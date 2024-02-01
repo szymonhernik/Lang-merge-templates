@@ -1,66 +1,140 @@
-/**
- * This config is used to set up Sanity Studio that's mounted on the `app/studio/[[...index]]/Studio.tsx` route
- */
-
+import { Card } from '@sanity/ui'
+import { buildLegacyTheme, defineConfig, isKeyedObject } from 'sanity'
+import { structureTool } from 'sanity/structure'
+import { assist } from '@sanity/assist'
 import { visionTool } from '@sanity/vision'
-import { defineConfig } from 'sanity'
-import { deskTool } from 'sanity/desk'
 import { presentationTool } from 'sanity/presentation'
-import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash'
+import { documentInternationalization } from '@sanity/document-internationalization'
+import { languageFilter } from '@sanity/language-filter'
+import { internationalizedArray } from 'sanity-plugin-internationalized-array'
 
 import { apiVersion, dataset, projectId, studioUrl } from '@/sanity/lib/api'
-import { locate } from '@/sanity/plugins/locate'
-import { pageStructure, singletonPlugin } from '@/sanity/plugins/settings'
-import page from '@/sanity/schemas/documents/page'
-import project from '@/sanity/schemas/documents/project'
-import duration from '@/sanity/schemas/objects/duration'
-import milestone from '@/sanity/schemas/objects/milestone'
-import timeline from '@/sanity/schemas/objects/timeline'
-import home from '@/sanity/schemas/singletons/home'
-import settings from '@/sanity/schemas/singletons/settings'
 
-const title =
-  process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE ||
-  'Next.js Personal Website with Sanity.io'
+import { structure, defaultDocumentNode } from '@/studio/structure'
+import { schemaTypes } from '@/sanity/schemas'
+import { i18n } from '@/languages'
+import { enableUrl, locate } from '@/studio/presentation'
+
+import Icon from '@/studio/components/Icon'
+const title = process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'Narges Mohammadi'
 
 export default defineConfig({
   basePath: studioUrl,
   projectId: projectId || '',
   dataset: dataset || '',
-  title,
-  schema: {
-    // If you want more content types, you can add them to this array
-    types: [
-      // Singletons
-      home,
-      settings,
-      // Documents
-      duration,
-      page,
-      project,
-      // Objects
-      milestone,
-      timeline,
-    ],
-  },
+  name: 'default',
+  title: 'NM web',
+  apiVersion: apiVersion || '',
   plugins: [
-    deskTool({
-      structure: pageStructure([home, settings]),
+    structureTool({
+      structure,
+      defaultDocumentNode,
     }),
     presentationTool({
       locate,
       previewUrl: {
         draftMode: {
-          enable: '/api/draft',
+          enable: enableUrl,
         },
       },
     }),
-    // Configures the global "new document" button, and document actions, to suit the Settings document singleton
-    singletonPlugin([home.name, settings.name]),
-    // Add an image asset source for Unsplash
-    unsplashImageAsset(),
-    // Vision lets you query your content with GROQ in the studio
-    // https://www.sanity.io/docs/the-vision-plugin
-    visionTool({ defaultApiVersion: apiVersion }),
+    documentInternationalization({
+      supportedLanguages: i18n.languages,
+      schemaTypes: ['lesson'],
+    }),
+    internationalizedArray({
+      languages: i18n.languages,
+      defaultLanguages: [i18n.base],
+      fieldTypes: ['string', 'text'],
+    }),
+    languageFilter({
+      supportedLanguages: i18n.languages,
+      defaultLanguages: [i18n.base],
+      documentTypes: [`presenter`, `course`, `labelGroup`],
+      filterField: (enclosingType, member, selectedLanguageIds) => {
+        // Filter internationalized arrays
+        if (
+          enclosingType.jsonType === 'object' &&
+          enclosingType.name.startsWith('internationalizedArray') &&
+          'kind' in member
+        ) {
+          const language = isKeyedObject(member.field.path[1])
+            ? member.field.path[1]._key
+            : null
+
+          return language ? selectedLanguageIds.includes(language) : false
+        }
+
+        // Filter internationalized objects
+        // `localeString` must be registered as a custom schema type
+        if (
+          enclosingType.jsonType === 'object' &&
+          enclosingType.name.startsWith('locale')
+        ) {
+          return selectedLanguageIds.includes(member.name)
+        }
+
+        return true
+      },
+    }),
+
+    visionTool(),
+
+    assist({
+      translate: {
+        field: {
+          documentTypes: ['presenter'],
+          languages: i18n.languages,
+        },
+      },
+    }),
   ],
+  schema: {
+    types: schemaTypes,
+    templates: (prev) => {
+      const prevFiltered = prev.filter((template) => template.id !== 'lesson')
+
+      return [
+        ...prevFiltered,
+        {
+          id: 'lesson-language',
+          title: 'Lesson with Language',
+          schemaType: 'lesson',
+          parameters: [{ name: 'language', type: 'string' }],
+          value: (params: { language: string }) => ({
+            language: params.language,
+          }),
+        },
+      ]
+    },
+  },
+  studio: {
+    components: {
+      // navbar: (props) => <Card scheme="dark">{props.renderDefault(props)}</Card>,
+    },
+  },
+  form: {
+    components: {
+      field: (props) => {
+        // if (props.path.length === 1) {
+        //   return (
+        //     <div style={{border: '1px solid red', padding: 30}}>{props.renderDefault(props)}</div>
+        //   )
+        // }
+
+        return props.renderDefault(props)
+      },
+    },
+  },
+  tools: (prev, { currentUser }) => {
+    const isAdmin = currentUser?.roles.some(
+      (role) => role.name === 'administrator',
+    )
+
+    if (isAdmin) {
+      return prev
+    }
+
+    return prev.filter((tool) => tool.name !== 'vision')
+  },
 })
