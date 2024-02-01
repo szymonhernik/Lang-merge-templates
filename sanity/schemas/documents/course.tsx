@@ -3,7 +3,7 @@ import { defineType, defineField, Reference } from 'sanity'
 import { SanityImageObjectStub } from '@sanity/asset-utils'
 
 import { i18n } from '../../../languages'
-import CourseMedia from '../../../studio/components/CourseMedia'
+import CourseMedia from '../../../sanity-studio/components/CourseMedia'
 
 export default defineType({
   name: 'course',

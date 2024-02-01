@@ -10,12 +10,12 @@ import { internationalizedArray } from 'sanity-plugin-internationalized-array'
 
 import { apiVersion, dataset, projectId, studioUrl } from '@/sanity/lib/api'
 
-import { structure, defaultDocumentNode } from '@/studio/structure'
+import { structure, defaultDocumentNode } from '@/sanity-studio/structure'
 import { schemaTypes } from '@/sanity/schemas'
 import { i18n } from '@/languages'
-import { enableUrl, locate } from '@/studio/presentation'
+import { enableUrl, locate } from '@/sanity-studio/presentation'
 
-import Icon from '@/studio/components/Icon'
+import Icon from '@/sanity-studio/components/Icon'
 const title = process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'Narges Mohammadi'
 
 export default defineConfig({
