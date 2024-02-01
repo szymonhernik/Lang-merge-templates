@@ -1,12 +1,12 @@
 'use client'
 
 import Link from 'next/link'
-import {usePathname} from 'next/navigation'
+import { usePathname } from 'next/navigation'
 
-import {CourseLayout} from '@/components/CourseLayout'
+import { CourseLayout } from '@/components/CourseLayout'
 import Header from '@/components/Header'
 
-import {i18n} from '../../../../languages'
+import { i18n } from '../../../../languages'
 
 export default function NotFound() {
   const pathname = usePathname()

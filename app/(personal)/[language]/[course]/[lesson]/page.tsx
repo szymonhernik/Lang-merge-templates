@@ -1,28 +1,30 @@
 import get from 'lodash/get'
-import {Metadata} from 'next'
-import {draftMode} from 'next/headers'
-import {notFound} from 'next/navigation'
-import {SanityDocument} from 'next-sanity'
+import { Metadata } from 'next'
+import { draftMode } from 'next/headers'
+import { notFound } from 'next/navigation'
+import { SanityDocument } from 'next-sanity'
 
 import Header from '@/components/Header'
-import {LessonLayout} from '@/components/LessonLayout'
-import {LiveQueryWrapper} from '@/components/LiveQueryWrapper'
-import {COMMON_PARAMS, DEFAULT_EMPTY_PARAMS} from '@/lib/constants'
-import {createLessonLinks} from '@/lib/helpers'
+import { LessonLayout } from '@/components/LessonLayout'
+import { LiveQueryWrapper } from '@/components/LiveQueryWrapper'
+import { COMMON_PARAMS, DEFAULT_EMPTY_PARAMS } from '@/lib/constants'
+import { createLessonLinks } from '@/lib/helpers'
 
-import {getLessonsWithSlugs} from '@/sanity/fetchers'
-import {loadQuery} from '@/sanity/lib/store'
-import {LESSON_QUERY} from '@/sanity/queries'
+import { getLessonsWithSlugs } from '@/sanity/fetchers'
+import { loadQuery } from '@/sanity/lib/store'
+import { LESSON_QUERY } from '@/sanity/queries'
 
 export async function generateStaticParams() {
   const lessons = await getLessonsWithSlugs()
 
-  const params: {language: string; course: string; lesson: string}[] = lessons
+  const params: { language: string; course: string; lesson: string }[] = lessons
     .map((lesson) => ({
       ...lesson,
       // Couldn't filter down the object of slugs in the GROQ query,
       // so we filter them here instead
-      course: lesson.language ? get(lesson, [`course`, lesson.language, `current`], null) : null,
+      course: lesson.language
+        ? get(lesson, [`course`, lesson.language, `current`], null)
+        : null,
     }))
     .filter((lesson) => lesson.course)
 
@@ -33,22 +35,25 @@ export const metadata: Metadata = {
   title: 'Lesson Page',
 }
 
-export default async function Page({params}) {
-  const {lesson, language} = params
-  const queryParams = {...COMMON_PARAMS, slug: lesson, language}
-  const {isEnabled} = draftMode()
+export default async function Page({ params }) {
+  const { lesson, language } = params
+  const queryParams = { ...COMMON_PARAMS, slug: lesson, language }
+  const { isEnabled } = draftMode()
   const initial = await loadQuery<SanityDocument>(LESSON_QUERY, queryParams, {
     perspective: isEnabled ? 'previewDrafts' : 'published',
-    next: {tags: ['lesson']},
+    next: { tags: ['lesson'] },
   })
 
   if (!initial.data) {
     notFound()
   }
 
-  const lessonPaths = createLessonLinks(initial.data.course.lessons, initial.data.course.slug)
+  const lessonPaths = createLessonLinks(
+    initial.data.course.lessons,
+    initial.data.course.slug,
+  )
   const currentLessonIndex = lessonPaths.findIndex((versions) =>
-    versions.find((lesson) => lesson.title === initial.data.title)
+    versions.find((lesson) => lesson.title === initial.data.title),
   )
   const translations = lessonPaths[currentLessonIndex]
 

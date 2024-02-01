@@ -1,4 +1,4 @@
-import {Metadata} from 'next'
+import { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Home',
@@ -6,18 +6,17 @@ export const metadata: Metadata = {
 
 import '@/styles/globals.css'
 
-import {draftMode} from 'next/headers'
-import {SanityDocument} from 'next-sanity'
+import { draftMode } from 'next/headers'
+import { SanityDocument } from 'next-sanity'
 
-import LegalLinks from '@/components/LegalLinks'
-import VisualEditing from '@/components/VisualEditing'
-import {COMMON_PARAMS} from '@/lib/constants'
-import {loadQuery} from '@/sanity/lib/store'
-import {LEGALS_QUERY} from '@/sanity/queries'
+import { COMMON_PARAMS } from '@/lib/constants'
+import { loadQuery } from '@/sanity/lib/store'
+import { LEGALS_QUERY } from '@/sanity/queries'
+import VisualEditing from '@/sanity/loader/VisualEditing'
 
 export default async function RootLayout(props) {
-  const queryParams = {...COMMON_PARAMS, language: props.params.language}
-  const {isEnabled} = draftMode()
+  const queryParams = { ...COMMON_PARAMS, language: props.params.language }
+  const { isEnabled } = draftMode()
   const initial = await loadQuery<SanityDocument[]>(LEGALS_QUERY, queryParams, {
     perspective: isEnabled ? 'previewDrafts' : 'published',
   })
