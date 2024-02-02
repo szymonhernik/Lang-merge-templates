@@ -2,8 +2,7 @@
   "i18n": {
     "languages": [
       { "id": "en", "title": "English (US)", "isDefault": true },
-      { "id": "nl", "title": "Dutch" },
-      { "id": "no", "title": "Norwegian" }
+      { "id": "nl", "title": "Dutch" }
     ],
     "base": "en"
   }

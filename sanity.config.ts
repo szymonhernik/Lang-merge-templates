@@ -40,7 +40,7 @@ export default defineConfig({
     }),
     documentInternationalization({
       supportedLanguages: i18n.languages,
-      schemaTypes: ['project'],
+      schemaTypes: ['project', 'aboutPage'],
     }),
     internationalizedArray({
       languages: i18n.languages,
@@ -92,7 +92,9 @@ export default defineConfig({
   schema: {
     types: schemaTypes,
     templates: (prev) => {
-      const prevFiltered = prev.filter((template) => template.id !== 'project')
+      const prevFiltered = prev.filter(
+        (template) => template.id !== 'project' && template.id !== 'aboutPage',
+      )
 
       return [
         ...prevFiltered,
@@ -100,6 +102,16 @@ export default defineConfig({
           id: 'project-language',
           title: 'Project with Language',
           schemaType: 'project',
+          parameters: [{ name: 'language', type: 'string' }],
+          value: (params: { language: string }) => ({
+            language: params.language,
+          }),
+        },
+        // New 'about-language' template
+        {
+          id: 'about-language',
+          title: 'About with Language',
+          schemaType: 'aboutPage',
           parameters: [{ name: 'language', type: 'string' }],
           value: (params: { language: string }) => ({
             language: params.language,
