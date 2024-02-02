@@ -1,7 +1,10 @@
-import {FiAward, FiType, FiUsers} from 'react-icons/fi'
-import {StructureResolver, DefaultDocumentNodeResolver} from 'sanity/structure'
+import { FiAward, FiType, FiUsers } from 'react-icons/fi'
+import {
+  StructureResolver,
+  DefaultDocumentNodeResolver,
+} from 'sanity/structure'
 
-import {i18n} from '../../languages'
+import { i18n } from '../../languages'
 import preview from './preview'
 import references from './references'
 import transifex from './transifex'
@@ -28,7 +31,7 @@ export const structure: StructureResolver = (S) =>
                       .title(`${language.title} Projects`)
                       .schemaType('lesson')
                       .filter('_type == "lesson" && language == $language')
-                      .params({language: language.id})
+                      .params({ language: language.id })
                       .initialValueTemplates([
                         S.initialValueTemplateItem('lesson-language', {
                           id: 'lesson-language',
@@ -52,8 +55,8 @@ export const structure: StructureResolver = (S) =>
                         const languageValue = params?.template?.split(`-`).pop()
 
                         return languageValue === language.id
-                      })
-                  )
+                      }),
+                  ),
               ),
               // I have only added this item so that search results when clicked will load this list
               // If the intent checker above could account for it, I'd remove this item
@@ -71,29 +74,28 @@ export const structure: StructureResolver = (S) =>
                     // Load this pane for existing `lesson` documents
                     // or new documents that aren't using an initial value template
                     .canHandleIntent(
-                      (intentName, params) => intentName === 'edit' || params.template === `lesson`
-                    )
+                      (intentName, params) =>
+                        intentName === 'edit' || params.template === `lesson`,
+                    ),
                 ),
-            ])
+            ]),
         ),
       // Field-level translations
-      S.documentTypeListItem('course').title('Projects Groups listed on Homepage'),
+      S.documentTypeListItem('course').title(
+        'Projects Groups listed on Homepage',
+      ),
       S.divider(),
 
       // Market-specific portable text example
       S.documentTypeListItem('legal').title('About'),
       S.divider(),
       // Singleton, field-level translations
-      S.listItem()
-        .icon(FiType)
-        .id('labelGroup')
-        .schemaType('labelGroup')
-        .title('Labels')
-        .child(S.editor().id('labelGroup').schemaType('labelGroup').documentId('labelGroup')),
-      S.divider(),
     ])
 
-export const defaultDocumentNode: DefaultDocumentNodeResolver = (S, {schemaType, getClient}) => {
+export const defaultDocumentNode: DefaultDocumentNodeResolver = (
+  S,
+  { schemaType, getClient },
+) => {
   // const client = getClient({apiVersion: `2023-01-01`})
 
   switch (schemaType) {

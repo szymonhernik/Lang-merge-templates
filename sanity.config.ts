@@ -50,7 +50,7 @@ export default defineConfig({
     languageFilter({
       supportedLanguages: i18n.languages,
       defaultLanguages: [i18n.base],
-      documentTypes: [`presenter`, `course`, `labelGroup`],
+      documentTypes: [`presenter`, `course`],
       filterField: (enclosingType, member, selectedLanguageIds) => {
         // Filter internationalized arrays
         if (

@@ -3,7 +3,6 @@
 import { useParams } from 'next/navigation'
 import React, { PropsWithChildren, useMemo } from 'react'
 
-import Blobs from '@/components/Blobs'
 import LessonLinks from '@/components/LessonLinks'
 import Title from '@/components/Title'
 import { createLessonLinks } from '@/lib/helpers'
@@ -55,7 +54,6 @@ export function CourseLayout(props: CourseLayoutProps) {
           )}
         </div>
       </div>
-      <Blobs />
     </>
   )
 }

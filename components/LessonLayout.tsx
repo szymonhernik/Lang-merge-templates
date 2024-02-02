@@ -7,7 +7,7 @@ import React, { useMemo } from 'react'
 import { createLessonLinks } from '@/lib/helpers'
 
 import { i18n } from '@/languages'
-import Blobs from './Blobs'
+
 import Button from './Button'
 import LessonLinks from './LessonLinks'
 

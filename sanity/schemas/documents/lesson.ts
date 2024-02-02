@@ -1,9 +1,9 @@
-import {FiAward} from 'react-icons/fi'
-import {defineField, defineType} from 'sanity'
+import { FiAward } from 'react-icons/fi'
+import { defineField, defineType } from 'sanity'
 
 export default defineType({
   name: 'lesson',
-  title: 'Lesson',
+  title: 'Project',
   icon: FiAward,
   type: 'document',
   fields: [
@@ -19,13 +19,16 @@ export default defineType({
         source: 'title',
       },
       validation: (rule) =>
-        rule.required().error('A slug is required to generate a page on the website'),
+        rule
+          .required()
+          .error('A slug is required to generate a page on the website'),
     }),
     defineField({
       name: 'summary',
       type: 'text',
       rows: 3,
-      validation: (rule) => rule.max(200).warning('Summary should be less than 200 characters'),
+      validation: (rule) =>
+        rule.max(200).warning('Summary should be less than 200 characters'),
     }),
     defineField({
       name: 'content',
@@ -44,7 +47,7 @@ export default defineType({
       media: 'image',
     },
     prepare(select) {
-      const {title, language, media} = select
+      const { title, language, media } = select
 
       return {
         title,
