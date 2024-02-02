@@ -1,6 +1,6 @@
-import {createClient} from '@sanity/client/stega'
+import { createClient } from '@sanity/client/stega'
 
-import {apiVersion, dataset, projectId} from '../env'
+import { apiVersion, dataset, projectId } from '../env'
 
 export const baseConfig = {
   apiVersion,
@@ -12,10 +12,10 @@ export const baseConfig = {
 const studioUrl = process.env.NEXT_PUBLIC_VERCEL_ENV
   ? `https://${
       process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
-        ? 'demo-course-platform-studio.sanity.build' // I don't understand why the primary domain doesn't have a variable
+        ? 'lang-merge-templates-studio.sanity.build' // I don't understand why the primary domain doesn't have a variable
         : process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL?.replace(
-            'demo-course-platform',
-            'demo-course-platform-studio'
+            'lang-merge-templates',
+            'lang-merge-templates-studio',
           )
     }`
   : 'http://localhost:3333'

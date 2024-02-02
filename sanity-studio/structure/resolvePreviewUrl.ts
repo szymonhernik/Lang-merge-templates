@@ -1,9 +1,12 @@
-import {SanityClient} from '@sanity/client'
-import {SanityDocument} from 'sanity'
+import { SanityClient } from '@sanity/client'
+import { SanityDocument } from 'sanity'
 
-import {getSecret, SECRET_ID} from './getSecret'
+import { getSecret, SECRET_ID } from './getSecret'
 
-export default async function resolvePreviewUrl(doc: SanityDocument, client: SanityClient) {
+export default async function resolvePreviewUrl(
+  doc: SanityDocument,
+  client: SanityClient,
+) {
   let baseUrl = `http://localhost:3000`
 
   // Use public vars because Studio is all client-side
@@ -11,15 +14,15 @@ export default async function resolvePreviewUrl(doc: SanityDocument, client: San
     // This is the URL of the Studio deployment, not the web deployment
     baseUrl =
       process.env.SANITY_STUDIO_VERCEL_ENV === 'production'
-        ? `https://demo-course-platform.sanity.build`
+        ? `https://lang-merge-templates.sanity.build`
         : // This should work, but doesn't
           // the env seems to be `undefined` in vercel
           // : process.env.SANITY_STUDIO_VERCEL_BRANCH_URL
           // So I'm DIY-ing a branch URL for the web deployment
-          `https://demo-course-platform-git-${process.env.SANITY_STUDIO_VERCEL_GIT_COMMIT_REF}.sanity.build`
+          `https://lang-merge-templates-git-${process.env.SANITY_STUDIO_VERCEL_GIT_COMMIT_REF}.sanity.build`
   }
 
-  const {_id} = doc
+  const { _id } = doc
 
   const previewUrl = new URL(`/api/preview`, baseUrl)
 

@@ -61,7 +61,7 @@ export const locate: DocumentLocationResolver = (params, context) => {
         }
       }),
     )
-  } else if (params.type === 'course') {
+  } else if (params.type === 'portfolio') {
     doc$ = context.documentStore.listenQuery(
       groq`*[_id == $id][0]{
             "slug": slug[$lang],
@@ -97,7 +97,7 @@ export const locate: DocumentLocationResolver = (params, context) => {
       groq`*[_id == $id][0]{
               slug,
               // TODO: Perform lookup for non-base-language projects to lookup metadata document
-              "courseSlug": *[_type == "course" && references(^._id)][0].slug,
+              "portfolioSlug": *[_type == "portfolio" && references(^._id)][0].slug,
               title,
               language
           }`,
@@ -107,19 +107,24 @@ export const locate: DocumentLocationResolver = (params, context) => {
 
     return doc$.pipe(
       map((doc) => {
-        if (!doc || !doc?.language || !doc.slug?.current || !doc.courseSlug) {
+        if (
+          !doc ||
+          !doc?.language ||
+          !doc.slug?.current ||
+          !doc.portfolioSlug
+        ) {
           return null
         }
 
         // Cannot retrieve values in GROQ dynamically based on the value of a field
-        const courseSlug =
-          doc.courseSlug[doc.language] || doc.courseSlug[DEFAULT_LANG]
+        const portfolioSlug =
+          doc.portfolioSlug[doc.language] || doc.portfolioSlug[DEFAULT_LANG]
 
         return {
           locations: [
             {
               title: doc.title || 'Untitled',
-              href: `/${doc.language}/${courseSlug.current}/${doc.slug.current}`,
+              href: `/${doc.language}/${portfolioSlug.current}/${doc.slug.current}`,
             },
           ],
         }

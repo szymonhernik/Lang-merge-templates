@@ -26,7 +26,7 @@ export default function Header(props: HeaderProps) {
           >
             <span className="flex items-center relative z-10 group-hover:text-cyan-700">
               <LanguageIcon className="text-cyan-500 group-hover:text-pink-400 w-6 h-6 mr-2" />
-              Course Platform
+              Portfolio Platform
             </span>
             <span className="pointer-events-none absolute inset-0 rounded-md -my-2 group-hover:scale-110  bg-white opacity-0 group-hover:opacity-100 transition-all duration-200" />
           </Link>

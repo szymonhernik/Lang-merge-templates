@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react'
-import {Reference, SanityDocument, useClient} from 'sanity'
-import {SanityImageObjectStub} from '@sanity/asset-utils'
+import React, { useEffect, useState } from 'react'
+import { Reference, SanityDocument, useClient } from 'sanity'
+import { SanityImageObjectStub } from '@sanity/asset-utils'
 import styled from 'styled-components'
-import {Box, Flex} from '@sanity/ui'
+import { Box, Flex } from '@sanity/ui'
 
-import {useImageUrlBuilder} from '../hooks/useImageUrlBuilder'
+import { useImageUrlBuilder } from '../hooks/useImageUrlBuilder'
 
 const SquareFlex = styled(Flex)`
   width: 100%;
@@ -33,15 +33,15 @@ const SquareFlex = styled(Flex)`
   }
 `
 
-const options = {apiVersion: `2023-03-01`}
+const options = { apiVersion: `2023-03-01` }
 
-type CourseMediaType = {
+type PortfolioMediaType = {
   image: SanityImageObjectStub
   presenters?: Reference[]
 }
 
-export default function CourseMedia(props: CourseMediaType) {
-  const {presenters = []} = props
+export default function PortfolioMedia(props: PortfolioMediaType) {
+  const { presenters = [] } = props
   const [presenterDocs, setPresenterDocs] = useState<SanityDocument[]>([])
   const client = useClient(options)
 
@@ -60,7 +60,12 @@ export default function CourseMedia(props: CourseMediaType) {
   const builder = useImageUrlBuilder(options)
 
   const image = props.image
-    ? builder?.image(props.image).width(400).height(400).auto('format').toString()
+    ? builder
+        ?.image(props.image)
+        .width(400)
+        .height(400)
+        .auto('format')
+        .toString()
     : null
 
   const presenterImages = presenterDocs.reduce<string[]>((acc, doc) => {
@@ -68,7 +73,10 @@ export default function CourseMedia(props: CourseMediaType) {
       return acc
     }
 
-    return [...acc, builder.image(doc.photo).width(100).height(100).auto('format').toString()]
+    return [
+      ...acc,
+      builder.image(doc.photo).width(100).height(100).auto('format').toString(),
+    ]
   }, [])
 
   return (

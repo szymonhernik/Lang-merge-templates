@@ -1,14 +1,22 @@
-import { FiAward, FiBook, FiGlobe, FiImage, FiUsers } from 'react-icons/fi'
+import {
+  FiAward,
+  FiBook,
+  FiGlobe,
+  FiImage,
+  FiUsers,
+  FiCircle,
+} from 'react-icons/fi'
 import { defineType, defineField, Reference } from 'sanity'
 import { SanityImageObjectStub } from '@sanity/asset-utils'
+import CustomFiCircleIcon from '@/sanity-studio/components/CustomFiCircleIcon' // Import your custom icon component
 
 import { i18n } from '../../../languages'
-import CourseMedia from '../../../sanity-studio/components/CourseMedia'
+import PortfolioMedia from '../../../sanity-studio/components/PortfolioMedia'
 
 export default defineType({
-  name: 'course',
-  title: 'Project groups (homepage)',
-  icon: FiBook,
+  name: 'portfolio',
+  title: 'Portfolio project',
+  icon: CustomFiCircleIcon,
   type: 'document',
   groups: [
     {
@@ -55,6 +63,11 @@ export default defineType({
           title: 'Project',
           type: 'reference',
           to: [{ type: 'project' }],
+          options: {
+            // Add filter options to only show projects where 'language' is 'en'
+            filter: 'language == $lang',
+            filterParams: { lang: 'en' },
+          },
         }),
       ],
       validation: (Rule) => [Rule.required().min(1), Rule.unique()],

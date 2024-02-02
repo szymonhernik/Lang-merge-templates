@@ -11,12 +11,12 @@ import { i18n } from '@/languages'
 
 import Prose from './Prose'
 
-type CourseLayoutProps = PropsWithChildren<{
+type PortfolioLayoutProps = PropsWithChildren<{
   data?: any
 }>
 
-export function CourseLayout(props: CourseLayoutProps) {
-  const { title, slug, presenters, projects } = props.data ?? {}
+export function PortfolioLayout(props: PortfolioLayoutProps) {
+  const { title, slug, projects } = props.data ?? {}
 
   // Render the localized title, if it exists, otherwise fallback to base
   const { language: currentLanguage } = useParams()
@@ -25,7 +25,7 @@ export function CourseLayout(props: CourseLayoutProps) {
     : currentLanguage
   const currentTitle = title ? title[titleLanguage] ?? title[i18n.base] : null
 
-  // Each "course" document has an array of "project" references
+  // Each "portfolio" document has an array of "project" references
   // "project" documents have document-level translations
   // Each document has a unique slug and are related by an
   // array of references stored in a separate "translation.metadata" document

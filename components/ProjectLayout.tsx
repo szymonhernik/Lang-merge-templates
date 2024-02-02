@@ -21,20 +21,20 @@ type ProjectLayoutProps = {
 
 export function ProjectLayout(props: ProjectLayoutProps) {
   const { labels = [] } = props
-  const { title, summary, content, course } = props.data ?? {}
-  const { projects } = course ?? {}
+  const { title, summary, content, portfolio } = props.data ?? {}
+  const { projects } = portfolio ?? {}
   const params = useParams()
   const language = Array.isArray(params.language)
     ? params.language[0]
     : params.language
 
   const projectPaths = useMemo(
-    () => createProjectLinks(projects, course?.slug),
-    [projects, course?.slug],
+    () => createProjectLinks(projects, portfolio?.slug),
+    [projects, portfolio?.slug],
   )
 
-  const courseSlug = course?.slug[language ?? i18n.base].current
-  const coursePath = [language, courseSlug].filter(Boolean).join('/')
+  const portfolioSlug = portfolio?.slug[language ?? i18n.base].current
+  const portfolioPath = [language, portfolioSlug].filter(Boolean).join('/')
 
   // From the projectPaths we can find the translations of this project
   const currentProjectIndex = projectPaths.findIndex((versions) =>
@@ -52,8 +52,12 @@ export function ProjectLayout(props: ProjectLayoutProps) {
         <section className="bg-gradient-to-r mix-blend-multiply from-cyan-100 via-transparent to-transparent pt-16">
           <div className="container mx-auto py-8 p-4 md:p-8 xl:p-16 flex flex-col justify-start items-start gap-4 xl:gap-8">
             <Title>{title}</Title>
-            {coursePath && course && backLabel && (
-              <Button href={`/${coursePath}`} Icon={ChevronLeftIcon} iconFirst>
+            {portfolioPath && portfolio && backLabel && (
+              <Button
+                href={`/${portfolioPath}`}
+                Icon={ChevronLeftIcon}
+                iconFirst
+              >
                 {backLabel}
               </Button>
             )}

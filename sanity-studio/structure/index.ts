@@ -80,7 +80,7 @@ export const structure: StructureResolver = (S) =>
             ]),
         ),
       // Field-level translations
-      S.documentTypeListItem('course').title('Project groups (homepage)'),
+      S.documentTypeListItem('portfolio').title('Portfolios'),
       S.divider(),
 
       // Market-specific portable text example
@@ -102,7 +102,7 @@ export const defaultDocumentNode: DefaultDocumentNodeResolver = (
         // preview(S, client)
         references(S),
       ])
-    case 'course':
+    case 'portfolio':
       return S.document().views([
         S.view.form(),
         // preview(S, client)

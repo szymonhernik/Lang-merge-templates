@@ -16,7 +16,7 @@ export default async function Page({ params }) {
   const { language } = params
   const queryParams = { ...COMMON_PARAMS, language }
   const { isEnabled } = draftMode()
-  const homeInitial = await loadQuery<{ courses: SanityDocument[] }>(
+  const homeInitial = await loadQuery<{ portfolios: SanityDocument[] }>(
     HOME_QUERY,
     queryParams,
     {

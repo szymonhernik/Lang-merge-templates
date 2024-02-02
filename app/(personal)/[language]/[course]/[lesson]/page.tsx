@@ -17,17 +17,17 @@ import { PROJECT_QUERY } from '@/sanity/queries'
 export async function generateStaticParams() {
   const projects = await getProjectsWithSlugs()
 
-  const params: { language: string; course: string; project: string }[] =
+  const params: { language: string; portfolio: string; project: string }[] =
     projects
       .map((project) => ({
         ...project,
         // Couldn't filter down the object of slugs in the GROQ query,
         // so we filter them here instead
-        course: project.language
-          ? get(project, [`course`, project.language, `current`], null)
+        portfolio: project.language
+          ? get(project, [`portfolio`, project.language, `current`], null)
           : null,
       }))
-      .filter((project) => project.course)
+      .filter((project) => project.portfolio)
 
   return params
 }
@@ -50,8 +50,8 @@ export default async function Page({ params }) {
   }
 
   const projectPaths = createProjectLinks(
-    initial.data.course.projects,
-    initial.data.course.slug,
+    initial.data.portfolio.projects,
+    initial.data.portfolio.slug,
   )
   const currentProjectIndex = projectPaths.findIndex((versions) =>
     versions.find((project) => project.title === initial.data.title),

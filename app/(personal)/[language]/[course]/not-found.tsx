@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-import { CourseLayout } from '@/components/CourseLayout'
+import { PortfolioLayout } from '@/components/PortfolioLayout'
 import Header from '@/components/Header'
 
 import { i18n } from '../../../../languages'
@@ -19,10 +19,10 @@ export default function NotFound() {
   return (
     <div>
       <Header translations={[]} />
-      <CourseLayout data={data}>
+      <PortfolioLayout data={data}>
         <p>Could not find the page</p>
         <Link href="/">Home</Link>
-      </CourseLayout>
+      </PortfolioLayout>
     </div>
   )
 }

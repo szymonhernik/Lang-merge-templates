@@ -37,7 +37,7 @@ export function createProjectLinks(
       slug: Slug
     }[]
   }[] = [],
-  courseSlug: SlugObject = {},
+  portfolioSlug: SlugObject = {},
 ): Translation[][] {
   if (!projects?.length) {
     return []
@@ -54,14 +54,15 @@ export function createProjectLinks(
           .filter((ref) => ref?.slug?.current)
           .map((ref) => {
             const projectLang = ref.language
-            const courseLangSlug = courseSlug[ref.language]?.current
+            const portfolioLangSlug = portfolioSlug[ref.language]?.current
             const projectLangSlug = ref.slug.current
 
             return {
               language: ref.language,
               title: ref.title,
               path:
-                '/' + [projectLang, courseLangSlug, projectLangSlug].join('/'),
+                '/' +
+                [projectLang, portfolioLangSlug, projectLangSlug].join('/'),
             }
           })
 
@@ -70,7 +71,7 @@ export function createProjectLinks(
   )
 }
 
-export function createCourseSummary(
+export function createPortfolioSummary(
   projects: SanityDocument[] = [],
   presenters: SanityDocument[] = [],
   labels: Label[] = [],

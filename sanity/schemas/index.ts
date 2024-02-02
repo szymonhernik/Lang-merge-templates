@@ -1,4 +1,4 @@
-import course from './documents/course'
+import portfolio from './documents/portfolio'
 
 import legal from './documents/legal'
 import project from './documents/project'
@@ -14,7 +14,7 @@ import portableText from './objects/portableText'
 
 export const schemaTypes = [
   // documents
-  course,
+  portfolio,
   legal,
   project,
   presenter,

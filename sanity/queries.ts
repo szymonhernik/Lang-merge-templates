@@ -16,9 +16,9 @@ export const LEGAL_QUERY = groq`*[_type == "legal" && slug.current == $slug][0]{
   }
 }`
 
-// We reuse this query on Courses and Projects
-const COURSE_QUERY_PROJECTION = groq`
-  // "course" documents have field-level translated title and slug fields
+// We reuse this query on Portfolios and Projects
+const PORTFOLIO_QUERY_PROJECTION = groq`
+  // "portfolio" documents have field-level translated title and slug fields
   // You *could* pick them out of each object like this:
   // "title": title[$language],
   // "slug": slug[$language].current,
@@ -51,40 +51,34 @@ const COURSE_QUERY_PROJECTION = groq`
     }
   },
 
-  // "course" documents have an array of "presenter" references
-  presenters[]->{
-    _id,
-    name,
-    // presenter field-level translations use arrays, not objects
-    "title": coalesce(title[_key == $language][0].value, title[_key == $defaultLocale][0].value),
-  }
+  
 `
 
-export const COURSE_QUERY = groq`*[_type == "course" && slug[$language].current == $slug][0]{
-  ${COURSE_QUERY_PROJECTION},
+export const PORTFOLIO_QUERY = groq`*[_type == "portfolio" && slug[$language].current == $slug][0]{
+  ${PORTFOLIO_QUERY_PROJECTION},
 }`
 
-export const COURSE_SLUGS_QUERY = groq`*[_type == "course" && defined(slug)]{
-  "course": slug
-}.course`
+export const PORTFOLIO_SLUGS_QUERY = groq`*[_type == "portfolio" && defined(slug)]{
+  "portfolio": slug
+}.portfolio`
 
 export const PROJECT_SLUGS_QUERY = groq`*[_type == "project" && defined(language) && defined(slug.current)]{
   language,
   "project": slug.current,
-  "course": select(
+  "portfolio": select(
       // So if this project isn't in English...
       ^.language != $defaultLocale => *[_type == "translation.metadata" && ^._id in translations[].value._ref][0]{
         // our query has to look up through the translations metadata
-        // and find the course that references the English version, not this language version
-        "course": *[
-          _type == "course" && 
+        // and find the portfolio that references the English version, not this language version
+        "portfolio": *[
+          _type == "portfolio" && 
           ^.translations[_key == $defaultLocale][0].value._ref in projects[]._ref
         ][0].slug
-      }.course,
+      }.portfolio,
       // By default, 
-      *[_type == "course" && ^._id in translations[].value._ref][0].slug
+      *[_type == "portfolio" && ^._id in translations[].value._ref][0].slug
     )
-}[defined(course)]`
+}[defined(portfolio)]`
 
 export const PROJECT_QUERY = groq`*[_type == "project" && slug.current == $slug][0]{
     // Get this whole document
@@ -100,25 +94,25 @@ export const PROJECT_QUERY = groq`*[_type == "project" && slug.current == $slug]
       }
     },
 
-    // ...and get this project's course
-    // In this Project, we have single "course" documents that reference "English" language version projects
-    "course": select(
+    // ...and get this project's portfolio
+    // In this Project, we have single "portfolio" documents that reference "English" language version projects
+    "portfolio": select(
       // So if this project isn't in English...
       ^.language != $defaultLocale => *[_type == "translation.metadata" && ^._id in translations[].value._ref][0]{
         // our query has to look up through the translations metadata
-        // and find the course that references the English version, not this language version
-        "course": *[
-          _type == "course" && 
+        // and find the portfolio that references the English version, not this language version
+        "portfolio": *[
+          _type == "portfolio" && 
           ^.translations[_key == $defaultLocale][0].value._ref in projects[]._ref
-        ][0]{ ${COURSE_QUERY_PROJECTION} }
-      }.course,
+        ][0]{ ${PORTFOLIO_QUERY_PROJECTION} }
+      }.portfolio,
       // By default, 
-      *[_type == "course" && ^._id in translations[].value._ref][0]{ ${COURSE_QUERY_PROJECTION} }
+      *[_type == "portfolio" && ^._id in translations[].value._ref][0]{ ${PORTFOLIO_QUERY_PROJECTION} }
     ),
 }`
 
 export const HOME_QUERY = groq`{
-  "courses": *[_type == "course" && count(projects) > 0]{
+  "portfolios": *[_type == "portfolio" && count(projects) > 0]{
     ...,
     "projects": projects[]->{
       // Get each project's *base* language version's title and slug

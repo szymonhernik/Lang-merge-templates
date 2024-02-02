@@ -8,7 +8,7 @@ import { COMMON_PARAMS, DEFAULT_EMPTY_PARAMS } from '@/lib/constants'
 import { loadQuery } from '@/sanity/lib/store'
 import { LEGAL_QUERY } from '@/sanity/queries'
 
-import { i18n } from '../../../../../languages'
+import { i18n } from '../../../../languages'
 
 export const metadata: Metadata = {
   title: 'Legal Page',
