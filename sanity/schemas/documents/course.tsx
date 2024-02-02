@@ -18,14 +18,8 @@ export default defineType({
       default: true,
     },
     {
-      name: 'presenters',
-      title: 'Presenters',
-      icon: FiUsers,
-    },
-    {
       name: 'lessons',
-      title: 'Lessons',
-      icon: FiAward,
+      title: 'Projects',
     },
     {
       name: 'media',
@@ -50,28 +44,17 @@ export default defineType({
           'A slug is required to generate a page on the website',
         ),
     }),
-    defineField({
-      name: 'presenters',
-      group: 'presenters',
-      type: 'array',
-      of: [
-        defineField({
-          name: 'presenter',
-          type: 'reference',
-          to: [{ type: 'presenter' }],
-        }),
-      ],
-    }),
+
     defineField({
       name: 'lessons',
       group: 'lessons',
       type: 'array',
       of: [
         defineField({
-          name: 'lesson',
-          title: 'Lesson',
+          name: 'project',
+          title: 'Project',
           type: 'reference',
-          to: [{ type: 'lesson' }],
+          to: [{ type: 'project' }],
         }),
       ],
       validation: (Rule) => [Rule.required().min(1), Rule.unique()],
@@ -86,7 +69,6 @@ export default defineType({
     select: {
       title: `title.${i18n.base}`,
       lessons: 'lessons',
-      presenters: 'presenters',
       image: 'image',
     },
     // Overloading the type causes an error
@@ -94,31 +76,22 @@ export default defineType({
     prepare({
       title,
       lessons,
-      presenters,
       image,
     }: {
       title: string
       lessons: Reference[]
-      presenters: Reference[]
+
       image: SanityImageObjectStub
     }) {
       const lessonCount = lessons?.length || 0
       const lessonSubtitle = lessonCount
-        ? `${lessonCount} ${lessonCount === 1 ? `lesson` : `lessons`}`
+        ? `${lessonCount} ${lessonCount === 1 ? `project` : `lessons`}`
         : 'No lessons'
-      const presenterCount = presenters?.length || 0
-      const presenterSubtitle = presenterCount
-        ? `${presenterCount} ${presenterCount === 1 ? `presenter` : `presenters`}`
-        : 'No presenters'
 
       return {
         title,
-        subtitle: [lessonSubtitle, presenterSubtitle].join(' · '),
-        media: presenterCount ? (
-          <CourseMedia image={image} presenters={presenters} />
-        ) : (
-          image ?? FiBook
-        ),
+        subtitle: lessonSubtitle,
+        media: image ?? FiBook,
       }
     },
   },

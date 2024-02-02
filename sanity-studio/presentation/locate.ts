@@ -1,15 +1,15 @@
 import groq from 'groq'
-import {map} from 'rxjs'
-import {ListenQueryOptions} from 'sanity'
-import type {DocumentLocationResolver} from 'sanity/presentation'
+import { map } from 'rxjs'
+import { ListenQueryOptions } from 'sanity'
+import type { DocumentLocationResolver } from 'sanity/presentation'
 
 const DEFAULT_LANG = 'en'
 
 // See: https://www.sanity.io/docs/configuring-the-presentation-tool#7dce82cbe90b
 export const locate: DocumentLocationResolver = (params, context) => {
   let doc$ = null
-  const queryParams = {...params, lang: DEFAULT_LANG}
-  const listenOptions: ListenQueryOptions = {perspective: 'previewDrafts'}
+  const queryParams = { ...params, lang: DEFAULT_LANG }
+  const listenOptions: ListenQueryOptions = { perspective: 'previewDrafts' }
 
   if (params.type === 'presenter') {
     doc$ = context.documentStore.listenQuery(
@@ -18,7 +18,7 @@ export const locate: DocumentLocationResolver = (params, context) => {
             "title": name
         }`,
       queryParams,
-      listenOptions
+      listenOptions,
     )
 
     // Return a streaming list of locations
@@ -36,13 +36,13 @@ export const locate: DocumentLocationResolver = (params, context) => {
             },
           ],
         }
-      })
+      }),
     )
   } else if (params.type === 'legal') {
     doc$ = context.documentStore.listenQuery(
       groq`*[_id == $id][0]{slug, title}`,
       queryParams,
-      listenOptions
+      listenOptions,
     )
 
     return doc$.pipe(
@@ -59,7 +59,7 @@ export const locate: DocumentLocationResolver = (params, context) => {
             },
           ],
         }
-      })
+      }),
     )
   } else if (params.type === 'course') {
     doc$ = context.documentStore.listenQuery(
@@ -68,7 +68,7 @@ export const locate: DocumentLocationResolver = (params, context) => {
             "title": title[$lang]
           }`,
       queryParams,
-      listenOptions
+      listenOptions,
     )
 
     return doc$.pipe(
@@ -90,9 +90,9 @@ export const locate: DocumentLocationResolver = (params, context) => {
             },
           ],
         }
-      })
+      }),
     )
-  } else if (params.type === 'lesson') {
+  } else if (params.type === 'project') {
     doc$ = context.documentStore.listenQuery(
       groq`*[_id == $id][0]{
               slug,
@@ -102,7 +102,7 @@ export const locate: DocumentLocationResolver = (params, context) => {
               language
           }`,
       queryParams,
-      listenOptions
+      listenOptions,
     )
 
     return doc$.pipe(
@@ -112,7 +112,8 @@ export const locate: DocumentLocationResolver = (params, context) => {
         }
 
         // Cannot retrieve values in GROQ dynamically based on the value of a field
-        const courseSlug = doc.courseSlug[doc.language] || doc.courseSlug[DEFAULT_LANG]
+        const courseSlug =
+          doc.courseSlug[doc.language] || doc.courseSlug[DEFAULT_LANG]
 
         return {
           locations: [
@@ -122,7 +123,7 @@ export const locate: DocumentLocationResolver = (params, context) => {
             },
           ],
         }
-      })
+      }),
     )
   }
 

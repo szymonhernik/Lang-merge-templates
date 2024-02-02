@@ -1,17 +1,5 @@
 import { groq } from 'next-sanity'
 
-export const PRESENTER_QUERY = groq`*[_type == "presenter" && slug.current == $slug][0]{
-  ...,
-  "title": coalesce(
-    title[_key == $language][0].value, 
-    title[_key == $defaultLocale][0].value
-  ),
-  "biography": coalesce(
-    biography[_key == $language][0].value, 
-    biography[_key == $defaultLocale][0].value
-  ),
-}`
-
 export const LEGALS_QUERY = groq`*[_type == "legal"]{
   _id,
   title,
@@ -80,11 +68,11 @@ export const COURSE_SLUGS_QUERY = groq`*[_type == "course" && defined(slug)]{
   "course": slug
 }.course`
 
-export const LESSON_SLUGS_QUERY = groq`*[_type == "lesson" && defined(language) && defined(slug.current)]{
+export const LESSON_SLUGS_QUERY = groq`*[_type == "project" && defined(language) && defined(slug.current)]{
   language,
-  "lesson": slug.current,
+  "project": slug.current,
   "course": select(
-      // So if this lesson isn't in English...
+      // So if this project isn't in English...
       ^.language != $defaultLocale => *[_type == "translation.metadata" && ^._id in translations[].value._ref][0]{
         // our query has to look up through the translations metadata
         // and find the course that references the English version, not this language version
@@ -98,7 +86,7 @@ export const LESSON_SLUGS_QUERY = groq`*[_type == "lesson" && defined(language) 
     )
 }[defined(course)]`
 
-export const LESSON_QUERY = groq`*[_type == "lesson" && slug.current == $slug][0]{
+export const LESSON_QUERY = groq`*[_type == "project" && slug.current == $slug][0]{
     // Get this whole document
     ...,
     content[] {
@@ -115,7 +103,7 @@ export const LESSON_QUERY = groq`*[_type == "lesson" && slug.current == $slug][0
     // ...and get this lesson's course
     // In this Project, we have single "course" documents that reference "English" language version lessons
     "course": select(
-      // So if this lesson isn't in English...
+      // So if this project isn't in English...
       ^.language != $defaultLocale => *[_type == "translation.metadata" && ^._id in translations[].value._ref][0]{
         // our query has to look up through the translations metadata
         // and find the course that references the English version, not this language version

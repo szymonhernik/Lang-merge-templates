@@ -1,5 +1,5 @@
-import {defineField, defineType} from 'sanity'
-import {ImageIcon} from '@sanity/icons'
+import { defineField, defineType } from 'sanity'
+import { ImageIcon } from '@sanity/icons'
 
 export default defineType({
   name: 'portableText',
@@ -10,14 +10,14 @@ export default defineType({
       name: 'block',
       type: 'block',
       styles: [
-        {title: 'Heading 2', value: 'h2'},
-        {title: 'Heading 3', value: 'h3'},
+        { title: 'Heading 2', value: 'h2' },
+        { title: 'Heading 3', value: 'h3' },
       ],
       marks: {
         decorators: [
-          {title: 'Strong', value: 'strong'},
-          {title: 'Emphasis', value: 'em'},
-          {title: 'Code', value: 'code'},
+          { title: 'Strong', value: 'strong' },
+          { title: 'Emphasis', value: 'em' },
+          { title: 'Code', value: 'code' },
         ],
         annotations: [
           defineField({
@@ -35,13 +35,13 @@ export default defineType({
           defineField({
             name: 'reference',
             type: 'reference',
-            to: [{type: 'lesson'}],
+            to: [{ type: 'project' }],
           }),
         ],
       },
-      of: [{type: 'marketContent', title: 'Inline Market Content'}],
+      of: [{ type: 'marketContent', title: 'Inline Market Content' }],
     }),
-    defineField({name: 'image', type: 'image', icon: ImageIcon}),
-    defineField({name: 'callout', type: 'callout'}),
+    defineField({ name: 'image', type: 'image', icon: ImageIcon }),
+    defineField({ name: 'callout', type: 'callout' }),
   ],
 })

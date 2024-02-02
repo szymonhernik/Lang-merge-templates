@@ -2,9 +2,8 @@ import { FiAward } from 'react-icons/fi'
 import { defineField, defineType } from 'sanity'
 
 export default defineType({
-  name: 'lesson',
+  name: 'project',
   title: 'Project',
-  icon: FiAward,
   type: 'document',
   fields: [
     defineField({

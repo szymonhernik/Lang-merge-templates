@@ -40,7 +40,7 @@ export default defineConfig({
     }),
     documentInternationalization({
       supportedLanguages: i18n.languages,
-      schemaTypes: ['lesson'],
+      schemaTypes: ['project'],
     }),
     internationalizedArray({
       languages: i18n.languages,
@@ -92,14 +92,14 @@ export default defineConfig({
   schema: {
     types: schemaTypes,
     templates: (prev) => {
-      const prevFiltered = prev.filter((template) => template.id !== 'lesson')
+      const prevFiltered = prev.filter((template) => template.id !== 'project')
 
       return [
         ...prevFiltered,
         {
-          id: 'lesson-language',
-          title: 'Lesson with Language',
-          schemaType: 'lesson',
+          id: 'project-language',
+          title: 'Project with Language',
+          schemaType: 'project',
           parameters: [{ name: 'language', type: 'string' }],
           value: (params: { language: string }) => ({
             language: params.language,

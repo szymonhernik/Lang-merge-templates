@@ -1,7 +1,7 @@
 import course from './documents/course'
 
 import legal from './documents/legal'
-import lesson from './documents/lesson'
+import project from './documents/project'
 import presenter from './documents/presenter'
 
 import callout from './objects/callout'
@@ -16,7 +16,7 @@ export const schemaTypes = [
   // documents
   course,
   legal,
-  lesson,
+  project,
   presenter,
   // objects
   callout,

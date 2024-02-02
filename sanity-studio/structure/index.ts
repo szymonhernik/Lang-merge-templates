@@ -23,18 +23,18 @@ export const structure: StructureResolver = (S) =>
               ...i18n.languages.map((language) =>
                 S.listItem()
                   .title(`Projects (${language.id.toLocaleUpperCase()})`)
-                  .schemaType('lesson')
+                  .schemaType('project')
 
                   .child(
                     S.documentList()
                       .id(language.id)
                       .title(`${language.title} Projects`)
-                      .schemaType('lesson')
-                      .filter('_type == "lesson" && language == $language')
+                      .schemaType('project')
+                      .filter('_type == "project" && language == $language')
                       .params({ language: language.id })
                       .initialValueTemplates([
-                        S.initialValueTemplateItem('lesson-language', {
-                          id: 'lesson-language',
+                        S.initialValueTemplateItem('project-language', {
+                          id: 'project-language',
                           language: language.id,
                         }),
                       ])
@@ -63,19 +63,18 @@ export const structure: StructureResolver = (S) =>
               S.divider(),
               S.listItem()
                 .title(`All Projects`)
-                .schemaType('lesson')
-                .icon(FiAward)
+                .schemaType('project')
                 .child(
                   S.documentList()
-                    .id(`all-lessons`)
-                    .title(`All Lessons`)
-                    .schemaType('lesson')
-                    .filter('_type == "lesson"')
+                    .id(`all-projects`)
+                    .title(`All projects`)
+                    .schemaType('project')
+                    .filter('_type == "project"')
                     // Load this pane for existing `lesson` documents
                     // or new documents that aren't using an initial value template
                     .canHandleIntent(
                       (intentName, params) =>
-                        intentName === 'edit' || params.template === `lesson`,
+                        intentName === 'edit' || params.template === `project`,
                     ),
                 ),
             ]),
@@ -111,7 +110,7 @@ export const defaultDocumentNode: DefaultDocumentNodeResolver = (
         // preview(S, client)
         transifex(S),
       ])
-    case 'lesson':
+    case 'project':
       return S.document().views([
         S.view.form(),
         // preview(S, client)
