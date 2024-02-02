@@ -96,7 +96,7 @@ export const locate: DocumentLocationResolver = (params, context) => {
     doc$ = context.documentStore.listenQuery(
       groq`*[_id == $id][0]{
               slug,
-              // TODO: Perform lookup for non-base-language lessons to lookup metadata document
+              // TODO: Perform lookup for non-base-language projects to lookup metadata document
               "courseSlug": *[_type == "course" && references(^._id)][0].slug,
               title,
               language

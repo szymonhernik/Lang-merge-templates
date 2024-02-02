@@ -3,9 +3,9 @@
 import { useParams } from 'next/navigation'
 import React, { PropsWithChildren, useMemo } from 'react'
 
-import LessonLinks from '@/components/LessonLinks'
+import ProjectLinks from '@/components/ProjectLinks'
 import Title from '@/components/Title'
-import { createLessonLinks } from '@/lib/helpers'
+import { createProjectLinks } from '@/lib/helpers'
 
 import { i18n } from '@/languages'
 
@@ -16,7 +16,7 @@ type CourseLayoutProps = PropsWithChildren<{
 }>
 
 export function CourseLayout(props: CourseLayoutProps) {
-  const { title, slug, presenters, lessons } = props.data ?? {}
+  const { title, slug, presenters, projects } = props.data ?? {}
 
   // Render the localized title, if it exists, otherwise fallback to base
   const { language: currentLanguage } = useParams()
@@ -25,17 +25,15 @@ export function CourseLayout(props: CourseLayoutProps) {
     : currentLanguage
   const currentTitle = title ? title[titleLanguage] ?? title[i18n.base] : null
 
-  // Each "course" document has an array of "lesson" references
-  // "lesson" documents have document-level translations
+  // Each "course" document has an array of "project" references
+  // "project" documents have document-level translations
   // Each document has a unique slug and are related by an
   // array of references stored in a separate "translation.metadata" document
-  const lessonPaths = useMemo(
-    () => createLessonLinks(lessons, slug),
-    [lessons, slug],
+  const projectPaths = useMemo(
+    () => createProjectLinks(projects, slug),
+    [projects, slug],
   )
 
-  // console.log('lessons', lessons, 'slug', slug)
-  // console.log(lessonPaths)
   return (
     <>
       <div className="relative">
@@ -47,8 +45,8 @@ export function CourseLayout(props: CourseLayoutProps) {
         </section>
 
         <div className="p-4 md:p-8 xl:p-16 container mx-auto">
-          {lessonPaths.length > 0 ? (
-            <LessonLinks lessons={lessonPaths} openByDefault />
+          {projectPaths.length > 0 ? (
+            <ProjectLinks projects={projectPaths} openByDefault />
           ) : (
             <Prose>{props.children}</Prose>
           )}

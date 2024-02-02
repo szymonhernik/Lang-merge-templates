@@ -16,7 +16,7 @@ export const LEGAL_QUERY = groq`*[_type == "legal" && slug.current == $slug][0]{
   }
 }`
 
-// We reuse this query on Courses and Lessons
+// We reuse this query on Courses and Projects
 const COURSE_QUERY_PROJECTION = groq`
   // "course" documents have field-level translated title and slug fields
   // You *could* pick them out of each object like this:
@@ -27,9 +27,9 @@ const COURSE_QUERY_PROJECTION = groq`
   title,
   slug,
 
-  // Every "lesson" is a reference to the base language version of a document
-  lessons[]->{
-    // Get each lesson's *base* language version's title and slug
+  // Every "project" is a reference to the base language version of a document
+  projects[]->{
+    // Get each project's *base* language version's title and slug
     language,
     title,
     slug,
@@ -38,7 +38,7 @@ const COURSE_QUERY_PROJECTION = groq`
     "translations": *[
       // by finding the translation metadata document
       _type == "translation.metadata" && 
-      // that contains this lesson's _id
+      // that contains this project's _id
       ^._id in translations[].value._ref
       // then map over the translations array
     ][0].translations[]{
@@ -68,7 +68,7 @@ export const COURSE_SLUGS_QUERY = groq`*[_type == "course" && defined(slug)]{
   "course": slug
 }.course`
 
-export const LESSON_SLUGS_QUERY = groq`*[_type == "project" && defined(language) && defined(slug.current)]{
+export const PROJECT_SLUGS_QUERY = groq`*[_type == "project" && defined(language) && defined(slug.current)]{
   language,
   "project": slug.current,
   "course": select(
@@ -78,7 +78,7 @@ export const LESSON_SLUGS_QUERY = groq`*[_type == "project" && defined(language)
         // and find the course that references the English version, not this language version
         "course": *[
           _type == "course" && 
-          ^.translations[_key == $defaultLocale][0].value._ref in lessons[]._ref
+          ^.translations[_key == $defaultLocale][0].value._ref in projects[]._ref
         ][0].slug
       }.course,
       // By default, 
@@ -86,7 +86,7 @@ export const LESSON_SLUGS_QUERY = groq`*[_type == "project" && defined(language)
     )
 }[defined(course)]`
 
-export const LESSON_QUERY = groq`*[_type == "project" && slug.current == $slug][0]{
+export const PROJECT_QUERY = groq`*[_type == "project" && slug.current == $slug][0]{
     // Get this whole document
     ...,
     content[] {
@@ -100,8 +100,8 @@ export const LESSON_QUERY = groq`*[_type == "project" && slug.current == $slug][
       }
     },
 
-    // ...and get this lesson's course
-    // In this Project, we have single "course" documents that reference "English" language version lessons
+    // ...and get this project's course
+    // In this Project, we have single "course" documents that reference "English" language version projects
     "course": select(
       // So if this project isn't in English...
       ^.language != $defaultLocale => *[_type == "translation.metadata" && ^._id in translations[].value._ref][0]{
@@ -109,7 +109,7 @@ export const LESSON_QUERY = groq`*[_type == "project" && slug.current == $slug][
         // and find the course that references the English version, not this language version
         "course": *[
           _type == "course" && 
-          ^.translations[_key == $defaultLocale][0].value._ref in lessons[]._ref
+          ^.translations[_key == $defaultLocale][0].value._ref in projects[]._ref
         ][0]{ ${COURSE_QUERY_PROJECTION} }
       }.course,
       // By default, 
@@ -118,10 +118,10 @@ export const LESSON_QUERY = groq`*[_type == "project" && slug.current == $slug][
 }`
 
 export const HOME_QUERY = groq`{
-  "courses": *[_type == "course" && count(lessons) > 0]{
+  "courses": *[_type == "course" && count(projects) > 0]{
     ...,
-    "lessons": lessons[]->{
-      // Get each lesson's *base* language version's title and slug
+    "projects": projects[]->{
+      // Get each project's *base* language version's title and slug
       language,
       title,
       slug,
@@ -130,7 +130,7 @@ export const HOME_QUERY = groq`{
       "translations": *[
         // by finding the translation metadata document
         _type == "translation.metadata" && 
-        // that contains this lesson's _id
+        // that contains this project's _id
         ^._id in translations[].value._ref
         // then map over the translations array
       ][0].translations[]{

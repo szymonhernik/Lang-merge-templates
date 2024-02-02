@@ -51,7 +51,7 @@ export const structure: StructureResolver = (S) =>
                           return true
                         }
 
-                        // Template name structure example: "lesson-en"
+                        // Template name structure example: "project-en"
                         const languageValue = params?.template?.split(`-`).pop()
 
                         return languageValue === language.id
@@ -70,7 +70,7 @@ export const structure: StructureResolver = (S) =>
                     .title(`All projects`)
                     .schemaType('project')
                     .filter('_type == "project"')
-                    // Load this pane for existing `lesson` documents
+                    // Load this pane for existing `project` documents
                     // or new documents that aren't using an initial value template
                     .canHandleIntent(
                       (intentName, params) =>
@@ -80,9 +80,7 @@ export const structure: StructureResolver = (S) =>
             ]),
         ),
       // Field-level translations
-      S.documentTypeListItem('course').title(
-        'Projects Groups listed on Homepage',
-      ),
+      S.documentTypeListItem('course').title('Project groups (homepage)'),
       S.divider(),
 
       // Market-specific portable text example

@@ -4,51 +4,45 @@ import { CheckIcon, ChevronLeftIcon } from '@heroicons/react/24/outline'
 import { useParams } from 'next/navigation'
 import React, { useMemo } from 'react'
 
-import { createLessonLinks } from '@/lib/helpers'
+import { createProjectLinks } from '@/lib/helpers'
 
 import { i18n } from '@/languages'
 
 import Button from './Button'
-import LessonLinks from './LessonLinks'
+import ProjectLinks from './ProjectLinks'
 
 import Prose from './Prose'
 import Title from './Title'
 
-type LessonLayoutProps = {
+type ProjectLayoutProps = {
   data?: any
   labels?: any[]
 }
 
-export function LessonLayout(props: LessonLayoutProps) {
+export function ProjectLayout(props: ProjectLayoutProps) {
   const { labels = [] } = props
   const { title, summary, content, course } = props.data ?? {}
-  const { lessons, presenters } = course ?? {}
+  const { projects } = course ?? {}
   const params = useParams()
   const language = Array.isArray(params.language)
     ? params.language[0]
     : params.language
 
-  const lessonPaths = useMemo(
-    () => createLessonLinks(lessons, course?.slug),
-    [lessons, course?.slug],
+  const projectPaths = useMemo(
+    () => createProjectLinks(projects, course?.slug),
+    [projects, course?.slug],
   )
 
   const courseSlug = course?.slug[language ?? i18n.base].current
   const coursePath = [language, courseSlug].filter(Boolean).join('/')
 
-  // From the lessonPaths we can find the translations of this lesson
-  const currentLessonIndex = lessonPaths.findIndex((versions) =>
-    versions.find((lesson) => lesson.title === title),
+  // From the projectPaths we can find the translations of this project
+  const currentProjectIndex = projectPaths.findIndex((versions) =>
+    versions.find((project) => project.title === title),
   )
-  const nextLesson =
-    currentLessonIndex + 1 === lessonPaths.length
-      ? null
-      : lessonPaths[currentLessonIndex + 1].find(
-          (lesson) => lesson.language === language,
-        )
 
   const completeString = labels.find(
-    ({ key }) => key === 'lesson.continue',
+    ({ key }) => key === 'project.continue',
   )?.text
   const backLabel = labels.find(({ key }) => key === 'back')?.text
 
@@ -76,19 +70,6 @@ export function LessonLayout(props: LessonLayoutProps) {
               ) : null}
 
               {content && content.length > 0 ? <Prose value={content} /> : null}
-
-              {nextLesson?.path && (
-                <div className="flex items-center justify-between my-8">
-                  <Button href={nextLesson.path} Icon={CheckIcon}>
-                    <>
-                      {completeString}
-                      <span className="sr-only">
-                        #{currentLessonIndex + 2} {nextLesson.title}
-                      </span>
-                    </>
-                  </Button>
-                </div>
-              )}
             </div>
           ) : null}
         </div>

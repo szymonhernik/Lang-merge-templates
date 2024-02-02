@@ -1,8 +1,8 @@
-import {vercelStegaSplit} from '@vercel/stega'
-import {SanityDocument, Slug} from 'sanity'
+import { vercelStegaSplit } from '@vercel/stega'
+import { SanityDocument, Slug } from 'sanity'
 
-import {getLabelByKey} from './getLabelByKey'
-import {Label, Translation} from './types'
+import { getLabelByKey } from './getLabelByKey'
+import { Label, Translation } from './types'
 
 // Return `DE` from `de`
 export function extractCountryFromCode(code = ``) {
@@ -14,18 +14,20 @@ export function extractCountryFromCode(code = ``) {
 // Return `EN` from `en_SE`
 // Return `EN` from `en`
 export function extractLanguageFromCode(code = ``) {
-  return code.length > 2 ? [...code.split(/[-_]/)][0].toLowerCase() : code.toLowerCase()
+  return code.length > 2
+    ? [...code.split(/[-_]/)][0].toLowerCase()
+    : code.toLowerCase()
 }
 
-// Creates an array of all language versions of this current lesson
+// Creates an array of all language versions of this current project
 // At this point, you might start to wonder if it wasn't better to move this logic into Sanity
 // ...it's not a bad idea
 type SlugObject = {
   [key: string]: Slug
 }
 
-export function createLessonLinks(
-  lessons: {
+export function createProjectLinks(
+  projects: {
     language: string
     title: string
     slug: Slug
@@ -35,30 +37,31 @@ export function createLessonLinks(
       slug: Slug
     }[]
   }[] = [],
-  courseSlug: SlugObject = {}
+  courseSlug: SlugObject = {},
 ): Translation[][] {
-  if (!lessons?.length) {
+  if (!projects?.length) {
     return []
   }
 
   return (
-    lessons
-      // Each lesson must have a language
-      .filter((lesson) => lesson?.language)
-      .map((lesson) => {
-        // console.log(lesson)
-        const translations = lesson.translations
+    projects
+      // Each project must have a language
+      .filter((project) => project?.language)
+      .map((project) => {
+        // console.log(project)
+        const translations = project.translations
 
           .filter((ref) => ref?.slug?.current)
           .map((ref) => {
-            const lessonLang = ref.language
+            const projectLang = ref.language
             const courseLangSlug = courseSlug[ref.language]?.current
-            const lessonLangSlug = ref.slug.current
+            const projectLangSlug = ref.slug.current
 
             return {
               language: ref.language,
               title: ref.title,
-              path: '/' + [lessonLang, courseLangSlug, lessonLangSlug].join('/'),
+              path:
+                '/' + [projectLang, courseLangSlug, projectLangSlug].join('/'),
             }
           })
 
@@ -68,9 +71,8 @@ export function createLessonLinks(
 }
 
 export function createCourseSummary(
-  lessons: SanityDocument[] = [],
-  presenters: SanityDocument[] = [],
-  labels: Label[] = []
+  projects: SanityDocument[] = [],
+  labels: Label[] = [],
 ) {
   const value: (string | number)[] = []
 
@@ -78,18 +80,16 @@ export function createCourseSummary(
     return ``
   }
 
-  const lessonSingular = getLabelByKey('lesson.singular', labels)
-  const lessonPlural = getLabelByKey('lesson.plural', labels)
-  const presenterSingular = getLabelByKey('presenter.singular', labels)
-  const presenterPlural = getLabelByKey('presenter.plural', labels)
-  const lessonTitles = lessons.map((lesson) => lesson.title)
+  const projectSingular = getLabelByKey('project.singular', labels)
+  const projectPlural = getLabelByKey('project.plural', labels)
+  const projectTitles = projects.map((project) => project.title)
 
-  if (lessons?.length) {
-    value.push(lessons.length)
-    value.push(lessons.length === 1 ? lessonSingular : lessonPlural)
+  if (projects?.length) {
+    value.push(projects.length)
+    value.push(projects.length === 1 ? projectSingular : projectPlural)
     value.push(':')
 
-    // Get the titles of the lessons
+    // Get the titles of the projects
   }
 
   return value

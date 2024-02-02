@@ -5,13 +5,13 @@ import { useParams } from 'next/navigation'
 import { SanityDocument } from 'next-sanity'
 
 import { getLabelByKey } from '@/lib/getLabelByKey'
-import { createCourseSummary, createLessonLinks } from '@/lib/helpers'
+import { createCourseSummary, createProjectLinks } from '@/lib/helpers'
 import { Label } from '@/lib/types'
 
 import Button from './Button'
 import Title from './Title'
 import TranslationLinks from './TranslationLinks'
-import LessonLinks from './LessonLinks'
+import ProjectLinks from './ProjectLinks'
 import Prose from './Prose'
 import { useMemo } from 'react'
 
@@ -31,9 +31,9 @@ export function HomeLayout(props: HomeLayoutProps) {
       {courses &&
         courses?.length > 0 &&
         courses.map((course) => {
-          // Generate lesson links for each course
-          const lessonPaths = createLessonLinks(course.lessons, course.slug)
-          const numberOfProjects = course.lessons.length
+          // Generate project links for each course
+          const projectPaths = createProjectLinks(course.projects, course.slug)
+          const numberOfProjects = course.projects.length
           return (
             <article
               key={course._id}
@@ -44,13 +44,13 @@ export function HomeLayout(props: HomeLayoutProps) {
               {course?.slug?.[language]?.current ? (
                 <>
                   <Title>{course.title[language]}</Title>
-                  {lessonPaths.length > 0 ? (
+                  {projectPaths.length > 0 ? (
                     <>
-                      <LessonLinks lessons={lessonPaths} openByDefault />
+                      <ProjectLinks projects={projectPaths} openByDefault />
                       {numberOfProjects}
                     </>
                   ) : (
-                    <Prose>No lessons available</Prose>
+                    <Prose>No projects available</Prose>
                   )}
                 </>
               ) : (

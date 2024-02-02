@@ -5,68 +5,69 @@ import { notFound } from 'next/navigation'
 import { SanityDocument } from 'next-sanity'
 
 import Header from '@/components/Header'
-import { LessonLayout } from '@/components/LessonLayout'
+import { ProjectLayout } from '@/components/ProjectLayout'
 import { LiveQueryWrapper } from '@/components/LiveQueryWrapper'
 import { COMMON_PARAMS, DEFAULT_EMPTY_PARAMS } from '@/lib/constants'
-import { createLessonLinks } from '@/lib/helpers'
+import { createProjectLinks } from '@/lib/helpers'
 
-import { getLessonsWithSlugs } from '@/sanity/fetchers'
+import { getProjectsWithSlugs } from '@/sanity/fetchers'
 import { loadQuery } from '@/sanity/lib/store'
-import { LESSON_QUERY } from '@/sanity/queries'
+import { PROJECT_QUERY } from '@/sanity/queries'
 
 export async function generateStaticParams() {
-  const lessons = await getLessonsWithSlugs()
+  const projects = await getProjectsWithSlugs()
 
-  const params: { language: string; course: string; lesson: string }[] = lessons
-    .map((lesson) => ({
-      ...lesson,
-      // Couldn't filter down the object of slugs in the GROQ query,
-      // so we filter them here instead
-      course: lesson.language
-        ? get(lesson, [`course`, lesson.language, `current`], null)
-        : null,
-    }))
-    .filter((lesson) => lesson.course)
+  const params: { language: string; course: string; project: string }[] =
+    projects
+      .map((project) => ({
+        ...project,
+        // Couldn't filter down the object of slugs in the GROQ query,
+        // so we filter them here instead
+        course: project.language
+          ? get(project, [`course`, project.language, `current`], null)
+          : null,
+      }))
+      .filter((project) => project.course)
 
   return params
 }
 
 export const metadata: Metadata = {
-  title: 'Lesson Page',
+  title: 'Project Page',
 }
 
 export default async function Page({ params }) {
-  const { lesson, language } = params
-  const queryParams = { ...COMMON_PARAMS, slug: lesson, language }
+  const { project, language } = params
+  const queryParams = { ...COMMON_PARAMS, slug: project, language }
   const { isEnabled } = draftMode()
-  const initial = await loadQuery<SanityDocument>(LESSON_QUERY, queryParams, {
+  const initial = await loadQuery<SanityDocument>(PROJECT_QUERY, queryParams, {
     perspective: isEnabled ? 'previewDrafts' : 'published',
-    next: { tags: ['lesson'] },
+    next: { tags: ['project'] },
   })
 
   if (!initial.data) {
     notFound()
   }
 
-  const lessonPaths = createLessonLinks(
-    initial.data.course.lessons,
+  const projectPaths = createProjectLinks(
+    initial.data.course.projects,
     initial.data.course.slug,
   )
-  const currentLessonIndex = lessonPaths.findIndex((versions) =>
-    versions.find((lesson) => lesson.title === initial.data.title),
+  const currentProjectIndex = projectPaths.findIndex((versions) =>
+    versions.find((project) => project.title === initial.data.title),
   )
-  const translations = lessonPaths[currentLessonIndex]
+  const translations = projectPaths[currentProjectIndex]
 
   return (
     <>
       <Header translations={translations} currentLanguage={language} />
       <LiveQueryWrapper
         isEnabled={isEnabled}
-        query={isEnabled ? LESSON_QUERY : ``}
+        query={isEnabled ? PROJECT_QUERY : ``}
         params={isEnabled ? queryParams : DEFAULT_EMPTY_PARAMS}
         initial={initial}
       >
-        <LessonLayout />
+        <ProjectLayout />
       </LiveQueryWrapper>
     </>
   )

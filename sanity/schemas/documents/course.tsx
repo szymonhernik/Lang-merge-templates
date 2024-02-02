@@ -7,7 +7,7 @@ import CourseMedia from '../../../sanity-studio/components/CourseMedia'
 
 export default defineType({
   name: 'course',
-  title: 'Projects Groups listed on Homepage',
+  title: 'Project groups (homepage)',
   icon: FiBook,
   type: 'document',
   groups: [
@@ -18,7 +18,7 @@ export default defineType({
       default: true,
     },
     {
-      name: 'lessons',
+      name: 'projects',
       title: 'Projects',
     },
     {
@@ -46,8 +46,8 @@ export default defineType({
     }),
 
     defineField({
-      name: 'lessons',
-      group: 'lessons',
+      name: 'projects',
+      group: 'projects',
       type: 'array',
       of: [
         defineField({
@@ -68,29 +68,29 @@ export default defineType({
   preview: {
     select: {
       title: `title.${i18n.base}`,
-      lessons: 'lessons',
+      projects: 'projects',
       image: 'image',
     },
     // Overloading the type causes an error
     // @ts-ignore
     prepare({
       title,
-      lessons,
+      projects,
       image,
     }: {
       title: string
-      lessons: Reference[]
+      projects: Reference[]
 
       image: SanityImageObjectStub
     }) {
-      const lessonCount = lessons?.length || 0
-      const lessonSubtitle = lessonCount
-        ? `${lessonCount} ${lessonCount === 1 ? `project` : `lessons`}`
-        : 'No lessons'
+      const projectCount = projects?.length || 0
+      const projectSubtitle = projectCount
+        ? `${projectCount} ${projectCount === 1 ? `project` : `projects`}`
+        : 'No projects'
 
       return {
         title,
-        subtitle: lessonSubtitle,
+        subtitle: projectSubtitle,
         media: image ?? FiBook,
       }
     },
