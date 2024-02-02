@@ -16,6 +16,8 @@ export const metadata: Metadata = {
 
 export default async function Page({ params }) {
   const { language, slug } = params
+  console.log('legal params: ', params)
+
   const queryParams = { ...COMMON_PARAMS, slug, language }
   const { isEnabled } = draftMode()
   const initial = await loadQuery<LegalLayoutProps['data']>(

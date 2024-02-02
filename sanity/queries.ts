@@ -79,6 +79,11 @@ export const PROJECT_SLUGS_QUERY = groq`*[_type == "project" && defined(language
       *[_type == "portfolio" && ^._id in translations[].value._ref][0].slug
     )
 }[defined(portfolio)]`
+export const ABOUT_SLUGS_QUERY = groq`*[_type == "aboutPage" && defined(language) && defined(slug.current)]{
+  language,
+  "aboutPage": slug
+  
+}[defined(aboutPage)]`
 
 export const PROJECT_QUERY = groq`*[_type == "project" && slug.current == $slug][0]{
     // Get this whole document
@@ -137,4 +142,13 @@ export const HOME_QUERY = groq`{
       }
     },
   }
+}`
+
+export const ABOUT_QUERY = groq`*[_type == "aboutPage" && language == $language][0]{
+  _id,
+  title,
+  slug,
+  summary,
+  content,
+  language,
 }`

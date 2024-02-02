@@ -14,23 +14,24 @@ import { getProjectsWithSlugs } from '@/sanity/fetchers'
 import { loadQuery } from '@/sanity/lib/store'
 import { PROJECT_QUERY } from '@/sanity/queries'
 
-export async function generateStaticParams() {
-  const projects = await getProjectsWithSlugs()
+// export async function generateStaticParams() {
+//   const projects = await getProjectsWithSlugs()
+//   // console.log('Projects:', projects[0].portfolio)
 
-  const params: { language: string; portfolio: string; project: string }[] =
-    projects
-      .map((project) => ({
-        ...project,
-        // Couldn't filter down the object of slugs in the GROQ query,
-        // so we filter them here instead
-        portfolio: project.language
-          ? get(project, [`portfolio`, project.language, `current`], null)
-          : null,
-      }))
-      .filter((project) => project.portfolio)
+//   const params: { language: string; portfolio: string; project: string }[] =
+//     projects
+//       .map((project) => ({
+//         ...project,
+//         // Couldn't filter down the object of slugs in the GROQ query,
+//         // so we filter them here instead
+//         portfolio: project.language
+//           ? get(project, [`portfolio`, project.language, `current`], null)
+//           : null,
+//       }))
+//       .filter((project) => project.portfolio)
 
-  return params
-}
+//   return params
+// }
 
 export const metadata: Metadata = {
   title: 'Project Page',
@@ -38,8 +39,10 @@ export const metadata: Metadata = {
 
 export default async function Page({ params }) {
   const { project, language } = params
+  console.log('params project: ', params)
   const queryParams = { ...COMMON_PARAMS, slug: project, language }
   const { isEnabled } = draftMode()
+
   const initial = await loadQuery<SanityDocument>(PROJECT_QUERY, queryParams, {
     perspective: isEnabled ? 'previewDrafts' : 'published',
     next: { tags: ['project'] },

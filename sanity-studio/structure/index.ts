@@ -45,6 +45,11 @@ export const structure: StructureResolver = (S) =>
                           return false
                         }
 
+                        if (intentName === 'create') {
+                          // return params?.language === language.id
+                          return true
+                        }
+
                         // Not an initial value template
                         if (!params.template) {
                           return false
@@ -73,7 +78,9 @@ export const structure: StructureResolver = (S) =>
                     // or new documents that aren't using an initial value template
                     .canHandleIntent(
                       (intentName, params) =>
-                        intentName === 'edit' || params.template === `project`,
+                        intentName === 'edit' ||
+                        intentName === 'create' ||
+                        params.template === `project`,
                     ),
                 ),
             ]),
@@ -112,6 +119,10 @@ export const structure: StructureResolver = (S) =>
                           // return params?.language === language.id
                           return false
                         }
+                        if (intentName === 'create') {
+                          // return params?.language === language.id
+                          return true
+                        }
 
                         // Not an initial value template
                         if (!params.template) {
@@ -142,6 +153,7 @@ export const structure: StructureResolver = (S) =>
                     .canHandleIntent(
                       (intentName, params) =>
                         intentName === 'edit' ||
+                        intentName === 'create' ||
                         params.template === `aboutPage`,
                     ),
                 ),
