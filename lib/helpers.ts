@@ -57,12 +57,21 @@ export function createProjectLinks(
             const portfolioLangSlug = portfolioSlug[ref.language]?.current
             const projectLangSlug = ref.slug.current
 
+            let path: string
+            if (projects.length === 1) {
+              path = '/' + [projectLang, 'works', projectLangSlug].join('/')
+            } else {
+              path =
+                '/' +
+                [projectLang, 'works', portfolioLangSlug, projectLangSlug].join(
+                  '/',
+                )
+            }
+
             return {
               language: ref.language,
               title: ref.title,
-              path:
-                '/' +
-                [projectLang, portfolioLangSlug, projectLangSlug].join('/'),
+              path: path,
             }
           })
 

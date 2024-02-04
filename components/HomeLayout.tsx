@@ -68,10 +68,10 @@ export function HomeLayout(props: HomeLayoutProps) {
                   </>
                 )}
               </article>
-              <Link href={language + '/about'}>About</Link>
             </>
           )
         })}
+      <Link href={language + '/about'}>About</Link>
     </div>
   )
 }

@@ -5,8 +5,7 @@ import { usePathname } from 'next/navigation'
 
 import { PortfolioLayout } from '@/components/PortfolioLayout'
 import Header from '@/components/Header'
-
-import { i18n } from '../../../../languages'
+import { i18n } from '@/languages'
 
 export default function NotFound() {
   const pathname = usePathname()
