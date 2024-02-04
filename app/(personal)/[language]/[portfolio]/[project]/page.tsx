@@ -39,7 +39,7 @@ export const metadata: Metadata = {
 
 export default async function Page({ params }) {
   const { project, language } = params
-  console.log('params project: ', params)
+  // console.log('params project: ', params)
   const queryParams = { ...COMMON_PARAMS, slug: project, language }
   const { isEnabled } = draftMode()
 

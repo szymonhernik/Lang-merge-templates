@@ -15,19 +15,17 @@ import { loadQuery } from '@/sanity/lib/store'
 import { ABOUT_QUERY } from '@/sanity/queries'
 import { i18n } from '@/languages'
 
-export async function generateStaticParams() {
-  const aboutPages = await getAboutsWithSlugs()
-  console.log('about pages', aboutPages)
+// export async function generateStaticParams() {
+//   const aboutPages = await getAboutsWithSlugs()
 
-  // Adjusted to correct property names and extraction of slug
-  const params = aboutPages.map((aboutPage) => ({
-    language: aboutPage.language,
-    aboutPage: aboutPage.aboutPage.current, // Correctly accessing the slug
-  }))
-  console.log('static params:', params)
+//   // Adjusted to correct property names and extraction of slug
+//   const params = aboutPages.map((aboutPage) => ({
+//     language: aboutPage.language,
+//     aboutPage: aboutPage.aboutPage.current, // Correctly accessing the slug
+//   }))
 
-  return params
-}
+//   return params
+// }
 
 export const metadata: Metadata = {
   title: 'About page',
@@ -35,7 +33,7 @@ export const metadata: Metadata = {
 
 export default async function Page({ params }) {
   const { language, slug } = params
-  console.log('PARAMS ABOUT: ', params)
+  // console.log('PARAMS ABOUT: ', params)
 
   const queryParams = { ...COMMON_PARAMS, language }
   const { isEnabled } = draftMode()
@@ -44,7 +42,7 @@ export default async function Page({ params }) {
     next: { tags: ['aboutPage'] },
   })
   const aboutsWithSlugs = await getAboutsWithSlugs()
-  console.log('abouts slugs: ', aboutsWithSlugs)
+  // console.log('abouts slugs: ', aboutsWithSlugs)
   // results in
   // abouts slugs:  [
   //   { language: 'en', aboutPage: { _type: 'slug', current: 'about' } },
