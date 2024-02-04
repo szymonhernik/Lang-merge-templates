@@ -13,6 +13,7 @@ import portableText from './objects/portableText'
 import aboutPage from './documents/about'
 import musicPage from './documents/music'
 import home from './singletons/home'
+import settings from './singletons/settings'
 
 export const schemaTypes = [
   // documents
@@ -22,6 +23,7 @@ export const schemaTypes = [
   aboutPage,
   musicPage,
   home,
+  settings,
   // objects
   callout,
   localizedSlug,

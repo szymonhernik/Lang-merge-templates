@@ -9,6 +9,7 @@ import preview from './preview'
 import references from './references'
 import transifex from './transifex'
 import home from '@/sanity/schemas/singletons/home'
+import settings from '@/sanity/schemas/singletons/settings'
 
 export const structure: StructureResolver = (S) => {
   // Define the custom 'home' document list item
@@ -21,10 +22,20 @@ export const structure: StructureResolver = (S) => {
         .schemaType(home.name) // Same as the ID, typically
         .documentId(home.name), // This ensures it points to the specific singleton document
     )
+  const settingsListItem = S.listItem()
+    .title('Settings') // Assuming settings schema has a title field
+    .icon(settings.icon) // Assuming settings schema has an icon field
+    .child(
+      S.editor()
+        .id(settings.name) // Assuming settings schema has a name field, like 'settings'
+        .schemaType(settings.name) // Same as the ID, typically
+        .documentId(settings.name), // This ensures it points to the specific singleton document
+    )
 
   // Get the default list items, but filter out 'home' if it's there by default
   const defaultListItems = S.documentTypeListItems().filter(
-    (listItem) => listItem.getId() !== home.name,
+    (listItem) =>
+      listItem.getId() !== home.name && listItem.getId() !== settings.name,
   )
 
   return S.list()
@@ -33,6 +44,7 @@ export const structure: StructureResolver = (S) => {
       // Custom document-level translation structure
       //here
       homeListItem,
+      settingsListItem,
       S.divider(),
       // Field-level translations
       S.documentTypeListItem('portfolio').title('Portfolio'),
