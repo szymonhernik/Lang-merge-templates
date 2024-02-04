@@ -15,6 +15,9 @@ import { i18n } from '@/languages'
 import { enableUrl, locate } from '@/sanity-studio/presentation'
 
 import Icon from '@/sanity-studio/components/Icon'
+import home from './sanity/schemas/singletons/home'
+import { pageStructure } from './sanity-studio/structure/transifex'
+
 const title = process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'Narges Mohammadi'
 
 export default defineConfig({
@@ -26,6 +29,7 @@ export default defineConfig({
   apiVersion: apiVersion || '',
   plugins: [
     structureTool({
+      // structure: pageStructure([home]),
       structure,
       defaultDocumentNode,
     }),
@@ -39,7 +43,7 @@ export default defineConfig({
     }),
     documentInternationalization({
       supportedLanguages: i18n.languages,
-      schemaTypes: ['project', 'aboutPage'],
+      schemaTypes: ['project', 'aboutPage', 'musicPage'],
     }),
     internationalizedArray({
       languages: i18n.languages,
@@ -83,7 +87,10 @@ export default defineConfig({
     types: schemaTypes,
     templates: (prev) => {
       const prevFiltered = prev.filter(
-        (template) => template.id !== 'project' && template.id !== 'aboutPage',
+        (template) =>
+          template.id !== 'project' &&
+          template.id !== 'aboutPage' &&
+          template.id !== 'musicPage',
       )
 
       return [
@@ -102,6 +109,16 @@ export default defineConfig({
           id: 'about-language',
           title: 'About with Language',
           schemaType: 'aboutPage',
+          parameters: [{ name: 'language', type: 'string' }],
+          value: (params: { language: string }) => ({
+            language: params.language,
+          }),
+        },
+        // New 'about-language' template
+        {
+          id: 'music-language',
+          title: 'Music with Language',
+          schemaType: 'musicPage',
           parameters: [{ name: 'language', type: 'string' }],
           value: (params: { language: string }) => ({
             language: params.language,

@@ -72,6 +72,7 @@ export function HomeLayout(props: HomeLayoutProps) {
           )
         })}
       <Link href={language + '/about'}>About</Link>
+      <Link href={language + '/works'}>Works</Link>
     </div>
   )
 }
