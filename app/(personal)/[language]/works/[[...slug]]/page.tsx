@@ -40,41 +40,49 @@ export const metadata: Metadata = {
 }
 
 export default async function Page({ params }) {
-  // const { project, language } = params
+  const { slug, language } = params
+  let project = ''
+  const projectGroup = slug[0]
+
+  if (slug.length === 2) {
+    project = slug[1]
+  } else if (slug.length === 1) {
+    project = slug[0]
+  }
   console.log('params: ', params)
-  // const queryParams = { ...COMMON_PARAMS, slug: project, language }
-  // const { isEnabled } = draftMode()
+  // params:  { language: 'en', slug: [ 'double-work', 'exhibition' ] }
+  const queryParams = { ...COMMON_PARAMS, slug: project, language }
+  const { isEnabled } = draftMode()
 
-  // const initial = await loadQuery<SanityDocument>(PROJECT_QUERY, queryParams, {
-  //   perspective: isEnabled ? 'previewDrafts' : 'published',
-  //   next: { tags: ['project'] },
-  // })
+  const initial = await loadQuery<SanityDocument>(PROJECT_QUERY, queryParams, {
+    perspective: isEnabled ? 'previewDrafts' : 'published',
+    next: { tags: ['project'] },
+  })
 
-  // if (!initial.data) {
-  //   notFound()
-  // }
+  if (!initial.data) {
+    notFound()
+  }
 
-  // const projectPaths = createProjectLinks(
-  //   initial.data.portfolio.projects,
-  //   initial.data.portfolio.slug,
-  // )
-  // const currentProjectIndex = projectPaths.findIndex((versions) =>
-  //   versions.find((project) => project.title === initial.data.title),
-  // )
-  // const translations = projectPaths[currentProjectIndex]
+  const projectPaths = createProjectLinks(
+    initial.data.portfolio.projects,
+    initial.data.portfolio.slug,
+  )
+  const currentProjectIndex = projectPaths.findIndex((versions) =>
+    versions.find((project) => project.title === initial.data.title),
+  )
+  const translations = projectPaths[currentProjectIndex]
 
   return (
     <>
-      {/* <Header translations={translations} currentLanguage={language} /> */}
-      {/* <LiveQueryWrapper
+      <Header translations={translations} currentLanguage={language} />
+      <LiveQueryWrapper
         isEnabled={isEnabled}
         query={isEnabled ? PROJECT_QUERY : ``}
         params={isEnabled ? queryParams : DEFAULT_EMPTY_PARAMS}
         initial={initial}
-      > */}
-      <h1>HELLO</h1>
-      {/* <ProjectLayout /> */}
-      {/* </LiveQueryWrapper> */}
+      >
+        <ProjectLayout />
+      </LiveQueryWrapper>
     </>
   )
 }

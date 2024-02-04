@@ -48,7 +48,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
 
   return (
     <>
-      <div className="relative z-10">
+      <div className="relative z-10 mt-40">
         <section className="bg-gradient-to-r mix-blend-multiply from-cyan-100 via-transparent to-transparent pt-16">
           <div className="container mx-auto py-8 p-4 md:p-8 xl:p-16 flex flex-col justify-start items-start gap-4 xl:gap-8">
             <Title>{title}</Title>
