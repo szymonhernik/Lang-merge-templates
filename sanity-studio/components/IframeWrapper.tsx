@@ -5,5 +5,7 @@ type IframeWrapperProps = {
 }
 
 export default function IframeWrapper(props: IframeWrapperProps) {
+  console.log(props)
+  // @ts-ignore
   return <Iframe />
 }

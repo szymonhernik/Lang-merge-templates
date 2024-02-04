@@ -1,15 +1,14 @@
 import groq from 'groq'
 import { map } from 'rxjs'
 import { ListenQueryOptions } from 'sanity'
-import type { DocumentLocationResolver } from 'sanity/presentation'
 
 const DEFAULT_LANG = 'en'
 
 // See: https://www.sanity.io/docs/configuring-the-presentation-tool#7dce82cbe90b
-export const locate: DocumentLocationResolver = (params, context) => {
+export const locate = (params, context) => {
   let doc$ = null
   const queryParams = { ...params, lang: DEFAULT_LANG }
-  const listenOptions: ListenQueryOptions = { perspective: 'previewDrafts' }
+  const listenOptions = { perspective: 'previewDrafts' }
 
   if (params.type === 'presenter') {
     doc$ = context.documentStore.listenQuery(
@@ -33,29 +32,6 @@ export const locate: DocumentLocationResolver = (params, context) => {
             {
               title: doc.title || 'Untitled',
               href: `/${DEFAULT_LANG}/presenter/${doc.slug.current}`,
-            },
-          ],
-        }
-      }),
-    )
-  } else if (params.type === 'legal') {
-    doc$ = context.documentStore.listenQuery(
-      groq`*[_id == $id][0]{slug, title}`,
-      queryParams,
-      listenOptions,
-    )
-
-    return doc$.pipe(
-      map((doc) => {
-        if (!doc || !doc.slug?.current) {
-          return null
-        }
-
-        return {
-          locations: [
-            {
-              title: doc.title || 'Untitled',
-              href: `/${DEFAULT_LANG}/legal/${doc.slug.current}`,
             },
           ],
         }

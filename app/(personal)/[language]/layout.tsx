@@ -11,15 +11,12 @@ import { SanityDocument } from 'next-sanity'
 
 import { COMMON_PARAMS } from '@/lib/constants'
 import { loadQuery } from '@/sanity/lib/store'
-import { LEGALS_QUERY } from '@/sanity/queries'
-import VisualEditing from '@/sanity/loader/VisualEditing'
+
+import VisualEditing from '@/components/VisualEditing'
 
 export default async function RootLayout(props) {
   const queryParams = { ...COMMON_PARAMS, language: props.params.language }
   const { isEnabled } = draftMode()
-  const initial = await loadQuery<SanityDocument[]>(LEGALS_QUERY, queryParams, {
-    perspective: isEnabled ? 'previewDrafts' : 'published',
-  })
 
   return (
     <html lang={props.params.language}>

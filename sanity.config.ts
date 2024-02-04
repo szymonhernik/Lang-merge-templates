@@ -1,7 +1,6 @@
 import { Card } from '@sanity/ui'
 import { buildLegacyTheme, defineConfig, isKeyedObject } from 'sanity'
 import { structureTool } from 'sanity/structure'
-import { assist } from '@sanity/assist'
 import { visionTool } from '@sanity/vision'
 import { presentationTool } from 'sanity/presentation'
 import { documentInternationalization } from '@sanity/document-internationalization'
@@ -79,15 +78,6 @@ export default defineConfig({
     }),
 
     visionTool(),
-
-    assist({
-      translate: {
-        field: {
-          documentTypes: ['presenter'],
-          languages: i18n.languages,
-        },
-      },
-    }),
   ],
   schema: {
     types: schemaTypes,

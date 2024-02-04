@@ -8,7 +8,7 @@ import callout from './objects/callout'
 import localizedSlug from './objects/localizedSlug'
 import localizedString from './objects/localizedString'
 import localizedText from './objects/localizedText'
-import marketContent from './objects/marketContent'
+
 import portableText from './objects/portableText'
 import aboutPage from './documents/about'
 
@@ -23,6 +23,6 @@ export const schemaTypes = [
   localizedSlug,
   localizedString,
   localizedText,
-  marketContent,
+
   portableText,
 ]
