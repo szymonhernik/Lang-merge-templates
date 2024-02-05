@@ -17,21 +17,25 @@ export default function Header(props: HeaderProps) {
   const { translations, currentLanguage = i18n.base } = props
 
   return (
-    <header className="bg-cyan-100/50 border-b border-cyan-50 text-cyan-900 font-bold fixed top-0 w-screen h-header flex items-center backdrop-blur z-20">
-      <div className="container mx-auto flex items-center justify-between px-4 md:px-8 xl:p-16">
+    <header className="bg-white font-bold fixed top-0 w-screen h-header flex z-20 pt-4">
+      <div className="container mx-auto flex items-start  justify-between gap-4">
         <h1 className="mr-auto">
-          <Link
-            href={`/${clean(currentLanguage)}`}
-            className="block transition-colors duration-200 font-display font-bold group relative z-0"
-          >
-            <span className="flex items-center relative z-10 group-hover:text-cyan-700">
-              <LanguageIcon className="text-cyan-500 group-hover:text-pink-400 w-6 h-6 mr-2" />
-              Portfolio Platform
-            </span>
-            <span className="pointer-events-none absolute inset-0 rounded-md -my-2 group-hover:scale-110  bg-white opacity-0 group-hover:opacity-100 transition-all duration-200" />
+          <Link href={`/${clean(currentLanguage)}`} className="">
+            <span className="">Narges Mohammadi</span>
           </Link>
         </h1>
         <TranslationLinks translations={translations} />
+        <div className="flex flex-col">
+          <Link href={currentLanguage + '/about'}>
+            {currentLanguage === 'en' ? 'About' : 'Over'}
+          </Link>
+          <Link href={currentLanguage + '/works'}>
+            {currentLanguage === 'en' ? 'Works' : 'Werken'}
+          </Link>
+          <Link href={currentLanguage + '/music'}>
+            {currentLanguage === 'en' ? 'Music' : 'Muziek'}
+          </Link>
+        </div>
       </div>
     </header>
   )

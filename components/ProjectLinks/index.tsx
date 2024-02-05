@@ -12,7 +12,7 @@ import { ListLink } from './ListLink'
 const buttonClasses = {
   default: `rounded-md flex w-full items-center p-3 transition-colors duration-300 border`,
   current: `bg-cyan-100/80 border-cyan-200/80 text-cyan-900`,
-  notCurrent: `bg-white/80 border-white hover:bg-cyan-50 hover:text-cyan-600 hover:border-cyan-100`,
+  notCurrent: `bg-white/80 border-white hover:underline`,
   active: `border-red-500`,
   notActive: ``,
 }
@@ -60,29 +60,25 @@ export default function ProjectLinks(props: ProjectLinksProps) {
   ].join(` `)
 
   return (
-    <Menu as="div" className="grid grid-cols-1 gap-1">
+    <Menu as="div" className="">
       {openByDefault ? null : (
         <button
           type="button"
           className={toggleClassNames}
           onClick={() => setMenuOpen(!menuOpen)}
         >
-          <span className="flex-1 flex items-center gap-x-4">
+          <span className="">
             <span className="text-pink-400 w-6">
               <ChevronDownIcon className="w-6 h-auto" />
             </span>
-            <span className="text-cyan-500 font-medium">
+            <span className="font-medium">
               {localeProjects.length} Projects
             </span>
           </span>
         </button>
       )}
 
-      <Menu.Items
-        static
-        as="ul"
-        className="text-cyan-500 font-medium grid grid-cols-1 gap-1"
-      >
+      <Menu.Items static as="ul" className="">
         {menuOpen &&
           localeProjects.map((project, index) =>
             project ? (
@@ -101,9 +97,9 @@ export default function ProjectLinks(props: ProjectLinksProps) {
                       active ? buttonClasses.active : buttonClasses.notActive,
                     ].join(` `)}
                   >
-                    <span className="flex-1 flex items-center gap-x-4">
-                      <span className="font-display font-bold text-sm text-pink-400 w-6">
-                        {String(index + 1).padStart(2, '0')}
+                    <span className="flex-1 flex items-center gap-x-2">
+                      <span className="font-bold text-sm  w-6">
+                        {String(index + 1).padEnd(2, '.')}
                       </span>
                       <span>{project.title}</span>
                     </span>

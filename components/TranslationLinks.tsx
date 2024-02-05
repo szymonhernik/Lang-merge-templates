@@ -33,31 +33,31 @@ export default function TranslationLinks(props: TranslationLinksProps) {
   )
 
   return (
-    <ul className="inline-flex items-center divide-x divide-gray-100 border border-white rounded-md overflow-hidden">
+    <ul className="inline-flex items-center ">
       {availableTranslations.map((version) => (
         <li
           key={version.language}
           className={clsx(
-            `transition-colors duration-200`,
+            ``,
             version.language === language
-              ? `bg-white pointer-events-none`
-              : `bg-white/50 hover:bg-cyan-100`,
+              ? `pointer-events-none`
+              : `text-gray-500 hover:text-black`,
           )}
         >
           {version?.path ? (
             <Link
               href={clean(version.path)}
               locale={version.language}
-              className="flex items-center group leading-none"
+              className="flex items-center group "
             >
-              <span className="block uppercase font-mono text-xs tracking-widest py-2 px-3">
+              <span className="block uppercase font-mono  tracking-widest  px-1">
                 {version.language}
               </span>
               <span className="sr-only">{version.title}</span>
             </Link>
           ) : (
-            <span className="flex items-center group leading-none opacity-25 pointer-events-none">
-              <span className="block uppercase font-mono text-xs tracking-widest py-2 px-3">
+            <span className="flex items-center group  opacity-25 pointer-events-none">
+              <span className="block uppercase font-mono  tracking-widest  px-1">
                 {version.language}
               </span>
               <span className="sr-only">{version.title}</span>

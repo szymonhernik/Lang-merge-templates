@@ -15,6 +15,14 @@ module.exports = {
       sans: 'var(--font-sans)',
       serif: 'var(--font-serif)',
     },
+    extend: {
+      padding: {
+        header: '100px',
+      },
+      height: {
+        header: '100px',
+      },
+    },
   },
   plugins: [require('@tailwindcss/typography')],
 }
