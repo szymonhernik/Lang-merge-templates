@@ -46,8 +46,6 @@ export const structure: StructureResolver = (S) => {
       homeListItem,
       settingsListItem,
       S.divider(),
-      // Field-level translations
-      S.documentTypeListItem('portfolio').title('Portfolio'),
 
       S.divider(),
       S.listItem()
@@ -196,7 +194,7 @@ export const structure: StructureResolver = (S) => {
 
       S.divider(),
       S.listItem()
-        .title('Projects')
+        .title('Projects → add to Portfolio ↓')
         .child(
           S.list()
             .title('Projects')
@@ -266,6 +264,8 @@ export const structure: StructureResolver = (S) => {
                 ),
             ]),
         ),
+      // Field-level translations
+      S.documentTypeListItem('portfolio').title('Portfolio'),
       // Singleton, field-level translations
     ])
 }
@@ -281,7 +281,6 @@ export const defaultDocumentNode: DefaultDocumentNodeResolver = (
       return S.document().views([
         S.view.form(),
         // preview(S, client)
-        transifex(S),
       ])
     case 'project':
       return S.document().views([

@@ -23,6 +23,22 @@ export default defineType({
           .error('A slug is required to generate a page on the website'),
     }),
     defineField({
+      name: 'belongs',
+      title: 'Belongs to (optional)',
+      description:
+        'This is just for clarity which project belongs to which group',
+      type: 'array',
+      of: [
+        defineField({
+          name: 'portfolios',
+          title: 'Portfolio',
+          type: 'reference',
+          to: [{ type: 'portfolio' }],
+        }),
+      ],
+      // validation: (Rule) => [Rule.required().min(1), Rule.unique()],
+    }),
+    defineField({
       name: 'summary',
       type: 'text',
       rows: 3,
@@ -44,13 +60,19 @@ export default defineType({
       title: 'title',
       language: 'language',
       media: 'image',
+      belongs: 'belongs.0.title',
     },
     prepare(select) {
-      const { title, language, media } = select
+      const { title, language, media, belongs } = select
+      const portfolioCount = belongs || 0
+
+      const portfolioSubtitle = portfolioCount
+        ? `(${language.toUpperCase()}) part of: ${belongs[language]}`
+        : `(${language.toUpperCase()})`
 
       return {
         title,
-        subtitle: language.toUpperCase(),
+        subtitle: portfolioSubtitle,
         media,
       }
     },

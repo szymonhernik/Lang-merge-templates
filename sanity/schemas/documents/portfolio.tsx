@@ -16,7 +16,7 @@ import PortfolioMedia from '../../../sanity-studio/components/PortfolioMedia'
 export default defineType({
   name: 'portfolio',
   title: 'Portfolio project',
-  icon: CustomFiCircleIcon,
+  icon: FiBook,
   type: 'document',
   groups: [
     {
@@ -81,6 +81,7 @@ export default defineType({
   preview: {
     select: {
       title: `title.${i18n.base}`,
+      titleNL: `title.nl`,
       projects: 'projects',
       image: 'image',
     },
@@ -90,15 +91,18 @@ export default defineType({
       title,
       projects,
       image,
+      titleNL,
     }: {
       title: string
       projects: Reference[]
-
       image: SanityImageObjectStub
+      titleNL: string
     }) {
+      console.log('projects ref: ', projects)
+
       const projectCount = projects?.length || 0
       const projectSubtitle = projectCount
-        ? `${projectCount} ${projectCount === 1 ? `project` : `projects`}`
+        ? `${titleNL} (${projectCount} ${projectCount === 1 ? `project` : `projects`})`
         : 'No projects'
 
       return {
