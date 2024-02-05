@@ -37,45 +37,37 @@ export function WorksLayout(props: WorksLayoutProps) {
             portfolio.projects,
             portfolio.slug,
           )
-          console.log('portfolio:', portfolio)
-          console.log('projectPaths: ', projectPaths)
-
           const numberOfProjects = portfolio.projects.length
-          {
-            /* if number of projects is 1 then add the link around the article and dont add component ProjectLinks */
-          }
-          {
-            /* if number of projects is > 1 then dont add the link around the article, only add it as already in project links*/
-          }
+
+          // Article content for reusability
+          const articleContent = (
+            <>
+              <p>img</p>
+              <p>{numberOfProjects}</p>
+
+              <Title>{portfolio.title[language]}</Title>
+              {projectPaths.length > 0 && numberOfProjects > 1 ? (
+                <ProjectLinks projects={projectPaths} openByDefault />
+              ) : (
+                numberOfProjects === 1 && null
+              )}
+            </>
+          )
+
           return (
             <>
-              <article key={portfolio._id} className="col-span-1 bg-blue-200">
-                {portfolio?.slug?.[language]?.current ? (
-                  <>
-                    <p>img</p>
-                    <p>{numberOfProjects}</p>
-
-                    <Link href={''}>
-                      <Title>{portfolio.title[language]}</Title>
-                    </Link>
-                    {projectPaths.length > 0 ? (
-                      <>
-                        <ProjectLinks projects={projectPaths} openByDefault />
-                      </>
-                    ) : (
-                      <Prose>No projects available</Prose>
-                    )}
-                  </>
-                ) : (
-                  <>
-                    <Title>{portfolio.title[language]}</Title>
-                    <ul>
-                      <li>item 1</li>
-                      <li>item 2</li>
-                    </ul>
-                  </>
-                )}
-              </article>
+              {numberOfProjects === 1 &&
+              portfolio?.slug?.[language]?.current ? (
+                <Link href={`works/${portfolio.slug[language].current}`}>
+                  <article className="col-span-1 bg-blue-200">
+                    {articleContent}
+                  </article>
+                </Link>
+              ) : (
+                <article className="col-span-1 bg-blue-200">
+                  {articleContent}
+                </article>
+              )}
             </>
           )
         })}
