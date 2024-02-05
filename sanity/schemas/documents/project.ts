@@ -23,6 +23,19 @@ export default defineType({
           .error('A slug is required to generate a page on the website'),
     }),
     defineField({
+      name: 'groups',
+      type: 'array',
+      of: [
+        defineField({
+          name: 'portfolios',
+          title: 'Portfolios',
+          type: 'reference',
+          to: [{ type: 'portfolio' }],
+        }),
+      ],
+      // validation: (Rule) => [Rule.required().min(1), Rule.unique()],
+    }),
+    defineField({
       name: 'summary',
       type: 'text',
       rows: 3,

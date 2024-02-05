@@ -47,7 +47,7 @@ export const structure: StructureResolver = (S) => {
       settingsListItem,
       S.divider(),
       // Field-level translations
-      S.documentTypeListItem('portfolio').title('Portfolio'),
+      S.documentTypeListItem('portfolio').title('Groups'),
 
       S.divider(),
       S.listItem()

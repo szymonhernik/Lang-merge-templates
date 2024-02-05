@@ -24,6 +24,7 @@ export default async function Page({ params }) {
       next: { tags: ['home'] },
     },
   )
+  console.log('homeInitial.data.projects[0].groups', homeInitial.data.projects)
 
   const translations = i18n.languages.map((lang) => {
     return {

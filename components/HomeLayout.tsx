@@ -21,26 +21,31 @@ type HomeLayoutProps = {
 }
 
 export function HomeLayout(props: HomeLayoutProps) {
-  const { portfolios } = props.data || {}
+  const { projects } = props.data || {}
+
   const params = useParams()
   const language = Array.isArray(params.language)
     ? params.language[0]
     : params.language
 
+  console.log('PROJECTS: ', projects)
+
   return (
-    <div className="container mx-auto pt-header grid grid-cols-1 gap-header mt-header px-4 md:px-0">
-      {portfolios &&
-        portfolios?.length > 0 &&
-        portfolios.map((portfolio) => {
+    <div className="container mx-auto mt-48 grid grid-cols-1 gap-header mt-header px-4 md:px-0 text-black bg-yellow-100">
+      {projects &&
+        projects.map((project) => {
+          console.log('project.language]: ', project.language)
+
           // Generate project links for each portfolio
-          const projectPaths = createProjectLinks(
-            portfolio.projects,
-            portfolio.slug,
-          )
-          const numberOfProjects = portfolio.projects.length
+          // const projectPaths = createProjectLinks(
+          //   portfolio.projects,
+          //   portfolio.slug,
+          // )
+          // const numberOfProjects = portfolio.projects.length
           return (
             <>
-              <article
+              <h1 className="text-black text-xl">{project.title}</h1>
+              {/* <article
                 key={portfolio._id}
                 className="mt-64 relative bg-gradient-to-tr mix-blend-multiply from-cyan-100 via-pink-100 to-yellow-100 p-8 md:p-16 xl:p-24 rounded-xl md:rounded-2xl xl:rounded-3xl w-full max-w-7xl mx-auto flex flex-col gap-4 md:flex-row items-start md:items-center md:justify-between group 
             hover:scale-[1.01] hover:rotate-[-0.25deg] 
@@ -67,12 +72,14 @@ export function HomeLayout(props: HomeLayoutProps) {
                     </ul>
                   </>
                 )}
-              </article>
+              </article> */}
             </>
           )
         })}
-      <Link href={language + '/about'}>About</Link>
-      <Link href={language + '/works'}>Works</Link>
+      {/* <div className="bg-white p-36">
+        <Link href={language + '/about'}>About</Link>
+        <Link href={language + '/works'}>Works</Link>
+      </div> */}
     </div>
   )
 }

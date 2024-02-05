@@ -106,16 +106,37 @@ export const PROJECT_QUERY = groq`*[_type == "project" && slug.current == $slug]
     ),
 }`
 
-export const HOME_QUERY = groq`{
-  "portfolios": *[_type == "portfolio" && count(projects) > 0]{
+// export const HOME_QUERY = groq`{
+//   "portfolios": *[_type == "portfolio" && count(projects) > 0]{
+//     ...,
+//     "projects": projects[]->{
+//       // Get each project's *base* language version's title and slug
+//       language,
+//       title,
+//       slug,
+
+//       // ...and all its connected document-level translations
+//       "translations": *[
+//         // by finding the translation metadata document
+//         _type == "translation.metadata" &&
+//         // that contains this project's _id
+//         ^._id in translations[].value._ref
+//         // then map over the translations array
+//       ][0].translations[]{
+//         // and spread the "value" of each reference to the root level
+//         ...(value->{
+//           language,
+//           title,
+//           slug
+//         })
+//       }
+//     },
+//   }
+// }`
+export const WORKS_QUERY = groq`{
+  "projects": *[_type == "project" ]{
     ...,
-    "projects": projects[]->{
-      // Get each project's *base* language version's title and slug
-      language,
-      title,
-      slug,
-  
-      // ...and all its connected document-level translations
+    // ...and all its connected document-level translations
       "translations": *[
         // by finding the translation metadata document
         _type == "translation.metadata" && 
@@ -129,7 +150,14 @@ export const HOME_QUERY = groq`{
           title,
           slug
         })
-      }
+      },
+    "groups": groups[]->{
+      // Get each project's *base* language version's title and slug
+      language,
+      title,
+      slug,
+  
+      
     },
   }
 }`
