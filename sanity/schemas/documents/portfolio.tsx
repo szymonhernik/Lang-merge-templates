@@ -62,10 +62,10 @@ export default defineType({
           name: 'project',
           title: 'Project',
           type: 'reference',
-          to: [{ type: 'project' }],
+          to: [{ type: 'project' }, { type: 'externalDoc' }],
           options: {
             // Add filter options to only show projects where 'language' is 'en'
-            filter: 'language == $lang',
+            filter: `(_type == 'project' && language == $lang) || _type == 'externalDoc'`,
             filterParams: { lang: 'en' },
           },
         }),
@@ -98,8 +98,6 @@ export default defineType({
       image: SanityImageObjectStub
       titleNL: string
     }) {
-      console.log('projects ref: ', projects)
-
       const projectCount = projects?.length || 0
       const projectSubtitle = projectCount
         ? `${titleNL} (${projectCount} ${projectCount === 1 ? `project` : `projects`})`

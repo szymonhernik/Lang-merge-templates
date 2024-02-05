@@ -26,13 +26,13 @@ export default function Header(props: HeaderProps) {
         </h1>
         <TranslationLinks translations={translations} />
         <div className="flex flex-col">
-          <Link href={currentLanguage + '/about'}>
+          <Link href={'/' + currentLanguage + '/about'}>
             {currentLanguage === 'en' ? 'About' : 'Over'}
           </Link>
-          <Link href={currentLanguage + '/works'}>
+          <Link href={'/' + currentLanguage + '/works'}>
             {currentLanguage === 'en' ? 'Works' : 'Werken'}
           </Link>
-          <Link href={currentLanguage + '/music'}>
+          <Link href={'/' + currentLanguage + '/music'}>
             {currentLanguage === 'en' ? 'Music' : 'Muziek'}
           </Link>
         </div>

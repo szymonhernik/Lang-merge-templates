@@ -53,7 +53,7 @@ export default defineConfig({
     languageFilter({
       supportedLanguages: i18n.languages,
       defaultLanguages: [i18n.base],
-      documentTypes: [`portfolio`],
+      documentTypes: ['portfolio', 'externalDoc'],
       filterField: (enclosingType, member, selectedLanguageIds) => {
         // Filter internationalized arrays
         if (

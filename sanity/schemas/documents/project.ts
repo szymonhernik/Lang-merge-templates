@@ -1,5 +1,5 @@
 import { FiAward } from 'react-icons/fi'
-import { defineField, defineType } from 'sanity'
+import { defineArrayMember, defineField, defineType } from 'sanity'
 
 export default defineType({
   name: 'project',
@@ -11,6 +11,7 @@ export default defineType({
       type: 'string',
       validation: (rule) => rule.required(),
     }),
+
     defineField({
       name: 'slug',
       type: 'slug',
@@ -21,6 +22,12 @@ export default defineType({
         rule
           .required()
           .error('A slug is required to generate a page on the website'),
+    }),
+    defineField({
+      name: 'year',
+      title: 'Year',
+      type: 'string',
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'belongs',
@@ -39,16 +46,137 @@ export default defineType({
       // validation: (Rule) => [Rule.required().min(1), Rule.unique()],
     }),
     defineField({
-      name: 'summary',
-      type: 'text',
-      rows: 3,
-      validation: (rule) =>
-        rule.max(200).warning('Summary should be less than 200 characters'),
+      name: 'overview',
+      description:
+        'Used both for the <meta> description tag for SEO, and project subheader.',
+      title: 'Overview',
+      type: 'array',
+      of: [
+        // Paragraphs
+        defineArrayMember({
+          lists: [],
+          marks: {
+            annotations: [],
+            decorators: [
+              {
+                title: 'Italic',
+                value: 'em',
+              },
+              {
+                title: 'Strong',
+                value: 'strong',
+              },
+            ],
+          },
+          styles: [],
+          type: 'block',
+        }),
+      ],
+      validation: (rule) => rule.max(155).required(),
     }),
     defineField({
-      name: 'content',
-      type: 'portableText',
+      name: 'coverImage',
+      title: 'Cover Image',
+      description:
+        'This image will be used as the cover image for the project. If you choose to add it to the show case projects, this is the image displayed in the list within the homepage.',
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
+      validation: (rule) => rule.required(),
     }),
+    defineField({
+      name: 'coverImageOptional',
+      title: 'Optional Second Cover Image',
+      description:
+        'You can choose whether to add the second cover image. If you do, it will be added as the representation of the project on the page Home in a two column layout. It wont add it in the page Works.',
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
+    }),
+    defineField({
+      name: 'details',
+      title: 'Project Details',
+      type: 'array',
+      of: [
+        defineArrayMember({
+          type: 'block',
+          marks: {
+            annotations: [
+              {
+                name: 'link',
+                type: 'object',
+                title: 'Link',
+                fields: [
+                  {
+                    name: 'href',
+                    type: 'url',
+                    title: 'Url',
+                  },
+                ],
+              },
+            ],
+          },
+          styles: [],
+        }),
+      ],
+    }),
+    defineField({
+      name: 'text',
+      title: 'Project Text',
+      type: 'array',
+      of: [
+        defineArrayMember({
+          type: 'block',
+          marks: {
+            annotations: [
+              {
+                name: 'link',
+                type: 'object',
+                title: 'Link',
+                fields: [
+                  {
+                    name: 'href',
+                    type: 'url',
+                    title: 'Url',
+                  },
+                ],
+              },
+            ],
+          },
+          styles: [],
+        }),
+      ],
+    }),
+    defineField({
+      name: 'credits',
+      title: 'Credits',
+      type: 'array',
+      of: [
+        defineArrayMember({
+          type: 'block',
+          marks: {
+            annotations: [
+              {
+                name: 'link',
+                type: 'object',
+                title: 'Link',
+                fields: [
+                  {
+                    name: 'href',
+                    type: 'url',
+                    title: 'Url',
+                  },
+                ],
+              },
+            ],
+          },
+          styles: [],
+        }),
+      ],
+    }),
+
     defineField({
       name: 'language',
       type: 'string',

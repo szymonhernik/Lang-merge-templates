@@ -10,6 +10,7 @@ import references from './references'
 import transifex from './transifex'
 import home from '@/sanity/schemas/singletons/home'
 import settings from '@/sanity/schemas/singletons/settings'
+import { apiVersion } from '@/sanity/env'
 
 export const structure: StructureResolver = (S) => {
   // Define the custom 'home' document list item
@@ -46,8 +47,6 @@ export const structure: StructureResolver = (S) => {
       homeListItem,
       settingsListItem,
       S.divider(),
-
-      S.divider(),
       S.listItem()
         .title('About pages')
         .child(
@@ -61,6 +60,8 @@ export const structure: StructureResolver = (S) => {
 
                   .child(
                     S.documentList()
+                      .apiVersion(apiVersion)
+
                       .id(language.id)
                       .title(`${language.title} About`)
                       .schemaType('aboutPage')
@@ -104,6 +105,7 @@ export const structure: StructureResolver = (S) => {
                 .schemaType('aboutPage')
                 .child(
                   S.documentList()
+                    .apiVersion(apiVersion)
                     .id(`all-abouts`)
                     .title(`All About pages`)
                     .schemaType('aboutPage')
@@ -133,6 +135,7 @@ export const structure: StructureResolver = (S) => {
 
                   .child(
                     S.documentList()
+                      .apiVersion(apiVersion)
                       .id(language.id)
                       .title(`${language.title} Music`)
                       .schemaType('musicPage')
@@ -176,6 +179,7 @@ export const structure: StructureResolver = (S) => {
                 .schemaType('aboutPage')
                 .child(
                   S.documentList()
+                    .apiVersion(apiVersion)
                     .id(`all-abouts`)
                     .title(`All About pages`)
                     .schemaType('aboutPage')
@@ -206,6 +210,7 @@ export const structure: StructureResolver = (S) => {
 
                   .child(
                     S.documentList()
+                      .apiVersion(apiVersion)
                       .id(language.id)
                       .title(`${language.title} Projects`)
                       .schemaType('project')
@@ -217,7 +222,7 @@ export const structure: StructureResolver = (S) => {
                           language: language.id,
                         }),
                       ])
-                      //if i remove this the canHandleIntent works correct for About but now it doesnt work for projects
+
                       .canHandleIntent((intentName, params) => {
                         if (intentName === 'edit') {
                           // return params?.language === language.id
@@ -249,6 +254,7 @@ export const structure: StructureResolver = (S) => {
                 .schemaType('project')
                 .child(
                   S.documentList()
+                    .apiVersion(apiVersion)
                     .id(`all-projects`)
                     .title(`All projects`)
                     .schemaType('project')
@@ -266,6 +272,7 @@ export const structure: StructureResolver = (S) => {
         ),
       // Field-level translations
       S.documentTypeListItem('portfolio').title('Portfolio'),
+      S.documentTypeListItem('externalDoc').title('Seperate files'),
       // Singleton, field-level translations
     ])
 }
@@ -278,6 +285,11 @@ export const defaultDocumentNode: DefaultDocumentNodeResolver = (
 
   switch (schemaType) {
     case 'portfolio':
+      return S.document().views([
+        S.view.form(),
+        // preview(S, client)
+      ])
+    case 'externalDoc':
       return S.document().views([
         S.view.form(),
         // preview(S, client)
