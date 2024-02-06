@@ -20,10 +20,11 @@ export default function ProjectContent(props: ProjectContentProps) {
 
   //   const numberOfProjects = portfolio.projects.length
   const projectPaths = createProjectLinks(portfolio.projects, portfolio.slug) // Ensure createProjectLinks is imported or accessible
+  //   console.log('portfolio:', portfolio)
 
   return (
     <>
-      <article className="space-y-4 relative flex flex-col">
+      <article className="gap-4 relative flex flex-col">
         {numberOfProjects === 1 ? (
           <ImageBox
             // classesWrapper="w-full h-full  "
@@ -36,7 +37,7 @@ export default function ProjectContent(props: ProjectContentProps) {
         )}
 
         {projectPaths.length > 0 && numberOfProjects > 1 ? (
-          <div className="absolute top-16 w-full p-4">
+          <div className="absolute top-0 w-full ">
             <MultifaceProjects projects={projectPaths} />
           </div>
         ) : (

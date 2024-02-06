@@ -13,4 +13,5 @@ export type Translation = {
   language: string
   title: string
   coverImage?: CoverImage
+  hasLinkedFile?: boolean
 }

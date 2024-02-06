@@ -49,7 +49,7 @@ export const locate = (params, context) => {
 
     return doc$.pipe(
       map((doc) => {
-        console.log(doc)
+        // console.log(doc)
         if (!doc || !doc.slug?.current) {
           return null
         }

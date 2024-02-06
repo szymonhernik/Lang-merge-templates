@@ -34,6 +34,14 @@ type CoverImage = {
     lqip: string
   }
 }
+type LinkedFile = {
+  asset?: {
+    _id: string
+    url: string
+    originalFilename?: string
+  }
+  description?: string
+}
 
 export function createProjectLinks(
   projects: {
@@ -41,7 +49,7 @@ export function createProjectLinks(
     title: string
     slug: Slug
     coverImage?: CoverImage // Add this line to include cover image data
-
+    linkedFile?: LinkedFile
     translations: {
       language: string
       title: string
@@ -88,12 +96,15 @@ export function createProjectLinks(
                 lqip: project.coverImage.asset.lqip,
               },
             }
+            // Check for the existence of linkedFile
+            const hasLinkedFile = !!project.linkedFile?.asset
 
             return {
               language: ref.language,
               title: ref.title,
               path: path,
               coverImage: coverImageData, // Include cover image data in the return object
+              hasLinkedFile,
             }
           })
 

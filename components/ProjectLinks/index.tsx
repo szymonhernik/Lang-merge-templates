@@ -3,10 +3,11 @@
 import { Menu } from '@headlessui/react'
 
 import { useParams } from 'next/navigation'
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 
 import { Translation } from '../../lib/types'
 import { ListLink } from './ListLink'
+import ImageBox from '../shared/ImageBox'
 
 type ProjectLinksProps = {
   projects: Translation[][]
@@ -16,6 +17,9 @@ type ProjectLinksProps = {
 
 export default function ProjectLinks(props: ProjectLinksProps) {
   const { projects } = props
+  const [selectedProject, setSelectedProject] = useState<
+    Translation | undefined | null
+  >(null)
 
   const params = useParams()
   const language = Array.isArray(params.language)
@@ -36,19 +40,51 @@ export default function ProjectLinks(props: ProjectLinksProps) {
     return null
   }
 
+  // Set the initial project to the first one with an available image
+  useEffect(() => {
+    const initialProject = localeProjects.find(
+      (project) => project?.coverImage != null,
+    )
+    setSelectedProject(initialProject)
+  }, [localeProjects])
+  const handleMouseEnter = (project) => {
+    setSelectedProject(project)
+  }
+
   return (
-    <div className="">
+    <div className="flex flex-col gap-8 justify-center">
+      <div className="w-full h-48">
+        {selectedProject?.coverImage && (
+          <ImageBox
+            classesWrapper="h-full "
+            classesImage="w-auto h-full object-contain"
+            image={selectedProject.coverImage}
+            alt={selectedProject.coverImage.alt || ''}
+          />
+        )}
+
+        {selectedProject?.hasLinkedFile && (
+          <div className="shadow-md h-full mx-auto aspect-[3/4] p-4 ">PDF</div>
+        )}
+      </div>
       <ul className="">
         {localeProjects.map((project, index) =>
           project ? (
-            <li key={project.path} className="flex items-center">
+            <li
+              key={project.path}
+              className="flex items-center "
+              onMouseEnter={() => handleMouseEnter(project)}
+            >
               <ListLink href={project.path} locale={project.language}>
-                <span className="flex-1 flex items-center gap-x-2">
-                  <span className="font-bold text-sm w-6">
-                    {String(index + 1).padEnd(2, '.')}
-                  </span>
-                  <span>{project.title}</span>
-                </span>
+                <div
+                  className={`flex transition-colors duration-200 hover:underline ${
+                    selectedProject?.path === project.path
+                      ? 'text-black'
+                      : 'text-gray-500'
+                  }`}
+                >
+                  {String(index + 1).padEnd(2, '.')} {project.title}
+                </div>
               </ListLink>
             </li>
           ) : null,

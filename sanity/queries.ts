@@ -142,6 +142,7 @@ export const WORKS_QUERY = groq`{
       title,
       slug,
       // Fetch coverImage only if the project's language matches the default language
+
   "coverImage": select(
     language == $defaultLocale => coverImage{
       ...,
@@ -152,6 +153,18 @@ export const WORKS_QUERY = groq`{
       }
     },
     // If not the default language, do not include coverImage
+    true => null
+  ),
+  "linkedFile": select(
+    showAdditionalFields == true => linkedFile{
+      ...,
+      asset->{
+        _id,
+        url,
+        "originalFilename": originalFilename
+      },
+      "description": description
+    },
     true => null
   ),
   
