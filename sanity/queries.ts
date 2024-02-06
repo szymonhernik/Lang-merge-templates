@@ -141,12 +141,21 @@ export const WORKS_QUERY = groq`{
       language,
       title,
       slug,
-      linkedFile {
-        asset->{
-          url,
-          originalFilename,
-        },
-      },
+      // Fetch coverImage only if the project's language matches the default language
+  "coverImage": select(
+    language == $defaultLocale => coverImage{
+      ...,
+      asset->{
+        _id,
+        url,
+        "lqip": metadata.lqip,
+      }
+    },
+    // If not the default language, do not include coverImage
+    true => null
+  ),
+  
+
       // ...and all its connected document-level translations
       "translations": *[
         // by finding the translation metadata document
