@@ -1,7 +1,5 @@
 'use client'
 
-import { Menu } from '@headlessui/react'
-
 import { useParams } from 'next/navigation'
 import React, { useEffect, useMemo, useState } from 'react'
 
@@ -72,7 +70,7 @@ export default function ProjectLinks(props: ProjectLinksProps) {
           project ? (
             <li
               key={project.path}
-              className="flex items-center "
+              className="flex items-center text-xl "
               onMouseEnter={() => handleMouseEnter(project)}
             >
               <ListLink href={project.path} locale={project.language}>

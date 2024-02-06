@@ -11,7 +11,7 @@ export default function Title(props: TitleProps) {
 
   return (
     <header className="flex flex-col gap-y-4">
-      <h1 className="text-sm font-bold ">{children}</h1>
+      <h1 className=" pl-4 text-sm ">{children}</h1>
       {/* {subtitle ? <Subtitle subtitle={subtitle} /> : null} */}
     </header>
   )
