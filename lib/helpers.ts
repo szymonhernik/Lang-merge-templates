@@ -26,11 +26,22 @@ type SlugObject = {
   [key: string]: Slug
 }
 
+type CoverImage = {
+  _type: 'image'
+  asset: {
+    _id: string
+    url: string
+    lqip: string
+  }
+}
+
 export function createProjectLinks(
   projects: {
     language: string
     title: string
     slug: Slug
+    coverImage?: CoverImage // Add this line to include cover image data
+
     translations: {
       language: string
       title: string
@@ -48,7 +59,7 @@ export function createProjectLinks(
       // Each project must have a language
       .filter((project) => project?.language)
       .map((project) => {
-        // console.log(project)
+        // console.log('project in createProjectsLinks', project)
         const translations = project.translations
 
           .filter((ref) => ref?.slug?.current)
@@ -68,10 +79,21 @@ export function createProjectLinks(
                 )
             }
 
+            // Handling cover image data here
+            let coverImageData = project.coverImage && {
+              _type: project.coverImage._type,
+              asset: {
+                _id: project.coverImage.asset._id,
+                url: project.coverImage.asset.url,
+                lqip: project.coverImage.asset.lqip,
+              },
+            }
+
             return {
               language: ref.language,
               title: ref.title,
               path: path,
+              coverImage: coverImageData, // Include cover image data in the return object
             }
           })
 

@@ -12,7 +12,7 @@ import Button from './Button'
 import Title from './Title'
 import TranslationLinks from './TranslationLinks'
 import ProjectLinks from './ProjectLinks'
-import Prose from './Prose'
+
 import { useMemo } from 'react'
 import Link from 'next/link'
 import MultifaceProjects from './MultifaceProjects'
@@ -34,33 +34,35 @@ export function WorksLayout(props: WorksLayoutProps) {
   // console.log('portfolios', portfolios[0].projects)
 
   return (
-    <div className="grid grid-cols-4 gap-4 pt-header px-8">
-      {portfolios &&
-        portfolios?.length > 0 &&
-        portfolios.map((portfolio) => {
-          const numberOfProjects = portfolio.projects.length
-          // console.log('portfolio:', portfolio)
-          return (
-            <>
-              {numberOfProjects === 1 &&
-              portfolio?.slug?.[language]?.current ? (
-                <Link href={`works/${portfolio.slug[language].current}`}>
+    <section className="w-full py-12">
+      <div className="2xl:max-w-[1536px] mx-auto grid gap-6 md:gap-8 px-4 md:px-6 lg:grid-cols-4 md:grid-cols-2 pt-header">
+        {portfolios &&
+          portfolios?.length > 0 &&
+          portfolios.map((portfolio) => {
+            const numberOfProjects = portfolio.projects.length
+            // console.log('portfolio:', portfolio)
+            return (
+              <>
+                {numberOfProjects === 1 &&
+                portfolio?.slug?.[language]?.current ? (
+                  <Link href={`works/${portfolio.slug[language].current}`}>
+                    <ProjectContent
+                      portfolio={portfolio}
+                      language={language}
+                      numberOfProjects={numberOfProjects}
+                    />
+                  </Link>
+                ) : (
                   <ProjectContent
                     portfolio={portfolio}
                     language={language}
                     numberOfProjects={numberOfProjects}
                   />
-                </Link>
-              ) : (
-                <ProjectContent
-                  portfolio={portfolio}
-                  language={language}
-                  numberOfProjects={numberOfProjects}
-                />
-              )}
-            </>
-          )
-        })}
-    </div>
+                )}
+              </>
+            )
+          })}
+      </div>
+    </section>
   )
 }

@@ -23,20 +23,20 @@ export default function ProjectContent(props: ProjectContentProps) {
 
   return (
     <>
-      <article className="col-span-1 bg-blue-200 relative">
-        <div className="w-full bg-gray-200 h-[30rem] object-cover overflow-hidden flex items-center justify-center">
-          {numberOfProjects === 1 && (
-            <ImageBox
-              classesWrapper="w-full h-full  "
-              classesImage="min-h-full object-cover"
-              image={portfolio.projects[0].coverImage}
-              alt={`${portfolio.projects[0].coverImage?.alt ?? ''}`}
-            />
-          )}
-        </div>
+      <article className="space-y-4 relative flex flex-col">
+        {numberOfProjects === 1 ? (
+          <ImageBox
+            // classesWrapper="w-full h-full  "
+            classesImage="aspect-[3/4] object-cover w-full  overflow-hidden opacity-90 hover:opacity-100 transition-opacity"
+            image={portfolio.projects[0].coverImage}
+            alt={`${portfolio.projects[0].coverImage?.alt ?? ''}`}
+          />
+        ) : (
+          <div className="aspect-[3/4] object-cover w-full  overflow-hidden"></div>
+        )}
 
         {projectPaths.length > 0 && numberOfProjects > 1 ? (
-          <div className="absolute top-1/2 w-full p-4">
+          <div className="absolute top-16 w-full p-4">
             <MultifaceProjects projects={projectPaths} />
           </div>
         ) : (
