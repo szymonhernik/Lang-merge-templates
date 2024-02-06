@@ -12,20 +12,14 @@ export default defineType({
   type: 'document',
   groups: [
     {
+      name: 'showcaseHome',
+      title: 'Showcase on Homepage',
+      icon: FiAward,
+    },
+    {
       name: 'i18n',
       title: 'Localised',
       icon: FiGlobe,
-      default: true,
-    },
-    {
-      name: 'presenters',
-      title: 'Presenters',
-      icon: FiUsers,
-    },
-    {
-      name: 'lessons',
-      title: 'Lessons',
-      icon: FiAward,
     },
     {
       name: 'media',
@@ -35,38 +29,36 @@ export default defineType({
   ],
   fields: [
     defineField({
-      name: 'title',
-      description: 'This is a localized string field, stored in an object',
-      type: 'localizedString',
-      group: ['i18n'],
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: 'slug',
-      type: 'localizedSlug',
-      group: ['i18n'],
-      validation: (Rule) =>
-        Rule.required().error(
-          'A slug is required to generate a page on the website',
-        ),
-    }),
-
-    defineField({
-      name: 'lessons',
-      group: 'lessons',
+      name: 'showcaseHome',
+      group: 'showcaseHome',
       type: 'array',
       of: [
         defineField({
-          name: 'lesson',
-          title: 'Lesson',
+          name: 'showcasedProjects',
+          title: 'Projects',
           type: 'reference',
           to: [{ type: 'project' }],
+          options: {
+            // Add filter options to only show projects where 'language' is 'en'
+            filter: `(_type == 'project' && language == $lang && !defined(linkedFile))`,
+            // filter: 'language == $lang',
+            filterParams: { lang: 'en' },
+          },
         }),
       ],
       validation: (Rule) => [Rule.required().min(1), Rule.unique()],
     }),
     defineField({
-      name: 'image',
+      name: 'text',
+      title: 'SEO texts',
+      type: 'localizedText',
+      group: ['i18n'],
+      validation: (Rule) => Rule.required(),
+    }),
+
+    defineField({
+      name: 'seoImage',
+      title: 'SEO Image',
       type: 'image',
       group: ['media'],
     }),

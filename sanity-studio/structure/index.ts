@@ -19,6 +19,7 @@ export const structure: StructureResolver = (S) => {
     .icon(home.icon) // Assuming home schema has an icon field
     .child(
       S.editor()
+        .title('Home')
         .id(home.name) // Assuming home schema has a name field, like 'home'
         .schemaType(home.name) // Same as the ID, typically
         .documentId(home.name), // This ensures it points to the specific singleton document
@@ -28,6 +29,7 @@ export const structure: StructureResolver = (S) => {
     .icon(settings.icon) // Assuming settings schema has an icon field
     .child(
       S.editor()
+        .title('Settings')
         .id(settings.name) // Assuming settings schema has a name field, like 'settings'
         .schemaType(settings.name) // Same as the ID, typically
         .documentId(settings.name), // This ensures it points to the specific singleton document
@@ -175,22 +177,22 @@ export const structure: StructureResolver = (S) => {
               // If the intent checker above could account for it, I'd remove this item
               S.divider(),
               S.listItem()
-                .title(`All About pages`)
-                .schemaType('aboutPage')
+                .title(`All Music pages`)
+                .schemaType('musicPage')
                 .child(
                   S.documentList()
                     .apiVersion(apiVersion)
-                    .id(`all-abouts`)
-                    .title(`All About pages`)
-                    .schemaType('aboutPage')
-                    .filter('_type == "aboutPage"')
+                    .id(`all-musics`)
+                    .title(`All Music pages`)
+                    .schemaType('musicPage')
+                    .filter('_type == "musicPage"')
                     // Load this pane for existing `project` documents
                     // or new documents that aren't using an initial value template
                     .canHandleIntent(
                       (intentName, params) =>
                         intentName === 'edit' ||
                         intentName === 'create' ||
-                        params.template === `aboutPage`,
+                        params.template === `musicPage`,
                     ),
                 ),
             ]),
