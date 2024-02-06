@@ -141,7 +141,12 @@ export const WORKS_QUERY = groq`{
       language,
       title,
       slug,
-  
+      linkedFile {
+        asset->{
+          url,
+          originalFilename,
+        },
+      },
       // ...and all its connected document-level translations
       "translations": *[
         // by finding the translation metadata document
@@ -158,7 +163,8 @@ export const WORKS_QUERY = groq`{
         })
       }
     },
-  }
+  },
+  
 }`
 
 export const ABOUT_QUERY = groq`*[_type == "aboutPage" && language == $language][0]{

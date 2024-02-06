@@ -27,6 +27,8 @@ export default async function Page({ params }) {
     },
   )
 
+  // console.log('WORKS INITIAL:', worksInitial.data.externalDocs)
+
   const translations = i18n.languages.map((lang) => {
     return {
       language: lang.id,

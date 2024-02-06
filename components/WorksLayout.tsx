@@ -27,6 +27,9 @@ export function WorksLayout(props: WorksLayoutProps) {
     ? params.language[0]
     : params.language
 
+  // console.log('externalDocs', externalDocs)
+  // console.log('portfolios', portfolios[0].projects[2].linkedFile.asset.url)
+
   return (
     <div className="grid grid-cols-4 gap-4 pt-header px-8">
       {portfolios &&
@@ -37,20 +40,26 @@ export function WorksLayout(props: WorksLayoutProps) {
             portfolio.projects,
             portfolio.slug,
           )
+          console.log('projectPaths:', projectPaths)
+
           const numberOfProjects = portfolio.projects.length
 
           // Article content for reusability
           const articleContent = (
             <>
-              <p>img</p>
-              <p>{numberOfProjects}</p>
+              <div className="w-full bg-gray-200 h-96 flex items-center justify-center">
+                img
+              </div>
+              {/* <p>{numberOfProjects}</p> */}
 
-              <Title>{portfolio.title[language]}</Title>
               {projectPaths.length > 0 && numberOfProjects > 1 ? (
-                <ProjectLinks projects={projectPaths} openByDefault />
+                <>
+                  <ProjectLinks projects={projectPaths} openByDefault />
+                </>
               ) : (
                 numberOfProjects === 1 && null
               )}
+              <Title>{portfolio.title[language]}</Title>
             </>
           )
 

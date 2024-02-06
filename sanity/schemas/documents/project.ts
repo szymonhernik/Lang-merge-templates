@@ -23,12 +23,7 @@ export default defineType({
           .required()
           .error('A slug is required to generate a page on the website'),
     }),
-    defineField({
-      name: 'year',
-      title: 'Year',
-      type: 'string',
-      validation: (rule) => rule.required(),
-    }),
+
     defineField({
       name: 'belongs',
       title: 'Belongs to (optional)',
@@ -45,6 +40,20 @@ export default defineType({
       ],
       // validation: (Rule) => [Rule.required().min(1), Rule.unique()],
     }),
+    defineField({
+      name: 'showAdditionalFields',
+      title: 'This project is just a file',
+      type: 'boolean',
+      description: 'Select if you only want to link for example a PDF.',
+    }),
+    defineField({
+      name: 'year',
+      title: 'Year',
+      type: 'string',
+      // validation: (rule) => rule.required(),
+      hidden: ({ document }) => document?.showAdditionalFields == true, // Hide this field if showAdditionalFields is not true
+    }),
+
     defineField({
       name: 'overview',
       description:
@@ -83,7 +92,8 @@ export default defineType({
       options: {
         hotspot: true,
       },
-      validation: (rule) => rule.required(),
+      // validation: (rule) => rule.required(),
+      hidden: ({ document }) => document?.showAdditionalFields == true, // Hide this field if showAdditionalFields is not true
     }),
     defineField({
       name: 'coverImageOptional',
@@ -94,6 +104,7 @@ export default defineType({
       options: {
         hotspot: true,
       },
+      hidden: ({ document }) => document?.showAdditionalFields == true, // Hide this field if showAdditionalFields is not true
     }),
     defineField({
       name: 'details',
@@ -121,6 +132,7 @@ export default defineType({
           styles: [],
         }),
       ],
+      hidden: ({ document }) => document?.showAdditionalFields == true, // Hide this field if showAdditionalFields is not true
     }),
     defineField({
       name: 'text',
@@ -148,6 +160,7 @@ export default defineType({
           styles: [],
         }),
       ],
+      hidden: ({ document }) => document?.showAdditionalFields == true, // Hide this field if showAdditionalFields is not true
     }),
     defineField({
       name: 'credits',
@@ -175,6 +188,21 @@ export default defineType({
           styles: [],
         }),
       ],
+      hidden: ({ document }) => document?.showAdditionalFields == true, // Hide this field if showAdditionalFields is not true
+    }),
+
+    defineField({
+      title: 'File',
+      name: 'linkedFile',
+      type: 'file',
+      fields: [
+        {
+          name: 'description',
+          type: 'string',
+          title: 'Description',
+        },
+      ],
+      hidden: ({ document }) => !document?.showAdditionalFields,
     }),
 
     defineField({

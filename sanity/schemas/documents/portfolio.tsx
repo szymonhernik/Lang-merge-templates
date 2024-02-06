@@ -62,10 +62,14 @@ export default defineType({
           name: 'project',
           title: 'Project',
           type: 'reference',
-          to: [{ type: 'project' }, { type: 'externalDoc' }],
+          to: [
+            { type: 'project' },
+            // { type: 'externalDoc' }
+          ],
           options: {
             // Add filter options to only show projects where 'language' is 'en'
-            filter: `(_type == 'project' && language == $lang) || _type == 'externalDoc'`,
+            // filter: `(_type == 'project' && language == $lang) || _type == 'externalDoc'`,
+            filter: 'language == $lang',
             filterParams: { lang: 'en' },
           },
         }),
