@@ -177,7 +177,8 @@ export const HOME_QUERY = groq`{
 }`
 export const WORKS_QUERY = groq`{
   "portfolios": *[_type == "portfolio" && count(projects) > 0]{
-    ...,
+    title,
+    language,
     "projects": projects[]->{
       // Get each project's *base* language version's title and slug
       language,
@@ -198,7 +199,7 @@ export const WORKS_QUERY = groq`{
   ),
   "linkedFile": select(
     showAdditionalFields == true => linkedFile{
-      ...,
+
       asset->{
         _id,
         url,
