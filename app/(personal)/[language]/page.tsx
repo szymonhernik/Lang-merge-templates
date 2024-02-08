@@ -12,11 +12,13 @@ import { i18n } from '../../../languages'
 import Header from '@/components/Header'
 import { HomeLayout } from '@/components/HomeLayout'
 
+import { HomeQueryResult } from '@/types'
+
 export default async function Page({ params }) {
   const { language } = params
   const queryParams = { ...COMMON_PARAMS, language }
   const { isEnabled } = draftMode()
-  const homeInitial = await loadQuery<{ projects: SanityDocument[] }>(
+  const homeInitial = await loadQuery<HomeQueryResult>(
     HOME_QUERY,
     queryParams,
     {
@@ -24,6 +26,18 @@ export default async function Page({ params }) {
       next: { tags: ['home'] },
     },
   )
+
+  const localizedProjects = homeInitial.data.home.showcaseHome.map(
+    (project) => {
+      const currentLanguageTitle =
+        project.translations.find((t) => t.language === language)?.title ||
+        project.title
+      return { ...project, currentTitle: currentLanguageTitle }
+    },
+  )
+
+  // console.log('localizedProjects', localizedProjects)
+
   // i need:
   // loop through the projects at home.showcaseHome
   // title of the project depending on the language in props
@@ -49,7 +63,7 @@ export default async function Page({ params }) {
         params={isEnabled ? queryParams : DEFAULT_EMPTY_PARAMS}
         initial={homeInitial}
       >
-        <HomeLayout />
+        <HomeLayout localizedProjects={localizedProjects} />
       </LiveQueryWrapper>
     </>
   )
