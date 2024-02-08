@@ -14,7 +14,7 @@ import { i18n } from '@/languages'
 import { WorksLayout } from '@/components/WorksLayout'
 
 export default async function Page({ params }) {
-  const { language, slug } = params
+  const { language } = params
 
   const queryParams = { ...COMMON_PARAMS, language }
   const { isEnabled } = draftMode()

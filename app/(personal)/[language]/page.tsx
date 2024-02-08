@@ -16,7 +16,7 @@ export default async function Page({ params }) {
   const { language } = params
   const queryParams = { ...COMMON_PARAMS, language }
   const { isEnabled } = draftMode()
-  const homeInitial = await loadQuery<{ portfolios: SanityDocument[] }>(
+  const homeInitial = await loadQuery<{ projects: SanityDocument[] }>(
     HOME_QUERY,
     queryParams,
     {
@@ -24,6 +24,13 @@ export default async function Page({ params }) {
       next: { tags: ['home'] },
     },
   )
+  // i need:
+  // loop through the projects at home.showcaseHome
+  // title of the project depending on the language in props
+  // // if the language from params is the same as language of showcaseHome[index].work.language -> this is the current title
+  // // else if the language from params is different than showcaseHome[index].work.language -> go to showcaseHome[index].work.translation and find the title for the language set in props
+
+  //
 
   const translations = i18n.languages.map((lang) => {
     return {

@@ -106,19 +106,60 @@ export const PROJECT_QUERY = groq`*[_type == "project" && slug.current == $slug]
     ),
 }`
 
+// export const HOME_QUERY = groq`{
+//   "portfolios": *[_type == "portfolio" && count(projects) > 0]{
+//     ...,
+//     "projects": projects[]->{
+//       // Get each project's *base* language version's title and slug
+//       language,
+//       title,
+//       slug,
+
+//       // ...and all its connected document-level translations
+//       "translations": *[
+//         // by finding the translation metadata document
+//         _type == "translation.metadata" &&
+//         // that contains this project's _id
+//         ^._id in translations[].value._ref
+//         // then map over the translations array
+//       ][0].translations[]{
+//         // and spread the "value" of each reference to the root level
+//         ...(value->{
+//           language,
+//           title,
+//           slug
+//         })
+//       }
+//     },
+//   }
+// }`
+// export const HOME_QUERY = groq`{
+//   *[_type== "home && slug[$language].current == $slug][0] {
+//     showcaseHome
+//   }
+// }`
 export const HOME_QUERY = groq`{
-  "portfolios": *[_type == "portfolio" && count(projects) > 0]{
-    ...,
-    "projects": projects[]->{
-      // Get each project's *base* language version's title and slug
+  "home": *[_type == "home"][0]{
+    
+    showcaseHome[]->{
       language,
       title,
       slug,
-  
-      // ...and all its connected document-level translations
+      "coverImage": select(
+        language == $defaultLocale => coverImage{
+
+          asset->{
+            _id,
+            url,
+            "lqip": metadata.lqip,
+          }
+        },
+        // If not the default language, do not include coverImage
+        true => null
+      ),
       "translations": *[
         // by finding the translation metadata document
-        _type == "translation.metadata" && 
+        _type == "translation.metadata" &&
         // that contains this project's _id
         ^._id in translations[].value._ref
         // then map over the translations array
@@ -130,7 +171,8 @@ export const HOME_QUERY = groq`{
           slug
         })
       }
-    },
+    }
+    
   }
 }`
 export const WORKS_QUERY = groq`{
@@ -145,7 +187,6 @@ export const WORKS_QUERY = groq`{
 
   "coverImage": select(
     language == $defaultLocale => coverImage{
-      ...,
       asset->{
         _id,
         url,
