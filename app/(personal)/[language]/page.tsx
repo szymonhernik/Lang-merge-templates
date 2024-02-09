@@ -43,18 +43,6 @@ export default async function Page({ params }) {
     },
   )
 
-  // console.log('localizedProjects:', localizedProjects[1])
-
-  // console.log('localizedProjects', localizedProjects)
-
-  // i need:
-  // loop through the projects at home.showcaseHome
-  // title of the project depending on the language in props
-  // // if the language from params is the same as language of showcaseHome[index].work.language -> this is the current title
-  // // else if the language from params is different than showcaseHome[index].work.language -> go to showcaseHome[index].work.translation and find the title for the language set in props
-
-  //
-
   const translations = i18n.languages.map((lang) => {
     return {
       language: lang.id,
@@ -72,7 +60,7 @@ export default async function Page({ params }) {
         params={isEnabled ? queryParams : DEFAULT_EMPTY_PARAMS}
         initial={homeInitial}
       >
-        <HomeLayout localizedProjects={localizedProjects} />
+        <HomeLayout localizedProjects={localizedProjects} language={language} />
       </LiveQueryWrapper>
     </>
   )
