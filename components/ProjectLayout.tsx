@@ -1,31 +1,22 @@
-'use client'
-
-import { CheckIcon, ChevronLeftIcon } from '@heroicons/react/24/outline'
-import { useParams } from 'next/navigation'
-import React, { useMemo } from 'react'
-
-import { createProjectLinks } from '@/lib/helpers'
-
-import { i18n } from '@/languages'
-
-import Button from './Button'
+import React, { Suspense, useMemo } from 'react'
 
 import Prose from './Prose'
 import Title from './Title'
+
+import { Galleries } from './Galleries'
 
 type ProjectLayoutProps = {
   data?: any
   labels?: any[]
 }
 
-export function ProjectLayout(props: ProjectLayoutProps) {
+export async function ProjectLayout(props: ProjectLayoutProps) {
   const { labels = [] } = props
-  const { title, summary, content, details, portfolio } = props.data ?? {}
+  const { title, summary, galleries, content, details, portfolio } =
+    props.data ?? {}
   const { projects } = portfolio ?? {}
-  const params = useParams()
-  const language = Array.isArray(params.language)
-    ? params.language[0]
-    : params.language
+
+  console.log('galleries', galleries)
 
   return (
     <>
@@ -33,6 +24,10 @@ export function ProjectLayout(props: ProjectLayoutProps) {
         <section className="">
           <div className="container mx-auto ">
             <Title>{title}</Title>
+            <Suspense fallback={<h1>Loading...</h1>}>
+              <Galleries galleries={galleries} />
+            </Suspense>
+
             <div className="w-auto">
               {details?.length > 0 ? <Prose value={details} /> : null}
             </div>

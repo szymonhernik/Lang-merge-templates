@@ -15,6 +15,7 @@ import {
 } from '@/sanity/fetchers'
 import { loadQuery } from '@/sanity/lib/store'
 import { PROJECT_QUERY } from '@/sanity/queries'
+import { Suspense } from 'react'
 
 export async function generateStaticParams() {
   const projects = await getProjectsWithSlugs() // Fetch projects and their portfolio slugs
@@ -72,7 +73,7 @@ export default async function Page({ params }) {
     notFound()
   }
 
-  console.log('initial.data', initial.data)
+  // console.log('initial.data', initial.data.portfolio.projects[0].pageBuilder)
 
   const projectPaths = createProjectLinks(
     initial.data.portfolio.projects,
@@ -83,6 +84,9 @@ export default async function Page({ params }) {
   )
   const translations = projectPaths[currentProjectIndex]
 
+  const galleries = initial.data.portfolio.projects[0].pageBuilder
+  console.log('galleries', galleries)
+
   return (
     <>
       <Header translations={translations} currentLanguage={language} />
@@ -92,7 +96,7 @@ export default async function Page({ params }) {
         params={isEnabled ? queryParams : DEFAULT_EMPTY_PARAMS}
         initial={initial}
       >
-        <ProjectLayout />
+        <ProjectLayout data={{ ...initial.data, galleries }} />
       </LiveQueryWrapper>
     </>
   )

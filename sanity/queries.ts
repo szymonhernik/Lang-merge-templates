@@ -17,7 +17,24 @@ const PORTFOLIO_QUERY_PROJECTION = groq`
     language,
     title,
     slug,
-
+    pageBuilder[]{
+      _type == "gallery" => {
+        galleryTitle,
+        _key,
+        images[]{
+          alt,
+          asset->{
+            _id,
+            url,
+            "lqip": metadata.lqip,
+            "aspectRatio": metadata.dimensions.aspectRatio,
+            "width": metadata.dimensions.width,
+            "height": metadata.dimensions.height,
+          }
+        },
+        _type,
+      }
+    },
     // ...and all its connected document-level translations
     "translations": *[
       // by finding the translation metadata document
@@ -76,16 +93,7 @@ export const ABOUT_SLUGS_QUERY = groq`*[_type == "aboutPage" && defined(language
 export const PROJECT_QUERY = groq`*[_type == "project" && slug.current == $slug][0]{
     // Get this whole document
     ...,
-    content[] {
-      ...,
-      markDefs[] {
-        ...,
-        _type == "reference" => {
-          ...,
-          "slug": @->.slug
-        }      
-      }
-    },
+    
 
     // ...and get this project's portfolio
     // In this Project, we have single "portfolio" documents that reference "English" language version projects
