@@ -71,6 +71,7 @@ export default async function Page({ params }) {
   if (!initial.data) {
     notFound()
   }
+
   console.log('initial.data', initial.data)
 
   const projectPaths = createProjectLinks(
