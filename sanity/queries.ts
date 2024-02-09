@@ -165,7 +165,19 @@ export const HOME_QUERY = groq`{
       ),
       "coverImage": select(
         language == $defaultLocale => coverImage{
-
+          alt,
+          asset->{
+            _id,
+            url,
+            "lqip": metadata.lqip,
+          }
+        },
+        // If not the default language, do not include coverImage
+        true => null
+      ),
+      "coverImageOptional": select(
+        language == $defaultLocale => coverImageOptional{
+          alt,
           asset->{
             _id,
             url,

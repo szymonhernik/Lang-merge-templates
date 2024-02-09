@@ -76,30 +76,24 @@ export default defineType({
       ],
       validation: (Rule) => [Rule.required().min(1), Rule.unique()],
     }),
-    defineField({
-      name: 'image',
-      type: 'image',
-      group: ['media'],
-    }),
   ],
   preview: {
     select: {
       title: `title.${i18n.base}`,
       titleNL: `title.nl`,
       projects: 'projects',
-      image: 'image',
     },
     // Overloading the type causes an error
     // @ts-ignore
     prepare({
       title,
       projects,
-      image,
+
       titleNL,
     }: {
       title: string
       projects: Reference[]
-      image: SanityImageObjectStub
+
       titleNL: string
     }) {
       const projectCount = projects?.length || 0
@@ -110,7 +104,7 @@ export default defineType({
       return {
         title,
         subtitle: projectSubtitle,
-        media: image ?? FiBook,
+        media: FiBook,
       }
     },
   },

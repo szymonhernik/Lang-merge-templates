@@ -92,6 +92,14 @@ export default defineType({
       options: {
         hotspot: true,
       },
+      fields: [
+        defineField({
+          name: 'alt',
+          type: 'string',
+          title: 'Alt text',
+          description: 'Alternative text for screenreaders. ',
+        }),
+      ],
       // validation: (rule) => rule.required(),
       hidden: ({ document }) => document?.showAdditionalFields == true, // Hide this field if showAdditionalFields is not true
     }),
@@ -104,6 +112,14 @@ export default defineType({
       options: {
         hotspot: true,
       },
+      fields: [
+        defineField({
+          name: 'alt',
+          type: 'string',
+          title: 'Alt text',
+          description: 'Alternative text for screenreaders. ',
+        }),
+      ],
       hidden: ({ document }) => document?.showAdditionalFields == true, // Hide this field if showAdditionalFields is not true
     }),
     defineField({
