@@ -24,7 +24,13 @@ export async function ProjectLayout(props: ProjectLayoutProps) {
         <section className="">
           <div className="container mx-auto ">
             <Title>{title}</Title>
-            <Suspense fallback={<h1>Loading...</h1>}>
+            <Suspense
+              fallback={
+                <div className="h-[50vh] w-full">
+                  <h1>Loading...</h1>
+                </div>
+              }
+            >
               <Galleries galleries={galleries} />
             </Suspense>
 

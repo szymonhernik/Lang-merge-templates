@@ -27,12 +27,12 @@ export async function Galleries({ galleries }) {
                   return (
                     <SwiperSlide className="!w-fit !mr-8">
                       <Image
-                        src={image.asset.url}
-                        width={image.asset.width / 2}
-                        height={image.asset.height / 2}
+                        src={`${image.asset.url}?w=${image.asset.width / 2}&h=${image.asset.height / 2}`}
+                        width={image.asset.width}
+                        height={image.asset.height}
                         sizes="(max-width:640px) 100vw, (max-width: 768px) 50vw, 30vw"
                         alt={`${image?.alt ?? ''}`}
-                        className="h-full w-auto"
+                        className="h-full min-w-fit w-fit"
                         blurDataURL={image.asset.lqip}
                         placeholder="blur"
                       />
