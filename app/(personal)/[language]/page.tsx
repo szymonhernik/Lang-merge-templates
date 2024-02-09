@@ -32,9 +32,18 @@ export default async function Page({ params }) {
       const currentLanguageTitle =
         project.translations.find((t) => t.language === language)?.title ||
         project.title
-      return { ...project, currentTitle: currentLanguageTitle }
+      const currentLanguageSlug =
+        project.translations.find((t) => t.language === language)?.slug
+          .current || project.slug
+      return {
+        ...project,
+        currentTitle: currentLanguageTitle,
+        currentSlug: currentLanguageSlug,
+      }
     },
   )
+
+  // console.log('localizedProjects:', localizedProjects[1])
 
   // console.log('localizedProjects', localizedProjects)
 

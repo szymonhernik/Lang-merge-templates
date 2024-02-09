@@ -34,8 +34,6 @@ const PORTFOLIO_QUERY_PROJECTION = groq`
       })
     }
   },
-
-  
 `
 
 export const PORTFOLIO_QUERY = groq`*[_type == "portfolio" && slug[$language].current == $slug][0]{
@@ -138,6 +136,13 @@ export const PROJECT_QUERY = groq`*[_type == "project" && slug.current == $slug]
 //     showcaseHome
 //   }
 // }`
+
+const HOME_PORTFOLIO_QUERY_PROJECTION = groq`
+"title": title[$language],
+"slug": slug[$language].current,
+"projectsCount": count(projects)
+`
+
 export const HOME_QUERY = groq`{
   "home": *[_type == "home"][0]{
     
@@ -145,6 +150,19 @@ export const HOME_QUERY = groq`{
       language,
       title,
       slug,
+      "portfolio": select(
+        // So if this project isn't in English...
+        ^.language != $defaultLocale => *[_type == "translation.metadata" && ^._id in translations[].value._ref][0]{
+          // our query has to look up through the translations metadata
+          // and find the portfolio that references the English version, not this language version
+          "portfolio": *[
+            _type == "portfolio" && 
+            ^.translations[_key == $defaultLocale][0].value._ref in projects[]._ref
+          ][0]{ ${HOME_PORTFOLIO_QUERY_PROJECTION} }
+        }.portfolio,
+        // By default, 
+        *[_type == "portfolio" && ^._id in translations[].value._ref][0]{ ${HOME_PORTFOLIO_QUERY_PROJECTION} }
+      ),
       "coverImage": select(
         language == $defaultLocale => coverImage{
 
@@ -171,6 +189,7 @@ export const HOME_QUERY = groq`{
           slug
         })
       }
+      
     }
     
   }
