@@ -17,7 +17,7 @@ export default function Header(props: HeaderProps) {
   const { translations, currentLanguage = i18n.base } = props
 
   return (
-    <header className="bg-white font-bold fixed top-0 w-screen h-header flex z-20 pt-4">
+    <header className="font-bold fixed top-0 w-screen h-header flex z-20 pt-4">
       <div className="container mx-auto flex items-start  justify-between gap-4">
         <h1 className="mr-auto">
           <Link href={`/${clean(currentLanguage)}`} className="">

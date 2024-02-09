@@ -55,6 +55,7 @@
     "sanity-plugin-transifex": "^3.0.0",
     "server-only": "0.0.1",
     "styled-components": "^5.2.0",
+    "swiper": "^11.0.6",
     "usehooks-ts": "^2.12.1"
   },
   "devDependencies": {

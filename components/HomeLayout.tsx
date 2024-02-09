@@ -1,7 +1,17 @@
+'use client'
 import { SanityDocument } from 'next-sanity'
 
 import ImageBox from './shared/ImageBox'
 import ProjectLink from './ProjectLink'
+
+import { Swiper, SwiperSlide } from 'swiper/react'
+
+// Import Swiper styles
+import 'swiper/css'
+
+// import required modules
+import { Autoplay } from 'swiper/modules'
+import Background from './shared/Background'
 
 type HomeLayoutProps = {
   data?: { home: SanityDocument }
@@ -14,25 +24,41 @@ export function HomeLayout({ localizedProjects, language }) {
   //   : params.language
 
   return (
-    <div className="container mx-auto py-header grid grid-cols-1 gap-header mt-header px-4 md:px-0">
-      {localizedProjects?.map((project, key) => (
-        <div key={key}>
-          <ProjectLink project={project} language={language}>
-            <h1>{project.currentTitle}</h1>
-          </ProjectLink>
-
-          {project.coverImage && (
-            <div className="w-1/4">
-              <ImageBox
-                classesWrapper="w-full h-auto"
-                classesImage="w-auto h-full object-contain"
-                image={project.coverImage}
-                alt={project.coverImage.alt || ''}
-              />
-            </div>
-          )}
-        </div>
-      ))}
+    <div className="w-screen h-screen overflow-hidden absolute top-0 left-0">
+      <Swiper
+        spaceBetween={30}
+        centeredSlides={true}
+        allowTouchMove={false}
+        loop={true}
+        autoplay={{
+          delay: 5000,
+        }}
+        speed={1000}
+        modules={[Autoplay]}
+        className="mySwiper  w-screen h-screen "
+      >
+        {localizedProjects?.map((project, key) => (
+          <div key={key} className="w-full h-screen ">
+            <SwiperSlide>
+              {project.coverImage && (
+                <div className="w-full">
+                  <Background
+                    classesWrapper="w-full h-screen overflow-hidden"
+                    classesImage=" object-cover object-center"
+                    image={project.coverImage}
+                    alt={project.coverImage.alt || ''}
+                  />
+                </div>
+              )}
+              <div className="absolute bottom-0 left-0 p-8">
+                <ProjectLink project={project} language={language}>
+                  <h1>{project.currentTitle}</h1>
+                </ProjectLink>
+              </div>
+            </SwiperSlide>
+          </div>
+        ))}
+      </Swiper>
     </div>
   )
 }
