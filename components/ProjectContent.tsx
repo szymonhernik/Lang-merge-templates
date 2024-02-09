@@ -2,7 +2,7 @@ import { Translation } from '@/lib/types'
 import { clsx } from 'clsx'
 import Link from 'next/link'
 import React, { PropsWithChildren } from 'react'
-import ProjectLinks from './ProjectLinks'
+
 import { SanityDocument } from 'next-sanity'
 import { createProjectLinks } from '@/lib/helpers'
 import ImageBox from './shared/ImageBox'

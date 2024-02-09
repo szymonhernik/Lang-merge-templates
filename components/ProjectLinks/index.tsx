@@ -34,10 +34,6 @@ export default function ProjectLinks(props: ProjectLinksProps) {
     [language, projects],
   )
 
-  if (!localeProjects?.length) {
-    return null
-  }
-
   // Set the initial project to the first one with an available image
   useEffect(() => {
     const initialProject = localeProjects.find(
@@ -45,8 +41,13 @@ export default function ProjectLinks(props: ProjectLinksProps) {
     )
     setSelectedProject(initialProject)
   }, [localeProjects])
+
   const handleMouseEnter = (project) => {
     setSelectedProject(project)
+  }
+
+  if (!localeProjects?.length) {
+    return null
   }
 
   return (

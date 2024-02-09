@@ -22,7 +22,7 @@ export function HomeLayout({ localizedProjects, language }) {
   // const language = Array.isArray(params.language)
   //   ? params.language[0]
   //   : params.language
-  console.log(localizedProjects[0])
+  // console.log(localizedProjects[0])
 
   return (
     <div className="w-screen h-screen overflow-hidden absolute top-0 left-0">
@@ -53,10 +53,10 @@ export function HomeLayout({ localizedProjects, language }) {
                     }
                     alt={
                       project.coverImageOptional
-                        ? [project.coverImage.alt]
+                        ? [project.coverImage.alt || '']
                         : [
-                            project.coverImage.alt,
-                            project.coverImageOptional?.alt,
+                            project.coverImage.alt || '',
+                            project.coverImageOptional?.alt || '',
                           ]
                     }
                   />

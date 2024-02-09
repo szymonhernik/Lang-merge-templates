@@ -170,6 +170,7 @@ export const HOME_QUERY = groq`{
             _id,
             url,
             "lqip": metadata.lqip,
+            "aspectRatio": metadata.dimensions.aspectRatio,
           }
         },
         // If not the default language, do not include coverImage

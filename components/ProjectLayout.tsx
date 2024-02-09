@@ -9,7 +9,6 @@ import { createProjectLinks } from '@/lib/helpers'
 import { i18n } from '@/languages'
 
 import Button from './Button'
-import ProjectLinks from './ProjectLinks'
 
 import Prose from './Prose'
 import Title from './Title'
@@ -28,39 +27,12 @@ export function ProjectLayout(props: ProjectLayoutProps) {
     ? params.language[0]
     : params.language
 
-  const projectPaths = useMemo(
-    () => createProjectLinks(projects, portfolio?.slug),
-    [projects, portfolio?.slug],
-  )
-
-  const portfolioSlug = portfolio?.slug[language ?? i18n.base].current
-  const portfolioPath = [language, portfolioSlug].filter(Boolean).join('/')
-
-  // From the projectPaths we can find the translations of this project
-  const currentProjectIndex = projectPaths.findIndex((versions) =>
-    versions.find((project) => project.title === title),
-  )
-
-  const completeString = labels.find(
-    ({ key }) => key === 'project.continue',
-  )?.text
-  const backLabel = labels.find(({ key }) => key === 'back')?.text
-
   return (
     <>
       <div className="relative z-10 mt-40">
         <section className="bg-gradient-to-r mix-blend-multiply from-cyan-100 via-transparent to-transparent pt-16">
           <div className="container mx-auto py-8 p-4 md:p-8 xl:p-16 flex flex-col justify-start items-start gap-4 xl:gap-8">
             <Title>{title}</Title>
-            {portfolioPath && portfolio && backLabel && (
-              <Button
-                href={`/${portfolioPath}`}
-                Icon={ChevronLeftIcon}
-                iconFirst
-              >
-                {backLabel}
-              </Button>
-            )}
           </div>
         </section>
 

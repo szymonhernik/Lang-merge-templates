@@ -11,9 +11,8 @@ import { Label } from '@/lib/types'
 import Button from './Button'
 import Title from './Title'
 import TranslationLinks from './TranslationLinks'
-import ProjectLinks from './ProjectLinks'
 
-import { useMemo } from 'react'
+import React, { useMemo } from 'react'
 import Link from 'next/link'
 import MultifaceProjects from './MultifaceProjects'
 import ImageBox from './shared/ImageBox'
@@ -38,11 +37,11 @@ export function WorksLayout(props: WorksLayoutProps) {
       <div className="2xl:max-w-[1536px] mx-auto grid gap-6 md:gap-8 px-4 md:px-6 lg:grid-cols-4 md:grid-cols-2 pt-header">
         {portfolios &&
           portfolios?.length > 0 &&
-          portfolios.map((portfolio) => {
+          portfolios.map((portfolio, index) => {
             const numberOfProjects = portfolio.projects.length
             // console.log('portfolio:', portfolio)
             return (
-              <>
+              <React.Fragment key={index}>
                 {numberOfProjects === 1 &&
                 portfolio?.slug?.[language]?.current ? (
                   <Link href={`works/${portfolio.slug[language].current}`}>
@@ -59,7 +58,7 @@ export function WorksLayout(props: WorksLayoutProps) {
                     numberOfProjects={numberOfProjects}
                   />
                 )}
-              </>
+              </React.Fragment>
             )
           })}
       </div>

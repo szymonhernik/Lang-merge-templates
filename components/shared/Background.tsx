@@ -22,6 +22,15 @@ export default function Background({
   ...props
 }: BackgroundProps) {
   // Assuming image.asset.url is the base URL you're starting with
+
+  const aspectRatioFirst = image && image[0]?.asset?.aspectRatio
+
+  const horizontalUrl =
+    aspectRatioFirst > 1 &&
+    image &&
+    image[0].asset.url &&
+    `${image[0].asset.url}?w=${height}&h=${width}&fit=crop`
+
   const imageUrl =
     image &&
     image[0].asset.url &&
@@ -38,14 +47,26 @@ export default function Background({
 
   return (
     <div className={`${classesWrapper}`} data-sanity={props['data-sanity']}>
-      {imageUrl && !imageUrl2 ? (
-        <div className="flex">
+      {imageUrl && !imageUrl2 && !horizontalUrl ? (
+        <div className="flex ">
           <Image
-            className={`w-${imageUrl2 ? '1/2' : 'full'} ${classesImage}`}
+            className={`  ${classesImage}`}
             alt={alt[0]}
             fill
             sizes={size}
             src={imageUrl}
+            placeholder="blur"
+            blurDataURL={blurDataURL} // Use the extracted LQIP as the blurDataURL
+          />
+        </div>
+      ) : imageUrl && !imageUrl2 && horizontalUrl ? (
+        <div className="flex ">
+          <Image
+            className={`  ${classesImage}`}
+            alt={alt[0]}
+            fill
+            sizes={size}
+            src={horizontalUrl}
             placeholder="blur"
             blurDataURL={blurDataURL} // Use the extracted LQIP as the blurDataURL
           />
