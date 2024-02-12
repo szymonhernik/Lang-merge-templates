@@ -1,3 +1,4 @@
+import { ShowcaseHomeProject } from '@/types'
 import { SanityDocument } from 'next-sanity'
 
 /**
@@ -7,9 +8,12 @@ import { SanityDocument } from 'next-sanity'
  * @returns Array of localized projects.
  */
 export const localizeProjects = (
-  projects: SanityDocument[],
+  projects: ShowcaseHomeProject[] | undefined,
   language: string,
 ) => {
+  if (!projects) {
+    return []
+  }
   return projects.map((project) => {
     const currentLanguageTitle =
       project.translations.find((t) => t.language === language)?.title ||

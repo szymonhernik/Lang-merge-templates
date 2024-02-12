@@ -1,8 +1,9 @@
+import { LocalizedProject } from '@/types'
 import { SanityDocument } from 'next-sanity'
 import Link from 'next/link'
 
 interface ProjectLinkProps {
-  project: SanityDocument // replace with your actual project type
+  project: LocalizedProject // replace with your actual project type
   language: string
   children: React.ReactNode
 }
@@ -13,7 +14,7 @@ const ProjectLink: React.FC<ProjectLinkProps> = ({
   children,
 }) => {
   const href =
-    project.portfolio.projectsCount > 1
+    project.portfolio && project.portfolio.projectsCount > 1
       ? `${language}/works/${project.portfolio.slug}/${project.currentSlug}`
       : `${language}/works/${project.currentSlug}`
 

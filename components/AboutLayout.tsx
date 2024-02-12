@@ -1,9 +1,11 @@
 import Image from 'next/image'
 import Prose from './Prose'
 import ImageBox from './shared/ImageBox'
+import { AboutPagePayload } from '@/types'
+import { CustomPortableText } from './CustomPortableText'
 
 type AboutLayoutProps = {
-  data?: any
+  data: AboutPagePayload | null
 }
 
 export async function AboutLayout({ data }: AboutLayoutProps) {
@@ -11,7 +13,6 @@ export async function AboutLayout({ data }: AboutLayoutProps) {
     _id,
     title,
     slug,
-    summary,
     content,
     language,
     profilePicture,
@@ -26,7 +27,7 @@ export async function AboutLayout({ data }: AboutLayoutProps) {
           {highlightedContent && (
             <p className="text-2xl">{highlightedContent}</p>
           )}
-          {content && <Prose value={content} />}
+          {content && <CustomPortableText value={content} />}
         </div>
         {profilePicture && (
           <ImageBox

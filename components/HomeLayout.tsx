@@ -12,18 +12,14 @@ import 'swiper/css'
 // import required modules
 import { Autoplay } from 'swiper/modules'
 import Background from './shared/Background'
+import { HomeQueryResult, LocalizedProject } from '@/types'
 
 type HomeLayoutProps = {
-  data?: { home: SanityDocument }
+  localizedProjects: LocalizedProject[]
+  language: string
 }
 
-export function HomeLayout({ localizedProjects, language }) {
-  // const params = useParams()
-  // const language = Array.isArray(params.language)
-  //   ? params.language[0]
-  //   : params.language
-  // console.log(localizedProjects[0])
-
+export function HomeLayout({ localizedProjects, language }: HomeLayoutProps) {
   return (
     <div className="w-screen h-screen overflow-hidden absolute top-0 left-0">
       <div className="fixed top-0 left-0  z-[2] bg-gradient-to-b from-black opacity-70 w-screen h-72"></div>
@@ -54,11 +50,11 @@ export function HomeLayout({ localizedProjects, language }) {
                     }
                     alt={
                       project.coverImageOptional
-                        ? [project.coverImage.alt || '']
-                        : [
+                        ? [
                             project.coverImage.alt || '',
-                            project.coverImageOptional?.alt || '',
+                            project.coverImageOptional.alt || '',
                           ]
+                        : [project.coverImage.alt || '']
                     }
                   />
                 </div>

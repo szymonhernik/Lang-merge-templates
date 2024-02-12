@@ -15,6 +15,7 @@ import { ABOUT_QUERY } from '@/sanity/queries'
 import { i18n } from '@/languages'
 import UpdateLangContext from '@/components/UpdateLangContext'
 import { AboutLayout } from '@/components/AboutLayout'
+import { AboutPagePayload } from '@/types'
 
 // export async function generateStaticParams() {
 //   const aboutPages = await getAboutsWithSlugs()
@@ -38,7 +39,7 @@ export default async function Page({ params }) {
 
   const queryParams = { ...COMMON_PARAMS, language }
   const { isEnabled } = draftMode()
-  const initial = await loadQuery<SanityDocument>(ABOUT_QUERY, queryParams, {
+  const initial = await loadQuery<AboutPagePayload>(ABOUT_QUERY, queryParams, {
     perspective: isEnabled ? 'previewDrafts' : 'published',
     next: { tags: ['aboutPage'] },
   })

@@ -42,6 +42,8 @@ export default async function Page({ params }) {
     }
   })
 
+  // console.log(homeInitial.data.home.showcaseHome)
+
   return (
     <>
       <UpdateLangContext
