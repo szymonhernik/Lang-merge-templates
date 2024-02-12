@@ -3,9 +3,9 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-import { PortfolioLayout } from '@/components/PortfolioLayout'
 import Header from '@/components/Header'
 import { i18n } from '@/languages'
+import UpdateLangContext from '@/components/UpdateLangContext'
 
 export default function NotFound() {
   const pathname = usePathname()
@@ -17,11 +17,10 @@ export default function NotFound() {
 
   return (
     <div>
-      <Header translations={[]} />
-      <PortfolioLayout data={data}>
-        <p>Could not find the page</p>
-        <Link href="/">Home</Link>
-      </PortfolioLayout>
+      <UpdateLangContext currentLanguage={''} translations={[]} />
+
+      <p>Could not find the page</p>
+      <Link href="/">Home</Link>
     </div>
   )
 }

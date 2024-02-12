@@ -14,7 +14,9 @@ export async function Galleries({ galleries }) {
   return (
     <>
       {galleries &&
-        galleries.map((gallery, key) => {
+        galleries.map((gallery) => {
+          console.log(gallery._key)
+
           return (
             <React.Fragment key={gallery._key}>
               <Swiper
@@ -25,7 +27,10 @@ export async function Galleries({ galleries }) {
               >
                 {gallery.images.map((image, index) => {
                   return (
-                    <SwiperSlide className="!w-fit !mr-8">
+                    <SwiperSlide
+                      className="!w-fit !mr-8"
+                      key={gallery._key + image + index}
+                    >
                       <Image
                         src={`${image.asset.url}?w=${image.asset.width / 2}&h=${image.asset.height / 2}`}
                         width={image.asset.width}
@@ -43,30 +48,6 @@ export async function Galleries({ galleries }) {
             </React.Fragment>
           )
         })}
-      {/* {galleries &&
-        galleries.map((gallery, key) => {
-          return (
-            <div key={gallery._key}>
-              <div className="h-[40vh] w-full flex whitespace-nowrap flex-row overflow-x-auto">
-                <div className="flex w-fit">
-                  {gallery.images.map((image, index) => {
-                    console.log(image.asset)
-                    return (
-                      <ImageBox
-                        classesWrapper={`w-auto  h-full `}
-                        classesImage={`w-full h-full aspect-[${image.asset.aspectRatio}]`}
-                        image={image}
-                        width={image.asset.width / 2}
-                        height={image.asset.height / 2}
-                        alt={`${image?.alt ?? ''}`}
-                      />
-                    )
-                  })}
-                </div>
-              </div>
-            </div>
-          )
-        })} */}
     </>
   )
 }

@@ -5,9 +5,11 @@ import { SanityDocument } from 'next-sanity'
 
 import Header from '@/components/Header'
 import { ProjectLayout } from '@/components/ProjectLayout'
+import UpdateLangContext from '@/components/UpdateLangContext'
+
 import { LiveQueryWrapper } from '@/components/LiveQueryWrapper'
 import { COMMON_PARAMS, DEFAULT_EMPTY_PARAMS } from '@/lib/constants'
-import { createProjectLinks } from '@/lib/helpers'
+import { createProjectReachLinks } from '@/lib/helpers'
 
 import {
   fetchPortfoliosWithProjectsCount,
@@ -75,7 +77,7 @@ export default async function Page({ params }) {
 
   // console.log('initial.data', initial.data.portfolio.projects[0].pageBuilder)
 
-  const projectPaths = createProjectLinks(
+  const projectPaths = createProjectReachLinks(
     initial.data.portfolio.projects,
     initial.data.portfolio.slug,
   )
@@ -85,11 +87,15 @@ export default async function Page({ params }) {
   const translations = projectPaths[currentProjectIndex]
 
   const galleries = initial.data.portfolio.projects[0].pageBuilder
-  console.log('galleries', galleries)
 
   return (
     <>
-      <Header translations={translations} currentLanguage={language} />
+      {/* <Header translations={translations} currentLanguage={language} /> */}
+      <UpdateLangContext
+        currentLanguage={language}
+        translations={translations}
+      />
+
       <LiveQueryWrapper
         isEnabled={isEnabled}
         query={isEnabled ? PROJECT_QUERY : ``}

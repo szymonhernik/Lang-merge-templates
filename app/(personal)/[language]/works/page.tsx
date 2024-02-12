@@ -12,6 +12,7 @@ import Header from '@/components/Header'
 import { HomeLayout } from '@/components/HomeLayout'
 import { i18n } from '@/languages'
 import { WorksLayout } from '@/components/WorksLayout'
+import UpdateLangContext from '@/components/UpdateLangContext'
 
 export default async function Page({ params }) {
   const { language } = params
@@ -27,8 +28,6 @@ export default async function Page({ params }) {
     },
   )
 
-  // console.log('WORKS INITIAL:', worksInitial.data.externalDocs)
-
   const translations = i18n.languages.map((lang) => {
     return {
       language: lang.id,
@@ -39,7 +38,10 @@ export default async function Page({ params }) {
 
   return (
     <>
-      <Header translations={translations} currentLanguage={language} />
+      <UpdateLangContext
+        currentLanguage={language}
+        translations={translations}
+      />
       <LiveQueryWrapper
         isEnabled={isEnabled}
         query={isEnabled ? WORKS_QUERY : ''}

@@ -13,6 +13,8 @@ import Header from '@/components/Header'
 import { HomeLayout } from '@/components/HomeLayout'
 
 import { HomeQueryResult } from '@/types'
+import UpdateLangContext from '@/components/UpdateLangContext'
+import { localizeProjects } from '@/lib/localizeProjects'
 
 export default async function Page({ params }) {
   const { language } = params
@@ -27,20 +29,9 @@ export default async function Page({ params }) {
     },
   )
 
-  const localizedProjects = homeInitial.data.home.showcaseHome.map(
-    (project) => {
-      const currentLanguageTitle =
-        project.translations.find((t) => t.language === language)?.title ||
-        project.title
-      const currentLanguageSlug =
-        project.translations.find((t) => t.language === language)?.slug
-          .current || project.slug
-      return {
-        ...project,
-        currentTitle: currentLanguageTitle,
-        currentSlug: currentLanguageSlug,
-      }
-    },
+  const localizedProjects = localizeProjects(
+    homeInitial.data.home.showcaseHome,
+    language,
   )
 
   const translations = i18n.languages.map((lang) => {
@@ -53,7 +44,10 @@ export default async function Page({ params }) {
 
   return (
     <>
-      <Header translations={translations} currentLanguage={language} />
+      <UpdateLangContext
+        currentLanguage={language}
+        translations={translations}
+      />
       <LiveQueryWrapper
         isEnabled={isEnabled}
         query={isEnabled ? HOME_QUERY : ''}

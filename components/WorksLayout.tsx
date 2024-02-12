@@ -39,12 +39,18 @@ export function WorksLayout(props: WorksLayoutProps) {
           portfolios?.length > 0 &&
           portfolios.map((portfolio, index) => {
             const numberOfProjects = portfolio.projects.length
-            // console.log('portfolio:', portfolio)
+            const projectPaths = createProjectLinks(
+              portfolio.projects,
+              portfolio.slug,
+            )
+            // console.log('projectPaths:', projectPaths)
             return (
               <React.Fragment key={index}>
                 {numberOfProjects === 1 &&
                 portfolio?.slug?.[language]?.current ? (
-                  <Link href={`works/${portfolio.slug[language].current}`}>
+                  <Link
+                    href={`${projectPaths[0].find((project) => project.language === language)?.path}`}
+                  >
                     <ProjectContent
                       portfolio={portfolio}
                       language={language}

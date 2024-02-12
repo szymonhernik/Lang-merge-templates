@@ -1,23 +1,23 @@
+'use client'
 import { LanguageIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
-import React from 'react'
+import React, { useContext } from 'react'
 
 import { Translation } from '@/lib/types'
 
 import { i18n } from '@/languages'
 import { clean } from './Clean'
 import TranslationLinks from './TranslationLinks'
+import { LanguageContext, useLanguage } from '@/contexts/LangContext'
 
-type HeaderProps = {
-  translations: Translation[]
-  currentLanguage?: string
-}
-
-export default function Header(props: HeaderProps) {
-  const { translations, currentLanguage = i18n.base } = props
+export default function Header() {
+  const { currentLanguage, translations } = useContext(LanguageContext)
+  // const { translations, currentLanguage = i18n.base } = props
+  console.log('currentLanguage', currentLanguage)
+  console.log('translations', translations)
 
   return (
-    <header className="font-bold text-white mix-blend-difference fixed top-0 w-screen h-header flex z-20 pt-4">
+    <header className="font-bold text-black fixed top-0 w-screen h-header flex z-20 pt-4">
       <div className="container mx-auto flex items-start  justify-between gap-4">
         <h1 className="mr-auto">
           <Link href={`/${clean(currentLanguage)}`} className="">

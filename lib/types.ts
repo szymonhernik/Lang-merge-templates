@@ -8,10 +8,15 @@ type CoverImage = {
     lqip: string
   }
 }
-export type Translation = {
+export type TranslationReach = {
   path: string
   language: string
   title: string
   coverImage?: CoverImage
   hasLinkedFile?: boolean
+}
+export type Translation = {
+  path: string
+  language: string
+  title: string
 }

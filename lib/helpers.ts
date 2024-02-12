@@ -2,7 +2,7 @@ import { vercelStegaSplit } from '@vercel/stega'
 import { SanityDocument, Slug } from 'sanity'
 
 import { getLabelByKey } from './getLabelByKey'
-import { Label, Translation } from './types'
+import { Label, Translation, TranslationReach } from './types'
 
 // Return `DE` from `de`
 export function extractCountryFromCode(code = ``) {
@@ -43,7 +43,7 @@ type LinkedFile = {
   description?: string
 }
 
-export function createProjectLinks(
+export function createProjectReachLinks(
   projects: {
     language: string
     title: string
@@ -57,7 +57,7 @@ export function createProjectLinks(
     }[]
   }[] = [],
   portfolioSlug: SlugObject = {},
-): Translation[][] {
+): TranslationReach[][] {
   if (!projects?.length) {
     return []
   }
@@ -105,6 +105,59 @@ export function createProjectLinks(
               path: path,
               coverImage: coverImageData, // Include cover image data in the return object
               hasLinkedFile,
+            }
+          })
+
+        return translations
+      })
+  )
+}
+
+export function createProjectLinks(
+  projects: {
+    language: string
+    title: string
+    slug: Slug
+    translations: {
+      language: string
+      title: string
+      slug: Slug
+    }[]
+  }[] = [],
+  portfolioSlug: SlugObject = {},
+): Translation[][] {
+  if (!projects?.length) {
+    return []
+  }
+
+  return (
+    projects
+      // Each project must have a language
+      .filter((project) => project?.language)
+      .map((project) => {
+        // console.log('project in createProjectsLinks', project)
+        const translations = project.translations
+
+          .filter((ref) => ref?.slug?.current)
+          .map((ref) => {
+            const projectLang = ref.language
+            const portfolioLangSlug = portfolioSlug[ref.language]?.current
+            const projectLangSlug = ref.slug.current
+
+            let path: string
+            if (projects.length === 1) {
+              path = '/' + [projectLang, 'works', projectLangSlug].join('/')
+            } else {
+              path =
+                '/' +
+                [projectLang, 'works', portfolioLangSlug, projectLangSlug].join(
+                  '/',
+                )
+            }
+            return {
+              language: ref.language,
+              title: ref.title,
+              path: path,
             }
           })
 

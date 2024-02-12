@@ -4,7 +4,7 @@ import Link from 'next/link'
 import React, { PropsWithChildren } from 'react'
 
 import { SanityDocument } from 'next-sanity'
-import { createProjectLinks } from '@/lib/helpers'
+import { createProjectReachLinks } from '@/lib/helpers'
 import ImageBox from './shared/ImageBox'
 import MultifaceProjects from './MultifaceProjects'
 import Title from './Title'
@@ -19,7 +19,10 @@ export default function ProjectContent(props: ProjectContentProps) {
   const { children, portfolio, language, numberOfProjects } = props
 
   //   const numberOfProjects = portfolio.projects.length
-  const projectPaths = createProjectLinks(portfolio.projects, portfolio.slug) // Ensure createProjectLinks is imported or accessible
+  const projectPaths = createProjectReachLinks(
+    portfolio.projects,
+    portfolio.slug,
+  ) // Ensure createProjectLinks is imported or accessible
   //   console.log('portfolio:', portfolio)
 
   return (

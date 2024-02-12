@@ -8,12 +8,12 @@ import Header from '@/components/Header'
 import { ProjectLayout } from '@/components/ProjectLayout'
 import { LiveQueryWrapper } from '@/components/LiveQueryWrapper'
 import { COMMON_PARAMS, DEFAULT_EMPTY_PARAMS } from '@/lib/constants'
-import { createProjectLinks } from '@/lib/helpers'
 
 import { getAboutsWithSlugs, getProjectsWithSlugs } from '@/sanity/fetchers'
 import { loadQuery } from '@/sanity/lib/store'
 import { ABOUT_QUERY } from '@/sanity/queries'
 import { i18n } from '@/languages'
+import UpdateLangContext from '@/components/UpdateLangContext'
 
 // export async function generateStaticParams() {
 //   const aboutPages = await getAboutsWithSlugs()
@@ -67,7 +67,10 @@ export default async function Page({ params }) {
 
   return (
     <>
-      <Header translations={translations} currentLanguage={language} />
+      <UpdateLangContext
+        currentLanguage={language}
+        translations={translations}
+      />
       <LiveQueryWrapper
         isEnabled={isEnabled}
         query={isEnabled ? ABOUT_QUERY : ``}
