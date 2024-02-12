@@ -1,8 +1,30 @@
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Home',
+  title: 'Narges Mohammadi | Home',
 }
+
+import localFont from 'next/font/local'
+
+const tonka = localFont({
+  src: [
+    {
+      path: '../../Tonka-Regular.woff2',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../../Tonka-Medium.woff2',
+      weight: '500',
+      style: 'normal',
+    },
+  ],
+})
+const tonka_italic = localFont({
+  src: '../../Tonka_Beta_02VF.woff2',
+  display: 'swap',
+  variable: '--font-tonka',
+})
 
 import '@/styles/globals.css'
 
@@ -22,10 +44,11 @@ export default async function RootLayout(props) {
 
   return (
     <LanguageProvider>
-      <html lang={props.params.language}>
-        <head>
-          <link rel="stylesheet" href="https://use.typekit.net/ogy2uky.css" />
-        </head>
+      <html
+        lang={props.params.language}
+        className={`${tonka.className} ${tonka_italic.variable}`}
+      >
+        <head></head>
         <body className="font-sans bg-white text-gray-900">
           <Header />
           {props.children}
