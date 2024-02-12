@@ -3,12 +3,12 @@
 import { useParams } from 'next/navigation'
 import React, { useEffect, useMemo, useState } from 'react'
 
-import { Translation } from '../../lib/types'
+import { TranslationReach } from '../../lib/types'
 import { ListLink } from './ListLink'
 import ImageBox from '../shared/ImageBox'
 
 type ProjectLinksProps = {
-  projects: Translation[][]
+  projects: TranslationReach[][]
   openByDefault?: boolean
   hasLinkedFile?: boolean
 }
@@ -16,7 +16,7 @@ type ProjectLinksProps = {
 export default function ProjectLinks(props: ProjectLinksProps) {
   const { projects } = props
   const [selectedProject, setSelectedProject] = useState<
-    Translation | undefined | null
+    TranslationReach | undefined | null
   >(null)
 
   const params = useParams()

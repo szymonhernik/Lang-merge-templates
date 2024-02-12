@@ -278,4 +278,17 @@ export const ABOUT_QUERY = groq`*[_type == "aboutPage" && language == $language]
   summary,
   content,
   language,
+  "profilePicture": *[_type == "aboutPage" && language == $defaultLocale][0].profilePicture {
+    alt,
+    asset->{
+      _id,
+      url,
+      "lqip": metadata.lqip,
+      "aspectRatio": metadata.dimensions.aspectRatio,
+      "width": metadata.dimensions.width,
+      "height": metadata.dimensions.height,
+    }
+  },
+  highlightedContent,
+  pageBuilder,
 }`

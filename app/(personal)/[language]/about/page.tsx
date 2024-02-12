@@ -14,6 +14,7 @@ import { loadQuery } from '@/sanity/lib/store'
 import { ABOUT_QUERY } from '@/sanity/queries'
 import { i18n } from '@/languages'
 import UpdateLangContext from '@/components/UpdateLangContext'
+import { AboutLayout } from '@/components/AboutLayout'
 
 // export async function generateStaticParams() {
 //   const aboutPages = await getAboutsWithSlugs()
@@ -41,23 +42,12 @@ export default async function Page({ params }) {
     perspective: isEnabled ? 'previewDrafts' : 'published',
     next: { tags: ['aboutPage'] },
   })
-  const aboutsWithSlugs = await getAboutsWithSlugs()
-  // console.log('abouts slugs: ', aboutsWithSlugs)
-  // results in
-  // abouts slugs:  [
-  //   { language: 'en', aboutPage: { _type: 'slug', current: 'about' } },
-  //   { language: 'nl', aboutPage: { current: 'over', _type: 'slug' } }
-  // ]
 
   if (!initial.data) {
     notFound()
   }
 
   const translations = i18n.languages.map((lang) => {
-    // const slug =
-    //   aboutsWithSlugs.find((page) => page.language === lang.id)?.aboutPage
-    //     .current || '/'
-
     return {
       language: lang.id,
       path: `/${lang.id}/about`, // Dynamic path based on language and slug
@@ -77,7 +67,8 @@ export default async function Page({ params }) {
         params={isEnabled ? queryParams : DEFAULT_EMPTY_PARAMS}
         initial={initial}
       >
-        <h1 className="h-96 bg-yellow-200 w-96 p-16">{initial.data.title}</h1>
+        <AboutLayout data={initial.data} />
+        {/* <h1 className="h-96 bg-yellow-200 w-96 p-16">{initial.data.title}</h1> */}
       </LiveQueryWrapper>
     </>
   )

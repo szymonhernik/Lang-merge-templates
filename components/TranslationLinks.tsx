@@ -42,12 +42,8 @@ export default function TranslationLinks(props: TranslationLinksProps) {
           className={clsx(
             ``,
             version.language === language
-              ? pathname === `/${language}`
-                ? `text-gray-200`
-                : `text-gray-400`
-              : `text-gray-200`
-                ? `pointer-events-none text-white`
-                : `text-gray-200 hover:text-white`,
+              ? `pointer-events-none text-white`
+              : `text-gray-400 hover:text-white`,
           )}
         >
           {version?.path ? (

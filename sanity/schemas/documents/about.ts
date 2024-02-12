@@ -1,5 +1,5 @@
-import { FiAward } from 'react-icons/fi'
-import { defineField, defineType } from 'sanity'
+import { FiAward, FiFilePlus } from 'react-icons/fi'
+import { defineArrayMember, defineField, defineType } from 'sanity'
 
 export default defineType({
   name: 'aboutPage',
@@ -23,15 +23,88 @@ export default defineType({
           .error('A slug is required to generate a page on the website'),
     }),
     defineField({
-      name: 'summary',
+      name: 'profilePicture',
+      title: 'Profile picture',
+      type: 'image',
+
+      fields: [
+        defineField({
+          name: 'alt',
+          type: 'string',
+          title: 'Alt text',
+          description: 'Alternative text for screenreaders. ',
+        }),
+      ],
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'highlightedContent',
       type: 'text',
-      rows: 3,
-      validation: (rule) =>
-        rule.max(200).warning('Summary should be less than 200 characters'),
+      title: 'Highlighted text',
     }),
     defineField({
       name: 'content',
-      type: 'portableText',
+      title: 'Rest of text',
+      type: 'array',
+      of: [
+        defineArrayMember({
+          type: 'block',
+          marks: {
+            annotations: [
+              {
+                name: 'link',
+                type: 'object',
+                title: 'Link',
+                fields: [
+                  {
+                    name: 'href',
+                    type: 'url',
+                    title: 'Url',
+                  },
+                ],
+              },
+            ],
+          },
+          styles: [],
+        }),
+      ],
+    }),
+    defineField({
+      name: 'pageBuilder',
+      type: 'array',
+      title: 'Files',
+      of: [
+        defineArrayMember({
+          name: 'files',
+          type: 'object',
+          title: 'Files',
+          fields: [
+            defineField({
+              name: 'fileTitle',
+              type: 'string',
+              title: 'Display name',
+              validation: (rule) =>
+                rule.required().error('File display name is required'),
+            }),
+            defineField({
+              name: 'fileAbout',
+              type: 'file',
+              title: 'File',
+            }),
+          ],
+          preview: {
+            select: {
+              title: 'fileTitle',
+            },
+            prepare({ title }) {
+              return {
+                title: title,
+                media: FiFilePlus,
+              }
+            },
+          },
+        }),
+      ],
     }),
     defineField({
       name: 'language',

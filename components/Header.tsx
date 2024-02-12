@@ -33,7 +33,7 @@ export default function Header() {
         <TranslationLinks translations={translations} />
         <div
           className={clsx(
-            'flex flex-col gap-1 w-16 justify-end items-end text-gray-200 ',
+            'flex flex-col gap-1 w-16 justify-end items-start text-gray-200 ',
             {
               'text-gray-400': pathname !== `/${langSelected}`,
             },
