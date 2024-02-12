@@ -9,13 +9,13 @@ import React from 'react'
 import Image from 'next/image'
 
 export async function Galleries({ galleries }) {
-  console.log('galleries', galleries)
+  // console.log('galleries', galleries)
 
   return (
     <>
       {galleries &&
         galleries.map((gallery) => {
-          console.log(gallery._key)
+          // console.log(gallery._key)
 
           return (
             <React.Fragment key={gallery._key}>

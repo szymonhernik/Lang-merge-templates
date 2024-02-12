@@ -22,7 +22,7 @@ export const LanguageProvider = ({ children }) => {
       languageData.currentLanguage !== newCurrentLanguage ||
       languageData.translations !== newTranslations
     ) {
-      console.log('Updating context with:', newCurrentLanguage, newTranslations)
+      // console.log('Updating context with:', newCurrentLanguage, newTranslations)
       setLanguageDataState({
         currentLanguage: newCurrentLanguage,
         translations: newTranslations,

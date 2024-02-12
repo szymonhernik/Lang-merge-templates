@@ -16,7 +16,7 @@ export async function ProjectLayout(props: ProjectLayoutProps) {
     props.data ?? {}
   const { projects } = portfolio ?? {}
 
-  console.log('galleries', galleries)
+  // console.log('galleries', galleries)
 
   return (
     <>

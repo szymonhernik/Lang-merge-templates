@@ -8,7 +8,7 @@ export default function UpdateLangContext({ currentLanguage, translations }) {
 
   useEffect(() => {
     setLanguageData(currentLanguage, translations)
-    console.log('In UpdateLangContext: ', currentLanguage, translations)
+    // console.log('In UpdateLangContext: ', currentLanguage, translations)
   }, [currentLanguage, translations, setLanguageData])
 
   return null // This component doesn't render anything

@@ -2,7 +2,7 @@
 
 import clsx from 'clsx'
 import Link from 'next/link'
-import { useParams } from 'next/navigation'
+import { useParams, usePathname } from 'next/navigation'
 import React, { useMemo } from 'react'
 
 import { Translation } from '@/lib/types'
@@ -16,6 +16,8 @@ type TranslationLinksProps = {
 
 export default function TranslationLinks(props: TranslationLinksProps) {
   const { translations = [] } = props
+  const pathname = usePathname()
+
   const params = useParams()
   const language = Array.isArray(params.language)
     ? params.language[0]
@@ -40,8 +42,12 @@ export default function TranslationLinks(props: TranslationLinksProps) {
           className={clsx(
             ``,
             version.language === language
-              ? `pointer-events-none`
-              : `text-gray-500 hover:text-black`,
+              ? pathname === `/${language}`
+                ? `text-gray-200`
+                : `text-gray-400`
+              : `text-gray-200`
+                ? `pointer-events-none text-white`
+                : `text-gray-200 hover:text-white`,
           )}
         >
           {version?.path ? (
