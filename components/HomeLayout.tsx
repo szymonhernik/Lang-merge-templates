@@ -59,9 +59,9 @@ export function HomeLayout({ localizedProjects, language }: HomeLayoutProps) {
                   />
                 </div>
               )}
-              <div className="absolute bottom-0 left-0 p-8">
+              <div className="absolute bottom-1 left-0 p-8">
                 <ProjectLink project={project} language={language}>
-                  <h1 className="text-white mix-blend-difference">
+                  <h1 className="text-white  mix-blend-difference">
                     {project.currentTitle}
                   </h1>
                 </ProjectLink>
