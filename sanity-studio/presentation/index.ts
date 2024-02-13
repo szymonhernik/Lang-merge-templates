@@ -5,10 +5,10 @@
 export const enableUrl = process.env.SANITY_STUDIO_VERCEL_ENV
   ? `https://${
       process.env.SANITY_STUDIO_VERCEL_ENV === 'production'
-        ? 'lang-merge-templates.sanity.build' // I don't understand why the primary domain doesn't have a variable
+        ? 'nm-dev.sanity.build' // I don't understand why the primary domain doesn't have a variable
         : process.env.SANITY_STUDIO_VERCEL_BRANCH_URL?.replace(
-            'lang-merge-templates-studio',
-            'lang-merge-templates',
+            'nm-dev-studio',
+            'nm-dev',
           )
     }/api/draft`
   : 'http://localhost:3000/api/draft'

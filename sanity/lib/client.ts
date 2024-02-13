@@ -12,10 +12,10 @@ export const baseConfig = {
 const studioUrl = process.env.NEXT_PUBLIC_VERCEL_ENV
   ? `https://${
       process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
-        ? 'lang-merge-templates-studio.sanity.build' // I don't understand why the primary domain doesn't have a variable
+        ? 'nm-dev-studio.sanity.build' // I don't understand why the primary domain doesn't have a variable
         : process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL?.replace(
-            'lang-merge-templates',
-            'lang-merge-templates-studio',
+            'nm-dev',
+            'nm-dev-studio',
           )
     }`
   : 'http://localhost:3333'

@@ -14,12 +14,12 @@ export default async function resolvePreviewUrl(
     // This is the URL of the Studio deployment, not the web deployment
     baseUrl =
       process.env.SANITY_STUDIO_VERCEL_ENV === 'production'
-        ? `https://lang-merge-templates.sanity.build`
+        ? `https://nm-dev.sanity.build`
         : // This should work, but doesn't
           // the env seems to be `undefined` in vercel
           // : process.env.SANITY_STUDIO_VERCEL_BRANCH_URL
           // So I'm DIY-ing a branch URL for the web deployment
-          `https://lang-merge-templates-git-${process.env.SANITY_STUDIO_VERCEL_GIT_COMMIT_REF}.sanity.build`
+          `https://nm-dev-git-${process.env.SANITY_STUDIO_VERCEL_GIT_COMMIT_REF}.sanity.build`
   }
 
   const { _id } = doc
