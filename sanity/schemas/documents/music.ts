@@ -1,5 +1,5 @@
-import { FiAward } from 'react-icons/fi'
-import { defineField, defineType } from 'sanity'
+import { FiAward, FiFilePlus } from 'react-icons/fi'
+import { defineArrayMember, defineField, defineType } from 'sanity'
 
 export default defineType({
   name: 'musicPage',
@@ -24,14 +24,69 @@ export default defineType({
     }),
     defineField({
       name: 'summary',
+      description: 'SEO summary',
       type: 'text',
       rows: 3,
       validation: (rule) =>
         rule.max(200).warning('Summary should be less than 200 characters'),
     }),
     defineField({
+      name: 'socialPicture',
+      title: 'Socials picture',
+      type: 'image',
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      title: 'Video banner',
+      name: 'videoMusic',
+      type: 'document',
+      fields: [
+        {
+          title: 'Video file',
+          name: 'video',
+          type: 'mux.video',
+        },
+      ],
+    }),
+    defineField({
       name: 'content',
-      type: 'portableText',
+      title: 'Content',
+      type: 'array',
+      of: [
+        defineArrayMember({
+          type: 'block',
+          marks: {
+            annotations: [
+              {
+                name: 'link',
+                type: 'object',
+                title: 'Link',
+                fields: [
+                  {
+                    name: 'href',
+                    type: 'url',
+                    title: 'Url',
+                  },
+                ],
+              },
+            ],
+          },
+          styles: [],
+        }),
+      ],
+    }),
+    defineField({
+      name: 'link',
+      type: 'object',
+      title: 'Link',
+      fields: [
+        { name: 'linkTitle', type: 'string', title: 'Display name' },
+        {
+          name: 'href',
+          type: 'url',
+          title: 'Url',
+        },
+      ],
     }),
     defineField({
       name: 'language',

@@ -62,7 +62,7 @@ export function HomeLayout({ localizedProjects, language }: HomeLayoutProps) {
               <div className="absolute bottom-1 left-0 p-8">
                 <ProjectLink project={project} language={language}>
                   <h1 className="text-white  mix-blend-difference">
-                    {project.currentTitle} a
+                    {project.currentTitle}
                   </h1>
                 </ProjectLink>
               </div>

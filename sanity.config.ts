@@ -6,6 +6,7 @@ import { presentationTool } from 'sanity/presentation'
 import { documentInternationalization } from '@sanity/document-internationalization'
 import { languageFilter } from '@sanity/language-filter'
 import { internationalizedArray } from 'sanity-plugin-internationalized-array'
+import { muxInput } from 'sanity-plugin-mux-input'
 
 import { apiVersion, dataset, projectId, studioUrl } from '@/sanity/lib/api'
 
@@ -82,6 +83,7 @@ export default defineConfig({
     }),
 
     visionTool(),
+    muxInput(),
   ],
   schema: {
     types: schemaTypes,

@@ -114,3 +114,28 @@ export interface LocalizedProject {
   }
   translations: TranslationHome[] // Define a more specific type for translations if applicable
 }
+
+export interface MusicPagePayload {
+  _id: string
+  title: string
+  slug: {
+    _type: 'slug'
+    current: string
+  }
+  summary: string
+  content: PortableTextBlock[]
+  language: string
+  videoBanner: {
+    _type: 'mux.video'
+    asset: {
+      _weak: boolean
+      _ref: string
+      _type: 'reference'
+    }
+  }
+  link: {
+    linkTitle: string
+    href: string
+    _id: string
+  }
+}

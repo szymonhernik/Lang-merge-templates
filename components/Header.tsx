@@ -40,14 +40,6 @@ export default function Header() {
           )}
         >
           <Link
-            href={'/' + langSelected + '/about'}
-            className={clsx('hover:text-white', {
-              'text-white': pathname === `/${langSelected}/about`,
-            })}
-          >
-            {langSelected === 'en' ? 'About' : 'Over'}
-          </Link>
-          <Link
             href={'/' + langSelected + '/works'}
             className={clsx('hover:text-white', {
               'text-white': pathname.startsWith(`/${langSelected}/works`),
@@ -55,6 +47,15 @@ export default function Header() {
           >
             {langSelected === 'en' ? 'Works' : 'Werken'}
           </Link>
+          <Link
+            href={'/' + langSelected + '/about'}
+            className={clsx('hover:text-white', {
+              'text-white': pathname === `/${langSelected}/about`,
+            })}
+          >
+            {langSelected === 'en' ? 'About' : 'Over'}
+          </Link>
+
           <Link
             href={'/' + langSelected + '/music'}
             className={clsx('hover:text-white', {

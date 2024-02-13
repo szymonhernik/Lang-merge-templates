@@ -292,3 +292,23 @@ export const ABOUT_QUERY = groq`*[_type == "aboutPage" && language == $language]
   highlightedContent,
   pageBuilder,
 }`
+
+export const MUSIC_QUERY = groq`*[_type == "musicPage" && language == $language][0]{
+  _id,
+  title,
+  slug,
+  summary,
+  content,
+  language,
+  "videoBanner": *[_type == "musicPage" && language == $defaultLocale][0].videoMusic {
+    _type,
+    video {
+     _type,
+       asset-> {
+        playbackId
+       }
+    }
+  },
+  content,
+  link
+}`
