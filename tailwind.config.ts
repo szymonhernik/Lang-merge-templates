@@ -1,10 +1,10 @@
-const { theme } = require('@sanity/demo/tailwind')
+// const { theme } = require('@sanity/demo/tailwind')
+// const colors = require('tailwindcss/colors')
 
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+import type { Config } from 'tailwindcss'
+const config: Config = {
   content: ['./app/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
   theme: {
-    ...theme,
     // Overriding fontFamily to use @next/font loaded families
     fontFamily: {
       mono: 'var(--font-mono)',
@@ -22,3 +22,5 @@ module.exports = {
   },
   plugins: [require('@tailwindcss/typography')],
 }
+
+export default config

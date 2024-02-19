@@ -15,9 +15,6 @@ type ProjectLinksProps = {
 
 export default function ProjectLinks(props: ProjectLinksProps) {
   const { projects } = props
-  const [selectedProject, setSelectedProject] = useState<
-    TranslationReach | undefined | null
-  >(null)
 
   const params = useParams()
   const language = Array.isArray(params.language)
@@ -34,25 +31,13 @@ export default function ProjectLinks(props: ProjectLinksProps) {
     [language, projects],
   )
 
-  // Set the initial project to the first one with an available image
-  useEffect(() => {
-    const initialProject = localeProjects.find(
-      (project) => project?.coverImage != null,
-    )
-    setSelectedProject(initialProject)
-  }, [localeProjects])
-
-  const handleMouseEnter = (project) => {
-    setSelectedProject(project)
-  }
-
   if (!localeProjects?.length) {
     return null
   }
 
   return (
     <div className="flex flex-col gap-8 justify-center">
-      <div className="w-full h-48">
+      {/* <div className="w-full h-48">
         {selectedProject?.coverImage && (
           <ImageBox
             classesWrapper="h-full "
@@ -65,26 +50,29 @@ export default function ProjectLinks(props: ProjectLinksProps) {
         {selectedProject?.hasLinkedFile && (
           <div className="shadow-md h-full mx-auto aspect-[3/4] p-4 ">PDF</div>
         )}
-      </div>
+      </div> */}
       <ul className="">
         {localeProjects.map((project, index) =>
           project ? (
             <li
               key={project.path}
-              className="flex items-center text-xl "
-              onMouseEnter={() => handleMouseEnter(project)}
+              className="flex items-center justify-between text-base border-neutral-500 last:border-b-0 border-b-[0.5px] py-4"
             >
               <ListLink href={project.path} locale={project.language}>
                 <div
-                  className={`flex transition-colors duration-200 hover:underline ${
-                    selectedProject?.path === project.path
-                      ? 'text-black'
-                      : 'text-gray-500'
-                  }`}
+                  className={`flex transition-colors duration-200 hover:underline text-gray-500 `}
                 >
                   {String(index + 1).padEnd(2, '.')} {project.title}
                 </div>
               </ListLink>
+              {project.coverImage && (
+                <ImageBox
+                  classesWrapper="w-auto h-16" // Set appropriate size for the images
+                  classesImage="w-auto h-full object-cover" // Adjust object-fit as needed
+                  image={project.coverImage}
+                  alt={project.coverImage.alt || 'Project image'}
+                />
+              )}
             </li>
           ) : null,
         )}
