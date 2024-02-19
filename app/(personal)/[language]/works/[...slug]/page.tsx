@@ -63,7 +63,7 @@ export async function generateMetadata({ params }) {
         portfolio.slug[language]?.current ===
         project.portfolio[language].current,
     )
-    console.log('matchingPortfolio', matchingPortfolio)
+    // console.log('matchingPortfolio', matchingPortfolio)
 
     const isSoloProject = matchingPortfolio?.projectsCount === 1
 
@@ -108,6 +108,8 @@ export default async function Page({ params }) {
     project = slug[0]
   }
 
+  console.log('slug', slug)
+
   const queryParams = { ...COMMON_PARAMS, slug: project, language }
   const { isEnabled } = draftMode()
 
@@ -119,7 +121,7 @@ export default async function Page({ params }) {
   if (!initial.data) {
     notFound()
   }
-
+  const slugPage = slug
   const projectPaths = createProjectReachLinks(
     initial.data.portfolio.projects,
     initial.data.portfolio.slug,
@@ -145,7 +147,7 @@ export default async function Page({ params }) {
         params={isEnabled ? queryParams : DEFAULT_EMPTY_PARAMS}
         initial={initial}
       >
-        <ProjectLayout data={{ ...initial.data, galleries }} />
+        <ProjectLayout data={{ ...initial.data, galleries, slugPage }} />
       </LiveQueryWrapper>
     </>
   )

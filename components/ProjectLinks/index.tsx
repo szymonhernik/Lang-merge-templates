@@ -56,7 +56,7 @@ export default function ProjectLinks(props: ProjectLinksProps) {
           project ? (
             <li
               key={project.path}
-              className="flex items-center justify-between text-base border-neutral-500 last:border-b-0 border-b-[0.5px] py-4"
+              className="flex items-start justify-between text-base border-neutral-500 last:border-b-0 border-b-[0.5px] py-4"
             >
               <ListLink href={project.path} locale={project.language}>
                 <div

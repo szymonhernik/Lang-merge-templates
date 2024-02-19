@@ -193,3 +193,22 @@ export function createPortfolioSummary(
     .map((part) => vercelStegaSplit(part.toString()).cleaned)
     .join(` `)
 }
+
+// A function to get project title based on current language
+export const getProjectTitleByLanguage = (project, language) => {
+  const translation = project.translations?.find((t) => t.language === language)
+  return translation ? translation.title : project.title
+}
+// console.log('slugPage', slugPage)
+
+export const filterOutCurrentProject = (projects, currentSlug, language) => {
+  return projects.filter((project) => {
+    const translation = project.translations?.find(
+      (t) => t.language === language,
+    )
+    const projectSlug = translation
+      ? translation.slug.current
+      : project.slug.current
+    return projectSlug !== currentSlug
+  })
+}
