@@ -18,5 +18,5 @@ export type TranslationReach = {
 export type Translation = {
   path: string
   language: string
-  title: string
+  title?: string
 }
