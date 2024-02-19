@@ -47,9 +47,33 @@ export async function generateStaticParams() {
 
   return params
 }
+// or Dynamic metadata
+export async function generateMetadata({ params }) {
+  const projects = await getProjectsWithSlugs() // Fetch projects and their portfolio slugs
+  // Extract slug and language from params
+  const { slug, language } = params
+  console.log('slug', slug)
+  console.log('language', language)
 
-export const metadata: Metadata = {
-  title: 'Project Page',
+  // Needs to check if the project is the only one in the group or if group has more.
+
+  // Find the current project based on the slug and language
+  const currentProject = projects.find((project) => {
+    console.log('project', project)
+    console.log('slug[0]', slug[0])
+    const portfolioSlugMatches =
+      project.portfolio[language]?.current === slug[0]
+    const languageMatches = project.language === language // Assuming project.language directly reflects the project's language
+    return portfolioSlugMatches && languageMatches
+  })
+  console.log('currentProject', currentProject)
+
+  // Construct a title for the page based on the current project's details
+  const title = currentProject ? `${currentProject.title}` : 'No title'
+
+  return {
+    title: title,
+  }
 }
 
 export default async function Page({ params }) {
@@ -74,8 +98,6 @@ export default async function Page({ params }) {
   if (!initial.data) {
     notFound()
   }
-
-  // console.log('initial.data', initial.data.portfolio.projects[0].pageBuilder)
 
   const projectPaths = createProjectReachLinks(
     initial.data.portfolio.projects,
