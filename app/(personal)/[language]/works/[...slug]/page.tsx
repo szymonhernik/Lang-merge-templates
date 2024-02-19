@@ -21,8 +21,7 @@ import { Suspense } from 'react'
 
 export async function generateStaticParams() {
   const projects = await getProjectsWithSlugs() // Fetch projects and their portfolio slugs
-  const portfolios = await fetchPortfoliosWithProjectsCount() // Hypothetical function to fetch portfolios with projects count
-
+  const portfolios = await fetchPortfoliosWithProjectsCount()
   // Map portfolio projects count to each project using slug matching
   const params = projects.map((project) => {
     // Find the portfolio that matches the project's slug in the project's language
@@ -41,32 +40,43 @@ export async function generateStaticParams() {
 
     return {
       language: project.language,
-      slug: slugArray, // Assuming you need a string path for each route
+      slug: slugArray,
     }
   })
 
   return params
 }
-// or Dynamic metadata
+
 export async function generateMetadata({ params }) {
-  const projects = await getProjectsWithSlugs() // Fetch projects and their portfolio slugs
+  const projects = await getProjectsWithSlugs()
+  const portfolios = await fetchPortfoliosWithProjectsCount()
+
   // Extract slug and language from params
   const { slug, language } = params
-  console.log('slug', slug)
-  console.log('language', language)
-
-  // Needs to check if the project is the only one in the group or if group has more.
+  // console.log('slug', slug)
+  // console.log('language', language)
 
   // Find the current project based on the slug and language
   const currentProject = projects.find((project) => {
-    console.log('project', project)
-    console.log('slug[0]', slug[0])
-    const portfolioSlugMatches =
-      project.portfolio[language]?.current === slug[0]
-    const languageMatches = project.language === language // Assuming project.language directly reflects the project's language
-    return portfolioSlugMatches && languageMatches
+    const matchingPortfolio = portfolios.find(
+      (portfolio) =>
+        portfolio.slug[language]?.current ===
+        project.portfolio[language].current,
+    )
+    // console.log('project', project)
+
+    const isSoloProject = matchingPortfolio?.projectsCount === 1
+
+    const slugMatches = isSoloProject
+      ? slug.length === 1 && slug[0] === project.project
+      : slug.length === 2 &&
+        slug[0] === matchingPortfolio.slug[language]?.current &&
+        slug[1] === project.project
+
+    const languageMatches = project.language === language //
+    return slugMatches && languageMatches
   })
-  console.log('currentProject', currentProject)
+  // console.log('currentProject', currentProject)
 
   // Construct a title for the page based on the current project's details
   const title = currentProject ? `${currentProject.title}` : 'No title'
