@@ -64,6 +64,7 @@ export const PORTFOLIO_SLUGS_QUERY = groq`*[_type == "portfolio" && defined(slug
 export const PORTFOLIOS_WITH_PROJECTS_COUNT_QUERY = groq`*[_type == "portfolio" ]{
   _id,
   slug,
+  title,
   "projectsCount": count(projects)
 }`
 

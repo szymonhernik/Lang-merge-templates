@@ -63,7 +63,7 @@ export async function generateMetadata({ params }) {
         portfolio.slug[language]?.current ===
         project.portfolio[language].current,
     )
-    // console.log('project', project)
+    console.log('matchingPortfolio', matchingPortfolio)
 
     const isSoloProject = matchingPortfolio?.projectsCount === 1
 
@@ -73,13 +73,24 @@ export async function generateMetadata({ params }) {
         slug[0] === matchingPortfolio.slug[language]?.current &&
         slug[1] === project.project
 
-    const languageMatches = project.language === language //
-    return slugMatches && languageMatches
+    return slugMatches
   })
-  // console.log('currentProject', currentProject)
 
   // Construct a title for the page based on the current project's details
-  const title = currentProject ? `${currentProject.title}` : 'No title'
+  // If the project is part of a portfolio with more than one element, append "| portfolio name"
+  let title = currentProject ? `${currentProject.title}` : 'No title'
+  if (currentProject) {
+    const matchingPortfolio = portfolios.find(
+      (portfolio) =>
+        portfolio.slug[language]?.current ===
+        currentProject.portfolio[language].current,
+    )
+    // Check if the portfolio has more than one project
+    if (matchingPortfolio && matchingPortfolio.projectsCount > 1) {
+      // Append portfolio name in the correct language
+      title += ` | ${matchingPortfolio.title[language]}`
+    }
+  }
 
   return {
     title: title,
