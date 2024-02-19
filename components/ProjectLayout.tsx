@@ -11,6 +11,7 @@ import {
   filterOutCurrentProject,
   getProjectTitleByLanguage,
 } from '@/lib/helpers'
+import PortfolioNavigator from './PortfolioNavigator'
 
 type ProjectLayoutProps = {
   data?: any
@@ -43,27 +44,15 @@ export async function ProjectLayout(props: ProjectLayoutProps) {
         <section className="">
           <div className="container mx-auto ">
             <header className="flex flex-col gap-y-4 w-1/4">
-              <h1 className="text-xl ">{portfolio.title[language]}</h1>
+              <h1 className="text-3xl ">{portfolio.title[language]}</h1>
               {portfolio.projects.length > 1 && (
-                <div>
-                  <h2 className="text-lg pb-4"> {title} </h2>
-                  <p>
-                    Other in{' '}
-                    <span className="italic">{portfolio.title[language]}</span>:
-                  </p>
-                  {otherProjects.map((project, index) => (
-                    <React.Fragment key={index}>
-                      <ListOfChildrenProjects
-                        project={project}
-                        language={language}
-                        slugPage={slugPage}
-                        getProjectTitle={getProjectTitleByLanguage}
-                      />
-                      {index < otherProjects.length - 1 ? ', ' : ''}
-                    </React.Fragment>
-                  ))}
-                  <p></p>
-                </div>
+                <PortfolioNavigator
+                  portfolio={portfolio}
+                  title={title}
+                  language={language}
+                  otherProjects={otherProjects}
+                  slugPage={slugPage}
+                />
               )}
             </header>
 
