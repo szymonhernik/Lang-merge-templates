@@ -29,10 +29,8 @@ const tonka_italic = localFont({
 import '@/styles/globals.css'
 
 import { draftMode } from 'next/headers'
-import { SanityDocument } from 'next-sanity'
 
 import { COMMON_PARAMS } from '@/lib/constants'
-import { loadQuery } from '@/sanity/lib/store'
 
 import VisualEditing from '@/components/VisualEditing'
 import { LanguageProvider } from '@/contexts/LangContext'

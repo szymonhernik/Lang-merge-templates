@@ -18,6 +18,9 @@ const config: Config = {
       height: {
         header: '100px',
       },
+      screens: {
+        '3xl': '1800px',
+      },
     },
   },
   plugins: [require('@tailwindcss/typography')],

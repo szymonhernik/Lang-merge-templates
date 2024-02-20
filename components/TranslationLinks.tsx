@@ -72,7 +72,7 @@ export default function TranslationLinks(props: TranslationLinksProps) {
               locale={version.language}
               className="flex items-center group"
             >
-              <span className="block uppercase font-mono tracking-widest px-1">
+              <span className="block uppercase font-mono tracking-widest first:pl-0 px-3">
                 {version.language}
               </span>
               <span className="sr-only">{version.title}</span>

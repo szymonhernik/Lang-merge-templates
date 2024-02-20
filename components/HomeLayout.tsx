@@ -33,16 +33,16 @@ export function HomeLayout({ localizedProjects, language }: HomeLayoutProps) {
         }}
         speed={1000}
         modules={[Autoplay]}
-        className="mySwiper  w-screen h-screen "
+        className="mySwiper w-screen h-dvh "
       >
         {localizedProjects?.map((project, key) => (
           <div key={key} className="w-full h-screen ">
             <SwiperSlide>
               {project.coverImage && (
-                <div className="w-full">
+                <div className="w-full h-full bg-stone-400">
                   <Background
-                    classesWrapper="w-full h-screen overflow-hidden"
-                    classesImage=" object-cover object-center"
+                    classesWrapper="w-full h-full overflow-hidden "
+                    classesImage="object-cover h-full object-center"
                     image={
                       project.coverImageOptional
                         ? [project.coverImage, project.coverImageOptional]
