@@ -21,20 +21,24 @@ export default function Header() {
   return (
     <header
       className={clsx(
-        'text-sm text-white  fixed top-0 w-screen h-header flex z-[20] pt-4',
+        'text-sm text-white fixed top-0 w-screen h-header flex z-[20] pt-4',
         {
-          'mix-blend-difference': pathname !== `/${langSelected}`,
+          'text-black bg-white': !isHomePage,
         },
       )}
     >
-      <div className="px-6 py-4  w-screen 3xl:mx-auto max-w-screen-3xl text-base flex items-start  justify-between gap-12">
+      <div
+        className={clsx(
+          'px-6 py-4  w-screen 3xl:mx-auto max-w-screen-3xl text-base flex items-start  justify-between gap-12',
+        )}
+      >
         <div className="space-y-3">
           <h1 className="mr-auto ">
             <Link href={`/${clean(langSelected)}`} className="">
               <span>Narges Mohammadi</span>
             </Link>
           </h1>
-          <div className="md:hidden">
+          <div className={clsx('md:hidden', { hidden: !isHomePage })}>
             <TranslationLinks translations={translations} />
           </div>
         </div>

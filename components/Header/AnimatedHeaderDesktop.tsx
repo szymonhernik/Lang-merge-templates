@@ -72,9 +72,14 @@ export default function AnimatedHeaderDesktop({
             <motion.div className=" flex flex-col gap-1">
               <Link
                 href={'/' + langSelected + '/works'}
-                className={clsx('hover:text-white pr-4 text-gray-400', {
-                  'text-white': pathname.startsWith(`/${langSelected}/works`),
-                })}
+                className={clsx(
+                  '  pr-4 ',
+                  { 'text-white hover:text-white': isHomePage },
+                  { 'text-gray-500 hover:text-black': !isHomePage },
+                  {
+                    'text-black': pathname.startsWith(`/${langSelected}/works`),
+                  },
+                )}
               >
                 {langSelected === 'en' ? 'Works' : 'Werken'}
               </Link>
@@ -85,9 +90,14 @@ export default function AnimatedHeaderDesktop({
 
               <Link
                 href={'/' + langSelected + '/about'}
-                className={clsx('hover:text-white pr-4 text-gray-400', {
-                  'text-white': pathname === `/${langSelected}/about`,
-                })}
+                className={clsx(
+                  '  pr-4 ',
+                  { 'text-white hover:text-white': isHomePage },
+                  { 'text-gray-500 hover:text-black': !isHomePage },
+                  {
+                    'text-black': pathname === `/${langSelected}/about`,
+                  },
+                )}
               >
                 {langSelected === 'en' ? 'About' : 'Over'}
               </Link>
@@ -97,9 +107,14 @@ export default function AnimatedHeaderDesktop({
 
               <Link
                 href={'/' + langSelected + '/music'}
-                className={clsx('hover:text-white pr-4 text-gray-400', {
-                  'text-white': pathname === `/${langSelected}/music`,
-                })}
+                className={clsx(
+                  '  pr-4 ',
+                  { 'text-white hover:text-white': isHomePage },
+                  { 'text-gray-500 hover:text-black': !isHomePage },
+                  {
+                    'text-white': pathname === `/${langSelected}/music`,
+                  },
+                )}
               >
                 {langSelected === 'en' ? 'Music' : 'Muziek'}
               </Link>

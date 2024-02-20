@@ -17,6 +17,7 @@ type TranslationLinksProps = {
 export default function TranslationLinks(props: TranslationLinksProps) {
   const { translations = [] } = props
   const pathname = usePathname()
+  const isHomePage = pathname === '/en' || pathname === '/nl'
 
   const params = useParams()
   const language = Array.isArray(params.language)
@@ -61,8 +62,11 @@ export default function TranslationLinks(props: TranslationLinksProps) {
         <li
           key={version.language}
           className={clsx(
-            version.language === language
+            isHomePage && version.language === language
               ? `pointer-events-none text-white`
+              : `text-gray-400 hover:text-white`,
+            !isHomePage && version.language === language
+              ? `pointer-events-none text-black`
               : `text-gray-400 hover:text-white`,
           )}
         >

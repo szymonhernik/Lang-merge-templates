@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 const AnimatedBorder = ({ isCurrentPath }) => {
   return (
     <motion.div
-      className="w-[2px] bg-white"
+      className="w-[2px] bg-black"
       initial={{ height: '1px', opacity: 0 }}
       animate={{
         height: isCurrentPath ? '50px' : '1px',
