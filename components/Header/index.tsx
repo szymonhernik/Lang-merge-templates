@@ -10,6 +10,7 @@ import { usePathname } from 'next/navigation'
 import clsx from 'clsx'
 import { i18n } from '@/languages'
 import { AnimatePresence, motion } from 'framer-motion'
+import AnimatedBorder from './AnimatedLines'
 
 export default function Header() {
   const { currentLanguage, translations } = useContext(LanguageContext)
@@ -118,7 +119,12 @@ export default function Header() {
             MENU
           </motion.div>
           <motion.div
-            className="border-r-[1.5px] w-px h-12 "
+            className={clsx(
+              'border-r-[1.5px] w-px h-12 transition-opacity delay-50',
+              {
+                'opacity-0': pathname !== `/${langSelected}`,
+              },
+            )}
             variants={borderVariants}
             initial="animate"
             animate={isHovered ? 'animate' : 'initial'}
@@ -132,32 +138,43 @@ export default function Header() {
               animate={isHovered ? 'visible' : 'hidden'}
               // exit="hidden"
             >
-              <motion.div className=" flex flex-col gap-2">
+              <motion.div className=" flex flex-col gap-1">
                 <Link
                   href={'/' + langSelected + '/works'}
-                  className={clsx('hover:text-white pr-4', {
+                  className={clsx('hover:text-white pr-4 text-gray-400', {
                     'text-white': pathname.startsWith(`/${langSelected}/works`),
                   })}
                 >
                   {langSelected === 'en' ? 'Works' : 'Werken'}
                 </Link>
+
+                <AnimatedBorder
+                  isCurrentPath={pathname === `/${langSelected}/works`}
+                />
+
                 <Link
                   href={'/' + langSelected + '/about'}
-                  className={clsx('hover:text-white pr-4', {
+                  className={clsx('hover:text-white pr-4 text-gray-400', {
                     'text-white': pathname === `/${langSelected}/about`,
                   })}
                 >
                   {langSelected === 'en' ? 'About' : 'Over'}
                 </Link>
+                <AnimatedBorder
+                  isCurrentPath={pathname === `/${langSelected}/about`}
+                />
 
                 <Link
                   href={'/' + langSelected + '/music'}
-                  className={clsx('hover:text-white pr-4', {
+                  className={clsx('hover:text-white pr-4 text-gray-400', {
                     'text-white': pathname === `/${langSelected}/music`,
                   })}
                 >
                   {langSelected === 'en' ? 'Music' : 'Muziek'}
                 </Link>
+                <AnimatedBorder
+                  isCurrentPath={pathname === `/${langSelected}/music`}
+                />
               </motion.div>
             </motion.div>
           </AnimatePresence>
