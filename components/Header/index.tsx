@@ -3,8 +3,8 @@
 import Link from 'next/link'
 import React, { useContext, useEffect, useState } from 'react'
 
-import { clean } from './Clean'
-import TranslationLinks from './TranslationLinks'
+import { clean } from '../Clean'
+import TranslationLinks from '../TranslationLinks'
 import { LanguageContext } from '@/contexts/LangContext'
 import { usePathname } from 'next/navigation'
 import clsx from 'clsx'
@@ -15,7 +15,9 @@ export default function Header() {
   const { currentLanguage, translations } = useContext(LanguageContext)
   const pathname = usePathname()
   const langSelected = pathname.split('/')[1]
-  const [isHovered, setIsHovered] = useState(pathname !== `/${langSelected}`)
+  const isHomePage = pathname === `/${langSelected}`
+
+  const [isHovered, setIsHovered] = useState(!isHomePage)
 
   // Update the isHovered state based on the pathname
   useEffect(() => {
@@ -83,13 +85,17 @@ export default function Header() {
             <span>Narges Mohammadi</span>
           </Link>
         </h1>
-        <motion.div
-          variants={transVariants}
-          initial="hidden"
-          animate={isHovered ? 'visible' : 'hidden'}
-        >
+        {isHomePage ? (
+          <motion.div
+            variants={transVariants}
+            initial="hidden"
+            animate={isHovered ? 'visible' : 'hidden'}
+          >
+            <TranslationLinks translations={translations} />
+          </motion.div>
+        ) : (
           <TranslationLinks translations={translations} />
-        </motion.div>
+        )}
         <motion.div
           className="flex gap-12 items-start w-24 "
           onMouseEnter={() =>

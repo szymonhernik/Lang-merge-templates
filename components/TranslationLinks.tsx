@@ -56,7 +56,7 @@ export default function TranslationLinks(props: TranslationLinksProps) {
   }, [translations, initialTranslations])
 
   return (
-    <ul className="inline-flex items-center">
+    <ul className="inline-flex items-center z-[20]">
       {availableTranslations.map((version) => (
         <li
           key={version.language}
