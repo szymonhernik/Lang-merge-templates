@@ -58,15 +58,19 @@ export default function Header() {
   }
 
   const linksVariants = {
-    hidden: {
-      opacity: 0,
-      x: 0,
-      transition: { duration: 0.5, ease: 'easeOut' },
+    initial: {
+      opacity: 1,
+      x: -100, // Adjust if you want the links to start from a specific position
     },
     visible: {
       opacity: 1,
-      x: -100,
-      transition: { duration: 0.5, ease: 'easeOut', delay: 0.05 },
+      x: -100, // Adjust to ensure it's visible and not displaced on hover
+      transition: { duration: 0.5, ease: 'easeOut' },
+    },
+    hidden: {
+      opacity: 0,
+      x: 0, // Or any value to slide out
+      transition: { duration: 0.5, ease: 'easeOut' },
     },
   }
 
@@ -108,7 +112,7 @@ export default function Header() {
           <motion.div
             className=""
             variants={menuVariants}
-            initial="hidden"
+            initial="visible"
             animate={isHovered ? 'visible' : 'hidden'}
           >
             MENU
@@ -116,49 +120,46 @@ export default function Header() {
           <motion.div
             className="border-r-[1.5px] w-px h-12 "
             variants={borderVariants}
-            initial="initial"
+            initial="animate"
             animate={isHovered ? 'animate' : 'initial'}
           />
           <AnimatePresence>
-            {isHovered && (
-              <motion.div
-                className="origin-left "
-                variants={linksVariants}
-                initial="hidden"
-                animate="visible"
-                exit="hidden"
-              >
-                <motion.div className=" flex flex-col gap-2">
-                  <Link
-                    href={'/' + langSelected + '/works'}
-                    className={clsx('hover:text-white pr-4', {
-                      'text-white': pathname.startsWith(
-                        `/${langSelected}/works`,
-                      ),
-                    })}
-                  >
-                    {langSelected === 'en' ? 'Works' : 'Werken'}
-                  </Link>
-                  <Link
-                    href={'/' + langSelected + '/about'}
-                    className={clsx('hover:text-white pr-4', {
-                      'text-white': pathname === `/${langSelected}/about`,
-                    })}
-                  >
-                    {langSelected === 'en' ? 'About' : 'Over'}
-                  </Link>
+            <motion.div
+              className="origin-left "
+              variants={linksVariants}
+              initial="initial"
+              // animate="visible"
+              animate={isHovered ? 'visible' : 'hidden'}
+              // exit="hidden"
+            >
+              <motion.div className=" flex flex-col gap-2">
+                <Link
+                  href={'/' + langSelected + '/works'}
+                  className={clsx('hover:text-white pr-4', {
+                    'text-white': pathname.startsWith(`/${langSelected}/works`),
+                  })}
+                >
+                  {langSelected === 'en' ? 'Works' : 'Werken'}
+                </Link>
+                <Link
+                  href={'/' + langSelected + '/about'}
+                  className={clsx('hover:text-white pr-4', {
+                    'text-white': pathname === `/${langSelected}/about`,
+                  })}
+                >
+                  {langSelected === 'en' ? 'About' : 'Over'}
+                </Link>
 
-                  <Link
-                    href={'/' + langSelected + '/music'}
-                    className={clsx('hover:text-white pr-4', {
-                      'text-white': pathname === `/${langSelected}/music`,
-                    })}
-                  >
-                    {langSelected === 'en' ? 'Music' : 'Muziek'}
-                  </Link>
-                </motion.div>
+                <Link
+                  href={'/' + langSelected + '/music'}
+                  className={clsx('hover:text-white pr-4', {
+                    'text-white': pathname === `/${langSelected}/music`,
+                  })}
+                >
+                  {langSelected === 'en' ? 'Music' : 'Muziek'}
+                </Link>
               </motion.div>
-            )}
+            </motion.div>
           </AnimatePresence>
         </motion.div>
       </div>
