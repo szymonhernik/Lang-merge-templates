@@ -1,45 +1,48 @@
 import clsx from 'clsx'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
-export default function MobileNavLinks({ pathname, langSelected }) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+export default function MobileNavLinks({
+  pathname,
+  langSelected,
+  isMenuOpen,
+  toggleMenu,
+}) {
+  // const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const isHomePage = pathname === `/${langSelected}`
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen)
-  }
+  const links = useMemo(
+    () => [
+      { href: '/works', en: 'Works', nl: 'Werken' },
+      { href: '/about', en: 'About', nl: 'Over' },
+      { href: '/music', en: 'Music', nl: 'Muziek' },
+    ],
+    [],
+  )
+
+  const renderLink = ({ href, en, nl }) => (
+    <Link
+      key={href}
+      href={`/${langSelected}${href}`}
+      className={clsx('pr-4 ', {
+        '': pathname.startsWith(`/${langSelected}${href}`),
+        'text-white': isHomePage,
+        'text-black': !isHomePage,
+      })}
+      onClick={(e) => {
+        if (!isHomePage || isMenuOpen) {
+          setTimeout(toggleMenu, 1000)
+        }
+      }}
+    >
+      {langSelected === 'en' ? en : nl}
+    </Link>
+  )
 
   return (
     <>
-      {pathname == `/${langSelected}` ? (
-        <>
-          <Link
-            href={'/' + langSelected + '/works'}
-            className={clsx(' pr-4 text-white', {
-              '': pathname.startsWith(`/${langSelected}/works`),
-            })}
-          >
-            {langSelected === 'en' ? 'Works' : 'Werken'}
-          </Link>
-
-          <Link
-            href={'/' + langSelected + '/about'}
-            className={clsx(' pr-4 text-white', {
-              '': pathname === `/${langSelected}/about`,
-            })}
-          >
-            {langSelected === 'en' ? 'About' : 'Over'}
-          </Link>
-
-          <Link
-            href={'/' + langSelected + '/music'}
-            className={clsx(' pr-4 text-white', {
-              '': pathname === `/${langSelected}/music`,
-            })}
-          >
-            {langSelected === 'en' ? 'Music' : 'Muziek'}
-          </Link>
-        </>
+      {isHomePage ? (
+        links.map(renderLink)
       ) : (
         <>
           <div className="z-[10]">
@@ -49,34 +52,8 @@ export default function MobileNavLinks({ pathname, langSelected }) {
           </div>
 
           {isMenuOpen && (
-            // ISOLATE THIS DIV FROM BLEND MODE OF THE PARENT A FEW LEVELS UP
-            <div className="fixed top-16 left-0 w-screen h-dvh bg-white flex flex-col justify-start items-center pt-24 text-xl gap-4">
-              <Link
-                href={'/' + langSelected + '/works'}
-                className={clsx(' pr-4', {
-                  '': pathname.startsWith(`/${langSelected}/works`),
-                })}
-              >
-                {langSelected === 'en' ? 'Works' : 'Werken'}
-              </Link>
-
-              <Link
-                href={'/' + langSelected + '/about'}
-                className={clsx(' pr-4', {
-                  '': pathname === `/${langSelected}/about`,
-                })}
-              >
-                {langSelected === 'en' ? 'About' : 'Over'}
-              </Link>
-
-              <Link
-                href={'/' + langSelected + '/music'}
-                className={clsx(' pr-4', {
-                  '': pathname === `/${langSelected}/music`,
-                })}
-              >
-                {langSelected === 'en' ? 'Music' : 'Muziek'}
-              </Link>
+            <div className="z-[-1] fixed top-headerSmall left-0 w-screen h-dvh bg-white flex flex-col justify-start items-center pt-24 text-xl gap-4">
+              {links.map(renderLink)}
             </div>
           )}
         </>

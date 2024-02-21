@@ -17,6 +17,7 @@ const config: Config = {
       },
       height: {
         header: '100px',
+        headerSmall: '88px',
       },
       screens: {
         '3xl': '1800px',

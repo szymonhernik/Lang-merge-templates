@@ -6,6 +6,7 @@ import Link from 'next/link'
 import clsx from 'clsx'
 import AnimatedBorder from './AnimatedLines'
 import TranslationLinks from '../TranslationLinks'
+import NavLinkWithBorder from './NavLinkWithBorder'
 
 export default function AnimatedHeaderDesktop({
   pathname,
@@ -16,8 +17,8 @@ export default function AnimatedHeaderDesktop({
   const [isHovered, setIsHovered] = useState(!isHomePage)
 
   useEffect(() => {
-    setIsHovered(pathname !== `/${langSelected}`)
-  }, [pathname])
+    setIsHovered(!isHomePage)
+  }, [pathname, isHomePage])
 
   return (
     <>
@@ -33,7 +34,7 @@ export default function AnimatedHeaderDesktop({
         <TranslationLinks translations={translations} />
       )}
       <motion.div
-        className="flex gap-12 items-start w-24 "
+        className="flex gap-12 items-start w-28 "
         onMouseEnter={() =>
           pathname === `/${langSelected}` && setIsHovered(true)
         }
@@ -70,57 +71,34 @@ export default function AnimatedHeaderDesktop({
             // exit="hidden"
           >
             <motion.div className=" flex flex-col gap-1">
-              <Link
-                href={'/' + langSelected + '/works'}
-                className={clsx(
-                  '  pr-4 ',
-                  { 'text-white hover:text-white': isHomePage },
-                  { 'text-gray-500 hover:text-black': !isHomePage },
-                  {
-                    'text-black': pathname.startsWith(`/${langSelected}/works`),
-                  },
-                )}
+              <NavLinkWithBorder
+                isHomePage={isHomePage}
+                href="/works"
+                isCurrentPath={pathname.startsWith(`/${langSelected}/works`)}
+                pathname={pathname}
+                langSelected={langSelected}
               >
                 {langSelected === 'en' ? 'Works' : 'Werken'}
-              </Link>
+              </NavLinkWithBorder>
 
-              <AnimatedBorder
-                isCurrentPath={pathname === `/${langSelected}/works`}
-              />
-
-              <Link
-                href={'/' + langSelected + '/about'}
-                className={clsx(
-                  '  pr-4 ',
-                  { 'text-white hover:text-white': isHomePage },
-                  { 'text-gray-500 hover:text-black': !isHomePage },
-                  {
-                    'text-black': pathname === `/${langSelected}/about`,
-                  },
-                )}
+              <NavLinkWithBorder
+                isHomePage={isHomePage}
+                href="/about"
+                isCurrentPath={pathname === `/${langSelected}/about`}
+                pathname={pathname}
+                langSelected={langSelected}
               >
                 {langSelected === 'en' ? 'About' : 'Over'}
-              </Link>
-              <AnimatedBorder
-                isCurrentPath={pathname === `/${langSelected}/about`}
-              />
-
-              <Link
-                href={'/' + langSelected + '/music'}
-                className={clsx(
-                  '  pr-4 ',
-                  { 'text-white hover:text-white': isHomePage },
-                  { 'text-gray-500 hover:text-black': !isHomePage },
-                  {
-                    'text-white': pathname === `/${langSelected}/music`,
-                  },
-                )}
+              </NavLinkWithBorder>
+              <NavLinkWithBorder
+                isHomePage={isHomePage}
+                href="/music"
+                isCurrentPath={pathname === `/${langSelected}/music`}
+                pathname={pathname}
+                langSelected={langSelected}
               >
                 {langSelected === 'en' ? 'Music' : 'Muziek'}
-              </Link>
-              <AnimatedBorder
-                isCurrentPath={pathname === `/${langSelected}/music`}
-              />
+              </NavLinkWithBorder>
             </motion.div>
           </motion.div>
         </AnimatePresence>

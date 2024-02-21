@@ -1,4 +1,4 @@
-import { Translation } from '@/lib/types'
+import { Translation, TranslationReach } from '@/lib/types'
 import { clsx } from 'clsx'
 import Link from 'next/link'
 import React, { PropsWithChildren } from 'react'
@@ -6,7 +6,7 @@ import ProjectLinks from './ProjectLinks'
 import ImageBox from './shared/ImageBox'
 
 type MultifaceProjectsProps = PropsWithChildren<{
-  projects: Translation[][]
+  projects: TranslationReach[][]
 }>
 
 export default function MultifaceProjects(props: MultifaceProjectsProps) {

@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import React, { useContext } from 'react'
+import React, { Suspense, useContext, useState } from 'react'
 
 import { clean } from '../Clean'
 import TranslationLinks from '../TranslationLinks'
@@ -18,12 +18,18 @@ export default function Header() {
   const langSelected = pathname.split('/')[1]
   const isHomePage = pathname === `/${langSelected}`
 
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
+
   return (
     <header
       className={clsx(
-        'text-sm text-white fixed top-0 w-screen h-header flex z-[20] pt-4',
+        'text-sm fixed top-0 w-screen h-headerSmall md:h-header flex z-[20] pt-4',
         {
-          'text-black bg-white': !isHomePage,
+          'text-white': isHomePage,
+        },
+        {
+          'text-black bg-white md:bg-transparent': !isHomePage,
         },
       )}
     >
@@ -38,20 +44,29 @@ export default function Header() {
               <span>Narges Mohammadi</span>
             </Link>
           </h1>
-          <div className={clsx('md:hidden', { hidden: !isHomePage })}>
-            <TranslationLinks translations={translations} />
-          </div>
+          {(isHomePage || isMenuOpen) && (
+            <div className="md:hidden">
+              <TranslationLinks translations={translations} />
+            </div>
+          )}
         </div>
         <div className="text-left flex flex-col gap-[0.3rem] md:hidden">
-          <MobileNavLinks pathname={pathname} langSelected={langSelected} />
+          <MobileNavLinks
+            pathname={pathname}
+            langSelected={langSelected}
+            isMenuOpen={isMenuOpen}
+            toggleMenu={toggleMenu}
+          />
         </div>
 
         <div className="hidden md:flex gap-12 items-start">
-          <AnimatedHeaderDesktop
-            pathname={pathname}
-            langSelected={langSelected}
-            translations={translations}
-          />
+          <Suspense>
+            <AnimatedHeaderDesktop
+              pathname={pathname}
+              langSelected={langSelected}
+              translations={translations}
+            />
+          </Suspense>
         </div>
       </div>
     </header>

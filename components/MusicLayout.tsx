@@ -18,7 +18,19 @@ export async function MusicLayout({ data }: MusicLayoutProps) {
   return (
     <div className="bg-black">
       <div className="sticky top-0 left-0 z-[0] h-[70vh] w-full overflow-hidden">
-        {videoBanner && <VideoBanner videoBanner={videoBanner} />}
+        {videoBanner && (
+          <Suspense
+            fallback={
+              <div className="w-full h-full bg-gradient-to-r from-amber-900">
+                <p className="animate-pulse text-white text-sm">
+                  Loading video
+                </p>
+              </div>
+            }
+          >
+            <VideoBanner videoBanner={videoBanner} />
+          </Suspense>
+        )}
       </div>
       <div className="z-[10] bg-black py-header  text-xl text-white relative">
         <div className="about flex flex-row gap-8 container mx-auto">

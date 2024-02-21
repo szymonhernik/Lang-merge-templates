@@ -13,6 +13,7 @@ import UpdateLangContext from '@/components/UpdateLangContext'
 
 import { MusicLayout } from '@/components/MusicLayout'
 import { MusicPagePayload } from '@/types'
+import { Suspense } from 'react'
 
 // export async function generateStaticParams() {
 //   const aboutPages = await getAboutsWithSlugs()
@@ -55,10 +56,12 @@ export default async function Page({ params }) {
 
   return (
     <>
-      <UpdateLangContext
-        currentLanguage={language}
-        translations={translations}
-      />
+      <Suspense fallback={<h1>Loading page...</h1>}>
+        <UpdateLangContext
+          currentLanguage={language}
+          translations={translations}
+        />
+      </Suspense>
       <LiveQueryWrapper
         isEnabled={isEnabled}
         query={isEnabled ? MUSIC_QUERY : ``}
@@ -66,6 +69,7 @@ export default async function Page({ params }) {
         initial={initial}
       >
         <MusicLayout data={initial.data} />
+
         {/* <h1 className="h-96 bg-yellow-200 w-96 p-16">{initial.data.title}</h1> */}
       </LiveQueryWrapper>
     </>

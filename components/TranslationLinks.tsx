@@ -61,14 +61,14 @@ export default function TranslationLinks(props: TranslationLinksProps) {
       {availableTranslations.map((version) => (
         <li
           key={version.language}
-          className={clsx(
-            isHomePage && version.language === language
-              ? `pointer-events-none text-white`
-              : `text-gray-400 hover:text-white`,
-            !isHomePage && version.language === language
-              ? `pointer-events-none text-black`
-              : `text-gray-400 hover:text-white`,
-          )}
+          className={clsx({
+            'pointer-events-none': version.language === language,
+            'text-white': isHomePage && version.language === language,
+            'hover:text-white': isHomePage && version.language !== language,
+            'text-black': !isHomePage && version.language === language,
+            'hover:text-black': !isHomePage && version.language !== language,
+            'text-gray-400': version.language !== language,
+          })}
         >
           {version?.path ? (
             <Link
