@@ -1,15 +1,34 @@
 'use client'
 import { Swiper, SwiperSlide } from 'swiper/react'
+import { FreeMode, Navigation } from 'swiper/modules'
 
 // Import Swiper styles
 import 'swiper/css'
 import 'swiper/css/pagination'
+import 'swiper/css/navigation'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 
 export async function Galleries({ galleries }) {
-  // console.log('galleries', galleries)
+  // State to hold whether we're on a mobile device
+  const [isMobile, setIsMobile] = useState(false)
+
+  // Effect hook to check screen width
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768)
+    }
+
+    // Check on mount
+    checkMobile()
+
+    // Add event listener for window resize
+    window.addEventListener('resize', checkMobile)
+
+    // Cleanup event listener on unmount
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   return (
     <>
@@ -20,10 +39,21 @@ export async function Galleries({ galleries }) {
           return (
             <React.Fragment key={gallery._key}>
               <Swiper
+                navigation={true}
+                freeMode={
+                  isMobile
+                    ? {
+                        enabled: true,
+                        momentumRatio: 0.2,
+                        momentumBounceRatio: 0.2,
+                        momentumVelocityRatio: 0.2,
+                      }
+                    : false
+                }
+                modules={[FreeMode, Navigation]}
                 slidesPerView={'auto'}
-                spaceBetween={30}
                 lazyPreloadPrevNext={2}
-                className="mySwiper h-[50vh] flex flex-col items-center justify-center !overflow-x-scroll"
+                className="mySwiper h-[50vh] flex flex-col items-center justify-center overflow-x-hidden select-none"
               >
                 {gallery.images.map((image, index) => {
                   // Define sizes based on aspect ratio
