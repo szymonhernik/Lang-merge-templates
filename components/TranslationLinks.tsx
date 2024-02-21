@@ -18,6 +18,7 @@ export default function TranslationLinks(props: TranslationLinksProps) {
   const { translations = [] } = props
   const pathname = usePathname()
   const isHomePage = pathname === '/en' || pathname === '/nl'
+  const isMusicPage = pathname === '/en/music' || pathname === '/nl/music'
 
   const params = useParams()
   const language = Array.isArray(params.language)
@@ -65,8 +66,10 @@ export default function TranslationLinks(props: TranslationLinksProps) {
             'pointer-events-none': version.language === language,
             'text-white': isHomePage && version.language === language,
             'hover:text-white': isHomePage && version.language !== language,
-            'text-black': !isHomePage && version.language === language,
-            'hover:text-black': !isHomePage && version.language !== language,
+            'text-black':
+              !isHomePage && version.language === language && !isMusicPage,
+            'hover:text-black':
+              !isHomePage && version.language !== language && !isMusicPage,
             'text-gray-400': version.language !== language,
           })}
         >

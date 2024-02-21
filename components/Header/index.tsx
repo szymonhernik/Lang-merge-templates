@@ -17,6 +17,7 @@ export default function Header() {
   const pathname = usePathname()
   const langSelected = pathname.split('/')[1]
   const isHomePage = pathname === `/${langSelected}`
+  const isMusicPage = pathname === `/${langSelected}/music`
 
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
@@ -24,12 +25,15 @@ export default function Header() {
   return (
     <header
       className={clsx(
-        'text-sm fixed top-0 w-screen h-headerSmall md:h-header flex z-[20] pt-4',
+        'text-sm fixed top-0 w-screen h-headerSmall md:h-header flex z-[20] pt-4  ',
         {
           'text-white': isHomePage,
         },
         {
-          'text-black bg-white md:bg-transparent': !isHomePage,
+          'text-black bg-white md:bg-transparent': !isHomePage && !isMusicPage,
+        },
+        {
+          'text-white bg-black md:bg-transparent': isMusicPage,
         },
       )}
     >
@@ -56,6 +60,8 @@ export default function Header() {
             langSelected={langSelected}
             isMenuOpen={isMenuOpen}
             toggleMenu={toggleMenu}
+            isMusicPage={isMusicPage}
+            isHomePage={isHomePage}
           />
         </div>
 

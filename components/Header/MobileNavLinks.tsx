@@ -7,10 +7,9 @@ export default function MobileNavLinks({
   langSelected,
   isMenuOpen,
   toggleMenu,
+  isMusicPage,
+  isHomePage,
 }) {
-  // const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const isHomePage = pathname === `/${langSelected}`
-
   const links = useMemo(
     () => [
       { href: '/works', en: 'Works', nl: 'Werken' },
@@ -19,6 +18,9 @@ export default function MobileNavLinks({
     ],
     [],
   )
+  console.log(pathname)
+
+  // const isActive = pathname.startsWith(`/${langSelected}${href}`);
 
   const renderLink = ({ href, en, nl }) => (
     <Link
@@ -27,11 +29,13 @@ export default function MobileNavLinks({
       className={clsx('pr-4 ', {
         '': pathname.startsWith(`/${langSelected}${href}`),
         'text-white': isHomePage,
-        'text-black': !isHomePage,
+        'text-black': !isHomePage && !isMusicPage,
+        'opacity-50':
+          !isHomePage && !pathname.startsWith(`/${langSelected}${href}`),
       })}
       onClick={(e) => {
         if (!isHomePage || isMenuOpen) {
-          setTimeout(toggleMenu, 1000)
+          setTimeout(toggleMenu, 500)
         }
       }}
     >
@@ -52,7 +56,9 @@ export default function MobileNavLinks({
           </div>
 
           {isMenuOpen && (
-            <div className="z-[-1] fixed top-headerSmall left-0 w-screen h-dvh bg-white flex flex-col justify-start items-center pt-24 text-xl gap-4">
+            <div
+              className={`z-[-1] fixed top-headerSmall left-0 w-screen h-dvh  flex flex-col justify-start items-center pt-24 text-xl gap-4 ${isMusicPage ? 'bg-black' : 'bg-white'}`}
+            >
               {links.map(renderLink)}
             </div>
           )}
