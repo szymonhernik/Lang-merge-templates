@@ -34,6 +34,7 @@ export const metadata: Metadata = {
 export default async function Page({ params }) {
   const { language, slug } = params
   // console.log('PARAMS ABOUT: ', params)
+  const currentLanguage = language
 
   const queryParams = { ...COMMON_PARAMS, language }
   const { isEnabled } = draftMode()
@@ -68,7 +69,9 @@ export default async function Page({ params }) {
         params={isEnabled ? queryParams : DEFAULT_EMPTY_PARAMS}
         initial={initial}
       >
-        <MusicLayout data={initial.data} />
+        {/* <div className="bg-black"> */}
+        <MusicLayout data={initial.data} currentLanguage={currentLanguage} />
+        {/* </div> */}
 
         {/* <h1 className="h-96 bg-yellow-200 w-96 p-16">{initial.data.title}</h1> */}
       </LiveQueryWrapper>

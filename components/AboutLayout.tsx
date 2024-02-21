@@ -24,10 +24,10 @@ export async function AboutLayout({ data, currentLanguage }: AboutLayoutProps) {
   } = data ?? {}
 
   return (
-    <div className="py-mobileSpace max-w-screen-3xl mx-auto">
+    <section className="py-mobileSpace max-w-screen-3xl mx-auto">
       <PageTitle currentLanguage={currentLanguage} currentPage={'About'} />
 
-      <div className="pt-mobileSpace md:pt-0 p-4 about w-full flex flex-col md:flex-row gap-8 font-medium">
+      <div className="pt-mobileSpace md:pt-0 p-6 about w-full flex flex-col md:flex-row gap-8 font-medium">
         <div className="lg:w-1/3 space-y-8">
           {highlightedContent && (
             <p className="text-2xl">{highlightedContent}</p>
@@ -83,6 +83,6 @@ export async function AboutLayout({ data, currentLanguage }: AboutLayoutProps) {
           </div>
         )}
       </div>
-    </div>
+    </section>
   )
 }
