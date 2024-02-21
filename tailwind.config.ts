@@ -14,9 +14,11 @@ const config: Config = {
     extend: {
       padding: {
         header: '100px',
+        mobileSpace: '20vh',
       },
       margin: {
         desktopSpace: '30vh',
+        mobileSpace: '20vh',
       },
       height: {
         header: '100px',
