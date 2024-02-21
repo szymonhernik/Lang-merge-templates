@@ -33,7 +33,7 @@ export function WorksLayout(props: WorksLayoutProps) {
   // console.log('portfolios', portfolios[0].projects)
 
   return (
-    <section className="w-full py-12">
+    <section className="w-full my-desktopSpace">
       <div className="2xl:max-w-[1536px] mx-auto grid gap-6 md:gap-8 px-4 md:px-6 lg:grid-cols-4 md:grid-cols-2 pt-header">
         {portfolios &&
           portfolios?.length > 0 &&

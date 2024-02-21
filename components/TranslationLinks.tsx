@@ -65,7 +65,8 @@ export default function TranslationLinks(props: TranslationLinksProps) {
           className={clsx({
             'pointer-events-none': version.language === language,
             'text-white': isHomePage && version.language === language,
-            'hover:text-white': isHomePage && version.language !== language,
+            'hover:text-white':
+              (isHomePage || isMusicPage) && version.language !== language,
             'text-black':
               !isHomePage && version.language === language && !isMusicPage,
             'hover:text-black':

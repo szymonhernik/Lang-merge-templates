@@ -1,9 +1,9 @@
 import { motion } from 'framer-motion'
 
-const AnimatedBorder = ({ isCurrentPath }) => {
+const AnimatedBorder = ({ isCurrentPath, isMusicPage }) => {
   return (
     <motion.div
-      className="w-[2px] bg-black"
+      className={`w-[2px] ${isMusicPage ? 'bg-white' : 'bg-black'}`}
       initial={{ height: '1px', opacity: 0 }}
       animate={{
         height: isCurrentPath ? '50px' : '1px',

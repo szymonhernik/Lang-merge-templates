@@ -14,6 +14,7 @@ export default function AnimatedHeaderDesktop({
   translations,
 }) {
   const isHomePage = pathname === `/${langSelected}`
+  const isMusicPage = pathname === `/${langSelected}/music`
   const [isHovered, setIsHovered] = useState(!isHomePage)
 
   useEffect(() => {
@@ -72,6 +73,7 @@ export default function AnimatedHeaderDesktop({
           >
             <motion.div className=" flex flex-col gap-1">
               <NavLinkWithBorder
+                isMusicPage={isMusicPage}
                 isHomePage={isHomePage}
                 href="/works"
                 isCurrentPath={pathname.startsWith(`/${langSelected}/works`)}
@@ -82,6 +84,7 @@ export default function AnimatedHeaderDesktop({
               </NavLinkWithBorder>
 
               <NavLinkWithBorder
+                isMusicPage={isMusicPage}
                 isHomePage={isHomePage}
                 href="/about"
                 isCurrentPath={pathname === `/${langSelected}/about`}
@@ -91,6 +94,7 @@ export default function AnimatedHeaderDesktop({
                 {langSelected === 'en' ? 'About' : 'Over'}
               </NavLinkWithBorder>
               <NavLinkWithBorder
+                isMusicPage={isMusicPage}
                 isHomePage={isHomePage}
                 href="/music"
                 isCurrentPath={pathname === `/${langSelected}/music`}

@@ -15,6 +15,9 @@ const config: Config = {
       padding: {
         header: '100px',
       },
+      margin: {
+        desktopSpace: '30vh',
+      },
       height: {
         header: '100px',
         headerSmall: '88px',

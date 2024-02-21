@@ -28,7 +28,7 @@ import { Suspense } from 'react'
 // }
 
 export const metadata: Metadata = {
-  title: 'Music page',
+  title: 'Music | Narges Mohammadi',
 }
 
 export default async function Page({ params }) {
@@ -56,7 +56,7 @@ export default async function Page({ params }) {
 
   return (
     <>
-      <Suspense fallback={<h1>Loading page...</h1>}>
+      <Suspense fallback={null}>
         <UpdateLangContext
           currentLanguage={language}
           translations={translations}
