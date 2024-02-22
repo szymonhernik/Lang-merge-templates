@@ -91,7 +91,11 @@ export async function ProjectLayout(props: ProjectLayoutProps) {
           </div>
         )}
 
-        {gallery && <Gallery gallery={gallery} />}
+        {gallery && (
+          <div className="w-screen -mx-6">
+            <Gallery gallery={gallery} />
+          </div>
+        )}
 
         {credits?.length > 0 && (
           <div className="font-medium  space-y-6">
