@@ -17,6 +17,17 @@ const PORTFOLIO_QUERY_PROJECTION = groq`
     language,
     title,
     slug,
+    coverImage{
+      alt,
+      asset->{
+        _id,
+        url,
+        "lqip": metadata.lqip,
+        "aspectRatio": metadata.dimensions.aspectRatio,
+        "width": metadata.dimensions.width,
+          "height": metadata.dimensions.height,
+      }
+    },
     projectGallery {
       images[]{
         _type,

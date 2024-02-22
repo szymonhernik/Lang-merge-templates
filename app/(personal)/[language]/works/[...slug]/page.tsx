@@ -101,6 +101,7 @@ export default async function Page({ params }) {
   const { slug, language } = params
   let project = ''
   const projectGroup = slug[0]
+  const currentLanguage = language
 
   if (slug.length === 2) {
     project = slug[1]
@@ -146,7 +147,9 @@ export default async function Page({ params }) {
         params={isEnabled ? queryParams : DEFAULT_EMPTY_PARAMS}
         initial={initial}
       >
-        <ProjectLayout data={{ ...initial.data, slugPage, gallery }} />
+        <ProjectLayout
+          data={{ ...initial.data, slugPage, gallery, currentLanguage }}
+        />
       </LiveQueryWrapper>
     </>
   )

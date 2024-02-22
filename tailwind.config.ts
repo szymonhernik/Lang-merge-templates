@@ -16,6 +16,9 @@ const config: Config = {
         header: '100px',
         mobileSpace: '20vh',
       },
+      inset: {
+        headerSmallSpace: '88px',
+      },
       margin: {
         desktopSpace: '30vh',
         mobileSpace: '20vh',
