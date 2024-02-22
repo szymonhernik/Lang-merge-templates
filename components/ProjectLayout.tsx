@@ -53,7 +53,7 @@ export async function ProjectLayout(props: ProjectLayoutProps) {
               )}
             </header>
 
-            <Gallery gallery={gallery} />
+            {gallery && <Gallery gallery={gallery} />}
 
             <div className="w-auto">
               {details?.length > 0 ? <Prose value={details} /> : null}
