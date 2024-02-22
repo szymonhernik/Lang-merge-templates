@@ -75,20 +75,21 @@ export function ProjectLayout(props: ProjectLayoutProps) {
     mouseYPosition = mouse.clientY ?? 0
   }
 
+  // Animation variants for the cursor text
+
   const variants = {
     default: {
       x: mouseXPosition,
       y: mouseYPosition,
-      // opacity: 0, // Make the element fully transparent
     },
     project: {
       fontSize: '12px',
       x: mouseXPosition,
       y: mouseYPosition - 40,
+      opacity: 1, // Make the cursor text fully visible
     },
     gallery: {
       opacity: 1,
-
       fontSize: '32px',
       x: mouseXPosition - 5,
       y: mouseYPosition - 30,
@@ -111,11 +112,11 @@ export function ProjectLayout(props: ProjectLayoutProps) {
     setIsHoverInitialized(false) // Reset hover initialization
   }
 
-  function galleryEnter(event) {
-    setCursorText({ arrow: '→', text: '1/8' })
-    setCursorVariant('gallery')
-    setIsHoverInitialized(false) // Reset hover initialization
-  }
+  // function galleryEnter(event) {
+  //   setCursorText({ arrow: '→', text: '1/8' })
+  //   setCursorVariant('gallery')
+  //   setIsHoverInitialized(false) // Reset hover initialization
+  // }
 
   function galleryLeave(event) {
     setCursorText({ arrow: '', text: '' })
@@ -135,10 +136,10 @@ export function ProjectLayout(props: ProjectLayoutProps) {
     const galleryMidpoint = galleryRect.left + galleryRect.width / 2
 
     // Determine if the mouse is on the left or right side of the gallery midpoint
-    if (mouseXPosition < galleryMidpoint / 2) {
+    if (mouseXPosition < galleryMidpoint / 1.5) {
       // Mouse is on the left side
       setCursorText({ arrow: '←', text: 'PREV' }) // Adjust text as needed
-    } else if (mouseXPosition > galleryMidpoint * 1.5) {
+    } else if (mouseXPosition > galleryMidpoint * 1.25) {
       // Mouse is on the right side
       if (galleryReachedEnd) {
         // If the gallery has reached the end, maybe alter the text or hide it
@@ -148,7 +149,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
         setCursorText({ arrow: '→', text: 'NEXT' })
       }
     } else {
-      setCursorText({ arrow: '', text: '' }) // Adjust text as needed
+      setCursorText({ arrow: '', text: '' })
     }
   }
   const handleGalleryEndReached = () => {
@@ -189,8 +190,8 @@ export function ProjectLayout(props: ProjectLayoutProps) {
           >
             <ImageBox
               classesWrapper="w-full h-screen "
-              width={1000}
-              height={1000}
+              width={2000}
+              height={2000}
               size="(max-width:640px) 100vw, (max-width: 768px) 50vw, 50vw"
               classesImage="object-cover  object-center lg:h-full lg:min-w-full "
               image={coverImage}
@@ -221,10 +222,12 @@ export function ProjectLayout(props: ProjectLayoutProps) {
           </div>
         )}
 
-        <div className=" lg:bg-white lg:w-[40vw] lg:z-[10] lg:-mr-6 lg:pl-8 lg:pr-12 lg:py-desktopSpace lg:shadow-shadowProject">
+        <div className=" lg:bg-white lg:w-[40vw] lg:z-[10] lg:-mr-6 lg:pl-8 lg:pr-12 lg:py-desktopSpace lg:shadow-shadowProject lg:min-h-screen">
           <div className="lg:max-w-screen-sm flex flex-col gap-12">
-            <div className="my-8 flex flex-col gap-y-4 w-3/4 text-center mx-auto md:max-w-screen-md lg:text-left lg:w-1/2 lg:mx-0 ">
-              <h1 className="text-3xl ">{portfolio.title[language]}</h1>
+            <div className="my-8 flex flex-col gap-y-4 w-3/4 text-center mx-auto md:max-w-screen-md lg:text-left lg:w-[80%] lg:mx-0 ">
+              <h1 className="text-3xl lg:text-4xl ">
+                {portfolio.title[language]}
+              </h1>
               {/* Reference from the portfolio that is a group */}
               {portfolio.projects.length > 1 && (
                 <PortfolioNavigator
@@ -236,7 +239,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
                 />
               )}
             </div>
-            <div className="font-medium space-y-2 md:max-w-screen-md md:mx-auto lg:text-sm lg:w-3/4 lg:mx-0 lg:mb-16">
+            <div className="font-medium space-y-2 md:max-w-screen-md md:mx-auto lg:text-sm lg:w-3/4 lg:mx-0 lg:mb-12">
               <span className="opacity-50">2023</span>
               {details?.length > 0 && <Prose value={details} />}
             </div>
@@ -251,7 +254,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
                 />
               </div>
             )}
-            <div className="lg:hidden sticky top-headerSmallSpace z-[10] left-0 w-screen -mx-6 flex flex-row gap-2 text-xs font-medium justify-center items-center bg-white py-4 opacity-80 ">
+            <div className="lg:hidden sticky top-headerSmallSpace z-[10] left-0 w-screen -mx-6 flex flex-row gap-2 text-xs font-medium justify-center items-center bg-white py-4 opacity-80  ">
               <p className="">{portfolio.title[language]}</p>
               <span className="text-base font-normal">↑</span>
             </div>
