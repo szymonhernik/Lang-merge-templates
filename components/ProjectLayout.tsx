@@ -1,5 +1,5 @@
 'use client'
-import React, { Suspense, useEffect, useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 
 import Prose from './Prose'
 
@@ -12,6 +12,8 @@ import Link from 'next/link'
 
 import ImageBox from './shared/ImageBox'
 import { CustomPortableText } from './CustomPortableText'
+// import useMouse from "@react-hook/mouse-position";
+// import { motion, useTransform } from "framer-motion";
 
 type ProjectLayoutProps = {
   data?: any
@@ -43,11 +45,21 @@ export function ProjectLayout(props: ProjectLayoutProps) {
   const coverImage = portfolio.projects[0].coverImage
   // console.log('coverImage', coverImage)
 
+  const [isCoverImageShown, setIsCoverImageShown] = useState(true)
+  const toggleCoverImage = () => {
+    setIsCoverImageShown(!isCoverImageShown)
+  }
+  // const coverImageClass = isCoverImageShown ? 'coverImageShown' : 'coverImageHidden';
+
   return (
     <>
       <section className="py-mobileSpace  md:overflow-hidden  mx-auto px-6 flex flex-col gap-12 text-sm  lg:items-end lg:py-0">
+        {/* Desktop Cover image */}
         {coverImage && (
-          <div className="hidden lg:block fixed top-0 left-0 h-screen w-[60vw] pr-[16vw]  z-[2]">
+          <div
+            className={`hidden lg:block fixed top-0 left-0 h-screen w-[60vw] pr-[16vw] z-[2] transition-all duration-500 hover:cursor-e-resize ${isCoverImageShown ? 'translate-x-0' : '-translate-x-full'}`}
+            onClick={toggleCoverImage}
+          >
             <ImageBox
               classesWrapper="w-full h-screen "
               width={1000}
@@ -64,8 +76,12 @@ export function ProjectLayout(props: ProjectLayoutProps) {
             back to works
           </Link>
         </div>
+
+        {/* Desktop gallery */}
         {gallery && (
-          <div className="hidden lg:block lg:fixed lg:left-0 lg:top-[25vh] lg:z-[0] lg:opacity-10">
+          <div
+            className={`hidden lg:block fixed left-0 top-[25vh] z-[0] transition-all duration-700 w-[59vw]  ${isCoverImageShown ? 'opacity-10 translate-x-[44vw]' : 'opacity-100 translate-x-0'}`}
+          >
             <Gallery gallery={gallery} />
           </div>
         )}
@@ -110,7 +126,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
                 <CustomPortableText value={text} />
               </div>
             )}
-
+            {/* Mobile&Tablet gallery */}
             {gallery && (
               <div className="w-screen md:w-full -mx-6 lg:hidden">
                 <Gallery gallery={gallery} />

@@ -49,7 +49,7 @@ export function Gallery({ gallery }) {
       modules={[FreeMode, Navigation]}
       slidesPerView={'auto'}
       lazyPreloadPrevNext={2}
-      className="!pl-6 w-screen   mySwiper h-[50vh] flex flex-col items-center justify-center overflow-x-hidden select-none"
+      className="!pl-6 w-screen  lg:w-full mySwiper h-[50vh] flex flex-col items-center justify-center overflow-x-hidden select-none"
     >
       {gallery.images.map((image, index) => {
         // Define sizes based on aspect ratio
