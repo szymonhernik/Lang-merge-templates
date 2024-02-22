@@ -59,6 +59,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
   })
   const [cursorVariant, setCursorVariant] = useState('default')
   const [isHoverInitialized, setIsHoverInitialized] = useState(false)
+  const [galleryReachedEnd, setGalleryReachedEnd] = useState(false)
 
   const ref = React.useRef(null)
   const mouse = useMouse(ref)
@@ -134,13 +135,28 @@ export function ProjectLayout(props: ProjectLayoutProps) {
     const galleryMidpoint = galleryRect.left + galleryRect.width / 2
 
     // Determine if the mouse is on the left or right side of the gallery midpoint
-    if (mouseXPosition < galleryMidpoint) {
+    if (mouseXPosition < galleryMidpoint / 2) {
       // Mouse is on the left side
       setCursorText({ arrow: '←', text: 'PREV' }) // Adjust text as needed
-    } else {
+    } else if (mouseXPosition > galleryMidpoint * 1.5) {
       // Mouse is on the right side
-      setCursorText({ arrow: '→', text: 'NEXT' }) // Adjust text as needed
+      if (galleryReachedEnd) {
+        // If the gallery has reached the end, maybe alter the text or hide it
+        setCursorText({ arrow: '', text: '' }) // Example: Clearing the text
+      } else {
+        // Default behavior
+        setCursorText({ arrow: '→', text: 'NEXT' })
+      }
+    } else {
+      setCursorText({ arrow: '', text: '' }) // Adjust text as needed
     }
+  }
+  const handleGalleryEndReached = () => {
+    setGalleryReachedEnd(true) // Mark that the gallery end has been reached
+  }
+  const handleSlideChange = (swiper) => {
+    const isEnd = swiper.isEnd // Boolean value indicating if the swiper is at the last slide
+    setGalleryReachedEnd(isEnd)
   }
 
   return (
@@ -197,7 +213,11 @@ export function ProjectLayout(props: ProjectLayoutProps) {
             onMouseLeave={galleryLeave}
             className={`hidden lg:block fixed left-0 top-[25vh] z-[0] transition-all duration-700 w-[59vw]  ${isCoverImageShown ? 'opacity-10 translate-x-[44vw]' : 'opacity-100 translate-x-0'} ${isLightGallery && 'opacity-30'} `}
           >
-            <Gallery gallery={gallery} />
+            <Gallery
+              gallery={gallery}
+              onEndReached={handleGalleryEndReached}
+              onSlideChange={handleSlideChange}
+            />
           </div>
         )}
 
@@ -244,7 +264,11 @@ export function ProjectLayout(props: ProjectLayoutProps) {
             {/* Mobile&Tablet gallery */}
             {gallery && (
               <div className="w-screen md:w-full -mx-6 lg:hidden">
-                <Gallery gallery={gallery} />
+                <Gallery
+                  gallery={gallery}
+                  onEndReached={null}
+                  onSlideChange={null}
+                />
               </div>
             )}
 

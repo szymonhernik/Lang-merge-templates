@@ -10,7 +10,7 @@ import 'swiper/css/navigation'
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 
-export function Gallery({ gallery }) {
+export function Gallery({ gallery, onEndReached, onSlideChange }) {
   // State to hold whether we're on a mobile device
   const [isMobile, setIsMobile] = useState(false)
 
@@ -36,6 +36,8 @@ export function Gallery({ gallery }) {
   return (
     <Swiper
       navigation={true}
+      onSlideChange={onSlideChange}
+      onReachEnd={onEndReached} // Add this line
       freeMode={
         isMobile
           ? {
