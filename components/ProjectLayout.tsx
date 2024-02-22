@@ -1,5 +1,5 @@
 'use client'
-import React, { Suspense, useMemo } from 'react'
+import React, { Suspense, useEffect, useMemo } from 'react'
 
 import Prose from './Prose'
 
@@ -64,8 +64,13 @@ export function ProjectLayout(props: ProjectLayoutProps) {
             back to works
           </Link>
         </div>
+        {gallery && (
+          <div className="hidden lg:block lg:fixed lg:left-0 lg:top-[25vh] lg:z-[0] lg:opacity-10">
+            <Gallery gallery={gallery} />
+          </div>
+        )}
 
-        <div className=" lg:bg-white lg:w-[40vw] lg:-mr-6 lg:pl-8 lg:pr-12 lg:py-desktopSpace lg:shadow-shadowProject">
+        <div className=" lg:bg-white lg:w-[40vw] lg:z-[10] lg:-mr-6 lg:pl-8 lg:pr-12 lg:py-desktopSpace lg:shadow-shadowProject">
           <div className="lg:max-w-screen-sm flex flex-col gap-12">
             <div className="my-8 flex flex-col gap-y-4 w-3/4 text-center mx-auto md:max-w-screen-md lg:text-left lg:w-1/2 lg:mx-0 ">
               <h1 className="text-3xl ">{portfolio.title[language]}</h1>
@@ -80,7 +85,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
                 />
               )}
             </div>
-            <div className="font-medium space-y-2 md:max-w-screen-md md:mx-auto lg:text-xs lg:w-3/4 lg:mx-0 lg:mb-16">
+            <div className="font-medium space-y-2 md:max-w-screen-md md:mx-auto lg:text-sm lg:w-3/4 lg:mx-0 lg:mb-16">
               <span className="opacity-50">2023</span>
               {details?.length > 0 && <Prose value={details} />}
             </div>
@@ -107,7 +112,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
             )}
 
             {gallery && (
-              <div className="w-screen md:w-full -mx-6 lg:fixed lg:left-0 lg:top-[25vh] lg:z-[-1] lg:opacity-10">
+              <div className="w-screen md:w-full -mx-6 lg:hidden">
                 <Gallery gallery={gallery} />
               </div>
             )}
