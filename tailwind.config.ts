@@ -15,6 +15,7 @@ const config: Config = {
       padding: {
         header: '100px',
         mobileSpace: '20vh',
+        desktopSpace: '20vh',
       },
       inset: {
         headerSmallSpace: '88px',
@@ -22,6 +23,9 @@ const config: Config = {
       margin: {
         desktopSpace: '30vh',
         mobileSpace: '20vh',
+      },
+      boxShadow: {
+        shadowProject: '-1px 0px 4px 0px rgba(0, 0, 0, 0.25)',
       },
       height: {
         header: '100px',

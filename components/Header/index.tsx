@@ -18,6 +18,7 @@ export default function Header() {
   const langSelected = pathname.split('/')[1]
   const isHomePage = pathname === `/${langSelected}`
   const isMusicPage = pathname === `/${langSelected}/music`
+  const isWorksPage = pathname.startsWith(`/${langSelected}/works/`)
 
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
@@ -43,9 +44,15 @@ export default function Header() {
         )}
       >
         <div className="space-y-3">
-          <h1 className="mr-auto ">
+          <h1 className="mr-auto space-x-3">
             <Link href={`/${clean(langSelected)}`} className="">
               <span>Narges Mohammadi</span>
+            </Link>
+            <Link
+              href={`/${langSelected}/works`}
+              className={`underline hidden ${isWorksPage && 'lg:inline'}`}
+            >
+              back to works
             </Link>
           </h1>
           {(isHomePage || isMenuOpen) && (
