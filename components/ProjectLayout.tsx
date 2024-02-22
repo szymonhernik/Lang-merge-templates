@@ -19,6 +19,7 @@ type ProjectLayoutProps = {
   data?: any
   labels?: any[]
 }
+type CursorText = { arrow: string; text: string } // For cases where you have an arrow and text
 
 export function ProjectLayout(props: ProjectLayoutProps) {
   const { labels = [] } = props
@@ -52,8 +53,13 @@ export function ProjectLayout(props: ProjectLayoutProps) {
   }
   // const coverImageClass = isCoverImageShown ? 'coverImageShown' : 'coverImageHidden';
 
-  const [cursorText, setCursorText] = useState('')
+  const [cursorText, setCursorText] = useState<CursorText>({
+    arrow: '',
+    text: '',
+  })
   const [cursorVariant, setCursorVariant] = useState('default')
+  const [isHoverInitialized, setIsHoverInitialized] = useState(false)
+
   const ref = React.useRef(null)
   const mouse = useMouse(ref)
 
@@ -81,36 +87,60 @@ export function ProjectLayout(props: ProjectLayoutProps) {
     },
     gallery: {
       opacity: 1,
-      backgroundColor: '#FFBCBC',
-      color: '#000',
-      height: 64,
-      width: 64,
+
       fontSize: '32px',
-      x: mouseXPosition - 48,
-      y: mouseYPosition - 48,
+      x: mouseXPosition - 5,
+      y: mouseYPosition - 30,
     },
   }
 
   function projectEnter(event) {
-    setCursorText('→ GALLERY')
-    setCursorVariant('project')
-    setLightGallery(true)
+    if (!isHoverInitialized) {
+      setCursorText({ arrow: '→', text: 'GALLERY' })
+      setCursorVariant('project')
+      setLightGallery(true)
+      setIsHoverInitialized(true) // Indicate that hover action has been initialized
+    }
   }
 
   function projectLeave(event) {
-    setCursorText('')
+    setCursorText({ arrow: '', text: '' })
     setCursorVariant('default')
     setLightGallery(false)
+    setIsHoverInitialized(false) // Reset hover initialization
   }
 
-  function contactEnter(event) {
-    setCursorText('👋')
+  function galleryEnter(event) {
+    setCursorText({ arrow: '→', text: '1/8' })
     setCursorVariant('gallery')
+    setIsHoverInitialized(false) // Reset hover initialization
   }
 
-  function contactLeave(event) {
-    setCursorText('')
+  function galleryLeave(event) {
+    setCursorText({ arrow: '', text: '' })
     setCursorVariant('default')
+  }
+
+  // Define a ref for the gallery element
+  const galleryRef = React.useRef(null)
+
+  // Function to calculate if mouse is on the left or right side
+  const updateGalleryCursor = (event) => {
+    if (!galleryRef.current) return
+
+    const galleryRect = (
+      galleryRef.current as HTMLElement
+    ).getBoundingClientRect()
+    const galleryMidpoint = galleryRect.left + galleryRect.width / 2
+
+    // Determine if the mouse is on the left or right side of the gallery midpoint
+    if (mouseXPosition < galleryMidpoint) {
+      // Mouse is on the left side
+      setCursorText({ arrow: '←', text: 'PREV' }) // Adjust text as needed
+    } else {
+      // Mouse is on the right side
+      setCursorText({ arrow: '→', text: 'NEXT' }) // Adjust text as needed
+    }
   }
 
   return (
@@ -121,12 +151,16 @@ export function ProjectLayout(props: ProjectLayoutProps) {
       >
         <motion.div
           variants={variants}
-          className="fixed pointer-events-none z-[100] flex flex-row justify-center items-center top-0 left-0 h-[10px] w-[10px] text-white mix-blend-difference"
+          className="fixed pointer-events-none z-[100] flex flex-col justify-center items-center top-0 left-0 h-[10px] w-[10px] text-white mix-blend-difference"
           animate={cursorVariant}
           transition={{ type: 'Interim', stiffness: 50, delay: 0 }}
         >
-          <span className="cursorText pointer-events-none m-auto flex-auto font-medium ">
-            {cursorText}
+          <span className="cursorText pointer-events-none m-auto flex-auto font-medium text-2xl">
+            {cursorText.arrow}
+          </span>
+          {/* Text with smaller font size */}
+          <span className="cursorText pointer-events-none m-auto flex-auto font-medium text-xs">
+            {cursorText.text}
           </span>
         </motion.div>
         {/* Desktop Cover image */}
@@ -134,7 +168,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
           <div
             className={`hidden lg:block fixed top-0 left-0 h-screen w-[60vw] pr-[16vw] z-[2] transition-all duration-500 hover:cursor-pointer  ${isCoverImageShown ? 'translate-x-0' : '-translate-x-full'}`}
             onClick={toggleCoverImage}
-            onMouseEnter={projectEnter}
+            onMouseOver={projectEnter}
             onMouseLeave={projectLeave}
           >
             <ImageBox
@@ -157,6 +191,10 @@ export function ProjectLayout(props: ProjectLayoutProps) {
         {/* Desktop gallery */}
         {gallery && (
           <div
+            ref={galleryRef}
+            onMouseOver={updateGalleryCursor}
+            onMouseMove={updateGalleryCursor}
+            onMouseLeave={galleryLeave}
             className={`hidden lg:block fixed left-0 top-[25vh] z-[0] transition-all duration-700 w-[59vw]  ${isCoverImageShown ? 'opacity-10 translate-x-[44vw]' : 'opacity-100 translate-x-0'} ${isLightGallery && 'opacity-30'} `}
           >
             <Gallery gallery={gallery} />
