@@ -12,8 +12,8 @@ import Link from 'next/link'
 
 import ImageBox from './shared/ImageBox'
 import { CustomPortableText } from './CustomPortableText'
-// import useMouse from "@react-hook/mouse-position";
-// import { motion, useTransform } from "framer-motion";
+import useMouse from '@react-hook/mouse-position'
+import { motion, useTransform } from 'framer-motion'
 
 type ProjectLayoutProps = {
   data?: any
@@ -46,19 +46,96 @@ export function ProjectLayout(props: ProjectLayoutProps) {
   // console.log('coverImage', coverImage)
 
   const [isCoverImageShown, setIsCoverImageShown] = useState(true)
+  const [isLightGallery, setLightGallery] = useState(true)
   const toggleCoverImage = () => {
     setIsCoverImageShown(!isCoverImageShown)
   }
   // const coverImageClass = isCoverImageShown ? 'coverImageShown' : 'coverImageHidden';
 
+  const [cursorText, setCursorText] = useState('')
+  const [cursorVariant, setCursorVariant] = useState('default')
+  const ref = React.useRef(null)
+  const mouse = useMouse(ref)
+
+  let mouseXPosition = 0
+  let mouseYPosition = 0
+
+  if (mouse.x !== null) {
+    mouseXPosition = mouse.clientX ?? 0
+  }
+
+  if (mouse.y !== null) {
+    mouseYPosition = mouse.clientY ?? 0
+  }
+
+  const variants = {
+    default: {
+      x: mouseXPosition,
+      y: mouseYPosition,
+      // opacity: 0, // Make the element fully transparent
+    },
+    project: {
+      fontSize: '12px',
+      x: mouseXPosition,
+      y: mouseYPosition - 40,
+    },
+    gallery: {
+      opacity: 1,
+      backgroundColor: '#FFBCBC',
+      color: '#000',
+      height: 64,
+      width: 64,
+      fontSize: '32px',
+      x: mouseXPosition - 48,
+      y: mouseYPosition - 48,
+    },
+  }
+
+  function projectEnter(event) {
+    setCursorText('→ GALLERY')
+    setCursorVariant('project')
+    setLightGallery(true)
+  }
+
+  function projectLeave(event) {
+    setCursorText('')
+    setCursorVariant('default')
+    setLightGallery(false)
+  }
+
+  function contactEnter(event) {
+    setCursorText('👋')
+    setCursorVariant('gallery')
+  }
+
+  function contactLeave(event) {
+    setCursorText('')
+    setCursorVariant('default')
+  }
+
   return (
     <>
-      <section className="py-mobileSpace  md:overflow-hidden  mx-auto px-6 flex flex-col gap-12 text-sm  lg:items-end lg:py-0">
+      <section
+        ref={ref}
+        className="py-mobileSpace  md:overflow-hidden  mx-auto px-6 flex flex-col gap-12 text-sm  lg:items-end lg:py-0"
+      >
+        <motion.div
+          variants={variants}
+          className="fixed pointer-events-none z-[100] flex flex-row justify-center items-center top-0 left-0 h-[10px] w-[10px] text-white mix-blend-difference"
+          animate={cursorVariant}
+          transition={{ type: 'Interim', stiffness: 50, delay: 0 }}
+        >
+          <span className="cursorText pointer-events-none m-auto flex-auto font-medium ">
+            {cursorText}
+          </span>
+        </motion.div>
         {/* Desktop Cover image */}
         {coverImage && (
           <div
-            className={`hidden lg:block fixed top-0 left-0 h-screen w-[60vw] pr-[16vw] z-[2] transition-all duration-500 hover:cursor-e-resize ${isCoverImageShown ? 'translate-x-0' : '-translate-x-full'}`}
+            className={`hidden lg:block fixed top-0 left-0 h-screen w-[60vw] pr-[16vw] z-[2] transition-all duration-500 hover:cursor-pointer  ${isCoverImageShown ? 'translate-x-0' : '-translate-x-full'}`}
             onClick={toggleCoverImage}
+            onMouseEnter={projectEnter}
+            onMouseLeave={projectLeave}
           >
             <ImageBox
               classesWrapper="w-full h-screen "
@@ -80,7 +157,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
         {/* Desktop gallery */}
         {gallery && (
           <div
-            className={`hidden lg:block fixed left-0 top-[25vh] z-[0] transition-all duration-700 w-[59vw]  ${isCoverImageShown ? 'opacity-10 translate-x-[44vw]' : 'opacity-100 translate-x-0'}`}
+            className={`hidden lg:block fixed left-0 top-[25vh] z-[0] transition-all duration-700 w-[59vw]  ${isCoverImageShown ? 'opacity-10 translate-x-[44vw]' : 'opacity-100 translate-x-0'} ${isLightGallery && 'opacity-30'} `}
           >
             <Gallery gallery={gallery} />
           </div>
