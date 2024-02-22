@@ -17,22 +17,18 @@ const PORTFOLIO_QUERY_PROJECTION = groq`
     language,
     title,
     slug,
-    pageBuilder[]{
-      _type == "gallery" => {
-        galleryTitle,
-        _key,
-        images[]{
-          alt,
-          asset->{
-            _id,
-            url,
-            "lqip": metadata.lqip,
-            "aspectRatio": metadata.dimensions.aspectRatio,
-            "width": metadata.dimensions.width,
-            "height": metadata.dimensions.height,
-          }
-        },
+    projectGallery {
+      images[]{
         _type,
+        _key,
+        asset->{
+          _id,
+          url,
+          "lqip": metadata.lqip,
+          "aspectRatio": metadata.dimensions.aspectRatio,
+          "width": metadata.dimensions.width,
+          "height": metadata.dimensions.height,
+        }
       }
     },
     // ...and all its connected document-level translations

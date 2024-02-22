@@ -227,57 +227,47 @@ export default defineType({
       readOnly: true,
     }),
     defineField({
-      name: 'pageBuilder',
-      type: 'array',
-      description: 'Please, add it only on English page.',
-      title: 'Galleries',
-      of: [
-        defineArrayMember({
-          name: 'gallery',
-          type: 'object',
-          title: 'Gallery',
-          fields: [
+      name: 'projectGallery',
+      type: 'object',
+      title: 'Project gallery',
+      fields: [
+        defineField({
+          name: 'galleryTitle',
+          type: 'string',
+          title: 'Name of the gallery',
+        }),
+        defineField({
+          name: 'images',
+          type: 'array',
+          of: [
             defineField({
-              name: 'galleryTitle',
-              type: 'string',
-              title: 'Name of the gallery',
-              validation: (rule) =>
-                rule.required().error('Gallery title is required'),
-            }),
-            defineField({
-              name: 'images',
-              type: 'array',
-              of: [
-                defineField({
-                  name: 'image',
-                  type: 'image',
-                  fields: [
-                    {
-                      name: 'alt',
-                      type: 'string',
-                      title: 'Alternative text',
-                    },
-                  ],
-                }),
+              name: 'image',
+              type: 'image',
+              fields: [
+                {
+                  name: 'alt',
+                  type: 'string',
+                  title: 'Alternative text',
+                },
               ],
-              options: {
-                layout: 'grid',
-              },
             }),
           ],
-          preview: {
-            select: {
-              title: 'galleryTitle',
-            },
-            prepare({ title }) {
-              return {
-                title: title ? `Gallery: ${title}` : 'Gallery',
-                media: FiImage,
-              }
-            },
+          options: {
+            layout: 'grid',
           },
         }),
       ],
+      preview: {
+        select: {
+          title: 'galleryTitle',
+        },
+        prepare({ title }) {
+          return {
+            title: title ? `Gallery: ${title}` : 'Gallery',
+            media: FiImage,
+          }
+        },
+      },
     }),
   ],
   preview: {

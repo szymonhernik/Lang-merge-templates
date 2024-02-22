@@ -1,12 +1,9 @@
 import React, { Suspense, useMemo } from 'react'
 
 import Prose from './Prose'
-import Title from './Title'
 
-import { Galleries } from './Galleries'
-import VideoSpace from './VideoSpace'
-import Link from 'next/link'
-import ListOfChildrenProjects from './ListOfChildrenProjects'
+import { Gallery } from './Gallery'
+
 import {
   filterOutCurrentProject,
   getProjectTitleByLanguage,
@@ -23,8 +20,8 @@ export async function ProjectLayout(props: ProjectLayoutProps) {
   const {
     title,
     summary,
-    galleries,
     content,
+    gallery,
     details,
     portfolio,
     language,
@@ -56,15 +53,7 @@ export async function ProjectLayout(props: ProjectLayoutProps) {
               )}
             </header>
 
-            <Suspense
-              fallback={
-                <div className="h-[50vh] w-full">
-                  <h1>Loading...</h1>
-                </div>
-              }
-            >
-              <Galleries galleries={galleries} />
-            </Suspense>
+            <Gallery gallery={gallery} />
 
             <div className="w-auto">
               {details?.length > 0 ? <Prose value={details} /> : null}

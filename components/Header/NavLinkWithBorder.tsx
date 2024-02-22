@@ -11,7 +11,7 @@ export default function NavLinkWithBorder({
   isHomePage,
   isMusicPage,
 }) {
-  console.log(pathname)
+  // console.log(pathname)
 
   return (
     <>

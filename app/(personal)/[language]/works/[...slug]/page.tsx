@@ -108,7 +108,7 @@ export default async function Page({ params }) {
     project = slug[0]
   }
 
-  console.log('slug', slug)
+  // console.log('slug', slug)
 
   const queryParams = { ...COMMON_PARAMS, slug: project, language }
   const { isEnabled } = draftMode()
@@ -131,11 +131,10 @@ export default async function Page({ params }) {
   )
   const translations = projectPaths[currentProjectIndex]
 
-  const galleries = initial.data.portfolio.projects[0].pageBuilder
+  const gallery = initial.data.portfolio.projects[0].projectGallery
 
   return (
     <>
-      {/* <Header translations={translations} currentLanguage={language} /> */}
       <UpdateLangContext
         currentLanguage={language}
         translations={translations}
@@ -147,7 +146,7 @@ export default async function Page({ params }) {
         params={isEnabled ? queryParams : DEFAULT_EMPTY_PARAMS}
         initial={initial}
       >
-        <ProjectLayout data={{ ...initial.data, galleries, slugPage }} />
+        <ProjectLayout data={{ ...initial.data, slugPage, gallery }} />
       </LiveQueryWrapper>
     </>
   )

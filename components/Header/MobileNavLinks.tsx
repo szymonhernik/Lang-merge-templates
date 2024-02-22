@@ -18,7 +18,7 @@ export default function MobileNavLinks({
     ],
     [],
   )
-  console.log(pathname)
+  // console.log(pathname)
 
   // const isActive = pathname.startsWith(`/${langSelected}${href}`);
 
