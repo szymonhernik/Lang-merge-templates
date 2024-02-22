@@ -49,7 +49,7 @@ export function Gallery({ gallery }) {
       modules={[FreeMode, Navigation]}
       slidesPerView={'auto'}
       lazyPreloadPrevNext={2}
-      className="mt-16 mySwiper h-[50vh] flex flex-col items-center justify-center overflow-x-hidden select-none"
+      className="!pl-6 w-screen mt-16 mySwiper h-[50vh] flex flex-col items-center justify-center overflow-x-hidden select-none"
     >
       {gallery.images.map((image, index) => {
         // Define sizes based on aspect ratio
@@ -65,7 +65,7 @@ export function Gallery({ gallery }) {
         }
         return (
           <SwiperSlide
-            className="!w-fit !mr-8"
+            className="!w-auto !mr-8"
             key={gallery._key + image + index}
           >
             <Image
@@ -74,7 +74,7 @@ export function Gallery({ gallery }) {
               height={Math.round(image.asset.height)}
               sizes={sizes}
               alt={`${image?.alt ?? ''}`}
-              className="h-full min-w-fit w-fit"
+              className="w-auto h-full"
               blurDataURL={image.asset.lqip}
               placeholder="blur"
             />
