@@ -46,6 +46,8 @@ export interface ShowcaseHomeProject {
 }
 export interface HomeQueryResult {
   home: {
+    ogImage: Image
+    text: Text
     showcaseHome?: ShowcaseHomeProject[]
   }
 }

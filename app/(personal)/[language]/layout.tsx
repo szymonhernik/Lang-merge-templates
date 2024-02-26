@@ -35,6 +35,10 @@ import { COMMON_PARAMS } from '@/lib/constants'
 import VisualEditing from '@/components/VisualEditing'
 import { LanguageProvider } from '@/contexts/LangContext'
 import Header from '@/components/Header'
+import { HomeQueryResult } from '@/types'
+import { loadQuery } from '@/sanity/lib/store'
+import { HOME_QUERY } from '@/sanity/queries'
+import { urlForOpenGraphImage } from '@/sanity/lib/utils'
 
 export default async function RootLayout(props) {
   const queryParams = { ...COMMON_PARAMS, language: props.params.language }

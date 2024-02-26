@@ -19,6 +19,10 @@ const config = {
       fullUrl: true,
     },
   },
+  // Set the metadataBase for social Open Graph or Twitter images
+  publicRuntimeConfig: {
+    metadataBase: 'https://www.nargesmohammadi.com',
+  },
   experimental: {
     taint: true,
   },

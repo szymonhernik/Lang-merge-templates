@@ -1,4 +1,11 @@
-import { FiAward, FiBook, FiGlobe, FiImage, FiUsers } from 'react-icons/fi'
+import {
+  FiAward,
+  FiBook,
+  FiGlobe,
+  FiImage,
+  FiSettings,
+  FiUsers,
+} from 'react-icons/fi'
 import { defineType, defineField, Reference } from 'sanity'
 import { SanityImageObjectStub } from '@sanity/asset-utils'
 
@@ -16,15 +23,11 @@ export default defineType({
       title: 'Showcase on Homepage',
       icon: FiAward,
     },
+
     {
-      name: 'i18n',
-      title: 'Localised',
-      icon: FiGlobe,
-    },
-    {
-      name: 'media',
-      title: 'Media',
-      icon: FiImage,
+      name: 'SEO',
+      title: 'SEO',
+      icon: FiSettings,
     },
   ],
   fields: [
@@ -49,18 +52,21 @@ export default defineType({
       validation: (Rule) => [Rule.required().min(1), Rule.unique()],
     }),
     defineField({
+      name: 'ogImage',
+      title: 'Open Graph Image',
+      type: 'image',
+      description: 'Displayed on social cards and search engine results.',
+      options: {
+        hotspot: true,
+      },
+      group: ['SEO'],
+    }),
+    defineField({
       name: 'text',
       title: 'SEO texts',
       type: 'localizedText',
-      group: ['i18n'],
+      group: ['SEO'],
       validation: (Rule) => Rule.required(),
-    }),
-
-    defineField({
-      name: 'seoImage',
-      title: 'SEO Image',
-      type: 'image',
-      group: ['media'],
     }),
   ],
 })

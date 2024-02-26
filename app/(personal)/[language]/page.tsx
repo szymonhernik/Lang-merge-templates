@@ -15,6 +15,33 @@ import { HomeLayout } from '@/components/HomeLayout'
 import { HomeQueryResult } from '@/types'
 import UpdateLangContext from '@/components/UpdateLangContext'
 import { localizeProjects } from '@/lib/localizeProjects'
+import { Metadata } from 'next'
+import { urlForOpenGraphImage } from '@/sanity/lib/utils'
+import { toPlainText } from '@portabletext/react'
+
+export async function generateMetadata({ params }): Promise<Metadata> {
+  const { language, slug } = params
+  const queryParams = { ...COMMON_PARAMS, language }
+
+  const homePage = await loadQuery<HomeQueryResult>(HOME_QUERY, queryParams, {
+    // perspective: isEnabled ? 'previewDrafts' : 'published',
+    next: { tags: ['home'] },
+  })
+  const homeRef = homePage.data.home
+  const ogImage = urlForOpenGraphImage(homeRef.ogImage)
+  console.log('homeRef', homeRef)
+
+  return {
+    title:
+      language === 'en' ? 'Home | Narges Mohammadi' : 'Home | Narges Mohammadi',
+    description: homeRef.text[language]
+      ? toPlainText(homeRef.text[language])
+      : '',
+    openGraph: {
+      images: ogImage ? [ogImage] : [],
+    },
+  }
+}
 
 export default async function Page({ params }) {
   const { language } = params

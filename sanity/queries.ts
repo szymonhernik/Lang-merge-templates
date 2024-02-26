@@ -163,7 +163,8 @@ const HOME_PORTFOLIO_QUERY_PROJECTION = groq`
 
 export const HOME_QUERY = groq`{
   "home": *[_type == "home"][0]{
-    
+    ogImage,
+    text,
     showcaseHome[]->{
       language,
       title,
@@ -216,6 +217,7 @@ export const HOME_QUERY = groq`{
       ][0].translations[]{
         // and spread the "value" of each reference to the root level
         ...(value->{
+          
           language,
           title,
           slug
