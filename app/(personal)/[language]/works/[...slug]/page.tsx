@@ -130,9 +130,15 @@ export default async function Page({ params }) {
   const currentProjectIndex = projectPaths.findIndex((versions) =>
     versions.find((project) => project.title === initial.data.title),
   )
+
+  console.log('currentProjectIndex', currentProjectIndex)
+
   const translations = projectPaths[currentProjectIndex]
 
-  const gallery = initial.data.portfolio.projects[0].projectGallery
+  const gallery =
+    initial.data.portfolio.projects[currentProjectIndex].projectGallery
+  const coverImageProp =
+    initial.data.portfolio.projects[currentProjectIndex].coverImage
 
   return (
     <>
@@ -148,7 +154,13 @@ export default async function Page({ params }) {
         initial={initial}
       >
         <ProjectLayout
-          data={{ ...initial.data, slugPage, gallery, currentLanguage }}
+          data={{
+            ...initial.data,
+            slugPage,
+            gallery,
+            currentLanguage,
+            coverImageProp,
+          }}
         />
       </LiveQueryWrapper>
     </>

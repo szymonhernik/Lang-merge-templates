@@ -17,12 +17,10 @@ import { motion, useTransform } from 'framer-motion'
 
 type ProjectLayoutProps = {
   data?: any
-  labels?: any[]
 }
 type CursorText = { arrow: string; text: string } // For cases where you have an arrow and text
 
 export function ProjectLayout(props: ProjectLayoutProps) {
-  const { labels = [] } = props
   const {
     title,
     summary,
@@ -31,6 +29,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
     gallery,
     details,
     portfolio,
+    coverImageProp,
     language,
     slug,
     text,
@@ -43,29 +42,24 @@ export function ProjectLayout(props: ProjectLayoutProps) {
     () => filterOutCurrentProject(projects, slug.current, language),
     [projects, slug, language],
   )
-  const coverImage = portfolio.projects[0].coverImage
-  // const currentProject = portfolio.projects.find(
-  //   (project) => project.slug.current === slug.current,
-  // )
-  // const coverImage = currentProject?.coverImage
-  // console.log('otherProjects', portfolio.projects)
-  // console.log('otherProjects', currentProject)
-  // console.log('otherProjects', currentProject)
+
+  const coverImage = coverImageProp
+
+  // CUSTOM CURSOR
 
   const [isCoverImageShown, setIsCoverImageShown] = useState(true)
   const [isLightGallery, setLightGallery] = useState(true)
-  const toggleCoverImage = () => {
-    setIsCoverImageShown(!isCoverImageShown)
-  }
-  // const coverImageClass = isCoverImageShown ? 'coverImageShown' : 'coverImageHidden';
-
+  const [cursorVariant, setCursorVariant] = useState('default')
+  const [isHoverInitialized, setIsHoverInitialized] = useState(false)
+  const [galleryReachedEnd, setGalleryReachedEnd] = useState(false)
   const [cursorText, setCursorText] = useState<CursorText>({
     arrow: '',
     text: '',
   })
-  const [cursorVariant, setCursorVariant] = useState('default')
-  const [isHoverInitialized, setIsHoverInitialized] = useState(false)
-  const [galleryReachedEnd, setGalleryReachedEnd] = useState(false)
+
+  const toggleCoverImage = () => {
+    setIsCoverImageShown(!isCoverImageShown)
+  }
 
   const ref = React.useRef(null)
   const mouse = useMouse(ref)
