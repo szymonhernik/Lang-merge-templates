@@ -44,7 +44,13 @@ export function ProjectLayout(props: ProjectLayoutProps) {
     [projects, slug, language],
   )
   const coverImage = portfolio.projects[0].coverImage
-  // console.log('coverImage', coverImage)
+  // const currentProject = portfolio.projects.find(
+  //   (project) => project.slug.current === slug.current,
+  // )
+  // const coverImage = currentProject?.coverImage
+  // console.log('otherProjects', portfolio.projects)
+  // console.log('otherProjects', currentProject)
+  // console.log('otherProjects', currentProject)
 
   const [isCoverImageShown, setIsCoverImageShown] = useState(true)
   const [isLightGallery, setLightGallery] = useState(true)
@@ -84,15 +90,15 @@ export function ProjectLayout(props: ProjectLayoutProps) {
     },
     project: {
       fontSize: '12px',
-      x: mouseXPosition,
-      y: mouseYPosition - 40,
-      opacity: 1, // Make the cursor text fully visible
+      x: mouseXPosition - 5,
+      y: mouseYPosition - 25,
+      opacity: 1,
     },
     gallery: {
       opacity: 1,
-      fontSize: '32px',
+      fontSize: '12px',
       x: mouseXPosition - 5,
-      y: mouseYPosition - 30,
+      y: mouseYPosition - 25,
     },
   }
 
@@ -112,12 +118,6 @@ export function ProjectLayout(props: ProjectLayoutProps) {
     setIsHoverInitialized(false) // Reset hover initialization
   }
 
-  // function galleryEnter(event) {
-  //   setCursorText({ arrow: '→', text: '1/8' })
-  //   setCursorVariant('gallery')
-  //   setIsHoverInitialized(false) // Reset hover initialization
-  // }
-
   function galleryLeave(event) {
     setCursorText({ arrow: '', text: '' })
     setCursorVariant('default')
@@ -134,22 +134,23 @@ export function ProjectLayout(props: ProjectLayoutProps) {
       galleryRef.current as HTMLElement
     ).getBoundingClientRect()
     const galleryMidpoint = galleryRect.left + galleryRect.width / 2
-
+    setCursorVariant('gallery')
     // Determine if the mouse is on the left or right side of the gallery midpoint
     if (mouseXPosition < galleryMidpoint / 1.5) {
       // Mouse is on the left side
-      setCursorText({ arrow: '←', text: 'PREV' }) // Adjust text as needed
+      setCursorText({ arrow: '←', text: 'PREV' })
     } else if (mouseXPosition > galleryMidpoint * 1.25) {
       // Mouse is on the right side
       if (galleryReachedEnd) {
-        // If the gallery has reached the end, maybe alter the text or hide it
-        setCursorText({ arrow: '', text: '' }) // Example: Clearing the text
+        setCursorText({ arrow: '', text: '' })
+        setCursorVariant('default')
       } else {
         // Default behavior
         setCursorText({ arrow: '→', text: 'NEXT' })
       }
     } else {
       setCursorText({ arrow: '', text: '' })
+      setCursorVariant('default')
     }
   }
   const handleGalleryEndReached = () => {
