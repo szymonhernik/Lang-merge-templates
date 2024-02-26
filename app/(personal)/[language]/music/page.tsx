@@ -14,6 +14,7 @@ import UpdateLangContext from '@/components/UpdateLangContext'
 import { MusicLayout } from '@/components/MusicLayout'
 import { MusicPagePayload } from '@/types'
 import { Suspense } from 'react'
+import { urlForOpenGraphImage } from '@/sanity/lib/utils'
 
 // export async function generateStaticParams() {
 //   const aboutPages = await getAboutsWithSlugs()
@@ -27,8 +28,31 @@ import { Suspense } from 'react'
 //   return params
 // }
 
-export const metadata: Metadata = {
-  title: 'Music | Narges Mohammadi',
+export async function generateMetadata({ params }): Promise<Metadata> {
+  const { language, slug } = params
+  const queryParams = { ...COMMON_PARAMS, language }
+
+  const musicPage = await loadQuery<MusicPagePayload>(
+    MUSIC_QUERY,
+    queryParams,
+    {
+      // perspective: isEnabled ? 'previewDrafts' : 'published',
+      next: { tags: ['musicPage'] },
+    },
+  )
+  const ogImage = urlForOpenGraphImage(musicPage?.data.ogImage)
+  console.log('musicPage', musicPage)
+
+  return {
+    title:
+      language === 'en'
+        ? 'Music | Narges Mohammadi'
+        : 'Muziek | Narges Mohammadi',
+    description: musicPage.data.overview ? musicPage.data.overview : undefined,
+    openGraph: {
+      images: ogImage ? [ogImage] : [],
+    },
+  }
 }
 
 export default async function Page({ params }) {

@@ -118,6 +118,8 @@ export interface LocalizedProject {
 }
 
 export interface MusicPagePayload {
+  ogImage?: Image
+  overview: string
   _id: string
   title: string
   slug: {

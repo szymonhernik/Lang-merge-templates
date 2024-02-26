@@ -311,6 +311,8 @@ export const ABOUT_QUERY = groq`*[_type == "aboutPage" && language == $language]
 }`
 
 export const MUSIC_QUERY = groq`*[_type == "musicPage" && language == $language][0]{
+  ogImage,
+  overview,
   _id,
   title,
   slug,

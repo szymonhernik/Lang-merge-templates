@@ -23,18 +23,20 @@ export default defineType({
           .error('A slug is required to generate a page on the website'),
     }),
     defineField({
-      name: 'summary',
-      description: 'SEO summary',
-      type: 'text',
-      rows: 3,
-      validation: (rule) =>
-        rule.max(200).warning('Summary should be less than 200 characters'),
+      name: 'ogImage',
+      title: 'Open Graph Image',
+      type: 'image',
+      description: 'Displayed on social cards and search engine results.',
+      options: {
+        hotspot: true,
+      },
     }),
     defineField({
-      name: 'socialPicture',
-      title: 'Socials picture',
-      type: 'image',
-      validation: (rule) => rule.required(),
+      name: 'overview',
+      description: 'Used for the <meta> description tag for SEO',
+      title: 'Description',
+      type: 'string',
+      validation: (rule) => rule.max(200).required(),
     }),
     defineField({
       title: 'Video banner',

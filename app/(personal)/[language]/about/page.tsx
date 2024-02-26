@@ -44,10 +44,13 @@ export async function generateMetadata({ params }): Promise<Metadata> {
     },
   )
   const ogImage = urlForOpenGraphImage(aboutPage?.data.ogImage)
-  console.log('aboutPage', aboutPage)
+  // console.log('aboutPage', aboutPage)
 
   return {
-    title: 'About | Narges Mohammadi',
+    title:
+      language === 'en'
+        ? 'About | Narges Mohammadi'
+        : 'Over | Narges Mohammadi',
     description: aboutPage.data.overview ? aboutPage.data.overview : undefined,
     openGraph: {
       images: ogImage ? [ogImage] : [],

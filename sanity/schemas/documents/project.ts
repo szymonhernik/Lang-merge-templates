@@ -23,6 +23,22 @@ export default defineType({
           .required()
           .error('A slug is required to generate a page on the website'),
     }),
+    defineField({
+      name: 'ogImage',
+      title: 'Open Graph Image',
+      type: 'image',
+      description: 'Displayed on social cards and search engine results.',
+      options: {
+        hotspot: true,
+      },
+    }),
+    defineField({
+      name: 'overview',
+      description: 'Used for the <meta> description tag for SEO',
+      title: 'Description',
+      type: 'string',
+      validation: (rule) => rule.max(200).required(),
+    }),
 
     defineField({
       name: 'belongs',
@@ -54,35 +70,6 @@ export default defineType({
       hidden: ({ document }) => document?.showAdditionalFields == true, // Hide this field if showAdditionalFields is not true
     }),
 
-    defineField({
-      name: 'overview',
-      description:
-        'Used both for the <meta> description tag for SEO, and project subheader.',
-      title: 'Overview',
-      type: 'array',
-      of: [
-        // Paragraphs
-        defineArrayMember({
-          lists: [],
-          marks: {
-            annotations: [],
-            decorators: [
-              {
-                title: 'Italic',
-                value: 'em',
-              },
-              {
-                title: 'Strong',
-                value: 'strong',
-              },
-            ],
-          },
-          styles: [],
-          type: 'block',
-        }),
-      ],
-      validation: (rule) => rule.max(155).required(),
-    }),
     defineField({
       name: 'coverImage',
       title: 'Cover Image',
