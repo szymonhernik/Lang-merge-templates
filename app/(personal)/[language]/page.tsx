@@ -34,9 +34,7 @@ export async function generateMetadata({ params }): Promise<Metadata> {
   return {
     title:
       language === 'en' ? 'Home | Narges Mohammadi' : 'Home | Narges Mohammadi',
-    description: homeRef.text[language]
-      ? toPlainText(homeRef.text[language])
-      : '',
+    description: homeRef.text[language] ? homeRef.text[language] : '',
     openGraph: {
       images: ogImage ? [ogImage] : [],
     },
