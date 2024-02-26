@@ -18,6 +18,7 @@ import {
 import { loadQuery } from '@/sanity/lib/store'
 import { PROJECT_QUERY } from '@/sanity/queries'
 import { Suspense } from 'react'
+import { urlForOpenGraphImage } from '@/sanity/lib/utils'
 
 export async function generateStaticParams() {
   const projects = await getProjectsWithSlugs() // Fetch projects and their portfolio slugs
@@ -76,6 +77,11 @@ export async function generateMetadata({ params }) {
     return slugMatches
   })
 
+  const ogImage = urlForOpenGraphImage(currentProject?.ogImage)
+
+  // console.log('currentProject', currentProject)
+  console.log('currentProject', currentProject)
+
   // Construct a title for the page based on the current project's details
   // If the project is part of a portfolio with more than one element, append "| portfolio name"
   let title = currentProject ? `${currentProject.title}` : 'No title'
@@ -94,6 +100,10 @@ export async function generateMetadata({ params }) {
 
   return {
     title: title,
+    description: currentProject.overview ? currentProject.overview : undefined,
+    openGraph: {
+      images: ogImage ? [ogImage] : [],
+    },
   }
 }
 
@@ -131,7 +141,7 @@ export default async function Page({ params }) {
     versions.find((project) => project.title === initial.data.title),
   )
 
-  console.log('currentProjectIndex', currentProjectIndex)
+  // console.log('currentProjectIndex', currentProjectIndex)
 
   const translations = projectPaths[currentProjectIndex]
 

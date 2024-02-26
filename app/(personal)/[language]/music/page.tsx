@@ -41,7 +41,7 @@ export async function generateMetadata({ params }): Promise<Metadata> {
     },
   )
   const ogImage = urlForOpenGraphImage(musicPage?.data.ogImage)
-  console.log('musicPage', musicPage)
+  // console.log('musicPage', musicPage)
 
   return {
     title:

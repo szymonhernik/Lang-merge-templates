@@ -80,6 +80,9 @@ export const PROJECT_SLUGS_QUERY = groq`*[_type == "project" && defined(language
   language,
   "project": slug.current,
   title,
+  ogImage,
+  overview,
+
   "portfolio": select(
       // So if this project isn't in English...
       ^.language != $defaultLocale => *[_type == "translation.metadata" && ^._id in translations[].value._ref][0]{

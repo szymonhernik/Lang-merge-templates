@@ -1,3 +1,91 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: theme('spacing.20');
+  overflow: auto;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  -webkit-text-size-adjust: 100%;
+  -ms-font-feature-settings: 'kern' 1;
+  font-feature-settings: 'kern';
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+html,
+body {
+  height: 100%;
+}
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+#root,
+#__next {
+  isolation: isolate;
+}
+
+pre[class*='language-'] {
+  @apply py-4 px-4 border-t border-b border-blue-100 text-xs;
+
+  overflow: auto;
+}
+
+@screen md {
+  pre[class*='language-'] {
+    @apply border rounded text-sm;
+  }
+}
+
+@tailwind utilities;
+
+.swiper-button-next {
+  height: 100% !important;
+  top: 0 !important;
+  right: 0 !important;
+  margin-top: 0 !important;
+  width: 25% !important;
+  color: black !important;
+  opacity: 0 !important;
+}
+.swiper-button-prev {
+  height: 100% !important;
+  top: 0 !important;
+  left: 0 !important;
+  margin-top: 0 !important;
+  width: 25% !important;
+  color: black !important;
+  opacity: 0 !important;
+}
+
+@media (max-width: 1024px) {
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: none !important;
+  }
+}
