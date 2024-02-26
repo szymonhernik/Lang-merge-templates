@@ -161,20 +161,22 @@ export function ProjectLayout(props: ProjectLayoutProps) {
         ref={ref}
         className="py-mobileSpace  md:overflow-hidden  mx-auto px-6 flex flex-col gap-12 text-sm  lg:items-end lg:py-0"
       >
-        <motion.div
-          variants={variants}
-          className="fixed pointer-events-none z-[100] flex flex-col justify-center items-center top-0 left-0 h-[10px] w-[10px] text-white mix-blend-difference"
-          animate={cursorVariant}
-          transition={{ type: 'Interim', stiffness: 50, delay: 0 }}
-        >
-          <span className="cursorText pointer-events-none m-auto flex-auto font-medium text-2xl">
-            {cursorText.arrow}
-          </span>
-          {/* Text with smaller font size */}
-          <span className="cursorText pointer-events-none m-auto flex-auto font-medium text-xs">
-            {cursorText.text}
-          </span>
-        </motion.div>
+        {gallery && (
+          <motion.div
+            variants={variants}
+            className="fixed pointer-events-none z-[100] flex flex-col justify-center items-center top-0 left-0 h-[10px] w-[10px] text-white mix-blend-difference"
+            animate={cursorVariant}
+            transition={{ type: 'Interim', stiffness: 50, delay: 0 }}
+          >
+            <span className="cursorText pointer-events-none m-auto flex-auto font-medium text-2xl">
+              {cursorText.arrow}
+            </span>
+            {/* Text with smaller font size */}
+            <span className="cursorText pointer-events-none m-auto flex-auto font-medium text-xs">
+              {cursorText.text}
+            </span>
+          </motion.div>
+        )}
         {/* Desktop Cover image */}
         {coverImage && (
           <>
@@ -183,17 +185,17 @@ export function ProjectLayout(props: ProjectLayoutProps) {
             ></div> */}
             {/* this has 44vw width */}
             <div
-              className={`hidden lg:block fixed top-0 left-0 h-screen w-[60vw] pr-[16vw] z-[2] transition-all duration-500 hover:cursor-pointer  ${isCoverImageShown ? 'translate-x-0' : '-translate-x-full'}`}
-              onClick={toggleCoverImage}
-              onMouseOver={projectEnter}
-              onMouseLeave={projectLeave}
+              className={`hidden lg:block fixed top-0 left-0 h-screen   z-[2] transition-all duration-500 ${gallery ? 'hover:cursor-pointer pr-[16vw] w-[60vw]' : 'pr-0 w-[50vw]'}  ${isCoverImageShown ? 'translate-x-0' : '-translate-x-full'}`}
+              onClick={gallery && toggleCoverImage}
+              onMouseOver={gallery && projectEnter}
+              onMouseLeave={gallery && projectLeave}
             >
               <ImageBox
                 classesWrapper="w-full h-screen "
                 width={2000}
                 height={2000}
                 size="(max-width:640px) 100vw, (max-width: 768px) 50vw, 50vw"
-                classesImage="object-cover  object-center lg:h-full lg:min-w-full "
+                classesImage={`object-cover aspect-[${Math.round(coverImage.width)}/${Math.round(coverImage.height)}] object-center lg:h-full lg:min-w-full `}
                 image={coverImage}
                 alt={coverImage.alt || 'Project image'}
               />
@@ -224,10 +226,10 @@ export function ProjectLayout(props: ProjectLayoutProps) {
         )}
 
         <div
-          className={` lg:bg-white lg:w-[40vw] lg:z-[10] lg:-mr-6 lg:pl-8 lg:pr-12 lg:py-desktopSpace transition-shadow duration-700 ${isCoverImageShown ? '' : 'lg:shadow-shadowProject'} lg:min-h-screen`}
+          className={` lg:bg-white lg:w-[40vw] lg:z-[10] lg:-mr-6 lg:pl-8 lg:pr-8 xl:pr-24 lg:pb-desktopSpace lg:pt-32 transition-shadow duration-700 ${!isCoverImageShown && 'lg:shadow-shadowProject'} lg:min-h-screen`}
         >
           <div className="lg:max-w-screen-sm flex flex-col gap-12">
-            <div className="my-8 flex flex-col gap-y-4 w-3/4 text-center mx-auto md:max-w-screen-md lg:text-left lg:w-[80%] lg:mx-0 ">
+            <div className="my-8 flex flex-col gap-y-2 w-3/4 text-center mx-auto md:max-w-screen-md lg:text-left lg:w-[80%] lg:mx-0 ">
               <h1 className="text-3xl lg:text-4xl ">
                 {portfolio.title[language]}
               </h1>
@@ -242,7 +244,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
                 />
               )}
             </div>
-            <div className="font-medium space-y-2 md:max-w-screen-md md:mx-auto lg:text-sm lg:w-3/4 lg:mx-0 lg:mb-12">
+            <div className="font-medium space-y-2 md:max-w-screen-md md:mx-auto lg:text-sm lg:w-11/12 xl:w-3/4  lg:mx-0 lg:mb-12">
               <span className="opacity-50">2023</span>
               {details?.length > 0 && <Prose value={details} />}
             </div>
