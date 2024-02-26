@@ -66,7 +66,11 @@ export interface AboutPagePayload {
   content: PortableTextBlock[]
   language: string
   profilePicture: {
-    photographerArray: any
+    photographerArray: {
+      _id: string
+      displayName: string
+      collaboratorUrl: string
+    }
     alt: string
     asset: {
       _id: string
@@ -106,6 +110,7 @@ export interface PageBuilderItem {
 export interface LocalizedProject {
   currentTitle: string
   currentSlug: string
+  year?: string
   language: string
   title: string
   slug: string

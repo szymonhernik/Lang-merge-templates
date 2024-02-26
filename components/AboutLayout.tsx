@@ -23,10 +23,10 @@ export async function AboutLayout({ data, currentLanguage }: AboutLayoutProps) {
     highlightedContent,
     pageBuilder,
   } = data ?? {}
-  console.log(
-    'profilePicture.photographerArray',
-    profilePicture.photographerArray,
-  )
+  // console.log(
+  //   'profilePicture.photographerArray',
+  //   profilePicture.photographerArray,
+  // )
 
   return (
     <section className="py-mobileSpace max-w-screen-3xl mx-auto">

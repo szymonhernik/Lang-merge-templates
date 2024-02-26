@@ -20,6 +20,7 @@ type HomeLayoutProps = {
 }
 
 export function HomeLayout({ localizedProjects, language }: HomeLayoutProps) {
+  // console.log('localizedProjects', localizedProjects)
   return (
     <div className="w-screen h-screen overflow-hidden absolute top-0 left-0">
       <div className="fixed top-0 left-0  z-[2] bg-gradient-to-b from-black opacity-70 w-screen h-72"></div>
@@ -62,7 +63,10 @@ export function HomeLayout({ localizedProjects, language }: HomeLayoutProps) {
               <div className="absolute bottom-1 left-0 p-8">
                 <ProjectLink project={project} language={language}>
                   <h1 className="text-white  mix-blend-difference">
-                    {project.currentTitle}
+                    {project.currentTitle}{' '}
+                    {project.year && (
+                      <span className="opacity-50">({project.year})</span>
+                    )}
                   </h1>
                 </ProjectLink>
               </div>

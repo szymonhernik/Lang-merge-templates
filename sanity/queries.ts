@@ -218,6 +218,7 @@ export const HOME_QUERY = groq`{
         // If not the default language, do not include coverImage
         true => null
       ),
+      year,
       "translations": *[
         // by finding the translation metadata document
         _type == "translation.metadata" &&
