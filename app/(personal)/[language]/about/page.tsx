@@ -16,6 +16,8 @@ import { i18n } from '@/languages'
 import UpdateLangContext from '@/components/UpdateLangContext'
 import { AboutLayout } from '@/components/AboutLayout'
 import { AboutPagePayload } from '@/types'
+import { urlForOpenGraphImage } from '@/sanity/lib/utils'
+import { toPlainText } from '@portabletext/react'
 
 // export async function generateStaticParams() {
 //   const aboutPages = await getAboutsWithSlugs()
@@ -29,8 +31,28 @@ import { AboutPagePayload } from '@/types'
 //   return params
 // }
 
-export const metadata: Metadata = {
-  title: 'About | Narges Mohammadi',
+export async function generateMetadata({ params }): Promise<Metadata> {
+  const { language, slug } = params
+  const queryParams = { ...COMMON_PARAMS, language }
+
+  const aboutPage = await loadQuery<AboutPagePayload>(
+    ABOUT_QUERY,
+    queryParams,
+    {
+      // perspective: isEnabled ? 'previewDrafts' : 'published',
+      next: { tags: ['aboutPage'] },
+    },
+  )
+  const ogImage = urlForOpenGraphImage(aboutPage?.data.ogImage)
+  console.log('aboutPage', aboutPage)
+
+  return {
+    title: 'About | Narges Mohammadi',
+    description: aboutPage.data.overview ? aboutPage.data.overview : undefined,
+    openGraph: {
+      images: ogImage ? [ogImage] : [],
+    },
+  }
 }
 
 export default async function Page({ params }) {

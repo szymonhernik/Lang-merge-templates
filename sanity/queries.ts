@@ -287,6 +287,8 @@ export const WORKS_QUERY = groq`{
 }`
 
 export const ABOUT_QUERY = groq`*[_type == "aboutPage" && language == $language][0]{
+  ogImage,
+  overview,
   _id,
   title,
   slug,

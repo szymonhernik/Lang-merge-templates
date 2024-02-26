@@ -51,6 +51,8 @@ export interface HomeQueryResult {
 }
 
 export interface AboutPagePayload {
+  ogImage?: Image
+  overview?: string
   _id: string
   title: string
   slug: string
