@@ -6,6 +6,8 @@ type CoverImage = {
     _id: string
     url: string
     lqip: string
+    width?: number
+    height?: number
   }
 }
 export type TranslationReach = {

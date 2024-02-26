@@ -36,7 +36,7 @@ export function WorksLayout(props: WorksLayoutProps) {
   return (
     <section className="w-full my-desktopSpace">
       <PageTitle currentLanguage={language} currentPage={'Works'} />
-      <div className="2xl:max-w-[1536px] mx-auto grid gap-6 md:gap-8 px-4 md:px-6 lg:grid-cols-4 md:grid-cols-2 pt-header">
+      <div className="3xl:max-w-[1936px] mx-auto grid gap-6 md:gap-8 px-4 md:px-6 lg:grid-cols-3 2xl:grid-cols-4 md:grid-cols-2 pt-header">
         {portfolios &&
           portfolios?.length > 0 &&
           portfolios.map((portfolio, index) => {

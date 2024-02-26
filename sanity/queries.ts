@@ -17,6 +17,7 @@ const PORTFOLIO_QUERY_PROJECTION = groq`
     language,
     title,
     slug,
+    year,
     coverImage{
       alt,
       asset->{
@@ -188,6 +189,7 @@ export const HOME_QUERY = groq`{
             url,
             "lqip": metadata.lqip,
             "aspectRatio": metadata.dimensions.aspectRatio,
+            
           }
         },
         // If not the default language, do not include coverImage
@@ -233,6 +235,7 @@ export const WORKS_QUERY = groq`{
       language,
       title,
       slug,
+      year,
       // Fetch coverImage only if the project's language matches the default language
 
   "coverImage": select(
@@ -241,6 +244,9 @@ export const WORKS_QUERY = groq`{
         _id,
         url,
         "lqip": metadata.lqip,
+        "width": metadata.dimensions.width,
+        "height": metadata.dimensions.height,
+        
       }
     },
     // If not the default language, do not include coverImage

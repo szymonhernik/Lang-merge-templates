@@ -23,30 +23,46 @@ export default function ProjectContent(props: ProjectContentProps) {
     portfolio.projects,
     portfolio.slug,
   ) // Ensure createProjectLinks is imported or accessible
-  //   console.log('portfolio:', portfolio)
+  // console.log(
+  //   'portfolio.projects[0].coverImage',
+  //   portfolio.projects[0].coverImage,
+  // )
+
+  const renderProjects = (numberOfProjects) => {
+    if (numberOfProjects > 1) {
+      return (
+        <div className="aspect-[3/4] object-cover w-full overflow-y-auto overflow-x-hidden">
+          <MultifaceProjects projects={projectPaths} />
+        </div>
+      )
+    } else if (numberOfProjects === 1) {
+      return (
+        <ImageBox
+          classesImage="aspect-[3/4] object-cover w-full overflow-hidden opacity-90 hover:opacity-100 transition-opacity"
+          image={portfolio.projects[0].coverImage}
+          alt={`${portfolio.projects[0].coverImage?.alt ?? ''}`}
+        />
+      )
+    } else {
+      // Handle case for 0 or undefined numberOfProjects
+      return <div>No projects to display</div>
+    }
+  }
 
   return (
     <>
       <article className="gap-4 relative flex flex-col">
-        {numberOfProjects === 1 ? (
-          <ImageBox
-            // classesWrapper="w-full h-full  "
-            classesImage="aspect-[3/4] object-cover w-full  overflow-hidden opacity-90 hover:opacity-100 transition-opacity"
-            image={portfolio.projects[0].coverImage}
-            alt={`${portfolio.projects[0].coverImage?.alt ?? ''}`}
-          />
-        ) : (
-          <div className="aspect-[3/4] object-cover w-full  overflow-hidden"></div>
-        )}
+        {renderProjects(numberOfProjects)}
 
-        {projectPaths.length > 0 && numberOfProjects > 1 ? (
-          <div className="absolute top-0 w-full ">
-            <MultifaceProjects projects={projectPaths} />
-          </div>
-        ) : (
-          numberOfProjects === 1 && null
-        )}
-        <Title>{portfolio.title[language]}</Title>
+        <Title
+          year={
+            numberOfProjects === 1 && portfolio.projects[0].year
+              ? portfolio.projects[0].year
+              : null
+          }
+        >
+          {portfolio.title[language]}
+        </Title>
       </article>
     </>
   )

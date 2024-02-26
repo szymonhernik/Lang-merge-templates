@@ -1,9 +1,6 @@
-import { Translation, TranslationReach } from '@/lib/types'
-import { clsx } from 'clsx'
-import Link from 'next/link'
+import { TranslationReach } from '@/lib/types'
 import React, { PropsWithChildren } from 'react'
 import ProjectLinks from './ProjectLinks'
-import ImageBox from './shared/ImageBox'
 
 type MultifaceProjectsProps = PropsWithChildren<{
   projects: TranslationReach[][]

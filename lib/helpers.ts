@@ -32,6 +32,8 @@ type CoverImage = {
     _id: string
     url: string
     lqip: string
+    width?: number
+    height?: number
   }
 }
 type LinkedFile = {
@@ -94,6 +96,8 @@ export function createProjectReachLinks(
                 _id: project.coverImage.asset._id,
                 url: project.coverImage.asset.url,
                 lqip: project.coverImage.asset.lqip,
+                width: project.coverImage.asset.width,
+                height: project.coverImage.asset.height,
               },
             }
             // Check for the existence of linkedFile

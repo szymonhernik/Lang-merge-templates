@@ -7,6 +7,15 @@ import { TranslationReach } from '../../lib/types'
 import { ListLink } from './ListLink'
 import ImageBox from '../shared/ImageBox'
 
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
+import Link from 'next/link'
+import Image from 'next/image'
+
 type ProjectLinksProps = {
   projects: TranslationReach[][]
   openByDefault?: boolean
@@ -30,53 +39,75 @@ export default function ProjectLinks(props: ProjectLinksProps) {
         ),
     [language, projects],
   )
+  // console.log(projects[0][0].coverImage)
 
   if (!localeProjects?.length) {
     return null
   }
 
   return (
-    <div className="flex flex-col gap-8 justify-center">
-      {/* <div className="w-full h-48">
-        {selectedProject?.coverImage && (
-          <ImageBox
-            classesWrapper="h-full "
-            classesImage="w-auto h-full object-contain"
-            image={selectedProject.coverImage}
-            alt={selectedProject.coverImage.alt || ''}
-          />
-        )}
-
-        {selectedProject?.hasLinkedFile && (
-          <div className="shadow-md h-full mx-auto aspect-[3/4] p-4 ">PDF</div>
-        )}
-      </div> */}
-      <ul className="">
+    <div className="min-h-full ">
+      <Accordion
+        type="single"
+        collapsible
+        className="w-full   text-trye"
+        defaultValue="item-0"
+      >
         {localeProjects.map((project, index) =>
           project ? (
-            <li
+            <AccordionItem
+              value={`item-${index}`}
               key={project.path}
-              className="flex items-start justify-between text-base border-neutral-500 last:border-b-0 border-b-[0.5px] py-4"
+              className="h-auto"
             >
-              <ListLink href={project.path} locale={project.language}>
-                <div
-                  className={`flex transition-colors duration-200 hover:underline text-gray-500 `}
-                >
-                  {String(index + 1).padEnd(2, '.')} {project.title}
-                </div>
-              </ListLink>
-              {project.coverImage && (
-                <ImageBox
-                  classesWrapper="w-auto h-16" // Set appropriate size for the images
-                  classesImage="w-auto h-full object-cover" // Adjust object-fit as needed
-                  image={project.coverImage}
-                  alt={project.coverImage.alt || 'Project image'}
-                />
+              {project.coverImage ? (
+                <>
+                  <AccordionTrigger className="hover:no-underline">
+                    <Link href={project.path}>
+                      <div
+                        className={`flex transition-colors duration-200 hover:opacity-100 hover:underline  opacity-50 `}
+                      >
+                        {String(index + 1).padEnd(2, '.')} {project.title}
+                      </div>
+                    </Link>
+                  </AccordionTrigger>
+                  <AccordionContent className="h-36 w-auto">
+                    <Image
+                      alt={project.coverImage.alt ? project.coverImage.alt : ''}
+                      width={
+                        project.coverImage.asset.width
+                          ? Math.round(project.coverImage.asset.width / 100)
+                          : 100
+                      }
+                      height={
+                        project.coverImage.asset.height
+                          ? Math.round(project.coverImage.asset.height / 100)
+                          : 100
+                      }
+                      className={`w-auto h-full object-cover `}
+                      sizes={
+                        '(max-width:640px) 25vw, (max-width: 768px) 20vw, 10vw'
+                      }
+                      src={project.coverImage.asset.url}
+                      placeholder="blur"
+                      blurDataURL={project.coverImage.asset.lqip} // Use the extracted LQIP as the blurDataURL
+                    />
+                  </AccordionContent>
+                </>
+              ) : (
+                <Link href={project.path}>
+                  <div
+                    className={`py-4 flex transition-colors duration-200  hover:opacity-100 hover:underline opacity-50 `}
+                  >
+                    {String(index + 1).padEnd(2, '.')} {project.title}
+                  </div>
+                </Link>
               )}
-            </li>
+              {/* </li> */}
+            </AccordionItem>
           ) : null,
         )}
-      </ul>
+      </Accordion>
     </div>
   )
 }

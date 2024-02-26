@@ -17,6 +17,9 @@ const config: Config = {
         mobileSpace: '20vh',
         desktopSpace: '20vh',
       },
+      fontSize: {
+        trye: 'clamp(14px, 1vw, 24px)',
+      },
       inset: {
         headerSmallSpace: '88px',
       },
@@ -34,9 +37,23 @@ const config: Config = {
       screens: {
         '3xl': '1800px',
       },
+      keyframes: {
+        'accordion-down': {
+          from: { height: '0' },
+          to: { height: 'var(--radix-accordion-content-height)' },
+        },
+        'accordion-up': {
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to: { height: '0' },
+        },
+      },
+      animation: {
+        'accordion-down': 'accordion-down 0.2s ease-out',
+        'accordion-up': 'accordion-up 0.2s ease-out',
+      },
     },
   },
-  plugins: [require('@tailwindcss/typography')],
+  plugins: [require('@tailwindcss/typography'), require('tailwindcss-animate')],
 }
 
 export default config
