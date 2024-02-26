@@ -50,6 +50,12 @@ export default defineType({
           title: 'Alt text',
           description: 'Alternative text for screenreaders. ',
         }),
+        defineField({
+          name: 'photographerArray',
+          type: 'reference',
+          title: 'Collaborators database',
+          to: [{ type: 'collaborator' }],
+        }),
       ],
       validation: (rule) => rule.required(),
     }),

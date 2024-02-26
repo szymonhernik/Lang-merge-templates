@@ -5,6 +5,7 @@ import { AboutPagePayload } from '@/types'
 import { CustomPortableText } from './CustomPortableText'
 import { i18n } from '@/languages'
 import PageTitle from './PageTitle'
+import Photocredits from './Photocredits'
 
 type AboutLayoutProps = {
   data: AboutPagePayload | null
@@ -22,6 +23,10 @@ export async function AboutLayout({ data, currentLanguage }: AboutLayoutProps) {
     highlightedContent,
     pageBuilder,
   } = data ?? {}
+  console.log(
+    'profilePicture.photographerArray',
+    profilePicture.photographerArray,
+  )
 
   return (
     <section className="py-mobileSpace max-w-screen-3xl mx-auto">
@@ -43,9 +48,7 @@ export async function AboutLayout({ data, currentLanguage }: AboutLayoutProps) {
                 image={profilePicture}
                 alt={`${profilePicture?.alt ?? ''}`}
               />
-              <p className="text-center">
-                Photo by <a className="underline">Lizzy Schwultz</a>
-              </p>
+              <Photocredits profilePicture={profilePicture.photographerArray} />
             </div>
           )}
           {content && <CustomPortableText value={content} />}
@@ -78,7 +81,7 @@ export async function AboutLayout({ data, currentLanguage }: AboutLayoutProps) {
               alt={`${profilePicture?.alt ?? ''}`}
             />
             <p className="text-center">
-              Photo by <a className="underline">Lizzy Schwultz</a>
+              <Photocredits profilePicture={profilePicture.photographerArray} />
             </p>
           </div>
         )}

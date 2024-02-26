@@ -59,12 +59,14 @@ export interface SettingsQueryResult {
 export interface AboutPagePayload {
   ogImage?: Image
   overview?: string
+
   _id: string
   title: string
   slug: string
   content: PortableTextBlock[]
   language: string
   profilePicture: {
+    photographerArray: any
     alt: string
     asset: {
       _id: string

@@ -315,6 +315,11 @@ export const ABOUT_QUERY = groq`*[_type == "aboutPage" && language == $language]
   language,
   "profilePicture": *[_type == "aboutPage" && language == $defaultLocale][0].profilePicture {
     alt,
+    photographerArray->{
+      _id,
+          displayName,
+          collaboratorUrl
+    },
     asset->{
       _id,
       url,

@@ -46,7 +46,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
 
   const coverImage = coverImageProp
 
-  console.log('gallery', gallery)
+  // console.log('gallery', gallery)
 
   // CUSTOM CURSOR
 
