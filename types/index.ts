@@ -51,6 +51,10 @@ export interface HomeQueryResult {
     showcaseHome?: ShowcaseHomeProject[]
   }
 }
+export interface SettingsQueryResult {
+  ogImage: Image
+  text: Text
+}
 
 export interface AboutPagePayload {
   ogImage?: Image

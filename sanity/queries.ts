@@ -288,6 +288,12 @@ export const WORKS_QUERY = groq`{
   
 }`
 
+export const SETTINGS_QUERY = groq` *[_type == "settings"][0]{
+    ogImage,
+    text,
+  }
+`
+
 export const ABOUT_QUERY = groq`*[_type == "aboutPage" && language == $language][0]{
   ogImage,
   overview,

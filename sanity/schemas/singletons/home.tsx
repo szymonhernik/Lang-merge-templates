@@ -23,12 +23,6 @@ export default defineType({
       title: 'Showcase on Homepage',
       icon: FiAward,
     },
-
-    {
-      name: 'SEO',
-      title: 'SEO',
-      icon: FiSettings,
-    },
   ],
   fields: [
     defineField({
@@ -50,23 +44,6 @@ export default defineType({
         }),
       ],
       validation: (Rule) => [Rule.required().min(1), Rule.unique()],
-    }),
-    defineField({
-      name: 'ogImage',
-      title: 'Open Graph Image',
-      type: 'image',
-      description: 'Displayed on social cards and search engine results.',
-      options: {
-        hotspot: true,
-      },
-      group: ['SEO'],
-    }),
-    defineField({
-      name: 'text',
-      title: 'SEO texts',
-      type: 'localizedText',
-      group: ['SEO'],
-      validation: (Rule) => Rule.required(),
     }),
   ],
 })

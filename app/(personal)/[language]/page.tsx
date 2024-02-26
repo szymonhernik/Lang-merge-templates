@@ -6,35 +6,40 @@ import { LiveQueryWrapper } from '@/components/LiveQueryWrapper'
 import { COMMON_PARAMS, DEFAULT_EMPTY_PARAMS } from '@/lib/constants'
 
 import { loadQuery } from '@/sanity/lib/store'
-import { HOME_QUERY } from '@/sanity/queries'
+import { HOME_QUERY, SETTINGS_QUERY } from '@/sanity/queries'
 
 import { i18n } from '../../../languages'
 import Header from '@/components/Header'
 import { HomeLayout } from '@/components/HomeLayout'
 
-import { HomeQueryResult } from '@/types'
+import { HomeQueryResult, SettingsQueryResult } from '@/types'
 import UpdateLangContext from '@/components/UpdateLangContext'
 import { localizeProjects } from '@/lib/localizeProjects'
 import { Metadata } from 'next'
 import { urlForOpenGraphImage } from '@/sanity/lib/utils'
-import { toPlainText } from '@portabletext/react'
 
 export async function generateMetadata({ params }): Promise<Metadata> {
-  const { language, slug } = params
+  const { language } = params
   const queryParams = { ...COMMON_PARAMS, language }
 
-  const homePage = await loadQuery<HomeQueryResult>(HOME_QUERY, queryParams, {
-    // perspective: isEnabled ? 'previewDrafts' : 'published',
-    next: { tags: ['home'] },
-  })
-  const homeRef = homePage.data.home
-  const ogImage = urlForOpenGraphImage(homeRef.ogImage)
-  console.log('homeRef', homeRef)
+  const dataPage = await loadQuery<SettingsQueryResult>(
+    SETTINGS_QUERY,
+    queryParams,
+    {
+      // perspective: isEnabled ? 'previewDrafts' : 'published',
+      next: { tags: ['settings'] },
+    },
+  )
+
+  const ogImage = urlForOpenGraphImage(dataPage.data.ogImage)
+  console.log('homeRef', dataPage)
 
   return {
     title:
       language === 'en' ? 'Home | Narges Mohammadi' : 'Home | Narges Mohammadi',
-    description: homeRef.text[language] ? homeRef.text[language] : '',
+    description: dataPage.data.text[language]
+      ? dataPage.data.text[language]
+      : '',
     openGraph: {
       images: ogImage ? [ogImage] : [],
     },

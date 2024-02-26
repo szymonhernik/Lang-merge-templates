@@ -14,9 +14,12 @@ export default defineType({
       title: 'Open Graph Image',
       type: 'image',
       description: 'Displayed on social cards and search engine results.',
-      options: {
-        hotspot: true,
-      },
+    }),
+    defineField({
+      name: 'text',
+      title: 'SEO texts',
+      type: 'localizedText',
+      validation: (Rule) => Rule.required(),
     }),
   ],
   preview: {
