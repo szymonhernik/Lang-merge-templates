@@ -16,10 +16,12 @@ import musicPage from './documents/music'
 import home from './singletons/home'
 import settings from './singletons/settings'
 import externalDoc from './documents/externalDoc'
+import collaborator from './documents/collaborator'
 
 export const schemaTypes = [
   // documents
   portfolio,
+  collaborator,
   externalDoc,
   project,
   presenter,

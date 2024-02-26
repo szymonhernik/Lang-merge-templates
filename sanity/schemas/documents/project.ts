@@ -1,4 +1,4 @@
-import { FiAward, FiImage } from 'react-icons/fi'
+import { FiAward, FiImage, FiLink } from 'react-icons/fi'
 import { defineArrayMember, defineField, defineType } from 'sanity'
 
 export default defineType({
@@ -18,6 +18,8 @@ export default defineType({
       options: {
         source: 'title',
       },
+      description:
+        '(Set for: both languages) Slugs (urls) must be unique — cant have two that are the same',
       validation: (rule) =>
         rule
           .required()
@@ -27,14 +29,15 @@ export default defineType({
       name: 'ogImage',
       title: 'Open Graph Image',
       type: 'image',
-      description: 'Displayed on social cards and search engine results.',
+      description:
+        '(Set for: both languages) Displayed on social cards and search engine results.',
       options: {
         hotspot: true,
       },
     }),
     defineField({
       name: 'overview',
-      description: 'Used for the <meta> description tag for SEO',
+      description: `(Set for: both languages) Used for the <meta> description tag for SEO`,
       title: 'Description',
       type: 'string',
 
@@ -220,9 +223,17 @@ export default defineType({
       title: 'Project gallery',
       fields: [
         defineField({
-          name: 'galleryTitle',
-          type: 'string',
-          title: 'Name of the gallery',
+          name: 'pageBuilder',
+          type: 'array',
+          title: 'Photo credits',
+          of: [
+            defineArrayMember({
+              name: 'photographerArray',
+              type: 'reference',
+              title: 'Collaborators database',
+              to: [{ type: 'collaborator' }],
+            }),
+          ],
         }),
         defineField({
           name: 'images',

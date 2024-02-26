@@ -274,7 +274,12 @@ export const structure: StructureResolver = (S) => {
         ),
       // Field-level translations
       S.documentTypeListItem('portfolio').title('Portfolio'),
+      S.divider(),
       S.documentTypeListItem('externalDoc').title('Seperate files'),
+      S.divider(),
+      S.documentTypeListItem('collaborator')
+        .title('Collaborators')
+        .icon(FiUsers),
       // Singleton, field-level translations
     ])
 }

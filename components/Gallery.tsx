@@ -34,55 +34,57 @@ export function Gallery({ gallery, onEndReached, onSlideChange }) {
   // console.log('galleryImages', gallery.images)
 
   return (
-    <Swiper
-      navigation={true}
-      onSlideChange={onSlideChange}
-      onReachEnd={onEndReached} // Add this line
-      freeMode={
-        isMobile
-          ? {
-              enabled: true,
-              momentumRatio: 0.2,
-              momentumBounceRatio: 0.2,
-              momentumVelocityRatio: 0.2,
-            }
-          : false
-      }
-      modules={[FreeMode, Navigation]}
-      slidesPerView={'auto'}
-      lazyPreloadPrevNext={2}
-      className="!pl-6 w-screen  lg:w-full mySwiper h-[50vh] flex flex-col items-center justify-center overflow-x-hidden select-none"
-    >
-      {gallery.images.map((image, index) => {
-        // Define sizes based on aspect ratio
-        // console.log('image', image)
-
-        let sizes
-        if (image.asset.aspectRatio > 1) {
-          // Landscape (horizontal) image
-          sizes = '(max-width:640px) 100vw, (max-width: 768px) 50vw, 50vw'
-        } else {
-          // Portrait (vertical) or square image
-          sizes = '(max-width:640px) 100vw, (max-width: 768px) 75vw, 30vw'
+    <>
+      <Swiper
+        navigation={true}
+        onSlideChange={onSlideChange}
+        onReachEnd={onEndReached} // Add this line
+        freeMode={
+          isMobile
+            ? {
+                enabled: true,
+                momentumRatio: 0.2,
+                momentumBounceRatio: 0.2,
+                momentumVelocityRatio: 0.2,
+              }
+            : false
         }
-        return (
-          <SwiperSlide
-            className="!w-auto !mr-8"
-            key={gallery._key + image + index}
-          >
-            <Image
-              src={`${image.asset.url}?w=${Math.round(image.asset.width / 2)}&h=${Math.round(image.asset.height / 2)}`}
-              width={Math.round(image.asset.width)}
-              height={Math.round(image.asset.height)}
-              sizes={sizes}
-              alt={`${image?.alt ?? ''}`}
-              className="w-auto h-full"
-              blurDataURL={image.asset.lqip}
-              placeholder="blur"
-            />
-          </SwiperSlide>
-        )
-      })}
-    </Swiper>
+        modules={[FreeMode, Navigation]}
+        slidesPerView={'auto'}
+        lazyPreloadPrevNext={2}
+        className="!pl-6 w-screen  lg:w-full mySwiper h-[50vh] flex flex-col items-center justify-center overflow-x-hidden select-none"
+      >
+        {gallery.images.map((image, index) => {
+          // Define sizes based on aspect ratio
+          // console.log('image', image)
+
+          let sizes
+          if (image.asset.aspectRatio > 1) {
+            // Landscape (horizontal) image
+            sizes = '(max-width:640px) 100vw, (max-width: 768px) 50vw, 50vw'
+          } else {
+            // Portrait (vertical) or square image
+            sizes = '(max-width:640px) 100vw, (max-width: 768px) 75vw, 30vw'
+          }
+          return (
+            <SwiperSlide
+              className="!w-auto !mr-8"
+              key={gallery._key + image + index}
+            >
+              <Image
+                src={`${image.asset.url}?w=${Math.round(image.asset.width / 2)}&h=${Math.round(image.asset.height / 2)}`}
+                width={Math.round(image.asset.width)}
+                height={Math.round(image.asset.height)}
+                sizes={sizes}
+                alt={`${image?.alt ?? ''}`}
+                className="w-auto h-full"
+                blurDataURL={image.asset.lqip}
+                placeholder="blur"
+              />
+            </SwiperSlide>
+          )
+        })}
+      </Swiper>
+    </>
   )
 }

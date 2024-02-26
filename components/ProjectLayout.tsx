@@ -31,6 +31,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
     portfolio,
     coverImageProp,
     language,
+    pageBuilder,
     slug,
     text,
     slugPage,
@@ -44,6 +45,8 @@ export function ProjectLayout(props: ProjectLayoutProps) {
   )
 
   const coverImage = coverImageProp
+
+  console.log('gallery', gallery)
 
   // CUSTOM CURSOR
 
@@ -271,13 +274,34 @@ export function ProjectLayout(props: ProjectLayoutProps) {
             )}
             {/* Mobile&Tablet gallery */}
             {gallery && (
-              <div className="w-screen md:w-full -mx-6 lg:hidden">
-                <Gallery
-                  gallery={gallery}
-                  onEndReached={null}
-                  onSlideChange={null}
-                />
-              </div>
+              <>
+                <div className="w-screen md:w-full -mx-6 lg:hidden">
+                  <Gallery
+                    gallery={gallery}
+                    onEndReached={null}
+                    onSlideChange={null}
+                  />
+                </div>
+                <div className="absolute bottom-[20vh] left-0 px-12 font-medium text-sm">
+                  {gallery.pageBuilder &&
+                    gallery.pageBuilder.map((collabObj, index) => (
+                      <p key={`${index}-${collabObj._id}`}>
+                        Photos by{' '}
+                        {collabObj.collaboratorUrl ? (
+                          <a
+                            href={collabObj.collaboratorUrl}
+                            target="_blank"
+                            className="underline"
+                          >
+                            {collabObj.displayName}
+                          </a>
+                        ) : (
+                          <span>{collabObj.displayName}</span>
+                        )}
+                      </p>
+                    ))}
+                </div>
+              </>
             )}
 
             {credits?.length > 0 && (

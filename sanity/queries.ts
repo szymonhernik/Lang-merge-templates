@@ -30,6 +30,12 @@ const PORTFOLIO_QUERY_PROJECTION = groq`
       }
     },
     projectGallery {
+      pageBuilder[]->{
+          _id,
+          displayName,
+          collaboratorUrl
+
+      },
       images[]{
         _type,
         _key,
@@ -43,6 +49,7 @@ const PORTFOLIO_QUERY_PROJECTION = groq`
         }
       }
     },
+    
     // ...and all its connected document-level translations
     "translations": *[
       // by finding the translation metadata document
