@@ -31,7 +31,11 @@ export default function Header() {
           'text-white': isHomePage,
         },
         {
-          'text-black bg-white md:bg-transparent': !isHomePage && !isMusicPage,
+          'text-black bg-white md:bg-transparent':
+            !isHomePage && !isMusicPage && !isWorksPage,
+        },
+        {
+          'text-white mix-blend-difference': isWorksPage,
         },
         {
           'text-white bg-black md:bg-transparent': isMusicPage,
@@ -44,7 +48,7 @@ export default function Header() {
         )}
       >
         <div className="space-y-3">
-          <h1 className="mr-auto space-x-3">
+          <h1 className={clsx('mr-auto space-x-3', {})}>
             <Link href={`/${clean(langSelected)}`} className="">
               <span>Narges Mohammadi</span>
             </Link>
@@ -57,7 +61,7 @@ export default function Header() {
           </h1>
           {(isHomePage || isMenuOpen) && (
             <div className="md:hidden">
-              <TranslationLinks translations={translations} />
+              <TranslationLinks translations={translations} isWorksPage />
             </div>
           )}
         </div>
@@ -78,6 +82,7 @@ export default function Header() {
               pathname={pathname}
               langSelected={langSelected}
               translations={translations}
+              isWorksPage={isWorksPage}
             />
           </Suspense>
         </div>

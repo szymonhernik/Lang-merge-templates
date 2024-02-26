@@ -12,10 +12,11 @@ import { i18n } from '@/languages'
 
 type TranslationLinksProps = {
   translations: Translation[]
+  isWorksPage: boolean
 }
 
 export default function TranslationLinks(props: TranslationLinksProps) {
-  const { translations = [] } = props
+  const { translations = [], isWorksPage } = props
   const pathname = usePathname()
   const isHomePage = pathname === '/en' || pathname === '/nl'
   const isMusicPage = pathname === '/en/music' || pathname === '/nl/music'
@@ -66,11 +67,18 @@ export default function TranslationLinks(props: TranslationLinksProps) {
             'pointer-events-none': version.language === language,
             'text-white': isHomePage && version.language === language,
             'hover:text-white':
-              (isHomePage || isMusicPage) && version.language !== language,
+              (isHomePage || isMusicPage || isWorksPage) &&
+              version.language !== language,
             'text-black':
-              !isHomePage && version.language === language && !isMusicPage,
+              !isHomePage &&
+              version.language === language &&
+              !isMusicPage &&
+              !isWorksPage,
             'hover:text-black':
-              !isHomePage && version.language !== language && !isMusicPage,
+              !isHomePage &&
+              version.language !== language &&
+              !isMusicPage &&
+              !isWorksPage,
             'text-gray-400': version.language !== language,
           })}
         >

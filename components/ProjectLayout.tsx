@@ -48,7 +48,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
   // CUSTOM CURSOR
 
   const [isCoverImageShown, setIsCoverImageShown] = useState(true)
-  const [isLightGallery, setLightGallery] = useState(true)
+  // const [isLightGallery, setLightGallery] = useState(true)
   const [cursorVariant, setCursorVariant] = useState('default')
   const [isHoverInitialized, setIsHoverInitialized] = useState(false)
   const [galleryReachedEnd, setGalleryReachedEnd] = useState(false)
@@ -100,7 +100,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
     if (!isHoverInitialized) {
       setCursorText({ arrow: '→', text: 'GALLERY' })
       setCursorVariant('project')
-      setLightGallery(true)
+      // setLightGallery(true)
       setIsHoverInitialized(true) // Indicate that hover action has been initialized
     }
   }
@@ -108,7 +108,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
   function projectLeave(event) {
     setCursorText({ arrow: '', text: '' })
     setCursorVariant('default')
-    setLightGallery(false)
+    // setLightGallery(false)
     setIsHoverInitialized(false) // Reset hover initialization
   }
 
@@ -177,22 +177,28 @@ export function ProjectLayout(props: ProjectLayoutProps) {
         </motion.div>
         {/* Desktop Cover image */}
         {coverImage && (
-          <div
-            className={`hidden lg:block fixed top-0 left-0 h-screen w-[60vw] pr-[16vw] z-[2] transition-all duration-500 hover:cursor-pointer  ${isCoverImageShown ? 'translate-x-0' : '-translate-x-full'}`}
-            onClick={toggleCoverImage}
-            onMouseOver={projectEnter}
-            onMouseLeave={projectLeave}
-          >
-            <ImageBox
-              classesWrapper="w-full h-screen "
-              width={2000}
-              height={2000}
-              size="(max-width:640px) 100vw, (max-width: 768px) 50vw, 50vw"
-              classesImage="object-cover  object-center lg:h-full lg:min-w-full "
-              image={coverImage}
-              alt={coverImage.alt || 'Project image'}
-            />
-          </div>
+          <>
+            {/* <div
+              className={`fixed top-0 left-0  z-[3] bg-gradient-to-b from-black opacity-50 w-[44vw] h-72 ${!isCoverImageShown && 'hidden'}`}
+            ></div> */}
+            {/* this has 44vw width */}
+            <div
+              className={`hidden lg:block fixed top-0 left-0 h-screen w-[60vw] pr-[16vw] z-[2] transition-all duration-500 hover:cursor-pointer  ${isCoverImageShown ? 'translate-x-0' : '-translate-x-full'}`}
+              onClick={toggleCoverImage}
+              onMouseOver={projectEnter}
+              onMouseLeave={projectLeave}
+            >
+              <ImageBox
+                classesWrapper="w-full h-screen "
+                width={2000}
+                height={2000}
+                size="(max-width:640px) 100vw, (max-width: 768px) 50vw, 50vw"
+                classesImage="object-cover  object-center lg:h-full lg:min-w-full "
+                image={coverImage}
+                alt={coverImage.alt || 'Project image'}
+              />
+            </div>
+          </>
         )}
         <div className="text-center lg:hidden">
           <Link href={`/${language}/works`} className="underline ">
@@ -207,7 +213,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
             onMouseOver={updateGalleryCursor}
             onMouseMove={updateGalleryCursor}
             onMouseLeave={galleryLeave}
-            className={`hidden lg:block fixed left-0 top-[25vh] z-[0] transition-all duration-700 w-[59vw]  ${isCoverImageShown ? 'opacity-10 translate-x-[44vw]' : 'opacity-100 translate-x-0'} ${isLightGallery && 'opacity-30'} `}
+            className={`hidden lg:block fixed left-0 top-[25vh] z-[0] transition-all duration-700 w-[59vw]  ${isCoverImageShown ? 'opacity-10 translate-x-[44vw]' : 'opacity-100 translate-x-0'} ${isHoverInitialized && 'opacity-30'} `}
           >
             <Gallery
               gallery={gallery}
@@ -217,7 +223,9 @@ export function ProjectLayout(props: ProjectLayoutProps) {
           </div>
         )}
 
-        <div className=" lg:bg-white lg:w-[40vw] lg:z-[10] lg:-mr-6 lg:pl-8 lg:pr-12 lg:py-desktopSpace lg:shadow-shadowProject lg:min-h-screen">
+        <div
+          className={` lg:bg-white lg:w-[40vw] lg:z-[10] lg:-mr-6 lg:pl-8 lg:pr-12 lg:py-desktopSpace transition-shadow duration-700 ${isCoverImageShown ? '' : 'lg:shadow-shadowProject'} lg:min-h-screen`}
+        >
           <div className="lg:max-w-screen-sm flex flex-col gap-12">
             <div className="my-8 flex flex-col gap-y-4 w-3/4 text-center mx-auto md:max-w-screen-md lg:text-left lg:w-[80%] lg:mx-0 ">
               <h1 className="text-3xl lg:text-4xl ">

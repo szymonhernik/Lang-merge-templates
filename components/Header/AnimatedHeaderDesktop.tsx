@@ -12,9 +12,11 @@ export default function AnimatedHeaderDesktop({
   pathname,
   langSelected,
   translations,
+  isWorksPage,
 }) {
   const isHomePage = pathname === `/${langSelected}`
   const isMusicPage = pathname === `/${langSelected}/music`
+
   const [isHovered, setIsHovered] = useState(!isHomePage)
 
   useEffect(() => {
@@ -29,10 +31,16 @@ export default function AnimatedHeaderDesktop({
           initial="hidden"
           animate={isHovered ? 'visible' : 'hidden'}
         >
-          <TranslationLinks translations={translations} />
+          <TranslationLinks
+            translations={translations}
+            isWorksPage={isWorksPage}
+          />
         </motion.div>
       ) : (
-        <TranslationLinks translations={translations} />
+        <TranslationLinks
+          translations={translations}
+          isWorksPage={isWorksPage}
+        />
       )}
       <motion.div
         className="flex gap-12 items-start w-28 "
@@ -79,6 +87,7 @@ export default function AnimatedHeaderDesktop({
                 isCurrentPath={pathname.startsWith(`/${langSelected}/works`)}
                 pathname={pathname}
                 langSelected={langSelected}
+                isWorksPage={isWorksPage}
               >
                 {langSelected === 'en' ? 'Works' : 'Werken'}
               </NavLinkWithBorder>
@@ -90,6 +99,7 @@ export default function AnimatedHeaderDesktop({
                 isCurrentPath={pathname === `/${langSelected}/about`}
                 pathname={pathname}
                 langSelected={langSelected}
+                isWorksPage={isWorksPage}
               >
                 {langSelected === 'en' ? 'About' : 'Over'}
               </NavLinkWithBorder>
@@ -100,6 +110,7 @@ export default function AnimatedHeaderDesktop({
                 isCurrentPath={pathname === `/${langSelected}/music`}
                 pathname={pathname}
                 langSelected={langSelected}
+                isWorksPage={isWorksPage}
               >
                 {langSelected === 'en' ? 'Music' : 'Muziek'}
               </NavLinkWithBorder>

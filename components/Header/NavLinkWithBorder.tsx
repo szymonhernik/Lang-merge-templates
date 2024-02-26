@@ -10,6 +10,7 @@ export default function NavLinkWithBorder({
   langSelected,
   isHomePage,
   isMusicPage,
+  isWorksPage,
 }) {
   // console.log(pathname)
 
@@ -19,7 +20,10 @@ export default function NavLinkWithBorder({
         href={`/${langSelected}${href}`}
         className={clsx(
           'pr-4',
-          { 'text-white hover:text-white': isHomePage },
+          {
+            'text-white hover:text-white hover:opacity-100':
+              isHomePage || isWorksPage,
+          },
           {
             'opacity-50 hover:text-black':
               !isHomePage && !isCurrentPath && !isMusicPage,
@@ -33,7 +37,11 @@ export default function NavLinkWithBorder({
       >
         {children}
       </Link>
-      <AnimatedBorder isCurrentPath={isCurrentPath} isMusicPage={isMusicPage} />
+      <AnimatedBorder
+        isCurrentPath={isCurrentPath}
+        isMusicPage={isMusicPage}
+        isWorksPage={isWorksPage}
+      />
     </>
   )
 }

@@ -212,15 +212,3 @@ export const filterOutCurrentProject = (projects, currentSlug, language) => {
     return projectSlug !== currentSlug
   })
 }
-
-export const filterOnlyCurrentProject = (projects, currentSlug, language) => {
-  return projects.filter((project) => {
-    const translation = project.translations?.find(
-      (t) => t.language === language,
-    )
-    const projectSlug = translation
-      ? translation.slug.current
-      : project.slug.current
-    return projectSlug === currentSlug // Changed to equality check
-  })
-}
