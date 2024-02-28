@@ -308,7 +308,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
             )}
 
             {credits?.length && (
-              <div className="font-medium  md:max-w-screen-md lg:max-w-full md:mx-auto lg:w-full lg:text-base">
+              <div className="font-medium  md:max-w-screen-md lg:max-w-full md:mx-auto md:w-full lg:text-base">
                 <p className="opacity-50 lg:text-xs">CREDITS</p>
                 <CustomPortableText value={credits} />
               </div>
