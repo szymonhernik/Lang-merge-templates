@@ -47,7 +47,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
 
   const coverImage = coverImageProp
 
-  // console.log('pageExtraMaterials', pageExtraMaterials)
+  console.log('pageExtraMaterials', pageExtraMaterials)
 
   // console.log('gallery', gallery)
 
@@ -305,6 +305,20 @@ export function ProjectLayout(props: ProjectLayoutProps) {
                     ))}
                 </div>
               </>
+            )}
+
+            {pageExtraMaterials?.length && (
+              <div>
+                {pageExtraMaterials.map((mat) => {
+                  if (mat._type === 'video') {
+                    return <p className="text-blue-500">Type: VIDEO</p>
+                  } else if (mat._type === 'audio') {
+                    return <p className="text-blue-500">Type: AUDIOOOO</p>
+                  } else {
+                    return null
+                  }
+                })}
+              </div>
             )}
 
             {credits?.length && (
