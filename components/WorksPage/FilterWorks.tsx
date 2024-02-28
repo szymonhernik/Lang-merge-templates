@@ -12,7 +12,7 @@ export default function FilterWorks({
           className={`lowercase ${selectedCategory === null ? 'underline' : ''}`}
           onClick={() => onCategorySelect(null)}
         >
-          All
+          {currentLanguage === 'en' ? <>all</> : <>alle</>}
         </button>
         {categories &&
           categories.map((category) => (

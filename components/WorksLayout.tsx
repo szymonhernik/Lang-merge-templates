@@ -25,20 +25,22 @@ export function WorksLayout(props: WorksLayoutProps) {
   // console.log('portfolios', portfolios[0].category)
 
   const filteredPortfolios = useMemo(() => {
-    if (!selectedCategory || selectedCategory === 'all') {
+    if (
+      !selectedCategory ||
+      selectedCategory === 'all' ||
+      selectedCategory === 'alle'
+    ) {
       return portfolios
     }
     return portfolios?.filter((portfolio) => {
-      // Direct comparison since portfolio.category is an object, not an array
       return portfolio.category._id === selectedCategory
     })
   }, [portfolios, selectedCategory])
 
   const handleCategorySelect = (categoryId) => {
     if (categoryId === 'all') {
-      setSelectedCategory(null) // Ensure "All" is represented by null
+      setSelectedCategory(null)
     } else {
-      // Directly use the category ID
       setSelectedCategory(categoryId)
     }
   }
