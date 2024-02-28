@@ -18,7 +18,7 @@ const config: Config = {
         desktopSpace: '20vh',
       },
       fontSize: {
-        trye: 'clamp(14px, 1vw, 24px)',
+        trye: 'clamp(14px, 1vw, 18px)',
       },
       inset: {
         headerSmallSpace: '88px',

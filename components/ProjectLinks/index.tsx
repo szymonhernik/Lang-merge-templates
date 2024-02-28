@@ -65,39 +65,43 @@ export default function ProjectLinks(props: ProjectLinksProps) {
                   <AccordionTrigger className="hover:no-underline">
                     <Link href={project.path}>
                       <div
-                        className={`flex transition-colors duration-200 hover:opacity-100 hover:underline  opacity-50 `}
+                        className={`flex transition-colors duration-200  hover:underline  `}
                       >
                         {String(index + 1).padEnd(2, '.')} {project.title}
                       </div>
                     </Link>
                   </AccordionTrigger>
                   <AccordionContent className="h-36 w-auto">
-                    <Image
-                      alt={project.coverImage.alt ? project.coverImage.alt : ''}
-                      width={
-                        project.coverImage.asset.width
-                          ? Math.round(project.coverImage.asset.width / 100)
-                          : 100
-                      }
-                      height={
-                        project.coverImage.asset.height
-                          ? Math.round(project.coverImage.asset.height / 100)
-                          : 100
-                      }
-                      className={`w-auto h-full object-cover `}
-                      sizes={
-                        '(max-width:640px) 25vw, (max-width: 768px) 20vw, 10vw'
-                      }
-                      src={project.coverImage.asset.url}
-                      placeholder="blur"
-                      blurDataURL={project.coverImage.asset.lqip} // Use the extracted LQIP as the blurDataURL
-                    />
+                    <Link href={project.path}>
+                      <Image
+                        alt={
+                          project.coverImage.alt ? project.coverImage.alt : ''
+                        }
+                        width={
+                          project.coverImage.asset.width
+                            ? Math.round(project.coverImage.asset.width / 100)
+                            : 100
+                        }
+                        height={
+                          project.coverImage.asset.height
+                            ? Math.round(project.coverImage.asset.height / 100)
+                            : 100
+                        }
+                        className={`w-auto h-full object-cover `}
+                        sizes={
+                          '(max-width:640px) 25vw, (max-width: 768px) 20vw, 10vw'
+                        }
+                        src={project.coverImage.asset.url}
+                        placeholder="blur"
+                        blurDataURL={project.coverImage.asset.lqip} // Use the extracted LQIP as the blurDataURL
+                      />
+                    </Link>
                   </AccordionContent>
                 </>
               ) : (
-                <Link href={project.path}>
+                <Link href={project.path} className="inline-block">
                   <div
-                    className={`py-4 flex transition-colors duration-200  hover:opacity-100 hover:underline opacity-50 `}
+                    className={`py-4 w-fit transition-colors duration-200  hover:opacity-100 hover:underline opacity-50 `}
                   >
                     {String(index + 1).padEnd(2, '.')} {project.title}
                   </div>
