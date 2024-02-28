@@ -44,7 +44,7 @@ export default function Header() {
     >
       <div
         className={clsx(
-          'px-6 py-4  w-screen 3xl:mx-auto max-w-screen-3xl text-base flex items-start  justify-between gap-12',
+          'px-6 lg:px-12 py-4  w-screen 3xl:mx-auto max-w-screen-3xl text-base flex items-start  justify-between gap-12',
         )}
       >
         <div className="space-y-3">

@@ -141,8 +141,6 @@ export default async function Page({ params }) {
     versions.find((project) => project.title === initial.data.title),
   )
 
-  // console.log('currentProjectIndex', currentProjectIndex)
-
   const translations = projectPaths[currentProjectIndex]
 
   const gallery =

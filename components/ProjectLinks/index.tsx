@@ -46,11 +46,11 @@ export default function ProjectLinks(props: ProjectLinksProps) {
   }
 
   return (
-    <div className="min-h-full ">
+    <div className="min-h-full bg-brokenYellow p-4 md:bg-transparent md:p-1">
       <Accordion
         type="single"
         collapsible
-        className="w-full   text-trye"
+        className="w-full  text-tryeMobile md:text-trye"
         defaultValue="item-0"
       >
         {localeProjects.map((project, index) =>
@@ -58,7 +58,7 @@ export default function ProjectLinks(props: ProjectLinksProps) {
             <AccordionItem
               value={`item-${index}`}
               key={project.path}
-              className="h-auto"
+              className="h-auto  border-black"
             >
               {project.coverImage ? (
                 <>
@@ -101,7 +101,7 @@ export default function ProjectLinks(props: ProjectLinksProps) {
               ) : (
                 <Link href={project.path} className="inline-block">
                   <div
-                    className={`py-4 w-fit transition-colors duration-200  hover:opacity-100 hover:underline opacity-50 `}
+                    className={`py-3 md:py-4 w-fit transition-colors duration-200  hover:opacity-100 hover:underline opacity-50 `}
                   >
                     {String(index + 1).padEnd(2, '.')} {project.title}
                   </div>

@@ -58,6 +58,7 @@ export default async function Page({ params }) {
       next: { tags: ['works'] },
     },
   )
+  // console.log('worksInitial', worksInitial.data.categories)
 
   const translations = i18n.languages.map((lang) => {
     return {

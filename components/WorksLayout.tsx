@@ -1,45 +1,61 @@
 'use client'
 
-import { ArrowRightIcon } from '@heroicons/react/24/outline'
 import { useParams } from 'next/navigation'
 import { SanityDocument } from 'next-sanity'
-
-import { getLabelByKey } from '@/lib/getLabelByKey'
-import { createPortfolioSummary, createProjectLinks } from '@/lib/helpers'
-import { Label } from '@/lib/types'
-
-import Button from './Button'
-import Title from './Title'
-import TranslationLinks from './TranslationLinks'
-
-import React, { useMemo } from 'react'
+import { createProjectLinks } from '@/lib/helpers'
+import React, { useMemo, useState } from 'react'
 import Link from 'next/link'
-import MultifaceProjects from './MultifaceProjects'
-import ImageBox from './shared/ImageBox'
 import ProjectContent from './ProjectContent'
 import PageTitle from './PageTitle'
+import FilterWorks from './WorksPage/FilterWorks'
 
 type WorksLayoutProps = {
-  data?: { portfolios: SanityDocument[] }
+  data?: { portfolios: SanityDocument[]; categories: SanityDocument[] }
 }
 
 export function WorksLayout(props: WorksLayoutProps) {
-  const { portfolios } = props.data || {}
+  const { portfolios, categories } = props.data || {}
   const params = useParams()
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+
   const language = Array.isArray(params.language)
     ? params.language[0]
     : params.language
 
-  // console.log('externalDocs', externalDocs)
-  // console.log('portfolios', portfolios[0].projects)
+  // console.log('portfolios', portfolios[0].category)
+
+  const filteredPortfolios = useMemo(() => {
+    if (!selectedCategory || selectedCategory === 'all') {
+      return portfolios
+    }
+    return portfolios?.filter((portfolio) => {
+      // Direct comparison since portfolio.category is an object, not an array
+      return portfolio.category._id === selectedCategory
+    })
+  }, [portfolios, selectedCategory])
+
+  const handleCategorySelect = (categoryId) => {
+    if (categoryId === 'all') {
+      setSelectedCategory(null) // Ensure "All" is represented by null
+    } else {
+      // Directly use the category ID
+      setSelectedCategory(categoryId)
+    }
+  }
 
   return (
     <section className="w-full my-desktopSpace">
       <PageTitle currentLanguage={language} currentPage={'Works'} />
+      <FilterWorks
+        currentLanguage={language}
+        categories={categories}
+        onCategorySelect={handleCategorySelect}
+        selectedCategory={selectedCategory}
+      />
       <div className="3xl:max-w-[1936px] mx-auto grid gap-6 md:gap-8 px-4 md:px-6 lg:grid-cols-3 2xl:grid-cols-4 md:grid-cols-2 pt-header">
-        {portfolios &&
-          portfolios?.length > 0 &&
-          portfolios.map((portfolio, index) => {
+        {filteredPortfolios &&
+          filteredPortfolios.length > 0 &&
+          filteredPortfolios.map((portfolio, index) => {
             const numberOfProjects = portfolio.projects.length
             const projectPaths = createProjectLinks(
               portfolio.projects,

@@ -17,11 +17,13 @@ import home from './singletons/home'
 import settings from './singletons/settings'
 import externalDoc from './documents/externalDoc'
 import collaborator from './documents/collaborator'
+import categories from './documents/categories'
 
 export const schemaTypes = [
   // documents
   portfolio,
   collaborator,
+  categories,
   externalDoc,
   project,
   presenter,

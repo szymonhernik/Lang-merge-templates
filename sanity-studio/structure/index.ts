@@ -1,4 +1,4 @@
-import { FiAward, FiType, FiUsers } from 'react-icons/fi'
+import { FiAward, FiFilter, FiType, FiUsers } from 'react-icons/fi'
 import {
   StructureResolver,
   DefaultDocumentNodeResolver,
@@ -280,6 +280,7 @@ export const structure: StructureResolver = (S) => {
       S.documentTypeListItem('collaborator')
         .title('Collaborators')
         .icon(FiUsers),
+      S.documentTypeListItem('categories').title('Categories').icon(FiFilter),
       // Singleton, field-level translations
     ])
 }

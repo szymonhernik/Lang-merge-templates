@@ -240,8 +240,16 @@ export const HOME_QUERY = groq`{
   }
 }`
 export const WORKS_QUERY = groq`{
+  "categories": *[_type == "categories"]{
+    _id,
+    categoryName
+  },
   "portfolios": *[_type == "portfolio" && count(projects) > 0]{
     ...,
+    category->{
+      _id,
+    categoryName
+    },
     //see what is needed for the works page. if i remove this and have only title, language then the links dont work
     "projects": projects[]->{
       // Get each project's *base* language version's title and slug

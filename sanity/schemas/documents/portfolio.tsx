@@ -23,7 +23,6 @@ export default defineType({
       name: 'i18n',
       title: 'Localised',
       icon: FiGlobe,
-      default: true,
     },
     {
       name: 'projects',
@@ -51,6 +50,13 @@ export default defineType({
         Rule.required().error(
           'A slug is required to generate a page on the website',
         ),
+    }),
+    defineField({
+      title: 'Category',
+      name: 'category',
+      type: 'reference',
+      to: [{ type: 'categories' }],
+      validation: (Rule) => [Rule.required()],
     }),
 
     defineField({

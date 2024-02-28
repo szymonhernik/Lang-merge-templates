@@ -43,7 +43,7 @@ export default function AnimatedHeaderDesktop({
         />
       )}
       <motion.div
-        className="flex gap-12 items-start w-28 "
+        className="flex gap-12 items-start w-32 "
         onMouseEnter={() =>
           pathname === `/${langSelected}` && setIsHovered(true)
         }

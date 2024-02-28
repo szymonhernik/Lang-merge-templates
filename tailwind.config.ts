@@ -17,8 +17,12 @@ const config: Config = {
         mobileSpace: '20vh',
         desktopSpace: '20vh',
       },
+      backgroundColor: {
+        brokenYellow: '#FAF8F4',
+      },
       fontSize: {
         trye: 'clamp(14px, 1vw, 18px)',
+        tryeMobile: '16px',
       },
       inset: {
         headerSmallSpace: '88px',

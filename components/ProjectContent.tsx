@@ -22,11 +22,7 @@ export default function ProjectContent(props: ProjectContentProps) {
   const projectPaths = createProjectReachLinks(
     portfolio.projects,
     portfolio.slug,
-  ) // Ensure createProjectLinks is imported or accessible
-  // console.log(
-  //   'portfolio.projects[0].coverImage',
-  //   portfolio.projects[0].coverImage,
-  // )
+  )
 
   const renderProjects = (numberOfProjects) => {
     if (numberOfProjects > 1) {
@@ -38,7 +34,7 @@ export default function ProjectContent(props: ProjectContentProps) {
     } else if (numberOfProjects === 1) {
       return (
         <ImageBox
-          classesImage="aspect-[3/4] object-cover w-full overflow-hidden opacity-90 hover:opacity-100 transition-opacity"
+          classesImage="aspect-[3/4] object-cover w-full overflow-hidden  transition-opacity"
           image={portfolio.projects[0].coverImage}
           alt={`${portfolio.projects[0].coverImage?.alt ?? ''}`}
         />
@@ -51,7 +47,7 @@ export default function ProjectContent(props: ProjectContentProps) {
 
   return (
     <>
-      <article className="gap-4 relative flex flex-col">
+      <article className="gap-4 relative flex flex-col opacity-90 hover:opacity-100 transition-opacity">
         {renderProjects(numberOfProjects)}
 
         <Title
