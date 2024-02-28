@@ -52,7 +52,7 @@ export function WorksLayout(props: WorksLayoutProps) {
         onCategorySelect={handleCategorySelect}
         selectedCategory={selectedCategory}
       />
-      <div className="3xl:max-w-[1936px] mx-auto grid gap-6 md:gap-8 px-4 md:px-6 lg:grid-cols-3 2xl:grid-cols-4 md:grid-cols-2 pt-header">
+      <div className="3xl:max-w-[1936px] mx-auto grid gap-16 md:gap-8 px-4 md:px-6 lg:grid-cols-3 2xl:grid-cols-4 md:grid-cols-2 pt-header">
         {filteredPortfolios &&
           filteredPortfolios.length > 0 &&
           filteredPortfolios.map((portfolio, index) => {

@@ -12,7 +12,7 @@ export default function Title(props: TitleProps) {
 
   return (
     <header className="flex flex-col gap-y-4 pl-4 ">
-      <h1 className=" text-xs ">
+      <h1 className=" text-sm md:text-xs ">
         {children}
         {year && <span className="text-gray-500"> ({year})</span>}
       </h1>
