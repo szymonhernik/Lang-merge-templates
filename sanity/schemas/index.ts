@@ -18,6 +18,8 @@ import settings from './singletons/settings'
 import externalDoc from './documents/externalDoc'
 import collaborator from './documents/collaborator'
 import categories from './documents/categories'
+import { videoType } from './objects/VideoType'
+import { audioType } from './objects/AudioType'
 
 export const schemaTypes = [
   // documents
@@ -26,6 +28,8 @@ export const schemaTypes = [
   categories,
   externalDoc,
   project,
+  videoType,
+  audioType,
   presenter,
   aboutPage,
   musicPage,

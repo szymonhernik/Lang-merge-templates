@@ -29,6 +29,7 @@ const PORTFOLIO_QUERY_PROJECTION = groq`
           "height": metadata.dimensions.height,
       }
     },
+    pageExtraMaterials,
     projectGallery {
       pageBuilder[]->{
           _id,

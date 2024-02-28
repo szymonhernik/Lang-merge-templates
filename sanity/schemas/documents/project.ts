@@ -114,6 +114,22 @@ export default defineType({
       hidden: ({ document }) => document?.showAdditionalFields == true, // Hide this field if showAdditionalFields is not true
     }),
     defineField({
+      name: 'pageExtraMaterials',
+      type: 'array',
+      title: 'Page extra materials',
+      description: 'Add movie, sound file',
+      of: [
+        defineArrayMember({
+          name: 'video',
+          type: 'video',
+        }),
+        defineArrayMember({
+          name: 'audio',
+          type: 'audio',
+        }),
+      ],
+    }),
+    defineField({
       name: 'details',
       title: 'Project Details',
       type: 'array',

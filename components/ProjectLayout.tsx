@@ -30,6 +30,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
     details,
     portfolio,
     coverImageProp,
+    pageExtraMaterials,
     language,
     pageBuilder,
     slug,
@@ -45,6 +46,8 @@ export function ProjectLayout(props: ProjectLayoutProps) {
   )
 
   const coverImage = coverImageProp
+
+  // console.log('pageExtraMaterials', pageExtraMaterials)
 
   // console.log('gallery', gallery)
 
@@ -160,10 +163,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
 
   return (
     <>
-      <section
-        ref={ref}
-        className="py-mobileSpace  md:overflow-hidden  mx-auto px-6 flex flex-col gap-12 text-sm  lg:items-end lg:py-0"
-      >
+      <section ref={ref} className="renderedDesktop hidden lg:block">
         {gallery && (
           <motion.div
             variants={variants}
@@ -203,34 +203,36 @@ export function ProjectLayout(props: ProjectLayoutProps) {
                 alt={coverImage.alt || 'Project image'}
               />
             </div>
+            {/* Desktop gallery */}
+            {gallery && (
+              <div
+                ref={galleryRef}
+                onMouseOver={updateGalleryCursor}
+                onMouseMove={updateGalleryCursor}
+                onMouseLeave={galleryLeave}
+                className={`hidden lg:block fixed left-0 top-[25vh] z-[0] transition-all duration-700 w-[59vw]  ${isCoverImageShown ? 'opacity-10 translate-x-[44vw]' : 'opacity-100 translate-x-0'} ${isHoverInitialized && 'opacity-30'} `}
+              >
+                <Gallery
+                  gallery={gallery}
+                  onEndReached={handleGalleryEndReached}
+                  onSlideChange={handleSlideChange}
+                />
+              </div>
+            )}
           </>
         )}
+      </section>
+      <section className="py-mobileSpace  md:overflow-hidden  mx-auto px-6 flex flex-col gap-12 text-sm  lg:items-end lg:py-0">
         <div className="text-center lg:hidden">
           <Link href={`/${language}/works`} className="underline ">
             back to works
           </Link>
         </div>
 
-        {/* Desktop gallery */}
-        {gallery && (
-          <div
-            ref={galleryRef}
-            onMouseOver={updateGalleryCursor}
-            onMouseMove={updateGalleryCursor}
-            onMouseLeave={galleryLeave}
-            className={`hidden lg:block fixed left-0 top-[25vh] z-[0] transition-all duration-700 w-[59vw]  ${isCoverImageShown ? 'opacity-10 translate-x-[44vw]' : 'opacity-100 translate-x-0'} ${isHoverInitialized && 'opacity-30'} `}
-          >
-            <Gallery
-              gallery={gallery}
-              onEndReached={handleGalleryEndReached}
-              onSlideChange={handleSlideChange}
-            />
-          </div>
-        )}
-
         <div
-          className={` lg:bg-white lg:w-[40vw] lg:z-[10] lg:-mr-6 lg:pl-8 lg:pr-8 xl:pr-24 lg:pb-desktopSpace lg:pt-32 transition-shadow duration-700 ${!isCoverImageShown && 'lg:shadow-shadowProject'} lg:min-h-screen`}
+          className={` lg:bg-white lg:w-[40vw] lg:z-[10] lg:-mr-6 lg:pl-8 lg:pr-8 xl:pr-24 lg:pb-desktopSpace lg:pt-32 transition-shadow duration-700  lg:min-h-screen`}
         >
+          {/* ${!isCoverImageShown && 'lg:shadow-shadowProject'} */}
           <div className="lg:max-w-screen-sm flex flex-col gap-12">
             <div className="my-8 flex flex-col gap-y-2 w-3/4 text-center mx-auto md:max-w-screen-md lg:text-left lg:w-[80%] lg:mx-0 ">
               <h1 className="text-3xl lg:text-4xl ">
@@ -262,11 +264,12 @@ export function ProjectLayout(props: ProjectLayoutProps) {
                 />
               </div>
             )}
+
             <div className="lg:hidden sticky top-headerSmallSpace z-[10] left-0 w-screen -mx-6 flex flex-row gap-2 text-xs font-medium justify-center items-center bg-white py-4 opacity-80  ">
               <p className="">{portfolio.title[language]}</p>
               <span className="text-base font-normal">↑</span>
             </div>
-            {text?.length > 0 && (
+            {text?.length && (
               <div className="font-medium  space-y-6 md:max-w-screen-md lg:max-w-full md:mx-auto lg:text-base lg:space-y-8">
                 <p className="opacity-50 lg:text-xs">TEXT</p>
                 <CustomPortableText value={text} />
@@ -304,8 +307,8 @@ export function ProjectLayout(props: ProjectLayoutProps) {
               </>
             )}
 
-            {credits?.length > 0 && (
-              <div className="font-medium space-y-6 md:max-w-screen-md lg:max-w-full md:mx-auto lg:text-base">
+            {credits?.length && (
+              <div className="font-medium  md:max-w-screen-md lg:max-w-full md:mx-auto lg:w-full lg:text-base">
                 <p className="opacity-50 lg:text-xs">CREDITS</p>
                 <CustomPortableText value={credits} />
               </div>
