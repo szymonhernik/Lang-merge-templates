@@ -1,7 +1,7 @@
 export default function AudioBox({ mat }) {
   return (
     <a href={mat.audioFile.asset.url} target="_blank">
-      <div className="flex items-center text-sm gap-8">
+      <div className="flex items-center text-sm gap-2 py-2 pr-2">
         <SvgAudio />
 
         {mat.audioLabel && <p>{mat.audioLabel}</p>}
@@ -14,8 +14,8 @@ function SvgAudio() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="40"
-      height="40"
+      width="32"
+      height="32"
       viewBox="0 0 28 28"
       fill="none"
     >

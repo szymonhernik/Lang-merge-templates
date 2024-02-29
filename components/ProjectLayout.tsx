@@ -17,11 +17,12 @@ import { motion, useTransform } from 'framer-motion'
 import VideoBanner from './VideoBanner'
 import VideoPlayer from './shared/VideoPlayer'
 import AudioBox from './shared/AudioBox'
+import { InteractiveGallery } from './ProjectPage/InteractiveGallery'
+import PageExtraMaterials from './ProjectPage/PageExtraMaterials'
 
 type ProjectLayoutProps = {
   data?: any
 }
-type CursorText = { arrow: string; text: string } // For cases where you have an arrow and text
 
 export function ProjectLayout(props: ProjectLayoutProps) {
   const {
@@ -50,181 +51,20 @@ export function ProjectLayout(props: ProjectLayoutProps) {
 
   const coverImage = coverImageProp
 
-  // console.log('pageExtraMaterials', pageExtraMaterials)
-
-  // console.log('gallery', gallery)
-
-  // CUSTOM CURSOR
-
   const [isCoverImageShown, setIsCoverImageShown] = useState(true)
-  // const [isLightGallery, setLightGallery] = useState(true)
-  const [cursorVariant, setCursorVariant] = useState('default')
-  const [isHoverInitialized, setIsHoverInitialized] = useState(false)
-  const [galleryReachedEnd, setGalleryReachedEnd] = useState(false)
-  const [cursorText, setCursorText] = useState<CursorText>({
-    arrow: '',
-    text: '',
-  })
 
-  const toggleCoverImage = () => {
-    setIsCoverImageShown(!isCoverImageShown)
-  }
-
-  const ref = React.useRef(null)
-  const mouse = useMouse(ref)
-
-  let mouseXPosition = 0
-  let mouseYPosition = 0
-
-  if (mouse.x !== null) {
-    mouseXPosition = mouse.clientX ?? 0
-  }
-
-  if (mouse.y !== null) {
-    mouseYPosition = mouse.clientY ?? 0
-  }
-
-  // Animation variants for the cursor text
-
-  const variants = {
-    default: {
-      x: mouseXPosition,
-      y: mouseYPosition,
-    },
-    project: {
-      fontSize: '12px',
-      x: mouseXPosition - 5,
-      y: mouseYPosition - 25,
-      opacity: 1,
-    },
-    gallery: {
-      opacity: 1,
-      fontSize: '12px',
-      x: mouseXPosition - 5,
-      y: mouseYPosition - 25,
-    },
-  }
-
-  function projectEnter(event) {
-    if (!isHoverInitialized) {
-      setCursorText({ arrow: '→', text: 'GALLERY' })
-      setCursorVariant('project')
-      // setLightGallery(true)
-      setIsHoverInitialized(true) // Indicate that hover action has been initialized
-    }
-  }
-
-  function projectLeave(event) {
-    setCursorText({ arrow: '', text: '' })
-    setCursorVariant('default')
-    // setLightGallery(false)
-    setIsHoverInitialized(false) // Reset hover initialization
-  }
-
-  function galleryLeave(event) {
-    setCursorText({ arrow: '', text: '' })
-    setCursorVariant('default')
-  }
-
-  // Define a ref for the gallery element
-  const galleryRef = React.useRef(null)
-
-  // Function to calculate if mouse is on the left or right side
-  const updateGalleryCursor = (event) => {
-    if (!galleryRef.current) return
-
-    const galleryRect = (
-      galleryRef.current as HTMLElement
-    ).getBoundingClientRect()
-    const galleryMidpoint = galleryRect.left + galleryRect.width / 2
-    setCursorVariant('gallery')
-    // Determine if the mouse is on the left or right side of the gallery midpoint
-    if (mouseXPosition < galleryMidpoint / 1.5) {
-      // Mouse is on the left side
-      setCursorText({ arrow: '←', text: 'PREV' })
-    } else if (mouseXPosition > galleryMidpoint * 1.25) {
-      // Mouse is on the right side
-      if (galleryReachedEnd) {
-        setCursorText({ arrow: '', text: '' })
-        setCursorVariant('default')
-      } else {
-        // Default behavior
-        setCursorText({ arrow: '→', text: 'NEXT' })
-      }
-    } else {
-      setCursorText({ arrow: '', text: '' })
-      setCursorVariant('default')
-    }
-  }
-  const handleGalleryEndReached = () => {
-    setGalleryReachedEnd(true) // Mark that the gallery end has been reached
-  }
-  const handleSlideChange = (swiper) => {
-    const isEnd = swiper.isEnd // Boolean value indicating if the swiper is at the last slide
-    setGalleryReachedEnd(isEnd)
+  // Callback function to update the state
+  const handleCoverImageVisibility = (isVisible) => {
+    setIsCoverImageShown(isVisible)
   }
 
   return (
     <>
-      <section ref={ref} className="renderedDesktop hidden lg:block">
-        {gallery && (
-          <motion.div
-            variants={variants}
-            className="fixed pointer-events-none z-[100] flex flex-col justify-center items-center top-0 left-0 h-[10px] w-[10px] text-white mix-blend-difference"
-            animate={cursorVariant}
-            transition={{ type: 'Interim', stiffness: 50, delay: 0 }}
-          >
-            <span className="cursorText pointer-events-none m-auto flex-auto font-medium text-2xl">
-              {cursorText.arrow}
-            </span>
-            {/* Text with smaller font size */}
-            <span className="cursorText pointer-events-none m-auto flex-auto font-medium text-xs">
-              {cursorText.text}
-            </span>
-          </motion.div>
-        )}
-        {/* Desktop Cover image */}
-        {coverImage && (
-          <>
-            {/* <div
-              className={`fixed top-0 left-0  z-[3] bg-gradient-to-b from-black opacity-50 w-[44vw] h-72 ${!isCoverImageShown && 'hidden'}`}
-            ></div> */}
-            {/* this has 44vw width */}
-            <div
-              className={`hidden lg:block fixed top-0 left-0 h-screen   z-[2] transition-all duration-500 ${gallery ? 'hover:cursor-pointer pr-[16vw] w-[60vw]' : 'pr-0 w-[50vw]'}  ${isCoverImageShown ? 'translate-x-0' : '-translate-x-full'}`}
-              onClick={gallery && toggleCoverImage}
-              onMouseOver={gallery && projectEnter}
-              onMouseLeave={gallery && projectLeave}
-            >
-              <ImageBox
-                classesWrapper="w-full h-screen "
-                width={2000}
-                height={2000}
-                size="(max-width:640px) 100vw, (max-width: 768px) 50vw, 50vw"
-                classesImage={`object-cover aspect-[${Math.round(coverImage.width)}/${Math.round(coverImage.height)}] object-center lg:h-full lg:min-w-full `}
-                image={coverImage}
-                alt={coverImage.alt || 'Project image'}
-              />
-            </div>
-            {/* Desktop gallery */}
-            {gallery && (
-              <div
-                ref={galleryRef}
-                onMouseOver={updateGalleryCursor}
-                onMouseMove={updateGalleryCursor}
-                onMouseLeave={galleryLeave}
-                className={`hidden lg:block fixed left-0 top-[25vh] z-[0] transition-all duration-700 w-[59vw]  ${isCoverImageShown ? 'opacity-10 translate-x-[44vw]' : 'opacity-100 translate-x-0'} ${isHoverInitialized && 'opacity-30'} `}
-              >
-                <Gallery
-                  gallery={gallery}
-                  onEndReached={handleGalleryEndReached}
-                  onSlideChange={handleSlideChange}
-                />
-              </div>
-            )}
-          </>
-        )}
-      </section>
+      <InteractiveGallery
+        gallery={gallery}
+        coverImage={coverImage}
+        onCoverImageVisibilityChange={handleCoverImageVisibility}
+      />
       <section className="py-mobileSpace  md:overflow-hidden  mx-auto px-6 flex flex-col gap-12 text-sm  lg:items-end lg:py-0">
         <div className="text-center lg:hidden">
           <Link href={`/${language}/works`} className="underline ">
@@ -233,9 +73,8 @@ export function ProjectLayout(props: ProjectLayoutProps) {
         </div>
 
         <div
-          className={` lg:bg-white lg:w-[40vw] lg:z-[10] lg:-mr-6 lg:pl-8 lg:pr-8 xl:pr-24 lg:pb-desktopSpace lg:pt-32 transition-shadow duration-700  lg:min-h-screen`}
+          className={`${!isCoverImageShown && 'lg:shadow-shadowProject'} lg:bg-white lg:w-[40vw] lg:z-[10] lg:-mr-6 lg:pl-8 lg:pr-8 xl:pr-24 lg:pb-desktopSpace lg:pt-32 transition-shadow duration-700  lg:min-h-screen`}
         >
-          {/* ${!isCoverImageShown && 'lg:shadow-shadowProject'} */}
           <div className="lg:max-w-screen-sm flex flex-col gap-12">
             <div className="my-8 flex flex-col gap-y-2 w-3/4 text-center mx-auto md:max-w-screen-md lg:text-left lg:w-[80%] lg:mx-0 ">
               <h1 className="text-3xl lg:text-4xl ">
@@ -251,40 +90,11 @@ export function ProjectLayout(props: ProjectLayoutProps) {
                   slugPage={slugPage}
                 />
               )}
-              {pageExtraMaterials?.length && (
-                <div className="mt-4 w-1/2 flex flex-col gap-4">
-                  {pageExtraMaterials.map((mat) => {
-                    if (mat._type === 'audio') {
-                      return (
-                        <div className="hover:bg-stone-100" key={mat._key}>
-                          {mat.audioFile && <AudioBox mat={mat} />}
-                          {/* <caption className="block">{mat.videoLabel}</caption> */}
-                        </div>
-                      )
-                    } else if (mat._type === 'file') {
-                      // console.log(mat)
-
-                      return (
-                        <div className="w-fit " key={mat._key}>
-                          {mat.asset && (
-                            <a
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              download
-                              href={`${mat.asset.url}?dl=${mat.asset.originalFilename}`}
-                            >
-                              <div className=" border-black border-[0.5px] px-2 py-[2px] hover:bg-stone-200">
-                                PDF
-                              </div>
-                            </a>
-                          )}
-                        </div>
-                      )
-                    } else {
-                      return null
-                    }
-                  })}
-                </div>
+              {pageExtraMaterials?.length > 0 && (
+                <PageExtraMaterials
+                  materials={pageExtraMaterials}
+                  filterType="non-video"
+                />
               )}
             </div>
             <div className="font-medium space-y-2 md:max-w-screen-md md:mx-auto lg:text-sm lg:w-11/12 xl:w-3/4  lg:mx-0 lg:mb-12">
@@ -345,22 +155,11 @@ export function ProjectLayout(props: ProjectLayoutProps) {
               </>
             )}
 
-            {pageExtraMaterials?.length && (
-              <div>
-                {pageExtraMaterials.map((mat) => {
-                  if (mat._type === 'video') {
-                    const videoProps = mat.video
-                    return (
-                      <div className="" key={mat._key}>
-                        {videoProps && <VideoPlayer videoProps={videoProps} />}
-                        <caption className="block">{mat.videoLabel}</caption>
-                      </div>
-                    )
-                  } else {
-                    return null
-                  }
-                })}
-              </div>
+            {pageExtraMaterials?.length > 0 && (
+              <PageExtraMaterials
+                materials={pageExtraMaterials}
+                filterType="video"
+              />
             )}
 
             {credits?.length && (
