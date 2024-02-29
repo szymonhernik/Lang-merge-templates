@@ -148,7 +148,10 @@ export default async function Page({ params }) {
   const coverImageProp =
     initial.data.portfolio.projects[currentProjectIndex].coverImage
 
-  // console.log(initial.dat);
+  // console.log(
+  //   'initial.data',
+  //   initial.data.portfolio.projects[currentProjectIndex].pageExtraMaterials[1],
+  // )
 
   return (
     <>

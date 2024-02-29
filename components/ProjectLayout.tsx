@@ -14,6 +14,9 @@ import ImageBox from './shared/ImageBox'
 import { CustomPortableText } from './CustomPortableText'
 import useMouse from '@react-hook/mouse-position'
 import { motion, useTransform } from 'framer-motion'
+import VideoBanner from './VideoBanner'
+import VideoPlayer from './shared/VideoPlayer'
+import AudioBox from './shared/AudioBox'
 
 type ProjectLayoutProps = {
   data?: any
@@ -47,7 +50,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
 
   const coverImage = coverImageProp
 
-  console.log('pageExtraMaterials', pageExtraMaterials)
+  // console.log('pageExtraMaterials', pageExtraMaterials)
 
   // console.log('gallery', gallery)
 
@@ -248,6 +251,41 @@ export function ProjectLayout(props: ProjectLayoutProps) {
                   slugPage={slugPage}
                 />
               )}
+              {pageExtraMaterials?.length && (
+                <div className="mt-4 w-1/2 flex flex-col gap-4">
+                  {pageExtraMaterials.map((mat) => {
+                    if (mat._type === 'audio') {
+                      return (
+                        <div className="hover:bg-stone-100" key={mat._key}>
+                          {mat.audioFile && <AudioBox mat={mat} />}
+                          {/* <caption className="block">{mat.videoLabel}</caption> */}
+                        </div>
+                      )
+                    } else if (mat._type === 'file') {
+                      console.log(mat)
+
+                      return (
+                        <div className="w-fit " key={mat._key}>
+                          {mat.asset && (
+                            <a
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              download
+                              href={`${mat.asset.url}?dl=${mat.asset.originalFilename}`}
+                            >
+                              <div className=" border-black border-[0.5px] px-2 py-[2px] hover:bg-stone-200">
+                                PDF
+                              </div>
+                            </a>
+                          )}
+                        </div>
+                      )
+                    } else {
+                      return null
+                    }
+                  })}
+                </div>
+              )}
             </div>
             <div className="font-medium space-y-2 md:max-w-screen-md md:mx-auto lg:text-sm lg:w-11/12 xl:w-3/4  lg:mx-0 lg:mb-12">
               <span className="opacity-50">2023</span>
@@ -311,9 +349,13 @@ export function ProjectLayout(props: ProjectLayoutProps) {
               <div>
                 {pageExtraMaterials.map((mat) => {
                   if (mat._type === 'video') {
-                    return <p className="text-blue-500">Type: VIDEO</p>
-                  } else if (mat._type === 'audio') {
-                    return <p className="text-blue-500">Type: AUDIOOOO</p>
+                    const videoProps = mat.video
+                    return (
+                      <div className="" key={mat._key}>
+                        {videoProps && <VideoPlayer videoProps={videoProps} />}
+                        <caption className="block">{mat.videoLabel}</caption>
+                      </div>
+                    )
                   } else {
                     return null
                   }

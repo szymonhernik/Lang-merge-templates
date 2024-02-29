@@ -6,6 +6,7 @@ interface Props {
   blurHashBase64: string
   sourceWidth: number
   sourceHeight: number
+  classesImage: string
 }
 
 export default function VideoSpace({
@@ -13,10 +14,12 @@ export default function VideoSpace({
   blurHashBase64,
   sourceWidth,
   sourceHeight,
+  classesImage,
 }: Props) {
   return (
     <MuxVideo
-      className="w-full h-full object-cover object-center"
+      // className="w-full h-full object-cover object-center"
+      className={`w-full  ${classesImage}`}
       playbackId={playbackId}
       placeholder={''}
       poster={blurHashBase64}

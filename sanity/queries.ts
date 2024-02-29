@@ -29,7 +29,7 @@ const PORTFOLIO_QUERY_PROJECTION = groq`
           "height": metadata.dimensions.height,
       }
     },
-    pageExtraMaterials,
+    
     projectGallery {
       pageBuilder[]->{
           _id,
@@ -114,6 +114,37 @@ export const ABOUT_SLUGS_QUERY = groq`*[_type == "aboutPage" && defined(language
 export const PROJECT_QUERY = groq`*[_type == "project" && slug.current == $slug][0]{
     // Get this whole document
     ...,
+    pageExtraMaterials[]{
+      ...,
+      _type == "video" => {
+        _type,
+        videoLabel,
+        video {
+        _type,
+          asset->{
+            playbackId,
+          }
+        }
+      },
+      _type == "audio" => {
+        _type,
+        audioLabel,
+        audioFile {
+        _type,
+          asset->{
+            url
+          }
+        }
+      },
+      _type == "file" => {
+        _type,
+        asset->{
+          url,
+          originalFilename
+        }
+
+      },
+    },
     
 
     // ...and get this project's portfolio

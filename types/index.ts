@@ -144,10 +144,13 @@ export interface MusicPagePayload {
   language: string
   videoBanner: {
     _type: 'mux.video'
-    asset: {
-      _weak: boolean
-      _ref: string
-      _type: 'reference'
+    video: {
+      asset: {
+        _weak: boolean
+        _ref: string
+        _type: 'reference'
+        playbackId: string
+      }
     }
   }
   link: {

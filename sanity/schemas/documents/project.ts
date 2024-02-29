@@ -127,6 +127,12 @@ export default defineType({
           name: 'audio',
           type: 'audio',
         }),
+        defineArrayMember({
+          name: 'file',
+          type: 'file',
+          title: 'File',
+          options: { storeOriginalFilename: true },
+        }),
       ],
     }),
     defineField({

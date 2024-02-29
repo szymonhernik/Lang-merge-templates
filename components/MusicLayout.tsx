@@ -17,6 +17,8 @@ export async function MusicLayout({ data, currentLanguage }: MusicLayoutProps) {
   const { _id, title, slug, summary, content, language, videoBanner, link } =
     data ?? {}
 
+  // console.log(videoBanner.video)
+
   return (
     <section className="bg-black flex lg:flex-col flex-col-reverse pt-mobileSpace lg:pt-0 ">
       <div className="lg:sticky top-0 left-0 z-[0] h-[70vh] w-full overflow-hidden">
@@ -30,7 +32,10 @@ export async function MusicLayout({ data, currentLanguage }: MusicLayoutProps) {
               </div>
             }
           >
-            <VideoBanner videoBanner={videoBanner} />
+            <VideoBanner
+              videoBanner={videoBanner.video}
+              classesImage={'w-full h-full object-cover object-center'}
+            />
           </Suspense>
         )}
       </div>
