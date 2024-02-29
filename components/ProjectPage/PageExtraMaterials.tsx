@@ -1,4 +1,5 @@
 import AudioBox from '../shared/AudioBox'
+import PDFAsset from '../shared/PDFAsset'
 import VideoPlayer from '../shared/VideoPlayer'
 
 export default function PageExtraMaterials({ materials, filterType }) {
@@ -26,16 +27,11 @@ export default function PageExtraMaterials({ materials, filterType }) {
               return (
                 <div className="w-full max-w-sm lg:w-fit" key={mat._key}>
                   {mat.asset && (
-                    <a
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      download
-                      href={`${mat.asset.url}?dl=${mat.asset.originalFilename}`}
-                    >
-                      <div className="border-black border-[0.5px] px-2 py-[2px] hover:bg-stone-200">
-                        PDF
-                      </div>
-                    </a>
+                    <PDFAsset
+                      classWrapper={'w-full'}
+                      classItem={'w-full max-w-xs mx-auto lg:w-fit'}
+                      file={mat}
+                    />
                   )}
                 </div>
               )

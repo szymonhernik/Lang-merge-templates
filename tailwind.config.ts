@@ -15,7 +15,7 @@ const config: Config = {
       padding: {
         header: '100px',
         mobileSpace: '20vh',
-        desktopSpace: '20vh',
+        desktopSpace: '30vh',
       },
       backgroundColor: {
         brokenYellow: '#FAF8F4',

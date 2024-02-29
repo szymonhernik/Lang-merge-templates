@@ -82,7 +82,19 @@ export interface AboutPagePayload {
     }
   }
   highlightedContent: string
-  pageBuilder: PageBuilderItem[]
+  fileAssets: FileItem[]
+}
+interface FileItem {
+  _key: string
+  fileTitle: string
+  fileAbout: FileAbout
+}
+interface FileAbout {
+  _type: 'file'
+  asset: {
+    url: string
+    originalFilename?: string
+  }
 }
 
 interface GalleryImage {

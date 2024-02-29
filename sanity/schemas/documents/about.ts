@@ -92,7 +92,7 @@ export default defineType({
       ],
     }),
     defineField({
-      name: 'pageBuilder',
+      name: 'fileAssets',
       type: 'array',
       title: 'Files',
       of: [

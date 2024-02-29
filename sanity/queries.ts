@@ -371,7 +371,17 @@ export const ABOUT_QUERY = groq`*[_type == "aboutPage" && language == $language]
     }
   },
   highlightedContent,
-  pageBuilder,
+  fileAssets []{
+    fileTitle,
+    fileAbout {
+      _type,
+        asset->{
+          url,
+          originalFilename
+        }
+    },
+    
+  },
 }`
 
 export const MUSIC_QUERY = groq`*[_type == "musicPage" && language == $language][0]{

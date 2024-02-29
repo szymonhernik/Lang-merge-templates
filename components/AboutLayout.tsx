@@ -6,6 +6,7 @@ import { CustomPortableText } from './CustomPortableText'
 import { i18n } from '@/languages'
 import PageTitle from './PageTitle'
 import Photocredits from './Photocredits'
+import PDFAsset from './shared/PDFAsset'
 
 type AboutLayoutProps = {
   data: AboutPagePayload | null
@@ -21,15 +22,12 @@ export async function AboutLayout({ data, currentLanguage }: AboutLayoutProps) {
     language,
     profilePicture,
     highlightedContent,
-    pageBuilder,
+    fileAssets,
   } = data ?? {}
-  // console.log(
-  //   'profilePicture.photographerArray',
-  //   profilePicture.photographerArray,
-  // )
+  console.log('fileAssets', fileAssets)
 
   return (
-    <section className="py-mobileSpace max-w-screen-3xl mx-auto">
+    <section className="py-mobileSpace lg:pt-desktopSpace lg:pb-16 max-w-screen-3xl mx-auto">
       <PageTitle currentLanguage={currentLanguage} currentPage={'About'} />
 
       <div className="pt-mobileSpace md:pt-0 p-6 about w-full flex flex-col md:flex-row gap-8 font-medium">
@@ -52,19 +50,29 @@ export async function AboutLayout({ data, currentLanguage }: AboutLayoutProps) {
             </div>
           )}
           {content && <CustomPortableText value={content} />}
-          <article className="space-y-8">
-            <div>
-              <p className="">CV</p>
-              <p className="underline ">Download PDF</p>
-            </div>
-            <div>
-              <p className="">Press</p>
-              <p className="underline ">Download PDF</p>
-            </div>
-            <div>
-              <p>Colophon</p>
+          <article className="flex flex-col gap-8 font-normal ">
+            {fileAssets &&
+              fileAssets.length &&
+              fileAssets.map((file) => {
+                return (
+                  <div key={file._key} className="flex flex-col gap-4">
+                    <h3 className="font-medium  ">{file.fileTitle} </h3>
+                    <PDFAsset classWrapper={'w-fit'} file={file.fileAbout} />
+                  </div>
+                )
+              })}
+
+            <div className="mt-8 text-sm">
+              <p className="font-medium ">Colophon</p>
               <p>
-                Website by <a className="underline">Szymon Eda Hernik</a>
+                Design and coding by{' '}
+                <a
+                  href="https://szymonhernik.com/"
+                  target="_blank"
+                  className="underline text-violet-400"
+                >
+                  Szymon Eda Hernik
+                </a>
               </p>
             </div>
           </article>

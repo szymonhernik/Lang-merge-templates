@@ -39,6 +39,7 @@ export function HomeLayout({ localizedProjects, language }: HomeLayoutProps) {
         {localizedProjects?.map((project, key) => (
           <div key={key} className="w-full h-screen ">
             <SwiperSlide>
+              <div className="fixed bottom-0 left-0  z-[2] bg-gradient-to-t from-black opacity-60 w-screen h-36"></div>
               {project.coverImage && (
                 <div className="w-full h-full bg-stone-400">
                   <Background
@@ -60,9 +61,9 @@ export function HomeLayout({ localizedProjects, language }: HomeLayoutProps) {
                   />
                 </div>
               )}
-              <div className="absolute bottom-1 left-0 p-8">
+              <div className="absolute bottom-1 left-0 p-8 z-[3]">
                 <ProjectLink project={project} language={language}>
-                  <h1 className="text-white  mix-blend-difference">
+                  <h1 className="text-white ">
                     {project.currentTitle}{' '}
                     {project.year && (
                       <span className="opacity-50">({project.year})</span>

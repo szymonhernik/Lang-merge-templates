@@ -46,7 +46,7 @@ export function WorksLayout(props: WorksLayoutProps) {
   }
 
   return (
-    <section className="w-full my-desktopSpace pb-desktopSpace">
+    <section className="w-full py-mobileSpace lg:pt-desktopSpace lg:pb-16">
       <PageTitle currentLanguage={language} currentPage={'Works'} />
       <FilterWorks
         currentLanguage={language}
@@ -54,7 +54,7 @@ export function WorksLayout(props: WorksLayoutProps) {
         onCategorySelect={handleCategorySelect}
         selectedCategory={selectedCategory}
       />
-      <div className="3xl:max-w-[1936px] mx-auto grid gap-16 md:gap-8 px-4 md:px-6 lg:grid-cols-3 2xl:grid-cols-4 md:grid-cols-2 pt-header">
+      <div className="3xl:max-w-[1936px] mx-auto grid gap-16 md:gap-8 px-4 md:px-6 lg:grid-cols-3 2xl:grid-cols-4 md:grid-cols-2 pt-header lg:pt-0 ">
         {filteredPortfolios &&
           filteredPortfolios.length > 0 &&
           filteredPortfolios.map((portfolio, index) => {
