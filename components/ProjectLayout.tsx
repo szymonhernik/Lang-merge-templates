@@ -118,7 +118,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
               <span className="text-base font-normal">↑</span>
             </div>
             {text?.length && (
-              <div className="font-medium  space-y-6 md:max-w-screen-md lg:max-w-full md:mx-auto lg:text-base lg:space-y-8">
+              <div className="font-medium   md:max-w-screen-md lg:max-w-full md:mx-auto lg:text-base lg:space-y-8 space-y-6 ">
                 <p className="opacity-50 lg:text-xs">TEXT</p>
                 <CustomPortableText value={text} />
               </div>
@@ -163,7 +163,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
             )}
 
             {credits?.length && (
-              <div className="font-medium  md:max-w-screen-md lg:max-w-full md:mx-auto md:w-full lg:text-base">
+              <div className="font-medium  md:max-w-screen-md lg:max-w-full md:mx-auto md:w-full lg:text-base lg:space-y-8 space-y-6">
                 <p className="opacity-50 lg:text-xs">CREDITS</p>
                 <CustomPortableText value={credits} />
               </div>
