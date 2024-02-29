@@ -262,7 +262,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
                         </div>
                       )
                     } else if (mat._type === 'file') {
-                      console.log(mat)
+                      // console.log(mat)
 
                       return (
                         <div className="w-fit " key={mat._key}>
