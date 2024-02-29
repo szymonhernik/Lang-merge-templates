@@ -1,0 +1,6 @@
+.muxPlayer {
+  --media-object-fit: cover;
+  --media-object-position: center;
+  --loading-indicator: none;
+  --cast-button: none;
+}

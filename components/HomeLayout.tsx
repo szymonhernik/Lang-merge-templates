@@ -22,7 +22,7 @@ type HomeLayoutProps = {
 export function HomeLayout({ localizedProjects, language }: HomeLayoutProps) {
   // console.log('localizedProjects', localizedProjects)
   return (
-    <div className="w-screen h-screen overflow-hidden absolute top-0 left-0">
+    <div className="w-screen h-dvh lg:h-screen overflow-hidden absolute top-0 left-0">
       <div className="fixed top-0 left-0  z-[2] bg-gradient-to-b from-black opacity-70 w-screen h-72"></div>
       <Swiper
         spaceBetween={30}

@@ -35,7 +35,7 @@ export default function MobileNavLinks({
       })}
       onClick={(e) => {
         if (!isHomePage || isMenuOpen) {
-          setTimeout(toggleMenu, 500)
+          toggleMenu()
         }
       }}
     >

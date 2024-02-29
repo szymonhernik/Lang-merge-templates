@@ -46,7 +46,7 @@ export function WorksLayout(props: WorksLayoutProps) {
   }
 
   return (
-    <section className="w-full my-desktopSpace">
+    <section className="w-full my-desktopSpace pb-desktopSpace">
       <PageTitle currentLanguage={language} currentPage={'Works'} />
       <FilterWorks
         currentLanguage={language}

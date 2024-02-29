@@ -26,16 +26,17 @@ export default function Header() {
   return (
     <header
       className={clsx(
-        'text-sm fixed top-0 w-screen h-headerSmall md:h-header flex z-[20] pt-4  ',
+        'text-sm fixed top-0 w-screen h-headerSmall md:h-header flex z-[20] pt-4   ',
         {
-          'text-white': isHomePage,
+          'text-white bg-transparent': isHomePage,
         },
         {
           'text-black bg-white md:bg-transparent':
             !isHomePage && !isMusicPage && !isWorksPage,
         },
         {
-          'text-white mix-blend-difference': isWorksPage,
+          'text-black md:text-white md:mix-blend-difference bg-white md:bg-transparent':
+            isWorksPage,
         },
         {
           'text-white bg-black md:bg-transparent': isMusicPage,
@@ -44,10 +45,10 @@ export default function Header() {
     >
       <div
         className={clsx(
-          'px-6 lg:px-12 py-4  w-screen 3xl:mx-auto max-w-screen-3xl text-base flex items-start  justify-between gap-12',
+          'px-6 lg:px-12 py-4  w-screen 3xl:mx-auto max-w-screen-3xl text-base flex items-start  justify-between gap-12 ',
         )}
       >
-        <div className="space-y-3">
+        <div className="space-y-3 ">
           <h1 className={clsx('mr-auto space-x-3', {})}>
             <Link href={`/${clean(langSelected)}`} className="">
               <span>Narges Mohammadi</span>

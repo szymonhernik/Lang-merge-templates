@@ -65,7 +65,10 @@ export function ProjectLayout(props: ProjectLayoutProps) {
         coverImage={coverImage}
         onCoverImageVisibilityChange={handleCoverImageVisibility}
       />
-      <section className="py-mobileSpace  md:overflow-hidden  mx-auto px-6 flex flex-col gap-12 text-sm  lg:items-end lg:py-0">
+      <section
+        id="project"
+        className="py-mobileSpace  md:overflow-hidden  mx-auto px-6 flex flex-col gap-12 text-sm  lg:items-end lg:py-0"
+      >
         <div className="text-center lg:hidden">
           <Link href={`/${language}/works`} className="underline ">
             back to works
@@ -113,10 +116,16 @@ export function ProjectLayout(props: ProjectLayoutProps) {
               </div>
             )}
 
-            <div className="lg:hidden sticky top-headerSmallSpace z-[10] left-0 w-screen -mx-6 flex flex-row gap-2 text-xs font-medium justify-center items-center bg-white py-4 opacity-80  ">
-              <p className="">{portfolio.title[language]}</p>
-              <span className="text-base font-normal">↑</span>
+            <div className="-mt-4 lg:hidden sticky top-headerSmallSpace z-[10] left-0 w-screen -mx-6 text-xs font-medium  bg-white  opacity-80  ">
+              <a
+                href="#project"
+                className="flex flex-row gap-2 justify-center items-center py-4"
+              >
+                <p className="">{portfolio.title[language]}</p>
+                <span className="text-base font-normal">↑</span>
+              </a>
             </div>
+
             {text?.length && (
               <div className="font-medium   md:max-w-screen-md lg:max-w-full md:mx-auto lg:text-base lg:space-y-8 space-y-6 ">
                 <p className="opacity-50 lg:text-xs">TEXT</p>
