@@ -1,8 +1,5 @@
 'use client'
-import MuxPlayer from '@mux/mux-player-react'
 import MuxVideo from '@mux/mux-video-react'
-import '@mux/mux-player/themes/minimal'
-import styles from '@/components/media.module.css'
 
 interface Props {
   playbackId: string
@@ -20,15 +17,17 @@ export default function VideoSpace({
   classesImage,
 }: Props) {
   return (
-    <MuxPlayer
+    <MuxVideo
       // className="w-full h-full object-cover object-center"
-      className={`w-full  ${classesImage} ${styles.muxPlayer}`}
+      playsInline={true}
+      className={`w-full  ${classesImage}`}
       playbackId={playbackId}
-      placeholder={blurHashBase64}
+      placeholder={''}
+      poster={blurHashBase64}
       autoPlay
-      theme="minimal"
+      controls
       muted
-      loop
+      loop={true}
       style={{ aspectRatio: `${sourceWidth} / ${sourceHeight}` }}
     />
   )

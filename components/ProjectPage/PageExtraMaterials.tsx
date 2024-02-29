@@ -3,7 +3,7 @@ import VideoPlayer from '../shared/VideoPlayer'
 
 export default function PageExtraMaterials({ materials, filterType }) {
   return (
-    <div className="py-4 flex flex-col gap-4">
+    <div className="py-4 flex flex-col gap-4 justify-center items-center lg:items-start ">
       {materials
         .filter((mat) => {
           // Decide whether to include the material based on filterType
@@ -24,7 +24,7 @@ export default function PageExtraMaterials({ materials, filterType }) {
               )
             case 'file':
               return (
-                <div className="w-fit" key={mat._key}>
+                <div className="w-full max-w-sm lg:w-fit" key={mat._key}>
                   {mat.asset && (
                     <a
                       target="_blank"

@@ -1,10 +1,12 @@
 export default function AudioBox({ mat }) {
   return (
     <a href={mat.audioFile.asset.url} target="_blank">
-      <div className="flex items-center text-sm gap-2 py-2 pr-2">
-        <SvgAudio />
+      <div className="flex items-start text-sm gap-2 py-2 pr-2">
+        <div className="w-12">
+          <SvgAudio />
+        </div>
 
-        {mat.audioLabel && <p>{mat.audioLabel}</p>}
+        {mat.audioLabel && <p className="text-left">{mat.audioLabel}</p>}
       </div>
     </a>
   )
