@@ -274,15 +274,7 @@ export const structure: StructureResolver = (S, context) => {
             ]),
         ),
       // Field-level translations
-      S.listItem()
-        .title('Portfolio')
-        .child(
-          S.list()
-            .title('Portfolio')
-            .items([
-              orderableDocumentListDeskItem({ type: 'portfolio', S, context }),
-            ]),
-        ),
+      orderableDocumentListDeskItem({ type: 'portfolio', S, context }),
 
       // S.documentTypeListItem('portfolio')
       //   .title('Portfolio')
