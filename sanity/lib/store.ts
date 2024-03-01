@@ -3,6 +3,7 @@ import * as queryStore from '@sanity/react-loader'
 import { draftMode } from 'next/headers'
 import { client } from '@/sanity/lib/client'
 import { token } from '@/sanity/lib/token'
+import { revalidateSecret } from './api'
 
 // Configure the server client with additional settings
 const serverClient = client.withConfig({
@@ -25,12 +26,16 @@ export const loadQuery = ((query, params = {}, options = {}) => {
   } = options
 
   let revalidate: NextFetchRequestConfig['revalidate'] = 0
-  if (!usingCdn && Array.isArray(options.next?.tags)) {
+  if (
+    !usingCdn &&
+    Array.isArray(options.next?.tags) &&
+    process.env.NODE_ENV != 'development'
+  ) {
     // Safe to cache if not using CDN and tags are set
     revalidate = false
   } else if (usingCdn) {
     // Use CDN caching strategy
-    revalidate = false
+    revalidate = 0
   }
 
   return queryStore.loadQuery(query, params, {

@@ -39,9 +39,10 @@ export default defineType({
       name: 'overview',
       description: `(Set for: both languages) Used for the <meta> description tag for SEO`,
       title: 'Description',
-      type: 'string',
-
-      validation: (rule) => rule.max(200).required(),
+      type: 'text',
+      rows: 3,
+      validation: (rule) =>
+        rule.max(200).warning('SEO text should be short').required(),
     }),
 
     defineField({

@@ -97,6 +97,7 @@ export async function generateMetadata({ params }) {
       title += ` | ${matchingPortfolio.title[language]}`
     }
   }
+  console.log(currentProject.overview)
 
   return {
     title: title,
