@@ -33,6 +33,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
     gallery,
     details,
     portfolio,
+    year,
     coverImageProp,
     pageExtraMaterials,
     language,
@@ -103,7 +104,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
               )}
             </div>
             <div className="font-medium space-y-2 md:max-w-screen-md md:mx-auto lg:text-sm lg:w-11/12 xl:w-3/4  lg:mx-0 lg:mb-12">
-              <span className="opacity-50">2023</span>
+              {year && <span className="opacity-50">{year}</span>}
               {details?.length > 0 && <Prose value={details} />}
             </div>
             {coverImage && (

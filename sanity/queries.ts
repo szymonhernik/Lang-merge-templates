@@ -90,6 +90,7 @@ export const PROJECT_SLUGS_QUERY = groq`*[_type == "project" && defined(language
   title,
   ogImage,
   overview,
+  year,
 
   "portfolio": select(
       // So if this project isn't in English...

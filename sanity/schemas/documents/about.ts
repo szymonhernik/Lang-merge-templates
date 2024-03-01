@@ -33,10 +33,12 @@ export default defineType({
     }),
     defineField({
       name: 'overview',
-      description: 'Used for the <meta> description tag for SEO',
+      description: `(Set for: both languages) Used for the <meta> description tag for SEO`,
       title: 'Description',
-      type: 'string',
-      validation: (rule) => rule.max(155).required(),
+      type: 'text',
+      rows: 3,
+      validation: (rule) =>
+        rule.max(200).warning('SEO text should be short').required(),
     }),
     defineField({
       name: 'profilePicture',
