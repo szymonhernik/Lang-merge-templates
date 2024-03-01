@@ -35,7 +35,7 @@ export const loadQuery = ((query, params = {}, options = {}) => {
     revalidate = false
   } else if (usingCdn) {
     // Use CDN caching strategy
-    revalidate = 0
+    revalidate = 1
   }
 
   return queryStore.loadQuery(query, params, {

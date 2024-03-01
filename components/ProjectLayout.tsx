@@ -81,7 +81,9 @@ export function ProjectLayout(props: ProjectLayoutProps) {
           <div className="lg:max-w-screen-sm flex flex-col gap-12">
             <div className="my-8 flex flex-col gap-y-2 w-3/4 text-center mx-auto md:max-w-screen-md lg:text-left lg:w-[80%] lg:mx-0 ">
               <h1 className="text-3xl lg:text-4xl ">
-                {portfolio.title[language]}
+                {portfolio.projects.length > 1
+                  ? portfolio.title[language]
+                  : title}
               </h1>
               {/* Reference from the portfolio that is a group */}
               {portfolio.projects.length > 1 && (
