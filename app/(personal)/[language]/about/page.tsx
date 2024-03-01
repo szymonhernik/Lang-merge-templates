@@ -60,7 +60,7 @@ export async function generateMetadata({ params }): Promise<Metadata> {
 
 export default async function Page({ params }) {
   const { language, slug } = params
-  console.log('PARAMS ABOUT: ', params)
+  // console.log('PARAMS ABOUT: ', params)
 
   const queryParams = { ...COMMON_PARAMS, language }
   const { isEnabled } = draftMode()
