@@ -1,6 +1,7 @@
 import { createClient } from '@sanity/client/stega'
 
 import { apiVersion, dataset, projectId } from '../env'
+import { revalidateSecret } from './api'
 
 export const baseConfig = {
   apiVersion,
@@ -24,7 +25,7 @@ export const client = createClient({
   apiVersion,
   dataset,
   projectId,
-  useCdn: true,
+  useCdn: revalidateSecret ? false : true,
   // These settings will be overridden in
   // ./sanity/lib/store.ts when draftMode is enabled
   perspective: 'published',
