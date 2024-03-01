@@ -24,7 +24,7 @@ export async function AboutLayout({ data, currentLanguage }: AboutLayoutProps) {
     highlightedContent,
     fileAssets,
   } = data ?? {}
-  console.log('fileAssets', fileAssets)
+  // console.log('fileAssets', fileAssets)
 
   return (
     <section className="py-mobileSpace lg:pt-desktopSpace lg:pb-16 max-w-screen-3xl mx-auto">
