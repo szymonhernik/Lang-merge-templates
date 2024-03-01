@@ -276,7 +276,7 @@ export const WORKS_QUERY = groq`{
     _id,
     categoryName
   },
-  "portfolios": *[_type == "portfolio" && count(projects) > 0]{
+  "portfolios": *[_type == "portfolio" && count(projects) > 0]|order(orderRank){
     ...,
     category->{
       _id,

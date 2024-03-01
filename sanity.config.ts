@@ -87,6 +87,18 @@ export default defineConfig({
   ],
   schema: {
     types: schemaTypes,
+    // {
+    //   name: 'portfolio',
+    //   title: 'Portfolio',
+    //   type: 'document',
+    //   // Optional: The plugin also exports a set of 'orderings' for use in other Document Lists
+    //   // https://www.sanity.io/docs/sort-orders
+    //   orderings: [orderRankOrdering],
+    //   fields: [
+    //     // OR placing new documents on top
+    //     orderRankField({ type: 'portfolio', newItemPosition: 'before' }),
+    //   ],
+    // },
     templates: (prev) => {
       const prevFiltered = prev.filter(
         (template) =>

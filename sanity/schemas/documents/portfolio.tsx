@@ -12,6 +12,7 @@ import CustomFiCircleIcon from '@/sanity-studio/components/CustomFiCircleIcon' /
 
 import { i18n } from '../../../languages'
 import PortfolioMedia from '../../../sanity-studio/components/PortfolioMedia'
+import { orderRankField } from '@sanity/orderable-document-list'
 
 export default defineType({
   name: 'portfolio',
@@ -35,6 +36,8 @@ export default defineType({
     },
   ],
   fields: [
+    orderRankField({ type: 'portfolio', newItemPosition: 'before' }),
+
     defineField({
       name: 'title',
       description: 'This is a localized string field, stored in an object',

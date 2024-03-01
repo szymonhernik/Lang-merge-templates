@@ -11,8 +11,9 @@ import transifex from './transifex'
 import home from '@/sanity/schemas/singletons/home'
 import settings from '@/sanity/schemas/singletons/settings'
 import { apiVersion } from '@/sanity/env'
+import { orderableDocumentListDeskItem } from '@sanity/orderable-document-list'
 
-export const structure: StructureResolver = (S) => {
+export const structure: StructureResolver = (S, context) => {
   // Define the custom 'home' document list item
   const homeListItem = S.listItem()
     .title('Home') // Assuming home schema has a title field
@@ -273,7 +274,22 @@ export const structure: StructureResolver = (S) => {
             ]),
         ),
       // Field-level translations
-      S.documentTypeListItem('portfolio').title('Portfolio'),
+      S.listItem()
+        .title('Portfolio')
+        .child(
+          S.list()
+            .title('Portfolio')
+            .items([
+              orderableDocumentListDeskItem({ type: 'portfolio', S, context }),
+            ]),
+        ),
+
+      // S.documentTypeListItem('portfolio')
+      //   .title('Portfolio')
+      //   .items([
+
+      //   ]),
+
       S.divider(),
       S.documentTypeListItem('externalDoc').title('Seperate files'),
       S.divider(),
