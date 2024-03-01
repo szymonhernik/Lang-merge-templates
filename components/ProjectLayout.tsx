@@ -145,7 +145,9 @@ export function ProjectLayout(props: ProjectLayoutProps) {
                     onSlideChange={null}
                   />
                 </div>
-                <div className="absolute bottom-[20vh] left-0 px-12 font-medium text-sm">
+                <div
+                  className={`block px-0 -mt-6 lg:mt-0 mx-auto lg:mx-0 lg:fixed lg:z-[0] bottom-[20vh] left-0 lg:px-12 font-medium text-sm transition-opacity delay-200   ${isCoverImageShown ? 'lg:opacity-0 pointer-events-none' : 'lg:opacity-100 pointer-events-auto'}`}
+                >
                   {gallery.pageBuilder &&
                     gallery.pageBuilder.map((collabObj, index) => (
                       <p key={`${index}-${collabObj._id}`}>

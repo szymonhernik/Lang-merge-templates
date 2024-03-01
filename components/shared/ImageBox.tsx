@@ -14,9 +14,9 @@ interface ImageBoxProps {
 export default function ImageBox({
   image,
   alt = 'Cover image',
-  width = 600,
-  height = 800,
-  size = '(max-width:640px) 100vw, (max-width: 768px) 50vw, 25vw',
+  width = 1920,
+  height = 1080,
+  size = '(max-width:640px) 100vw, (max-width: 768px) 50vw, 33vw',
   classesWrapper,
   classesImage,
   ...props

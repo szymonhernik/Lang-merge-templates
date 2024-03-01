@@ -1,20 +1,51 @@
-import { FiAward, FiImage, FiLink } from 'react-icons/fi'
+import {
+  FiAward,
+  FiGlobe,
+  FiHome,
+  FiImage,
+  FiLink,
+  FiToggleLeft,
+} from 'react-icons/fi'
 import { defineArrayMember, defineField, defineType } from 'sanity'
 
 export default defineType({
   name: 'project',
   title: 'Project',
   type: 'document',
+  groups: [
+    {
+      name: 'main',
+      title: 'Main',
+      icon: FiHome,
+    },
+    {
+      name: 'seo',
+      title: 'SEO',
+      icon: FiGlobe,
+    },
+    {
+      name: 'media',
+      title: 'Media',
+      icon: FiImage,
+    },
+    {
+      name: 'optional',
+      title: 'Optional',
+      icon: FiToggleLeft,
+    },
+  ],
   fields: [
     defineField({
       name: 'title',
       type: 'string',
+      group: 'main',
       validation: (rule) => rule.required(),
     }),
 
     defineField({
       name: 'slug',
       type: 'slug',
+      group: 'main',
       options: {
         source: 'title',
       },
@@ -29,6 +60,7 @@ export default defineType({
       name: 'ogImage',
       title: 'Open Graph Image',
       type: 'image',
+      group: 'seo',
       description:
         '(Set for: both languages) Displayed on social cards and search engine results.',
       options: {
@@ -39,6 +71,7 @@ export default defineType({
       name: 'overview',
       description: `(Set for: both languages) Used for the <meta> description tag for SEO`,
       title: 'Description',
+      group: 'seo',
       type: 'text',
       rows: 3,
       validation: (rule) =>
@@ -47,6 +80,7 @@ export default defineType({
 
     defineField({
       name: 'belongs',
+      group: 'optional',
       title: 'Belongs to (optional)',
       description:
         'This is just for clarity which project belongs to which group',
@@ -61,23 +95,19 @@ export default defineType({
       ],
       // validation: (Rule) => [Rule.required().min(1), Rule.unique()],
     }),
-    defineField({
-      name: 'showAdditionalFields',
-      title: 'This project is just a file',
-      type: 'boolean',
-      description: 'Select if you only want to link for example a PDF.',
-    }),
+
     defineField({
       name: 'year',
       title: 'Year',
+      group: 'main',
       type: 'string',
       // validation: (rule) => rule.required(),
-      hidden: ({ document }) => document?.showAdditionalFields == true, // Hide this field if showAdditionalFields is not true
     }),
 
     defineField({
       name: 'coverImage',
       title: 'Cover Image',
+      group: 'main',
       description:
         'This image will be used as the cover image for the project. If you choose to add it to the show case projects, this is the image displayed in the list within the homepage.',
       type: 'image',
@@ -93,10 +123,10 @@ export default defineType({
         }),
       ],
       // validation: (rule) => rule.required(),
-      hidden: ({ document }) => document?.showAdditionalFields == true, // Hide this field if showAdditionalFields is not true
     }),
     defineField({
       name: 'coverImageOptional',
+      group: 'optional',
       title: 'Optional Second Cover Image',
       description:
         'You can choose whether to add the second cover image. If you do, it will be added as the representation of the project on the page Home in a two column layout. It wont add it in the page Works.',
@@ -112,10 +142,10 @@ export default defineType({
           description: 'Alternative text for screenreaders. ',
         }),
       ],
-      hidden: ({ document }) => document?.showAdditionalFields == true, // Hide this field if showAdditionalFields is not true
     }),
     defineField({
       name: 'pageExtraMaterials',
+      group: 'optional',
       type: 'array',
       title: 'Page extra materials',
       description: 'Add movie, sound file',
@@ -139,6 +169,7 @@ export default defineType({
     defineField({
       name: 'details',
       title: 'Project Details',
+      group: 'main',
       type: 'array',
       of: [
         defineArrayMember({
@@ -162,11 +193,11 @@ export default defineType({
           styles: [],
         }),
       ],
-      hidden: ({ document }) => document?.showAdditionalFields == true, // Hide this field if showAdditionalFields is not true
     }),
     defineField({
       name: 'text',
       title: 'Project Text',
+      group: 'main',
       type: 'array',
       of: [
         defineArrayMember({
@@ -190,11 +221,11 @@ export default defineType({
           styles: [],
         }),
       ],
-      hidden: ({ document }) => document?.showAdditionalFields == true, // Hide this field if showAdditionalFields is not true
     }),
     defineField({
       name: 'credits',
       title: 'Credits',
+      group: 'main',
       type: 'array',
       of: [
         defineArrayMember({
@@ -218,31 +249,12 @@ export default defineType({
           styles: [],
         }),
       ],
-      hidden: ({ document }) => document?.showAdditionalFields == true, // Hide this field if showAdditionalFields is not true
     }),
 
-    defineField({
-      title: 'File',
-      name: 'linkedFile',
-      type: 'file',
-      fields: [
-        {
-          name: 'description',
-          type: 'string',
-          title: 'Description',
-        },
-      ],
-      hidden: ({ document }) => !document?.showAdditionalFields,
-    }),
-
-    defineField({
-      name: 'language',
-      type: 'string',
-      readOnly: true,
-    }),
     defineField({
       name: 'projectGallery',
       type: 'object',
+      group: ['media', 'main'],
       title: 'Project gallery',
       fields: [
         defineField({
@@ -290,6 +302,11 @@ export default defineType({
           }
         },
       },
+    }),
+    defineField({
+      name: 'language',
+      type: 'string',
+      readOnly: true,
     }),
   ],
   preview: {

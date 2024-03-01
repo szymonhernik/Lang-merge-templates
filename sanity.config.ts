@@ -7,6 +7,7 @@ import { documentInternationalization } from '@sanity/document-internationalizat
 import { languageFilter } from '@sanity/language-filter'
 import { internationalizedArray } from 'sanity-plugin-internationalized-array'
 import { muxInput } from 'sanity-plugin-mux-input'
+import { media } from 'sanity-plugin-media'
 
 import { apiVersion, dataset, projectId, studioUrl } from '@/sanity/lib/api'
 
@@ -42,6 +43,7 @@ export default defineConfig({
         },
       },
     }),
+    media(),
     documentInternationalization({
       supportedLanguages: i18n.languages,
       schemaTypes: ['project', 'aboutPage', 'musicPage'],

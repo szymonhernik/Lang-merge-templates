@@ -61,6 +61,7 @@
     "sanity-plugin-google-translate": "^3.0.0",
     "sanity-plugin-iframe-pane": "^2.0.0",
     "sanity-plugin-internationalized-array": "^1.10.5",
+    "sanity-plugin-media": "^2.2.5",
     "sanity-plugin-mux-input": "^2.2.4",
     "sanity-plugin-transifex": "^3.0.0",
     "server-only": "0.0.1",
