@@ -55,7 +55,7 @@ export default async function Page({ params }) {
     queryParams,
     {
       perspective: isEnabled ? 'previewDrafts' : 'published',
-      next: { tags: ['works'] },
+      next: { tags: ['works', 'portfolio'] },
     },
   )
   // console.log('worksInitial', worksInitial.data.categories)
