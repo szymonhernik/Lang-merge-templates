@@ -24,13 +24,13 @@ export const loadQuery = ((query, params = {}, options = {}) => {
     perspective = draftMode().isEnabled ? 'previewDrafts' : 'published',
   } = options
 
-  let revalidate = 0 // Don't cache by default
+  let revalidate: NextFetchRequestConfig['revalidate'] = 0
   if (!usingCdn && Array.isArray(options.next?.tags)) {
     // Safe to cache if not using CDN and tags are set
-    revalidate = 0
+    revalidate = false
   } else if (usingCdn) {
     // Use CDN caching strategy
-    revalidate = 5
+    revalidate = false
   }
 
   return queryStore.loadQuery(query, params, {
