@@ -32,7 +32,6 @@ export async function generateMetadata({ params }): Promise<Metadata> {
   )
 
   const ogImage = urlForOpenGraphImage(dataPage.data.ogImage)
-  // console.log('homeRef', dataPage)
 
   return {
     title:
