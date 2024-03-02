@@ -101,7 +101,7 @@ export async function generateMetadata({ params }) {
 
   return {
     title: title,
-    description: currentProject.overview ? currentProject.overview : undefined,
+    description: currentProject?.overview ?? '',
     openGraph: {
       images: ogImage ? [ogImage] : [],
     },
