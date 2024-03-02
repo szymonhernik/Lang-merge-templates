@@ -87,15 +87,15 @@ export default async function Page({ params }) {
         currentLanguage={language}
         translations={translations}
       />
-      <LiveQueryWrapper
+      {/* <LiveQueryWrapper
         isEnabled={isEnabled}
         query={isEnabled ? ABOUT_QUERY : ``}
         params={isEnabled ? queryParams : DEFAULT_EMPTY_PARAMS}
         initial={initial}
-      >
-        <AboutLayout data={initial.data} currentLanguage={language} />
-        {/* <h1 className="h-96 bg-yellow-200 w-96 p-16">{initial.data.title}</h1> */}
-      </LiveQueryWrapper>
+      > */}
+      <AboutLayout data={initial.data} currentLanguage={language} />
+      {/* <h1 className="h-96 bg-yellow-200 w-96 p-16">{initial.data.title}</h1> */}
+      {/* </LiveQueryWrapper> */}
     </>
   )
 }

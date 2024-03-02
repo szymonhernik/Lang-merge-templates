@@ -87,18 +87,18 @@ export default async function Page({ params }) {
           translations={translations}
         />
       </Suspense>
-      <LiveQueryWrapper
+      {/* <LiveQueryWrapper
         isEnabled={isEnabled}
         query={isEnabled ? MUSIC_QUERY : ``}
         params={isEnabled ? queryParams : DEFAULT_EMPTY_PARAMS}
         initial={initial}
-      >
-        {/* <div className="bg-black"> */}
-        <MusicLayout data={initial.data} currentLanguage={currentLanguage} />
-        {/* </div> */}
+      > */}
+      {/* <div className="bg-black"> */}
+      <MusicLayout data={initial.data} currentLanguage={currentLanguage} />
+      {/* </div> */}
 
-        {/* <h1 className="h-96 bg-yellow-200 w-96 p-16">{initial.data.title}</h1> */}
-      </LiveQueryWrapper>
+      {/* <h1 className="h-96 bg-yellow-200 w-96 p-16">{initial.data.title}</h1> */}
+      {/* </LiveQueryWrapper> */}
     </>
   )
 }
