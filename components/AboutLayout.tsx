@@ -39,7 +39,7 @@ export async function AboutLayout({ data, currentLanguage }: AboutLayoutProps) {
             <div className="w-full flex flex-col lg:hidden justify-center items-center gap-4">
               <ImageBox
                 size="(max-width:640px) 100vw, (max-width: 768px) 50vw, 33vw"
-                classesWrapper={`w-full max-w-sm`}
+                classesWrapper={`w-full max-w-sm `}
                 // width={profilePicture.asset.width / 2}
                 // height={profilePicture.asset.height / 2}
                 classesImage={`object-cover h-full w-full`}
@@ -81,10 +81,10 @@ export async function AboutLayout({ data, currentLanguage }: AboutLayoutProps) {
           <div className="w-1/3 hidden lg:flex justify-start flex-col gap-4">
             <ImageBox
               size="(max-width:640px) 100vw, (max-width: 768px) 50vw, 33vw"
-              classesWrapper={`w-full mx-auto h-fit max-w-lg   `}
-              // width={profilePicture.asset.width / 2}
-              // height={profilePicture.asset.height / 2}
-              classesImage={`object-cover h-full w-full`}
+              classesWrapper={`w-full mx-auto h-fit max-w-lg  `}
+              width={Math.round(profilePicture.asset.width / 2)}
+              height={Math.round(profilePicture.asset.height / 2)}
+              classesImage={`object-cover h-full w-full `}
               image={profilePicture}
               alt={`${profilePicture?.alt ?? ''}`}
             />
