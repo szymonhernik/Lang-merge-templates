@@ -56,10 +56,9 @@ export function Gallery({ gallery, onEndReached, onSlideChange }) {
       >
         {gallery.images.map((image, index) => {
           // Define sizes based on aspect ratio
-          // console.log('image', image)
 
           let sizes
-          if (image.asset.aspectRatio > 1) {
+          if (image.asset && image.asset.aspectRatio > 1) {
             // Landscape (horizontal) image
             sizes = '(max-width:640px) 100vw, (max-width: 768px) 50vw, 50vw'
           } else {
@@ -71,16 +70,18 @@ export function Gallery({ gallery, onEndReached, onSlideChange }) {
               className="!w-auto !mr-8"
               key={gallery._key + image + index}
             >
-              <Image
-                src={`${image.asset.url}?w=${Math.round(image.asset.width / 2)}&h=${Math.round(image.asset.height / 2)}`}
-                width={Math.round(image.asset.width)}
-                height={Math.round(image.asset.height)}
-                sizes={sizes}
-                alt={`${image?.alt ?? ''}`}
-                className="w-auto h-full"
-                blurDataURL={image.asset.lqip}
-                placeholder="blur"
-              />
+              {image.asset && (
+                <Image
+                  src={`${image.asset.url}?w=${Math.round(image.asset.width / 2)}&h=${Math.round(image.asset.height / 2)}`}
+                  width={Math.round(image.asset.width)}
+                  height={Math.round(image.asset.height)}
+                  sizes={sizes}
+                  alt={`${image?.alt ?? ''}`}
+                  className="w-auto h-full"
+                  blurDataURL={image.asset.lqip}
+                  placeholder="blur"
+                />
+              )}
             </SwiperSlide>
           )
         })}
