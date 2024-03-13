@@ -124,6 +124,9 @@ export const PROJECT_QUERY = groq`*[_type == "project" && slug.current == $slug]
         video {
         _type,
           asset->{
+            data {
+              aspect_ratio,
+            },
             playbackId,
           }
         }

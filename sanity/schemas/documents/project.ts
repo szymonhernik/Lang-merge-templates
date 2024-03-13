@@ -120,7 +120,7 @@ export default defineType({
       group: 'optional',
       title: 'Optional Second Cover Image',
       description:
-        '[EN, ] You can choose whether to add the second cover image. If you do, it will be added as the representation of the project on the page Home in a two column layout. It wont add it in the page Works.',
+        '[EN] You can choose whether to add the second cover image. If you do, it will be added as the representation of the project on the page Home in a two column layout. It wont add it in the page Works.',
       type: 'image',
       options: {
         hotspot: true,
@@ -248,7 +248,7 @@ export default defineType({
     defineField({
       name: 'projectGallery',
       type: 'object',
-      description: '[EN, ]',
+      description: '[EN]',
       group: ['media', 'main'],
       title: 'Project gallery',
       fields: [
@@ -308,7 +308,7 @@ export default defineType({
     select: {
       title: 'title',
       language: 'language',
-      media: 'image',
+      media: 'coverImage',
       belongs: 'belongs.0.title',
     },
     prepare(select) {
