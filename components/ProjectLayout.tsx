@@ -151,7 +151,9 @@ export function ProjectLayout(props: ProjectLayoutProps) {
                   {gallery.pageBuilder &&
                     gallery.pageBuilder.map((collabObj, index) => (
                       <p key={`${index}-${collabObj._id}`}>
-                        Photos by{' '}
+                        {language === 'en'
+                          ? 'Photography by'
+                          : 'Fotografie door'}{' '}
                         {collabObj.collaboratorUrl ? (
                           <a
                             href={collabObj.collaboratorUrl}

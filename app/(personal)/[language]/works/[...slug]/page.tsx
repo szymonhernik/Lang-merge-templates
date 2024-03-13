@@ -55,7 +55,6 @@ export async function generateMetadata({ params }) {
   // Extract slug and language from params
   const { slug, language } = params
   // console.log('slug', slug)
-  // console.log('language', language)
 
   // Find the current project based on the slug and language
   const currentProject = projects.find((project) => {
@@ -76,11 +75,10 @@ export async function generateMetadata({ params }) {
 
     return slugMatches
   })
-
-  const ogImage = urlForOpenGraphImage(currentProject?.ogImage)
-
   // console.log('currentProject', currentProject)
-  // console.log('currentProject', currentProject)
+
+  const ogImage = urlForOpenGraphImage(currentProject?.coverImage)
+  console.log('ogImage', ogImage)
 
   // Construct a title for the page based on the current project's details
   // If the project is part of a portfolio with more than one element, append "| portfolio name"

@@ -89,6 +89,7 @@ export const PROJECT_SLUGS_QUERY = groq`*[_type == "project" && defined(language
   "project": slug.current,
   title,
   ogImage,
+  coverImage,
   overview,
   year,
 

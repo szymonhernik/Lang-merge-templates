@@ -38,7 +38,7 @@ export default defineType({
     defineField({
       name: 'title',
       type: 'string',
-      description: '[🇬🇧🇳🇱]',
+      description: '[EN, NL]',
       group: 'main',
       validation: (rule) => rule.required(),
     }),
@@ -51,26 +51,15 @@ export default defineType({
         source: 'title',
       },
       description:
-        '[🇬🇧🇳🇱] Slugs (urls) must be unique — cant have two that are the same',
+        '[EN, NL] Slugs (urls) must be unique — cant have two that are the same',
       validation: (rule) =>
         rule
           .required()
           .error('A slug is required to generate a page on the website'),
     }),
     defineField({
-      name: 'ogImage',
-      title: 'Open Graph Image',
-      type: 'image',
-      group: 'seo',
-      description:
-        '[🇬🇧🇳🇱] Displayed on social cards and search engine results.',
-      options: {
-        hotspot: true,
-      },
-    }),
-    defineField({
       name: 'overview',
-      description: `[🇬🇧🇳🇱] Used for the <meta> description tag for SEO`,
+      description: `[EN, NL] Used for the <meta> description tag for SEO`,
       title: 'Description',
       group: 'seo',
       type: 'text',
@@ -84,7 +73,7 @@ export default defineType({
       group: 'optional',
       title: 'Belongs to (optional)',
       description:
-        '[🇬🇧🇳🇱] This is just for clarity which project belongs to which group',
+        '[EN, NL] This is just for clarity which project belongs to which group',
       type: 'array',
       of: [
         defineField({
@@ -102,16 +91,16 @@ export default defineType({
       title: 'Year',
       group: 'main',
       type: 'string',
-      description: '[🇬🇧🇳🇱]',
+      description: '[EN, NL]',
       // validation: (rule) => rule.required(),
     }),
 
     defineField({
       name: 'coverImage',
       title: 'Cover Image',
-      group: 'main',
+      group: ['main', 'seo'],
       description:
-        '[🇬🇧] This image will be used as the cover image for the project. If you choose to add it to the show case projects, this is the image displayed in the list within the homepage.',
+        '[EN, NL] This image will be used as the cover image for the project and the ogImage (n social cards and search engine results). If you choose to add this project to the show case projects, this is the image displayed on the homepage.',
       type: 'image',
       options: {
         hotspot: true,
@@ -131,7 +120,7 @@ export default defineType({
       group: 'optional',
       title: 'Optional Second Cover Image',
       description:
-        '[🇬🇧] You can choose whether to add the second cover image. If you do, it will be added as the representation of the project on the page Home in a two column layout. It wont add it in the page Works.',
+        '[EN, ] You can choose whether to add the second cover image. If you do, it will be added as the representation of the project on the page Home in a two column layout. It wont add it in the page Works.',
       type: 'image',
       options: {
         hotspot: true,
@@ -150,7 +139,7 @@ export default defineType({
       group: 'optional',
       type: 'array',
       title: 'Page extra materials',
-      description: '[🇬🇧🇳🇱] Add movie, sound file, pdf',
+      description: '[EN, NL] Add movie, sound file, pdf',
       of: [
         defineArrayMember({
           name: 'video',
@@ -171,7 +160,7 @@ export default defineType({
     defineField({
       name: 'details',
       title: 'Project Details',
-      description: '[🇬🇧🇳🇱]',
+      description: '[EN, NL]',
       group: 'main',
       type: 'array',
       of: [
@@ -200,7 +189,7 @@ export default defineType({
     defineField({
       name: 'text',
       title: 'Project Text',
-      description: '[🇬🇧🇳🇱]',
+      description: '[EN, NL]',
       group: 'main',
       type: 'array',
       of: [
@@ -229,7 +218,7 @@ export default defineType({
     defineField({
       name: 'credits',
       title: 'Credits',
-      description: '[🇬🇧🇳🇱]',
+      description: '[EN, NL]',
       group: 'main',
       type: 'array',
       of: [
@@ -259,7 +248,7 @@ export default defineType({
     defineField({
       name: 'projectGallery',
       type: 'object',
-      description: '[🇬🇧]',
+      description: '[EN, ]',
       group: ['media', 'main'],
       title: 'Project gallery',
       fields: [
