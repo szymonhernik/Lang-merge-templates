@@ -42,7 +42,11 @@ export default function PageExtraMaterials({ materials, filterType }) {
               return (
                 <div key={mat._key}>
                   <AspectRatio
-                    ratio={videoProps.asset.data.aspect_ratio.replace(':', '/')}
+                    ratio={
+                      videoProps.asset.data.aspect_ratio
+                        ? videoProps.asset.data.aspect_ratio.replace(':', '/')
+                        : '16/9'
+                    }
                     className="bg-muted"
                   >
                     {videoProps && <VideoPlayer videoProps={videoProps} />}
