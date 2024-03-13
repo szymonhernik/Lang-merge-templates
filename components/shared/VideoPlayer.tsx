@@ -5,7 +5,7 @@ export default function VideoPlayer({ videoProps }) {
   const aspectRatio = videoProps.asset.data.aspect_ratio
   // replace : with / to get the aspect ratio
   const aspectRatioFormatted = aspectRatio.replace(':', '/')
-  console.log('aspectRatio', aspectRatio)
+  // console.log('aspectRatio', aspectRatio)
   return (
     <MuxPlayer
       theme="minimal"

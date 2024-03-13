@@ -78,7 +78,7 @@ export async function generateMetadata({ params }) {
   // console.log('currentProject', currentProject)
 
   const ogImage = urlForOpenGraphImage(currentProject?.coverImage)
-  console.log('ogImage', ogImage)
+  // console.log('ogImage', ogImage)
 
   // Construct a title for the page based on the current project's details
   // If the project is part of a portfolio with more than one element, append "| portfolio name"
