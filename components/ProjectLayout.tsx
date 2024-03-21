@@ -136,7 +136,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
               </div>
             )}
             {/* Mobile&Tablet gallery */}
-            {gallery && (
+            {gallery && gallery.images && (
               <>
                 <div className="w-screen md:w-full -mx-6 lg:hidden">
                   <Gallery
