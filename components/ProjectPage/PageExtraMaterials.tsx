@@ -38,14 +38,16 @@ export default function PageExtraMaterials({ materials, filterType }) {
               )
             case 'video':
               const videoProps = mat.video
+              const aspectRatio = videoProps.asset.data.aspect_ratio
+              const [width, height] = aspectRatio.split(':').map(Number)
 
               return (
-                <div key={mat._key}>
+                <div key={mat._key} className="w-full h-auto">
                   <AspectRatio
                     ratio={
                       videoProps.asset.data.aspect_ratio
-                        ? videoProps.asset.data.aspect_ratio.replace(':', '/')
-                        : '16/9'
+                        ? width / height
+                        : 16 / 9
                     }
                     className="bg-muted"
                   >
