@@ -27,7 +27,9 @@ export default function ProjectContent(props: ProjectContentProps) {
   const renderProjects = (numberOfProjects) => {
     if (numberOfProjects > 1) {
       return (
-        <div className="aspect-[3/4] object-cover w-full overflow-y-auto overflow-x-hidden">
+        <div
+          className={`aspect-[3/4] object-cover w-full overflow-y-auto overflow-x-hidden minimalScrollbar`}
+        >
           <MultifaceProjects projects={projectPaths} />
         </div>
       )

@@ -44,9 +44,10 @@ export default function ProjectLinks(props: ProjectLinksProps) {
   if (!localeProjects?.length) {
     return null
   }
+  // console.log('projects', projects)
 
   return (
-    <div className="min-h-full bg-brokenYellow p-4 md:bg-transparent md:p-1">
+    <div className="min-h-full bg-brokenYellow p-4 md:bg-transparent md:p-1 md:px-2 ">
       <Accordion
         type="single"
         collapsible
@@ -65,9 +66,14 @@ export default function ProjectLinks(props: ProjectLinksProps) {
                   <AccordionTrigger className="hover:no-underline">
                     <Link href={project.path}>
                       <div
-                        className={`flex transition-colors duration-200  hover:underline  `}
+                        className={` transition-colors duration-200  hover:underline  `}
                       >
-                        {String(index + 1).padEnd(2, '.')} {project.title}
+                        {String(index + 1).padEnd(2, '.')} {project.title}{' '}
+                        {project.year && (
+                          <span className="  opacity-50 ml-1 text-sm">
+                            ({project.year})
+                          </span>
+                        )}
                       </div>
                     </Link>
                   </AccordionTrigger>
@@ -103,7 +109,12 @@ export default function ProjectLinks(props: ProjectLinksProps) {
                   <div
                     className={`py-3 md:py-4 w-fit transition-colors duration-200  hover:opacity-100 hover:underline opacity-50 `}
                   >
-                    {String(index + 1).padEnd(2, '.')} {project.title}
+                    {String(index + 1).padEnd(2, '.')} {project.title}{' '}
+                    {project.year && (
+                      <span className="  opacity-50 ml-1 text-sm">
+                        ({project.year})
+                      </span>
+                    )}
                   </div>
                 </Link>
               )}

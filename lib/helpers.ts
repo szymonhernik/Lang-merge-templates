@@ -50,6 +50,7 @@ export function createProjectReachLinks(
     language: string
     title: string
     slug: Slug
+    year?: string
     coverImage?: CoverImage // Add this line to include cover image data
     linkedFile?: LinkedFile
     translations: {
@@ -109,6 +110,7 @@ export function createProjectReachLinks(
               path: path,
               coverImage: coverImageData, // Include cover image data in the return object
               hasLinkedFile,
+              year: project.year,
             }
           })
 

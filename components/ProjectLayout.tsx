@@ -86,6 +86,11 @@ export function ProjectLayout(props: ProjectLayoutProps) {
                   ? portfolio.title[language]
                   : title}
               </h1>
+              {/* {year && (
+                <span className="opacity-50 font-medium lg:text-sm">
+                  {year}
+                </span>
+              )} */}
               {/* Reference from the portfolio that is a group */}
               {portfolio.projects.length > 1 && (
                 <PortfolioNavigator
@@ -104,7 +109,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
               )}
             </div>
             <div className="font-medium space-y-2 md:max-w-screen-md md:mx-auto lg:text-sm lg:w-11/12 xl:w-3/4  lg:mx-0 lg:mb-12">
-              {year && <span className="opacity-50">{year}</span>}
+              <span className="opacity-50 font-medium lg:text-sm">{year}</span>
               {details?.length > 0 && <Prose value={details} />}
             </div>
             {coverImage && (
@@ -130,8 +135,8 @@ export function ProjectLayout(props: ProjectLayoutProps) {
             </div>
 
             {text?.length && (
-              <div className="font-medium   md:max-w-screen-md lg:max-w-full md:mx-auto lg:text-base lg:space-y-8 space-y-6 ">
-                <p className="opacity-50 lg:text-xs">TEXT</p>
+              <div className="font-medium   md:max-w-screen-md lg:max-w-full md:mx-auto lg:text-base lg:space-y-4 space-y-4 ">
+                <p className="opacity-50 lg:text-sm">TEXT</p>
                 <CustomPortableText value={text} />
               </div>
             )}
@@ -179,8 +184,8 @@ export function ProjectLayout(props: ProjectLayoutProps) {
             )}
 
             {credits?.length && (
-              <div className="font-medium  md:max-w-screen-md lg:max-w-full md:mx-auto md:w-full lg:text-base lg:space-y-8 space-y-6">
-                <p className="opacity-50 lg:text-xs">CREDITS</p>
+              <div className="font-medium  md:max-w-screen-md lg:max-w-full md:mx-auto md:w-full lg:text-base lg:space-y-4 space-y-4">
+                <p className="opacity-50 lg:text-sm">CREDITS</p>
                 <CustomPortableText value={credits} />
               </div>
             )}

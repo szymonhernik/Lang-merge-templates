@@ -13,6 +13,7 @@ type CoverImage = {
 export type TranslationReach = {
   path: string
   language: string
+  year?: string
   title: string
   coverImage?: CoverImage
   hasLinkedFile?: boolean
