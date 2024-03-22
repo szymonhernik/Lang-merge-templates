@@ -70,7 +70,7 @@ export default function ProjectLinks(props: ProjectLinksProps) {
                       >
                         {String(index + 1).padEnd(2, '.')} {project.title}{' '}
                         {project.year && (
-                          <span className="  opacity-50 ml-1 text-sm">
+                          <span className="opacity-50 ml-1 text-sm">
                             ({project.year})
                           </span>
                         )}
