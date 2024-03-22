@@ -74,6 +74,16 @@ export async function AboutLayout({ data, currentLanguage }: AboutLayoutProps) {
                   Szymon Eda Hernik
                 </a>
               </p>
+              <p>
+                Fonts used: Tonka by{' '}
+                <a
+                  href="https://celine-hurka.com/home/"
+                  target="_blank"
+                  className="underline text-violet-400"
+                >
+                  Céline Hurka and Huw Williams
+                </a>
+              </p>
             </div>
           </article>
         </div>
