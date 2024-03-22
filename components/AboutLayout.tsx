@@ -64,8 +64,21 @@ export async function AboutLayout({ data, currentLanguage }: AboutLayoutProps) {
 
             <div className="mt-8 text-sm">
               <p className="font-medium ">Colophon</p>
+
+              <p>Editor (Englisch): Shivani Gowda</p>
+
               <p>
-                Design and coding by{' '}
+                Editor & translator (English & Dutch):{' '}
+                <a
+                  href="https://puckkroon.com/"
+                  target="_blank"
+                  className="underline text-violet-400"
+                >
+                  Puck Kroon
+                </a>
+              </p>
+              <p>
+                Web design and coding:{' '}
                 <a
                   href="https://szymonhernik.com/"
                   target="_blank"
@@ -84,6 +97,7 @@ export async function AboutLayout({ data, currentLanguage }: AboutLayoutProps) {
                   Céline Hurka and Huw Williams
                 </a>
               </p>
+              <p>Emotional support: Yannik Güldner & Pannekoekie </p>
             </div>
           </article>
         </div>
