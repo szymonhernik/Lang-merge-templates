@@ -125,7 +125,7 @@ export default async function Page({ params }) {
 
   const initial = await loadQuery<SanityDocument>(PROJECT_QUERY, queryParams, {
     perspective: isEnabled ? 'previewDrafts' : 'published',
-    next: { tags: ['project'] },
+    next: { tags: ['project', 'portfolio'] },
   })
 
   if (!initial.data) {
