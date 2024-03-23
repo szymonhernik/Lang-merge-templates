@@ -68,7 +68,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
       />
       <section
         id="project"
-        className="py-mobileSpace  md:overflow-hidden  mx-auto px-6 flex flex-col gap-12 text-sm  lg:items-end lg:py-0"
+        className="py-mobileSpace  md:overflow-hidden  mx-auto px-6 flex flex-col gap-12 text-sm  lg:items-end lg:py-[5vh]"
       >
         <div className="text-center lg:hidden">
           <Link href={`/${language}/works`} className="underline ">
@@ -101,12 +101,14 @@ export function ProjectLayout(props: ProjectLayoutProps) {
                   slugPage={slugPage}
                 />
               )}
-              {pageExtraMaterials?.length > 0 && (
-                <PageExtraMaterials
-                  materials={pageExtraMaterials}
-                  filterType="non-video"
-                />
-              )}
+              {pageExtraMaterials?.length > 0 &&
+                pageExtraMaterials.filter((type) => type._type !== 'video')
+                  .length > 0 && (
+                  <PageExtraMaterials
+                    materials={pageExtraMaterials}
+                    filterType="non-video"
+                  />
+                )}
             </div>
             <div className="font-medium space-y-2 md:max-w-screen-md md:mx-auto lg:text-sm lg:w-11/12 xl:w-3/4  lg:mx-0 lg:mb-12">
               <span className="opacity-50 font-medium lg:text-sm">{year}</span>
@@ -176,12 +178,14 @@ export function ProjectLayout(props: ProjectLayoutProps) {
               </>
             )}
 
-            {pageExtraMaterials?.length > 0 && (
-              <PageExtraMaterials
-                materials={pageExtraMaterials}
-                filterType="video"
-              />
-            )}
+            {pageExtraMaterials?.length > 0 &&
+              pageExtraMaterials.filter((type) => type._type === 'video')
+                .length > 0 && (
+                <PageExtraMaterials
+                  materials={pageExtraMaterials}
+                  filterType="video"
+                />
+              )}
 
             {credits?.length && (
               <div className="font-medium  md:max-w-screen-md lg:max-w-full md:mx-auto md:w-full lg:text-base lg:space-y-4 space-y-4">

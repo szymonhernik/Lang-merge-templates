@@ -19,6 +19,7 @@ export default function Header() {
   const isHomePage = pathname === `/${langSelected}`
   const isMusicPage = pathname === `/${langSelected}/music`
   const isWorksPage = pathname.startsWith(`/${langSelected}/works/`)
+  // const isInnerWorksPage = pathname.startsWith(`/${langSelected}/works/`)
 
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
@@ -35,7 +36,7 @@ export default function Header() {
             !isHomePage && !isMusicPage && !isWorksPage,
         },
         {
-          'text-black md:text-white md:mix-blend-difference bg-white md:bg-transparent':
+          'text-black lg:!absolute md:text-white md:mix-blend-difference bg-white md:bg-transparent':
             isWorksPage,
         },
         {
@@ -49,7 +50,11 @@ export default function Header() {
         )}
       >
         <div className="space-y-3 ">
-          <h1 className={clsx('mr-auto space-x-3', {})}>
+          <h1
+            className={clsx('mr-auto space-x-3 ', {
+              'md:fixed md:left-12 md:top-8': isWorksPage,
+            })}
+          >
             <Link href={`/${clean(langSelected)}`} className="">
               <span>Narges Mohammadi</span>
             </Link>
