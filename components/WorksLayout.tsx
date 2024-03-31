@@ -1,9 +1,9 @@
 'use client'
 
-import { useParams } from 'next/navigation'
+import { useParams, useSearchParams } from 'next/navigation'
 import { SanityDocument } from 'next-sanity'
 import { createProjectLinks } from '@/lib/helpers'
-import React, { useMemo, useState } from 'react'
+import React, { useMemo } from 'react'
 import Link from 'next/link'
 import ProjectContent from './ProjectContent'
 import PageTitle from './PageTitle'
@@ -16,44 +16,30 @@ type WorksLayoutProps = {
 export function WorksLayout(props: WorksLayoutProps) {
   const { portfolios, categories } = props.data || {}
   const params = useParams()
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+  const searchParams = useSearchParams()
+  const showCategory = searchParams.get('show')
 
   const language = Array.isArray(params.language)
     ? params.language[0]
     : params.language
 
-  // console.log('portfolios', portfolios[0].category)
-
   const filteredPortfolios = useMemo(() => {
-    if (
-      !selectedCategory ||
-      selectedCategory === 'all' ||
-      selectedCategory === 'alle'
-    ) {
-      return portfolios
-    }
-    return portfolios?.filter((portfolio) => {
-      return portfolio.category._id === selectedCategory
-    })
-  }, [portfolios, selectedCategory])
+    if (!portfolios) return []
 
-  const handleCategorySelect = (categoryId) => {
-    if (categoryId === 'all') {
-      setSelectedCategory(null)
-    } else {
-      setSelectedCategory(categoryId)
-    }
-  }
+    // Defaults to "Artworks" if no filter is specified
+    const effectiveFilter = (showCategory || 'artworks').toLowerCase()
+
+    return portfolios.filter(
+      (portfolio) =>
+        portfolio.category &&
+        portfolio.category.categoryName.toLowerCase() === effectiveFilter,
+    )
+  }, [portfolios, showCategory])
 
   return (
     <section className="w-full py-mobileSpace lg:pt-desktopSpace lg:pb-16">
       <PageTitle currentLanguage={language} currentPage={'Works'} />
-      <FilterWorks
-        currentLanguage={language}
-        categories={categories}
-        onCategorySelect={handleCategorySelect}
-        selectedCategory={selectedCategory}
-      />
+      <FilterWorks currentLanguage={language} />
       <div className="3xl:max-w-[1936px] mx-auto grid gap-16 md:gap-8 px-4 md:px-6 lg:grid-cols-3 2xl:grid-cols-4 md:grid-cols-2 pt-header lg:pt-0 ">
         {filteredPortfolios &&
           filteredPortfolios.length > 0 &&
