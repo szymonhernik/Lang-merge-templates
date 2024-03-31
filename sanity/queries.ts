@@ -117,7 +117,7 @@ export const PROJECT_QUERY = groq`*[_type == "project" && slug.current == $slug]
     // Get this whole document
     ...,
     pageExtraMaterials[]{
-      ...,
+      
       _type == "video" => {
         _type,
         videoLabel,
@@ -278,13 +278,13 @@ export const HOME_QUERY = groq`{
 }`
 export const WORKS_QUERY = groq`{
   "categories": *[_type == "categories"]{
-    _id,
+
     categoryName
   },
   "portfolios": *[_type == "portfolio" && count(projects) > 0]|order(orderRank){
     ...,
     category->{
-      _id,
+
     categoryName
     },
     //see what is needed for the works page. if i remove this and have only title, language then the links dont work
