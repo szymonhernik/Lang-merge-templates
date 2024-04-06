@@ -36,7 +36,7 @@ export default function ProjectContent(props: ProjectContentProps) {
     } else if (numberOfProjects === 1) {
       return (
         <ImageBox
-          size={'(max-width: 768px) 100vw, 33vw'}
+          size={'(max-width: 768px) 100vw, 45vw'}
           classesImage="aspect-[3/4] object-cover w-full overflow-hidden  transition-opacity"
           image={portfolio.projects[0].coverImage}
           alt={`${portfolio.projects[0].coverImage?.alt ?? ''}`}

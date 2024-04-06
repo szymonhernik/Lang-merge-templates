@@ -21,7 +21,6 @@ export default function ImageBox({
   classesImage,
   ...props
 }: ImageBoxProps) {
-  // Assuming image.asset.url is the base URL you're starting with
   const imageUrl2 =
     image && image.asset.url && `${image.asset.url}?w=${width}&h=${height}`
 

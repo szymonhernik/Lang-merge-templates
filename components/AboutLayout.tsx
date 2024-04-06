@@ -63,8 +63,8 @@ export async function AboutLayout({ data, currentLanguage }: AboutLayoutProps) {
                   )
                 })}
 
-              <div className="mt-8 text-sm">
-                <p className="font-medium ">Colophon</p>
+              <div className="mt-8 text-sm ">
+                <p className="font-medium mb-2">Colophon</p>
 
                 <p>Editor (Englisch): Shivani Gowda</p>
 
@@ -99,6 +99,17 @@ export async function AboutLayout({ data, currentLanguage }: AboutLayoutProps) {
                   </a>
                 </p>
                 <p>Emotional support: Yannik Güldner & Pannekoekie </p>
+
+                <p className="mt-2">
+                  Gallery representation:{' '}
+                  <a
+                    href="https://www.copperfieldgallery.com/"
+                    target="_blank"
+                    className="underline text-violet-400"
+                  >
+                    Copperfield, London
+                  </a>
+                </p>
               </div>
             </article>
           </div>
