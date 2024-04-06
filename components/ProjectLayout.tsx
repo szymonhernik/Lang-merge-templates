@@ -106,8 +106,8 @@ export function ProjectLayout(props: ProjectLayoutProps) {
                   />
                 )}
             </div>
-            <div className="font-medium space-y-2 md:max-w-screen-md md:mx-auto lg:text-sm lg:w-11/12 xl:w-3/4  lg:mx-0 lg:mb-12">
-              <span className="opacity-50 font-medium lg:text-sm">{year}</span>
+            <div className="font-medium space-y-2 md:max-w-screen-md mx-auto lg:text-sm lg:w-11/12 xl:w-3/4  lg:mx-0 lg:mb-12">
+              <span className="opacity-50 font-medium lg:text-sm ">{year}</span>
               {details?.length > 0 && <Prose value={details} />}
             </div>
             {coverImage && (
@@ -124,7 +124,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
               </div>
             )}
 
-            <div className="-mt-4 lg:hidden sticky top-headerSmallSpace z-[10] left-0 w-screen -mx-6 text-xs font-medium  bg-white  opacity-80  ">
+            <div className="-mt-4 px-6 lg:hidden sticky top-headerSmallSpace z-[10] left-0 md:max-w-screen-md md:mx-auto w-screen -mx-6 text-xs font-medium  bg-white  opacity-80  ">
               <a
                 href="#project"
                 className="flex flex-row gap-2 justify-center items-center py-4"
