@@ -101,12 +101,12 @@ pre[class*='language-'] {
   color: white !important;
 }
 
-@media (max-width: 1024px) {
+/* @media (max-width: 1024px) {
   .swiper-button-next,
   .swiper-button-prev {
     display: none !important;
   }
-}
+} */
 
 /* width */
 .minimalScrollbar::-webkit-scrollbar {

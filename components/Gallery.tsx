@@ -47,7 +47,7 @@ export function Gallery({ gallery }) {
           isMobile
             ? {
                 enabled: true,
-                momentumRatio: 0.2,
+                momentumRatio: 0.8,
                 momentumBounceRatio: 0.2,
                 momentumVelocityRatio: 0.2,
               }
