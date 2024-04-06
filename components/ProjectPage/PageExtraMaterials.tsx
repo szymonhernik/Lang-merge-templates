@@ -42,7 +42,10 @@ export default function PageExtraMaterials({ materials, filterType }) {
               const [width, height] = aspectRatio.split(':').map(Number)
 
               return (
-                <div key={mat._key} className="w-full h-auto">
+                <div
+                  key={mat._key}
+                  className="w-full h-auto max-w-lg lg:max-w-screen-md"
+                >
                   <AspectRatio
                     ratio={
                       videoProps.asset.data.aspect_ratio

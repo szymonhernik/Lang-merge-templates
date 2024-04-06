@@ -7,10 +7,19 @@ import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/navigation'
 
-import React, { useEffect, useState } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 import Image from 'next/image'
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from './ui/dialog'
 
-export function Gallery({ gallery, onEndReached, onSlideChange }) {
+export function Gallery({ gallery }) {
   // State to hold whether we're on a mobile device
   const [isMobile, setIsMobile] = useState(false)
 
@@ -30,15 +39,10 @@ export function Gallery({ gallery, onEndReached, onSlideChange }) {
     return () => window.removeEventListener('resize', checkMobile)
   }, [])
 
-  // console.log('gallery', gallery)
-  // console.log('galleryImages', gallery.images)
-
   return (
     <>
       <Swiper
         navigation={true}
-        onSlideChange={onSlideChange}
-        onReachEnd={onEndReached} // Add this line
         freeMode={
           isMobile
             ? {
@@ -57,13 +61,20 @@ export function Gallery({ gallery, onEndReached, onSlideChange }) {
         {gallery.images.map((image, index) => {
           // Define sizes based on aspect ratio
 
+          const isVertical = image.asset.aspectRatio < 1
+
           let sizes
+          let sizesDialog
           if (image.asset && image.asset.aspectRatio > 1) {
             // Landscape (horizontal) image
             sizes = '(max-width:640px) 100vw, (max-width: 768px) 50vw, 50vw'
+            sizesDialog =
+              '(max-width:640px) 100vw, (max-width: 768px) 90vw, 90vw'
           } else {
             // Portrait (vertical) or square image
             sizes = '(max-width:640px) 100vw, (max-width: 768px) 75vw, 30vw'
+            sizesDialog =
+              '(max-width:640px) 100vw, (max-width: 768px) 75vw, 50vw'
           }
           return (
             <SwiperSlide
@@ -71,16 +82,41 @@ export function Gallery({ gallery, onEndReached, onSlideChange }) {
               key={gallery._key + image + index}
             >
               {image.asset && (
-                <Image
-                  src={`${image.asset.url}?w=${Math.round(image.asset.width / 2)}&h=${Math.round(image.asset.height / 2)}`}
-                  width={Math.round(image.asset.width)}
-                  height={Math.round(image.asset.height)}
-                  sizes={sizes}
-                  alt={`${image?.alt ?? ''}`}
-                  className="w-auto h-full"
-                  blurDataURL={image.asset.lqip}
-                  placeholder="blur"
-                />
+                <Dialog>
+                  <DialogTrigger className="h-full" asChild>
+                    <Image
+                      src={`${image.asset.url}?w=${Math.round(image.asset.width / 1.5)}&h=${Math.round(image.asset.height / 1.5)}`}
+                      width={Math.round(image.asset.width)}
+                      height={Math.round(image.asset.height)}
+                      sizes={sizes}
+                      alt={`${image?.alt ?? ''}`}
+                      className="w-auto h-full hover:cursor-zoom-in"
+                      blurDataURL={image.asset.lqip}
+                      placeholder="blur"
+                    />
+                  </DialogTrigger>
+                  <DialogContent
+                    onOpenAutoFocus={(e) => e.preventDefault()}
+                    className="bg-transparent  w-screen h-screen items-center p-0 justify-center"
+                  >
+                    <DialogClose asChild>
+                      {/* <div
+                        className={`aspect-[${Math.round(image.asset.width)}/${Math.round(image.asset.height)}]`}
+                      > */}
+                      <Image
+                        src={`${image.asset.url}?w=${Math.round(image.asset.width / 1.5)}&h=${Math.round(image.asset.height / 1.5)}`}
+                        width={Math.round(image.asset.width)}
+                        height={Math.round(image.asset.height)}
+                        sizes={sizesDialog}
+                        alt={`${image?.alt ?? ''}`}
+                        className={` max-w-[96vw] max-h-[96vh] object-contain ${isVertical ? 'w-auto h-[96vh]' : 'w-[96vw] md:w-[80vw] h-auto'} xl:max-w-screen-2xl xl:max-h-screen-2xl hover:cursor-zoom-out `}
+                        blurDataURL={image.asset.lqip}
+                        placeholder="blur"
+                      />
+                      {/* </div> */}
+                    </DialogClose>
+                  </DialogContent>
+                </Dialog>
               )}
             </SwiperSlide>
           )

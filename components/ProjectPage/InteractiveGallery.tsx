@@ -14,10 +14,8 @@ export function InteractiveGallery({
   onCoverImageVisibilityChange,
 }) {
   const [isCoverImageShown, setIsCoverImageShown] = useState(true)
-  // const [isLightGallery, setLightGallery] = useState(true)
   const [cursorVariant, setCursorVariant] = useState('default')
   const [isHoverInitialized, setIsHoverInitialized] = useState(false)
-  const [galleryReachedEnd, setGalleryReachedEnd] = useState(false)
   const [cursorText, setCursorText] = useState<CursorText>({
     arrow: '',
     text: '',
@@ -57,19 +55,12 @@ export function InteractiveGallery({
       y: mouseYPosition - 25,
       opacity: 1,
     },
-    gallery: {
-      opacity: 1,
-      fontSize: '12px',
-      x: mouseXPosition - 5,
-      y: mouseYPosition - 25,
-    },
   }
 
   function projectEnter(event) {
     if (!isHoverInitialized) {
       setCursorText({ arrow: '→', text: 'GALLERY' })
       setCursorVariant('project')
-      // setLightGallery(true)
       setIsHoverInitialized(true) // Indicate that hover action has been initialized
     }
   }
@@ -77,7 +68,6 @@ export function InteractiveGallery({
   function projectLeave(event) {
     setCursorText({ arrow: '', text: '' })
     setCursorVariant('default')
-    // setLightGallery(false)
     setIsHoverInitialized(false) // Reset hover initialization
   }
 
@@ -87,42 +77,42 @@ export function InteractiveGallery({
   }
 
   // Define a ref for the gallery element
-  const galleryRef = React.useRef(null)
+  // const galleryRef = React.useRef(null)
 
   // Function to calculate if mouse is on the left or right side
-  const updateGalleryCursor = (event) => {
-    if (!galleryRef.current) return
+  // const updateGalleryCursor = (event) => {
+  //   if (!galleryRef.current) return
 
-    const galleryRect = (
-      galleryRef.current as HTMLElement
-    ).getBoundingClientRect()
-    const galleryMidpoint = galleryRect.left + galleryRect.width / 2
-    setCursorVariant('gallery')
-    // Determine if the mouse is on the left or right side of the gallery midpoint
-    if (mouseXPosition < galleryMidpoint) {
-      // Mouse is on the left side
-      setCursorText({ arrow: '←', text: 'PREV' })
-    } else if (mouseXPosition > galleryMidpoint) {
-      // Mouse is on the right side
-      if (galleryReachedEnd) {
-        setCursorText({ arrow: '', text: '' })
-        setCursorVariant('default')
-      } else {
-        // Default behavior
-        setCursorText({ arrow: '→', text: 'NEXT' })
-      }
-    } else {
-      setCursorText({ arrow: '', text: '' })
-      setCursorVariant('default')
-    }
-  }
-  const handleGalleryEndReached = () => {
-    setGalleryReachedEnd(true) // Mark that the gallery end has been reached
-  }
-  const handleSlideChange = (swiper) => {
-    const isEnd = swiper.isEnd // Boolean value indicating if the swiper is at the last slide
-    setGalleryReachedEnd(isEnd)
-  }
+  //   const galleryRect = (
+  //     galleryRef.current as HTMLElement
+  //   ).getBoundingClientRect()
+  //   const galleryMidpoint = galleryRect.left + galleryRect.width / 2
+  //   setCursorVariant('gallery')
+  //   // Determine if the mouse is on the left or right side of the gallery midpoint
+  //   if (mouseXPosition < galleryMidpoint) {
+  //     // Mouse is on the left side
+  //     setCursorText({ arrow: '←', text: 'PREV' })
+  //   } else if (mouseXPosition > galleryMidpoint) {
+  //     // Mouse is on the right side
+  //     if (galleryReachedEnd) {
+  //       setCursorText({ arrow: '', text: '' })
+  //       setCursorVariant('default')
+  //     } else {
+  //       // Default behavior
+  //       setCursorText({ arrow: '→', text: 'NEXT' })
+  //     }
+  //   } else {
+  //     setCursorText({ arrow: '', text: '' })
+  //     setCursorVariant('default')
+  //   }
+  // }
+  // const handleGalleryEndReached = () => {
+  //   setGalleryReachedEnd(true) // Mark that the gallery end has been reached
+  // }
+  // const handleSlideChange = (swiper) => {
+  //   const isEnd = swiper.isEnd // Boolean value indicating if the swiper is at the last slide
+  //   setGalleryReachedEnd(isEnd)
+  // }
 
   return (
     <section ref={ref} className="renderedDesktop hidden lg:block">
@@ -168,17 +158,10 @@ export function InteractiveGallery({
           {/* Desktop gallery */}
           {gallery && (
             <div
-              ref={galleryRef}
-              onMouseOver={updateGalleryCursor}
-              onMouseMove={updateGalleryCursor}
               onMouseLeave={galleryLeave}
               className={`hidden lg:block fixed left-0 top-[25vh] z-[0] transition-all duration-700 w-[60vw]  ${isCoverImageShown ? 'opacity-10 translate-x-[44vw]' : 'opacity-100 translate-x-0'} ${isHoverInitialized && 'opacity-30'} `}
             >
-              <Gallery
-                gallery={gallery}
-                onEndReached={handleGalleryEndReached}
-                onSlideChange={handleSlideChange}
-              />
+              <Gallery gallery={gallery} />
             </div>
           )}
         </>

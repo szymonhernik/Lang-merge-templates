@@ -27,9 +27,7 @@ type ProjectLayoutProps = {
 export function ProjectLayout(props: ProjectLayoutProps) {
   const {
     title,
-    summary,
     credits,
-    content,
     gallery,
     details,
     portfolio,
@@ -37,11 +35,9 @@ export function ProjectLayout(props: ProjectLayoutProps) {
     coverImageProp,
     pageExtraMaterials,
     language,
-    pageBuilder,
     slug,
     text,
     slugPage,
-    currentLanguage,
   } = props.data ?? {}
   const { projects } = portfolio ?? {}
 
@@ -68,7 +64,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
       />
       <section
         id="project"
-        className="py-mobileSpace  md:overflow-hidden  mx-auto px-6 flex flex-col gap-12 text-sm  lg:items-end lg:py-[5vh]"
+        className="py-mobileSpace  md:overflow-hidden  mx-auto px-6 flex flex-col gap-12 text-sm  lg:items-end lg:py-[0]"
       >
         <div className="text-center lg:hidden">
           <Link href={`/${language}/works`} className="underline ">
@@ -77,7 +73,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
         </div>
 
         <div
-          className={`${!isCoverImageShown && 'lg:shadow-shadowProject'} lg:bg-white lg:w-[40vw] lg:z-[10] lg:-mr-6 lg:pl-8 lg:pr-8 xl:pr-24 lg:pb-desktopSpace lg:pt-32 transition-shadow duration-700  lg:min-h-screen`}
+          className={`${!isCoverImageShown && 'lg:shadow-shadowProject'} lg:bg-white lg:w-[40vw] lg:z-[10] lg:-mr-6 lg:pl-8 lg:pr-8 xl:pr-24 lg:pb-desktopSpace lg:pt-48 transition-shadow duration-700  lg:min-h-screen`}
         >
           <div className="lg:max-w-screen-sm flex flex-col gap-12">
             <div className="my-8 flex flex-col gap-y-2 w-3/4 text-center mx-auto md:max-w-screen-md lg:text-left lg:w-[80%] lg:mx-0 ">
@@ -146,11 +142,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
             {gallery && gallery.images && (
               <>
                 <div className="w-screen md:w-full -mx-6 lg:hidden">
-                  <Gallery
-                    gallery={gallery}
-                    onEndReached={null}
-                    onSlideChange={null}
-                  />
+                  <Gallery gallery={gallery} />
                 </div>
                 <div
                   className={`block px-0 -mt-6 lg:mt-0 mx-auto lg:mx-0 lg:fixed lg:z-[0] bottom-[20vh] left-0 lg:px-12 font-medium text-sm transition-opacity delay-200   ${isCoverImageShown ? 'lg:opacity-0 pointer-events-none' : 'lg:opacity-100 pointer-events-auto'}`}
