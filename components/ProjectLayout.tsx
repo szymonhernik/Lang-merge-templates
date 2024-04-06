@@ -113,9 +113,11 @@ export function ProjectLayout(props: ProjectLayoutProps) {
             {coverImage && (
               <div className="flex justify-center lg:hidden">
                 <ImageBox
-                  classesWrapper="-mx-6 w-screen max-w-lg h-auto max-h-screen overflow-hidden "
+                  classesWrapper={`-mx-6 w-screen max-w-lg h-auto max-h-screen overflow-hidden `}
                   size="(max-width:640px) 100vw, (max-width: 768px) 50vw, 50vw"
-                  classesImage="object-cover  object-center lg:h-full lg:w-auto "
+                  width={coverImage.asset.width}
+                  height={coverImage.asset.height}
+                  classesImage="object-cover  object-center h-full w-auto "
                   image={coverImage}
                   alt={coverImage.alt || 'Project image'}
                 />

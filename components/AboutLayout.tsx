@@ -27,10 +27,10 @@ export async function AboutLayout({ data, currentLanguage }: AboutLayoutProps) {
   // console.log('fileAssets', fileAssets)
 
   return (
-    <section className="py-mobileSpace lg:pt-desktopSpace lg:pb-16 max-w-screen-3xl mx-auto">
+    <section className="py-mobileSpace md:pt-desktopSpace lg:pb-16 max-w-screen-3xl mx-auto">
       <PageTitle currentLanguage={currentLanguage} currentPage={'About'} />
 
-      <div className="pt-mobileSpace md:pt-0 p-6 about w-full flex flex-col md:flex-row gap-8 font-medium">
+      <div className="pt-mobileSpace md:pt-0 p-6 about w-full flex flex-col md:flex-row gap-8 font-medium ">
         <div className="lg:w-1/3 space-y-8">
           {highlightedContent && (
             <p className="text-2xl">{highlightedContent}</p>
@@ -40,8 +40,8 @@ export async function AboutLayout({ data, currentLanguage }: AboutLayoutProps) {
               <ImageBox
                 size="(max-width:640px) 100vw, (max-width: 768px) 50vw, 33vw"
                 classesWrapper={`w-full max-w-sm `}
-                // width={profilePicture.asset.width / 2}
-                // height={profilePicture.asset.height / 2}
+                width={profilePicture.asset.width}
+                height={profilePicture.asset.height}
                 classesImage={`object-cover h-full w-full`}
                 image={profilePicture}
                 alt={`${profilePicture?.alt ?? ''}`}
@@ -49,57 +49,59 @@ export async function AboutLayout({ data, currentLanguage }: AboutLayoutProps) {
               <Photocredits profilePicture={profilePicture.photographerArray} />
             </div>
           )}
-          {content && <CustomPortableText value={content} />}
-          <article className="flex flex-col gap-8 font-normal ">
-            {fileAssets &&
-              fileAssets.length &&
-              fileAssets.map((file) => {
-                return (
-                  <div key={file._key} className="flex flex-col gap-4">
-                    <h3 className="font-medium  ">{file.fileTitle} </h3>
-                    <PDFAsset classWrapper={'w-fit'} file={file.fileAbout} />
-                  </div>
-                )
-              })}
+          <div className="max-w-screen-md mx-auto flex gap-8 flex-col">
+            {content && <CustomPortableText value={content} />}
+            <article className="flex flex-col gap-8 font-normal ">
+              {fileAssets &&
+                fileAssets.length &&
+                fileAssets.map((file) => {
+                  return (
+                    <div key={file._key} className="flex flex-col gap-4">
+                      <h3 className="font-medium  ">{file.fileTitle} </h3>
+                      <PDFAsset classWrapper={'w-fit'} file={file.fileAbout} />
+                    </div>
+                  )
+                })}
 
-            <div className="mt-8 text-sm">
-              <p className="font-medium ">Colophon</p>
+              <div className="mt-8 text-sm">
+                <p className="font-medium ">Colophon</p>
 
-              <p>Editor (Englisch): Shivani Gowda</p>
+                <p>Editor (Englisch): Shivani Gowda</p>
 
-              <p>
-                Editor & translator (English & Dutch):{' '}
-                <a
-                  href="https://puckkroon.com/"
-                  target="_blank"
-                  className="underline text-violet-400"
-                >
-                  Puck Kroon
-                </a>
-              </p>
-              <p>
-                Web design and coding:{' '}
-                <a
-                  href="https://szymonhernik.com/"
-                  target="_blank"
-                  className="underline text-violet-400"
-                >
-                  Szymon Eda Hernik
-                </a>
-              </p>
-              <p>
-                Fonts used: Tonka by{' '}
-                <a
-                  href="https://celine-hurka.com/home/"
-                  target="_blank"
-                  className="underline text-violet-400"
-                >
-                  Céline Hurka and Huw Williams
-                </a>
-              </p>
-              <p>Emotional support: Yannik Güldner & Pannekoekie </p>
-            </div>
-          </article>
+                <p>
+                  Editor & translator (English & Dutch):{' '}
+                  <a
+                    href="https://puckkroon.com/"
+                    target="_blank"
+                    className="underline text-violet-400"
+                  >
+                    Puck Kroon
+                  </a>
+                </p>
+                <p>
+                  Web design and coding:{' '}
+                  <a
+                    href="https://szymonhernik.com/"
+                    target="_blank"
+                    className="underline text-violet-400"
+                  >
+                    Szymon Eda Hernik
+                  </a>
+                </p>
+                <p>
+                  Fonts used: Tonka by{' '}
+                  <a
+                    href="https://celine-hurka.com/home/"
+                    target="_blank"
+                    className="underline text-violet-400"
+                  >
+                    Céline Hurka and Huw Williams
+                  </a>
+                </p>
+                <p>Emotional support: Yannik Güldner & Pannekoekie </p>
+              </div>
+            </article>
+          </div>
         </div>
         {profilePicture && (
           <div className="w-1/3 hidden lg:flex justify-start flex-col gap-4">
