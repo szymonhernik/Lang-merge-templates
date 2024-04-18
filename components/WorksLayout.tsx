@@ -40,7 +40,7 @@ export function WorksLayout(props: WorksLayoutProps) {
     <section className="w-full py-mobileSpace lg:pt-desktopSpace lg:pb-16">
       <PageTitle currentLanguage={language} currentPage={'Works'} />
       <FilterWorks currentLanguage={language} />
-      <div className="3xl:max-w-[1936px] mx-auto grid gap-16 md:gap-x-8 md:gap-y-24 px-4 md:px-6 lg:grid-cols-3 2xl:grid-cols-4 md:grid-cols-2 pt-header lg:pt-0 ">
+      <div className="3xl:max-w-[1936px] mx-auto grid gap-16 md:gap-x-8 md:gap-y-20 px-4 md:px-6 lg:grid-cols-3 2xl:grid-cols-4 md:grid-cols-2 pt-header lg:pt-0 ">
         {filteredPortfolios &&
           filteredPortfolios.length > 0 &&
           filteredPortfolios.map((portfolio, index) => {
