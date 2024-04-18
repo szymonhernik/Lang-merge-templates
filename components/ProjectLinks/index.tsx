@@ -66,18 +66,18 @@ export default function ProjectLinks(props: ProjectLinksProps) {
                   <AccordionTrigger className="hover:no-underline">
                     <Link href={project.path}>
                       <div
-                        className={` transition-colors duration-200  hover:underline  `}
+                        className={` transition-colors duration-200  hover:underline  text-sm `}
                       >
                         {String(index + 1).padEnd(2, '.')} {project.title}{' '}
                         {project.year && (
-                          <span className="opacity-50 ml-1 text-sm">
+                          <span className="opacity-50 ml-1 text-xs">
                             ({project.year})
                           </span>
                         )}
                       </div>
                     </Link>
                   </AccordionTrigger>
-                  <AccordionContent className="h-36 w-auto">
+                  <AccordionContent className="w-full">
                     <Link href={project.path}>
                       <Image
                         alt={
@@ -93,7 +93,7 @@ export default function ProjectLinks(props: ProjectLinksProps) {
                             ? Math.round(project.coverImage.asset.height / 100)
                             : 100
                         }
-                        className={`w-auto h-full object-cover `}
+                        className={`w-full h-full object-cover `}
                         sizes={
                           '(max-width:640px) 25vw, (max-width: 768px) 20vw, 10vw'
                         }
@@ -111,7 +111,7 @@ export default function ProjectLinks(props: ProjectLinksProps) {
                   >
                     {String(index + 1).padEnd(2, '.')} {project.title}{' '}
                     {project.year && (
-                      <span className="  opacity-50 ml-1 text-sm">
+                      <span className="  opacity-50 ml-1 text-xs">
                         ({project.year})
                       </span>
                     )}
