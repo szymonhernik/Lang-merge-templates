@@ -95,7 +95,7 @@ export default function ProjectLinks(props: ProjectLinksProps) {
                         }
                         className={`w-full h-full object-cover `}
                         sizes={
-                          '(max-width:640px) 25vw, (max-width: 768px) 20vw, 10vw'
+                          '(max-width:640px) 100vw, (max-width: 768px) 35vw, 35vw'
                         }
                         src={project.coverImage.asset.url}
                         placeholder="blur"
