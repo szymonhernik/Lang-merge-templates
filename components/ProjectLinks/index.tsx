@@ -107,7 +107,7 @@ export default function ProjectLinks(props: ProjectLinksProps) {
               ) : (
                 <Link href={project.path} className="inline-block">
                   <div
-                    className={`py-3 md:py-4 w-fit transition-colors duration-200  hover:opacity-100 hover:underline opacity-50 `}
+                    className={`py-3 md:py-4 w-fit transition-colors duration-200  hover:opacity-100 hover:underline opacity-50 text-sm`}
                   >
                     {String(index + 1).padEnd(2, '.')} {project.title}{' '}
                     {project.year && (
