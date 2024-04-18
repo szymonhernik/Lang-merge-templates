@@ -159,7 +159,7 @@ export function InteractiveGallery({
           {gallery && (
             <div
               onMouseLeave={galleryLeave}
-              className={`hidden lg:block fixed left-0 top-[25vh] z-[0] transition-all duration-700 w-[60vw]  ${isCoverImageShown ? 'opacity-10 translate-x-[44vw]' : 'opacity-100 translate-x-0'} ${isHoverInitialized && 'opacity-30'} `}
+              className={`hidden lg:block fixed left-0 top-[25vh] z-[0] transition-all duration-700 w-[calc(60vw-1rem)]  ${isCoverImageShown ? 'opacity-10 translate-x-[44vw]' : 'opacity-100 translate-x-0'} ${isHoverInitialized && 'opacity-30'} `}
             >
               <Gallery gallery={gallery} />
             </div>
