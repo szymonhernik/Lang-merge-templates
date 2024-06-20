@@ -7,6 +7,7 @@ import callout from './objects/callout'
 
 import localizedSlug from './objects/localizedSlug'
 import localizedString from './objects/localizedString'
+
 import localizedText from './objects/localizedText'
 import localizedFile from './objects/localizedFile'
 
@@ -21,6 +22,7 @@ import collaborator from './documents/collaborator'
 import categories from './documents/categories'
 import { videoType } from './objects/VideoType'
 import { audioType } from './objects/AudioType'
+import pdfEmbed from './objects/pdfEmbed'
 
 export const schemaTypes = [
   // documents
@@ -43,6 +45,6 @@ export const schemaTypes = [
   localizedString,
   localizedFile,
   localizedText,
-
+  pdfEmbed,
   portableText,
 ]

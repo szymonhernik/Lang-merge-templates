@@ -32,7 +32,6 @@ const PORTFOLIO_QUERY_PROJECTION = groq`
           "height": metadata.dimensions.height,
       }
     },
-    
     projectGallery {
       pageBuilder[]->{
           _id,
@@ -53,6 +52,8 @@ const PORTFOLIO_QUERY_PROJECTION = groq`
         }
       }
     },
+    
+    
     
     // ...and all its connected document-level translations
     "translations": *[
@@ -153,8 +154,73 @@ export const PROJECT_QUERY = groq`*[_type == "project" && slug.current == $slug]
 
       },
     },
+    relatedImageGallery[]->{
+      _id,
+      "slug": slug.current,
+      title,
+    },
+    relatedProject[]->{
+      _id,
+      "slug": slug.current,
+      title,
+    },
     
+    coverImage{
+      alt,
+      asset->{
+        _id,
+        url,
+        "lqip": metadata.lqip,
+        "aspectRatio": metadata.dimensions.aspectRatio,
+        "width": metadata.dimensions.width,
+          "height": metadata.dimensions.height,
+      }
+    },
+    pageContent[] {
+    ...,
+    _type == "pdfEmbed" => {
+        _type,
+        asset->{
+          url,
+          originalFilename
+        }
+      },
+    },
+    "translations": *[
+      // by finding the translation metadata document
+      _type == "translation.metadata" && 
+      // that contains this lesson's _id
+      ^._id in translations[].value._ref
+      // then map over the translations array
+    ][0].translations[]{
+      // and spread the "value" of each reference to the root level
+      ...(value->{
+        language,
+        title,
+        slug
+      })
+    },
+    projectGallery {
+      pageBuilder[]->{
+          _id,
+          displayName,
+          collaboratorUrl
 
+      },
+      images[]{
+        _type,
+        _key,
+        asset->{
+          _id,
+          url,
+          "lqip": metadata.lqip,
+          "aspectRatio": metadata.dimensions.aspectRatio,
+          "width": metadata.dimensions.width,
+          "height": metadata.dimensions.height,
+        }
+      }
+    },
+    
     // ...and get this project's portfolio
     // In this Project, we have single "portfolio" documents that reference "English" language version projects
     "portfolio": select(

@@ -1,11 +1,11 @@
 import { PortableText } from '@portabletext/react'
 import { PropsWithChildren } from 'react'
-import { TypedObject } from 'sanity'
+import { PortableTextBlock, TypedObject } from 'sanity'
 
 import { portableTextComponents } from '@/sanity/portableTextComponents'
 
 type ProseProps = PropsWithChildren<{
-  value?: TypedObject[]
+  value?: PortableTextBlock[]
 }>
 
 export default function Prose(props: ProseProps) {

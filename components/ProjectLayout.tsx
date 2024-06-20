@@ -19,35 +19,36 @@ import VideoPlayer from './shared/VideoPlayer'
 import AudioBox from './shared/AudioBox'
 import { InteractiveGallery } from './ProjectPage/InteractiveGallery'
 import PageExtraMaterials from './ProjectPage/PageExtraMaterials'
+import { LocalizedProject } from '@/types'
 
 type ProjectLayoutProps = {
-  data?: any
+  data: LocalizedProject
+
+  gallery?: any
 }
 
 export function ProjectLayout(props: ProjectLayoutProps) {
   const {
     title,
-    credits,
-    gallery,
+    coverImage,
     details,
     portfolio,
     year,
-    coverImageProp,
     pageExtraMaterials,
     language,
     slug,
     text,
-    slugPage,
+    relatedImageGallery,
+    relatedProject,
   } = props.data ?? {}
+
   const { projects } = portfolio ?? {}
-  console.log('props.data:', props.data)
+  const gallery = props.gallery
 
-  const otherProjects = useMemo(
-    () => filterOutCurrentProject(projects, slug.current, language),
-    [projects, slug, language],
-  )
-
-  const coverImage = coverImageProp
+  // const otherProjects = useMemo(
+  //   () => filterOutCurrentProject(projects, slug.current, language),
+  //   [projects, slug, language],
+  // )
 
   const [isCoverImageShown, setIsCoverImageShown] = useState(true)
 
@@ -68,14 +69,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
         className="py-mobileSpace  md:overflow-hidden  mx-auto px-6 flex flex-col gap-12 text-sm  lg:items-end lg:py-[0]"
       >
         <div className="text-center lg:hidden">
-          <Link
-            href={
-              portfolio.category.categoryName === 'Artworks'
-                ? `/${language}/works`
-                : `/${language}/works?show=workshops`
-            }
-            className="underline "
-          >
+          <Link href={`/${language}/works`} className="underline ">
             back to works
           </Link>
         </div>
@@ -85,18 +79,48 @@ export function ProjectLayout(props: ProjectLayoutProps) {
         >
           <div className="lg:max-w-screen-sm flex flex-col gap-12">
             <div className="my-8 flex flex-col gap-y-2 w-3/4 text-center mx-auto md:max-w-screen-md lg:text-left lg:w-[80%] lg:mx-0 ">
-              <h1 className="text-3xl lg:text-4xl ">
-                {portfolio.projects.length > 1
-                  ? portfolio.title[language]
-                  : title}
-              </h1>
+              <h1 className="text-3xl lg:text-4xl ">{title}</h1>
+              {(relatedImageGallery || relatedProject) && (
+                <div className="space-y-4 mt-6">
+                  {relatedImageGallery && (
+                    <div>
+                      <h3 className="uppercase opacity-50 font-medium">
+                        Related Image Gallery
+                      </h3>
+                      {relatedImageGallery.map((relatedItem, index) => (
+                        <Link href={relatedItem.slug} key={relatedItem._id}>
+                          <span className="text-lg underline">
+                            {relatedItem.title}
+                          </span>
+                          {index < relatedImageGallery.length - 1 && ', '}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                  {relatedProject && (
+                    <div>
+                      <h3 className="uppercase opacity-50 font-medium">
+                        Related Project
+                      </h3>
+                      {relatedProject.map((relatedItem, index) => (
+                        <Link href={relatedItem.slug} key={relatedItem._id}>
+                          <span className="text-lg underline">
+                            {relatedItem.title}
+                          </span>
+                          {index < relatedProject.length - 1 && ', '}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
               {/* {year && (
                 <span className="opacity-50 font-medium lg:text-sm">
                   {year}
                 </span>
               )} */}
               {/* Reference from the portfolio that is a group */}
-              {portfolio.projects.length > 1 && (
+              {/* {portfolio.projects.length > 1 && (
                 <PortfolioNavigator
                   portfolio={portfolio}
                   title={title}
@@ -104,8 +128,9 @@ export function ProjectLayout(props: ProjectLayoutProps) {
                   otherProjects={otherProjects}
                   slugPage={slugPage}
                 />
-              )}
-              {pageExtraMaterials?.length > 0 &&
+              )} */}
+              {pageExtraMaterials &&
+                pageExtraMaterials?.length > 0 &&
                 pageExtraMaterials.filter((type) => type._type !== 'video')
                   .length > 0 && (
                   <PageExtraMaterials
@@ -137,7 +162,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
                 href="#project"
                 className="flex flex-row gap-2 justify-center items-center py-4"
               >
-                <p className="">{portfolio.title[language]}</p>
+                <p className="">{title[language]}</p>
                 <span className="text-base font-normal">↑</span>
               </a>
             </div>
@@ -180,7 +205,8 @@ export function ProjectLayout(props: ProjectLayoutProps) {
               </>
             )}
 
-            {pageExtraMaterials?.length > 0 &&
+            {pageExtraMaterials &&
+              pageExtraMaterials?.length > 0 &&
               pageExtraMaterials.filter((type) => type._type === 'video')
                 .length > 0 && (
                 <PageExtraMaterials
@@ -188,13 +214,6 @@ export function ProjectLayout(props: ProjectLayoutProps) {
                   filterType="video"
                 />
               )}
-
-            {credits?.length && (
-              <div className="font-medium  md:max-w-screen-md lg:max-w-full md:mx-auto md:w-full lg:text-base lg:space-y-4 space-y-4">
-                <p className="opacity-50 lg:text-sm">CREDITS</p>
-                <CustomPortableText value={credits} />
-              </div>
-            )}
           </div>
         </div>
       </section>

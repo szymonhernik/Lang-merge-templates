@@ -19,6 +19,7 @@ import { loadQuery } from '@/sanity/lib/store'
 import { PROJECT_QUERY } from '@/sanity/queries'
 import { Suspense } from 'react'
 import { urlForOpenGraphImage } from '@/sanity/lib/utils'
+import { LocalizedProject } from '@/types'
 
 export async function generateStaticParams() {
   const projects = await getProjectsWithSlugs() // Fetch projects and their portfolio slugs
@@ -106,7 +107,11 @@ export async function generateMetadata({ params }) {
   }
 }
 
-export default async function Page({ params }) {
+export default async function Page({
+  params,
+}: {
+  params: { slug: string[]; language: string }
+}) {
   const { slug, language } = params
   let project = ''
   const projectGroup = slug[0]
@@ -118,34 +123,58 @@ export default async function Page({ params }) {
     project = slug[0]
   }
 
-  // console.log('slug', slug)
+  console.log('slug', slug)
 
   const queryParams = { ...COMMON_PARAMS, slug: project, language }
   const { isEnabled } = draftMode()
 
-  const initial = await loadQuery<SanityDocument>(PROJECT_QUERY, queryParams, {
-    perspective: isEnabled ? 'previewDrafts' : 'published',
-    next: { tags: ['project', 'portfolio'] },
-  })
+  const initial = await loadQuery<LocalizedProject>(
+    PROJECT_QUERY,
+    queryParams,
+    {
+      perspective: isEnabled ? 'previewDrafts' : 'published',
+      next: { tags: ['project', 'portfolio'] },
+    },
+  )
 
   if (!initial.data) {
     notFound()
   }
+  console.log('initial.data.translations', initial.data.translations)
+  // initial.data.translations [
+  //   {
+  //     language: 'en',
+  //     title: 'Attempts for refuge',
+  //     slug: { current: 'attempts-for-refuge', _type: 'slug' }
+  //   },
+  //   {
+  //     language: 'nl',
+  //     title: 'Attempts for refuge',
+  //     slug: { current: 'attempts-for-refuge-nl', _type: 'slug' }
+  //   }
+  // ]
+  // I need to add path to this object: '/en/works/attempts-for-refuge',
+  const newTranslations = initial.data.translations.map((translation) => {
+    const path = `/${translation.language}/works/${translation.slug.current}`
+    return { ...translation, path }
+  })
+  console.log('newTranslations', newTranslations)
+
   const slugPage = slug
-  const projectPaths = createProjectReachLinks(
-    initial.data.portfolio.projects,
-    initial.data.portfolio.slug,
-  )
-  const currentProjectIndex = projectPaths.findIndex((versions) =>
-    versions.find((project) => project.title === initial.data.title),
-  )
+  // const projectPaths = createProjectReachLinks(
+  //   initial.data.portfolio.projects,
+  //   initial.data.portfolio.slug,
+  // )
+  // const currentProjectIndex = projectPaths.findIndex((versions) =>
+  //   versions.find((project) => project.title === initial.data.title),
+  // )
 
-  const translations = projectPaths[currentProjectIndex]
+  const translations = newTranslations
 
-  const gallery =
-    initial.data.portfolio.projects[currentProjectIndex].projectGallery
-  const coverImageProp =
-    initial.data.portfolio.projects[currentProjectIndex].coverImage
+  console.log('translations', translations)
+  // const gallery = initial.data.portfolio.projects[0].projectGallery
+
+  const gallery = initial.data.projectGallery
 
   // console.log(
   //   'initial.data',
@@ -168,11 +197,8 @@ export default async function Page({ params }) {
         <ProjectLayout
           data={{
             ...initial.data,
-            slugPage,
-            gallery,
-            currentLanguage,
-            coverImageProp,
           }}
+          gallery={gallery}
         />
       </LiveQueryWrapper>
     </>

@@ -67,7 +67,60 @@ export default defineType({
       validation: (rule) =>
         rule.max(200).warning('SEO text should be short').required(),
     }),
-
+    defineField({
+      name: 'relatedImageGallery',
+      title: 'Related Image Gallery',
+      type: 'array',
+      of: [
+        defineField({
+          name: 'relatedImageGalleryPage',
+          title: 'Related Image Gallery Page',
+          description: 'Select the related image gallery page.',
+          type: 'reference',
+          to: [{ type: 'project' }],
+          options: {
+            filter: ({ document }) => {
+              if (!document.language) {
+                return null
+              }
+              return {
+                filter: `(_type == 'project' && language == $lang)`,
+                params: {
+                  lang: document.language,
+                },
+              }
+            },
+          },
+        }),
+      ],
+    }),
+    defineField({
+      name: 'relatedProject',
+      title: 'Related Projects',
+      type: 'array',
+      of: [
+        defineField({
+          name: 'relatedProjectPage',
+          title: 'Related Project Page',
+          description: 'Select the related project page.',
+          type: 'reference',
+          to: [{ type: 'project' }],
+          options: {
+            filter: ({ document }) => {
+              if (!document.language) {
+                return null
+              }
+              return {
+                filter: `(_type == 'project' && language == $lang)`,
+                params: {
+                  lang: document.language,
+                },
+              }
+            },
+          },
+        }),
+      ],
+    }),
     defineField({
       name: 'belongs',
       group: 'optional',
@@ -216,31 +269,17 @@ export default defineType({
       ],
     }),
     defineField({
-      name: 'credits',
-      title: 'Credits',
-      description: '[EN, NL]',
+      name: 'pageContent',
+      title: 'Page Content',
       group: 'main',
+      description:
+        'The main content of the post. It can include text, post content, and embedded PDFs.',
+
       type: 'array',
       of: [
         defineArrayMember({
-          type: 'block',
-          marks: {
-            annotations: [
-              {
-                name: 'link',
-                type: 'object',
-                title: 'Link',
-                fields: [
-                  {
-                    name: 'href',
-                    type: 'url',
-                    title: 'Url',
-                  },
-                ],
-              },
-            ],
-          },
-          styles: [],
+          type: 'pdfEmbed',
+          description: 'Embed a PDF document within the post.',
         }),
       ],
     }),

@@ -24,26 +24,15 @@ export default function ProjectContent(props: ProjectContentProps) {
     portfolio.slug,
   )
 
-  const renderProjects = (numberOfProjects) => {
-    if (numberOfProjects > 0) {
-      return (
+  return (
+    <>
+      <article className="gap-4 relative flex flex-col opacity-90 hover:opacity-100 transition-opacity">
         <ImageBox
           size={'(max-width: 768px) 100vw, 45vw'}
           classesImage="aspect-[3/4] object-cover w-full overflow-hidden  transition-opacity"
           image={portfolio.projects[0].coverImage}
           alt={`${portfolio.projects[0].coverImage?.alt ?? ''}`}
         />
-      )
-    } else {
-      // Handle case for 0 or undefined numberOfProjects
-      return <div>No projects to display</div>
-    }
-  }
-
-  return (
-    <>
-      <article className="gap-4 relative flex flex-col opacity-90 hover:opacity-100 transition-opacity">
-        {renderProjects(numberOfProjects)}
 
         <Title
           year={

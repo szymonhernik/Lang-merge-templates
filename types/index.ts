@@ -1,7 +1,7 @@
 import { Translation } from '@/lib/types'
-import type { PortableTextBlock } from '@portabletext/types'
+
 import { SanityDocument } from 'next-sanity'
-import type { Image } from 'sanity'
+import type { Image, PortableTextBlock } from 'sanity'
 
 interface PortfolioProjectHome {
   title: string
@@ -64,6 +64,7 @@ export interface AboutPagePayload {
   title: string
   slug: string
   content: PortableTextBlock[]
+  text: PortableTextBlock[]
   language: string
   profilePicture: {
     photographerArray: {
@@ -126,12 +127,58 @@ export interface LocalizedProject {
   language: string
   title: string
   slug: string
-  portfolio?: {
-    title: string
-    slug: string
-    projectsCount: number
+  relatedProject: [
+    {
+      title: string
+      slug: string
+      _id: string
+    },
+  ]
+  relatedImageGallery: [
+    {
+      title: string
+      slug: string
+      _id: string
+    },
+  ]
+  projectGallery?: {
+    _type: 'gallery'
+    gallery: Gallery
   }
-  coverImage?: {
+  pageContent?: [
+    | {
+        _type: 'pdfEmbed'
+        pdfFile: {
+          _type: 'file'
+          asset: {
+            url: string
+            originalFilename: string
+          }
+        }
+      }
+    | {
+        _type: 'textBlock'
+        textBlock: {
+          content: PortableTextBlock[]
+        }
+      },
+  ]
+  // projectGallery: any
+  details: PortableTextBlock[]
+  text: PortableTextBlock[]
+  pageExtraMaterials?: [
+    | {
+        _type: 'video'
+      }
+    | {
+        _type: 'audio'
+      }
+    | {
+        _type: 'file'
+      },
+  ]
+  portfolio?: any
+  coverImage: {
     alt?: string
     asset: any // Consider defining a more specific type for the asset if possible
   }

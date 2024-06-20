@@ -1,5 +1,5 @@
 import { PortableText, PortableTextComponents } from '@portabletext/react'
-import type { PortableTextBlock } from '@portabletext/types'
+import { PortableTextBlock } from 'sanity'
 
 export function CustomPortableText({
   paragraphClasses,
