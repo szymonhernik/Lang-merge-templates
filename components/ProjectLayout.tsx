@@ -40,6 +40,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
     slugPage,
   } = props.data ?? {}
   const { projects } = portfolio ?? {}
+  console.log('props.data:', props.data)
 
   const otherProjects = useMemo(
     () => filterOutCurrentProject(projects, slug.current, language),
@@ -67,7 +68,14 @@ export function ProjectLayout(props: ProjectLayoutProps) {
         className="py-mobileSpace  md:overflow-hidden  mx-auto px-6 flex flex-col gap-12 text-sm  lg:items-end lg:py-[0]"
       >
         <div className="text-center lg:hidden">
-          <Link href={`/${language}/works`} className="underline ">
+          <Link
+            href={
+              portfolio.category.categoryName === 'Artworks'
+                ? `/${language}/works`
+                : `/${language}/works?show=workshops`
+            }
+            className="underline "
+          >
             back to works
           </Link>
         </div>

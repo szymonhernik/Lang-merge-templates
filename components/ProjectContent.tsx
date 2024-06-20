@@ -25,15 +25,7 @@ export default function ProjectContent(props: ProjectContentProps) {
   )
 
   const renderProjects = (numberOfProjects) => {
-    if (numberOfProjects > 1) {
-      return (
-        <div
-          className={`aspect-[3/4] object-cover w-full overflow-y-auto overflow-x-hidden minimalScrollbar`}
-        >
-          <MultifaceProjects projects={projectPaths} />
-        </div>
-      )
-    } else if (numberOfProjects === 1) {
+    if (numberOfProjects > 0) {
       return (
         <ImageBox
           size={'(max-width: 768px) 100vw, 45vw'}
@@ -55,7 +47,7 @@ export default function ProjectContent(props: ProjectContentProps) {
 
         <Title
           year={
-            numberOfProjects === 1 && portfolio.projects[0].year
+            numberOfProjects > 0 && portfolio.projects[0].year
               ? portfolio.projects[0].year
               : null
           }

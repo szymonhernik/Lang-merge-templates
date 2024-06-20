@@ -10,6 +10,9 @@ const PORTFOLIO_QUERY_PROJECTION = groq`
   // But this is useful information for the language-switching UI, so we'll query it all
   title,
   slug,
+  category->{
+    categoryName
+  },
 
   // Every "project" is a reference to the base language version of a document
   projects[]->{
@@ -155,6 +158,7 @@ export const PROJECT_QUERY = groq`*[_type == "project" && slug.current == $slug]
     // ...and get this project's portfolio
     // In this Project, we have single "portfolio" documents that reference "English" language version projects
     "portfolio": select(
+      
       // So if this project isn't in English...
       ^.language != $defaultLocale => *[_type == "translation.metadata" && ^._id in translations[].value._ref][0]{
         // our query has to look up through the translations metadata
@@ -168,39 +172,6 @@ export const PROJECT_QUERY = groq`*[_type == "project" && slug.current == $slug]
       *[_type == "portfolio" && ^._id in translations[].value._ref][0]{ ${PORTFOLIO_QUERY_PROJECTION} }
     ),
 }`
-
-// export const HOME_QUERY = groq`{
-//   "portfolios": *[_type == "portfolio" && count(projects) > 0]{
-//     ...,
-//     "projects": projects[]->{
-//       // Get each project's *base* language version's title and slug
-//       language,
-//       title,
-//       slug,
-
-//       // ...and all its connected document-level translations
-//       "translations": *[
-//         // by finding the translation metadata document
-//         _type == "translation.metadata" &&
-//         // that contains this project's _id
-//         ^._id in translations[].value._ref
-//         // then map over the translations array
-//       ][0].translations[]{
-//         // and spread the "value" of each reference to the root level
-//         ...(value->{
-//           language,
-//           title,
-//           slug
-//         })
-//       }
-//     },
-//   }
-// }`
-// export const HOME_QUERY = groq`{
-//   *[_type== "home && slug[$language].current == $slug][0] {
-//     showcaseHome
-//   }
-// }`
 
 const HOME_PORTFOLIO_QUERY_PROJECTION = groq`
 "title": title[$language],
