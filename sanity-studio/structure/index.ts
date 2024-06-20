@@ -1,4 +1,13 @@
-import { FiAward, FiFilter, FiType, FiUsers } from 'react-icons/fi'
+import {
+  FiAward,
+  FiFilter,
+  FiType,
+  FiUsers,
+  FiAtSign,
+  FiMusic,
+  FiInfo,
+  FiAlignLeft,
+} from 'react-icons/fi'
 import {
   StructureResolver,
   DefaultDocumentNodeResolver,
@@ -52,6 +61,7 @@ export const structure: StructureResolver = (S, context) => {
       S.divider(),
       S.listItem()
         .title('About pages')
+        .icon(FiAlignLeft)
         .child(
           S.list()
             .title('About pages')
@@ -60,7 +70,7 @@ export const structure: StructureResolver = (S, context) => {
                 S.listItem()
                   .title(`About page (${language.id.toLocaleUpperCase()})`)
                   .schemaType('aboutPage')
-
+                  .icon(FiAlignLeft)
                   .child(
                     S.documentList()
                       .apiVersion(apiVersion)
@@ -100,33 +110,12 @@ export const structure: StructureResolver = (S, context) => {
                       }),
                   ),
               ),
-              // I have only added this item so that search results when clicked will load this list
-              // If the intent checker above could account for it, I'd remove this item
-              S.divider(),
-              S.listItem()
-                .title(`All About pages`)
-                .schemaType('aboutPage')
-                .child(
-                  S.documentList()
-                    .apiVersion(apiVersion)
-                    .id(`all-abouts`)
-                    .title(`All About pages`)
-                    .schemaType('aboutPage')
-                    .filter('_type == "aboutPage"')
-                    // Load this pane for existing `project` documents
-                    // or new documents that aren't using an initial value template
-                    .canHandleIntent(
-                      (intentName, params) =>
-                        intentName === 'edit' ||
-                        intentName === 'create' ||
-                        params.template === `aboutPage`,
-                    ),
-                ),
             ]),
         ),
 
       S.listItem()
         .title('Music pages')
+        .icon(FiMusic)
         .child(
           S.list()
             .title('Music pages')
@@ -135,12 +124,13 @@ export const structure: StructureResolver = (S, context) => {
                 S.listItem()
                   .title(`Music page (${language.id.toLocaleUpperCase()})`)
                   .schemaType('aboutPage')
-
+                  .icon(FiMusic)
                   .child(
                     S.documentList()
                       .apiVersion(apiVersion)
                       .id(language.id)
                       .title(`${language.title} Music`)
+
                       .schemaType('musicPage')
                       .filter('_type == "musicPage" && language == $language')
                       .params({ language: language.id })
@@ -174,31 +164,63 @@ export const structure: StructureResolver = (S, context) => {
                       }),
                   ),
               ),
-              // I have only added this item so that search results when clicked will load this list
-              // If the intent checker above could account for it, I'd remove this item
-              S.divider(),
-              S.listItem()
-                .title(`All Music pages`)
-                .schemaType('musicPage')
-                .child(
-                  S.documentList()
-                    .apiVersion(apiVersion)
-                    .id(`all-musics`)
-                    .title(`All Music pages`)
-                    .schemaType('musicPage')
-                    .filter('_type == "musicPage"')
-                    // Load this pane for existing `project` documents
-                    // or new documents that aren't using an initial value template
-                    .canHandleIntent(
-                      (intentName, params) =>
-                        intentName === 'edit' ||
-                        intentName === 'create' ||
-                        params.template === `musicPage`,
-                    ),
-                ),
             ]),
         ),
 
+      S.listItem()
+        .title('Contact pages')
+        .icon(FiAtSign)
+        .child(
+          S.list()
+            .title('Contact pages')
+            .items([
+              ...i18n.languages.map((language) =>
+                S.listItem()
+                  .title(`Contact page (${language.id.toLocaleUpperCase()})`)
+                  .schemaType('contactPage')
+                  .icon(FiAtSign)
+
+                  .child(
+                    S.documentList()
+                      .apiVersion(apiVersion)
+
+                      .id(language.id)
+                      .title(`${language.title} Contact`)
+                      .schemaType('contactPage')
+                      .filter('_type == "contactPage" && language == $language')
+                      .params({ language: language.id })
+                      .initialValueTemplates([
+                        S.initialValueTemplateItem('contact-language', {
+                          id: 'contact-language',
+                          language: language.id,
+                        }),
+                      ])
+                      .canHandleIntent((intentName, params) => {
+                        // TODO: Handle **existing** documents (like search results when clicked)
+                        // to return `true` on the correct language list!
+                        if (intentName === 'edit') {
+                          // return params?.language === language.id
+                          return false
+                        }
+                        if (intentName === 'create') {
+                          // return params?.language === language.id
+                          return true
+                        }
+
+                        // Not an initial value template
+                        if (!params.template) {
+                          return false
+                        }
+
+                        // Template name structure example: "project-en"
+                        const languageValue = params?.template?.split(`-`).pop()
+
+                        return languageValue === language.id
+                      }),
+                  ),
+              ),
+            ]),
+        ),
       S.divider(),
       S.listItem()
         .title('Projects → add to Portfolio ↓')

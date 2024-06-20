@@ -46,7 +46,7 @@ export default defineConfig({
     media(),
     documentInternationalization({
       supportedLanguages: i18n.languages,
-      schemaTypes: ['project', 'aboutPage', 'musicPage'],
+      schemaTypes: ['project', 'aboutPage', 'musicPage', 'contactPage'],
     }),
     internationalizedArray({
       languages: i18n.languages,
@@ -106,6 +106,7 @@ export default defineConfig({
         (template) =>
           template.id !== 'project' &&
           template.id !== 'aboutPage' &&
+          template.id !== 'contactPage' &&
           template.id !== 'musicPage',
       )
 
@@ -130,7 +131,15 @@ export default defineConfig({
             language: params.language,
           }),
         },
-        // New 'about-language' template
+        {
+          id: 'contact-language',
+          title: 'Contact with Language',
+          schemaType: 'contactPage',
+          parameters: [{ name: 'language', type: 'string' }],
+          value: (params: { language: string }) => ({
+            language: params.language,
+          }),
+        },
         {
           id: 'music-language',
           title: 'Music with Language',

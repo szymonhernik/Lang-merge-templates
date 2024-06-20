@@ -12,6 +12,7 @@ import localizedFile from './objects/localizedFile'
 
 import portableText from './objects/portableText'
 import aboutPage from './documents/about'
+import contactPage from './documents/contact'
 import musicPage from './documents/music'
 import home from './singletons/home'
 import settings from './singletons/settings'
@@ -32,6 +33,7 @@ export const schemaTypes = [
   audioType,
   presenter,
   aboutPage,
+  contactPage,
   musicPage,
   home,
   settings,

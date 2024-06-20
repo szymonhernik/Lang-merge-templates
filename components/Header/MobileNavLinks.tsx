@@ -14,6 +14,7 @@ export default function MobileNavLinks({
     () => [
       { href: '/works', en: 'Works', nl: 'Werken' },
       { href: '/about', en: 'About', nl: 'Over' },
+      { href: '/contact', en: 'Contact', nl: 'Contact' },
       { href: '/music', en: 'Music', nl: 'Muziek' },
     ],
     [],

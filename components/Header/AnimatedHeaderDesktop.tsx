@@ -106,6 +106,17 @@ export default function AnimatedHeaderDesktop({
               <NavLinkWithBorder
                 isMusicPage={isMusicPage}
                 isHomePage={isHomePage}
+                href="/contact"
+                isCurrentPath={pathname === `/${langSelected}/contact`}
+                pathname={pathname}
+                langSelected={langSelected}
+                isWorksPage={isWorksPage}
+              >
+                {langSelected === 'en' ? 'Contact' : 'Contact'}
+              </NavLinkWithBorder>
+              <NavLinkWithBorder
+                isMusicPage={isMusicPage}
+                isHomePage={isHomePage}
                 href="/music"
                 isCurrentPath={pathname === `/${langSelected}/music`}
                 pathname={pathname}

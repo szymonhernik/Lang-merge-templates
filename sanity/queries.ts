@@ -378,6 +378,16 @@ export const MUSIC_QUERY = groq`*[_type == "musicPage" && language == $language]
        }
     }
   },
-  content,
   link
+}`
+
+export const CONTACT_QUERY = groq`*[_type == "contactPage" && language == $language][0]{
+  ogImage,
+  overview,
+  _id,
+  title,
+  slug,
+  contactLink,
+  colophon
+
 }`

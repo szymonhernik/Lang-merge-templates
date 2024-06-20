@@ -171,3 +171,23 @@ export interface MusicPagePayload {
     _id: string
   }
 }
+
+export interface ContactPagePayload {
+  ogImage?: Image
+  overview: string
+  _id: string
+  title: string
+  slug: {
+    _type: 'slug'
+    current: string
+  }
+  contactLink: [
+    {
+      _key: string
+      title: string
+      handle: string
+      url: string
+    },
+  ]
+  colophon: PortableTextBlock[]
+}
