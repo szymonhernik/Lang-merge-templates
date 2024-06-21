@@ -123,8 +123,6 @@ export default async function Page({
     project = slug[0]
   }
 
-  console.log('slug', slug)
-
   const queryParams = { ...COMMON_PARAMS, slug: project, language }
   const { isEnabled } = draftMode()
 
@@ -140,20 +138,7 @@ export default async function Page({
   if (!initial.data) {
     notFound()
   }
-  console.log('initial.data', initial.data)
-  // initial.data.translations [
-  //   {
-  //     language: 'en',
-  //     title: 'Attempts for refuge',
-  //     slug: { current: 'attempts-for-refuge', _type: 'slug' }
-  //   },
-  //   {
-  //     language: 'nl',
-  //     title: 'Attempts for refuge',
-  //     slug: { current: 'attempts-for-refuge-nl', _type: 'slug' }
-  //   }
-  // ]
-  // I need to add path to this object: '/en/works/attempts-for-refuge',
+
   const newTranslations = initial.data.translations.map((translation) => {
     const path = `/${translation.language}/works/${translation.slug.current}`
     return { ...translation, path }
@@ -170,10 +155,7 @@ export default async function Page({
 
   const translations = newTranslations
 
-  console.log('translations', translations)
   // const gallery = initial.data.portfolio.projects[0].projectGallery
-
-  const gallery = initial.data.projectGallery
 
   // console.log(
   //   'initial.data',
@@ -197,7 +179,7 @@ export default async function Page({
           data={{
             ...initial.data,
           }}
-          gallery={gallery}
+          // gallery={gallery}
         />
       </LiveQueryWrapper>
     </>

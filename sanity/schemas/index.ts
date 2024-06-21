@@ -23,7 +23,7 @@ import categories from './documents/categories'
 import { videoType } from './objects/VideoType'
 import { audioType } from './objects/AudioType'
 import pdfEmbed from './objects/pdfEmbed'
-import gallery from './documents/gallery'
+
 import textBox from './objects/textBox'
 import imageInline from './objects/imageInline'
 
@@ -42,7 +42,7 @@ export const schemaTypes = [
   musicPage,
   home,
   settings,
-  gallery,
+
   // objects
   callout,
   localizedSlug,

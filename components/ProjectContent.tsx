@@ -23,6 +23,7 @@ export default function ProjectContent(props: ProjectContentProps) {
     portfolio.projects,
     portfolio.slug,
   )
+  console.log('portfolio:', portfolio)
 
   return (
     <>

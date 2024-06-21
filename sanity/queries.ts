@@ -33,7 +33,7 @@ const PORTFOLIO_QUERY_PROJECTION = groq`
       }
     },
     projectGallery {
-      pageBuilder[]->{
+      photoCredits[]->{
           _id,
           displayName,
           collaboratorUrl
@@ -185,11 +185,10 @@ export const PROJECT_QUERY = groq`*[_type == "project" && slug.current == $slug]
     },
     
     projectGallery {
-      pageBuilder[]->{
+      photoCredits[]->{
           _id,
           displayName,
           collaboratorUrl
-
       },
       images[]{
         _type,
@@ -222,7 +221,28 @@ export const PROJECT_QUERY = groq`*[_type == "project" && slug.current == $slug]
     _type == "translation.metadata" && 
     ^._id in translations[].value._ref
   ][0].translations[0].value->{
-  projectGallery},
+    galleryArrays[] {
+      _key,
+      _type,
+      photoCredits[]->{
+          _id,
+          displayName,
+          collaboratorUrl
+      },
+      images[]{
+        _type,
+        _key,
+        asset->{
+          _id,
+          url,
+          "lqip": metadata.lqip,
+          "aspectRatio": metadata.dimensions.aspectRatio,
+          "width": metadata.dimensions.width,
+          "height": metadata.dimensions.height,
+        }
+      }
+    }
+  },
 
 
 }`

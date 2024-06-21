@@ -103,8 +103,12 @@ interface GalleryImage {
   _type?: 'image'
   alt?: string
   asset: {
-    _ref: string
-    _type: 'reference'
+    _id: string
+    url: string
+    lqip: string
+    aspectRatio: number
+    width: number
+    height: number
   }
 }
 
@@ -141,6 +145,16 @@ export interface LocalizedProject {
       _id: string
     },
   ]
+  defaultLangDocument?: {
+    galleryArrays?: {
+      _type: 'singleProjectGallery'
+      _key: string
+      photoCredits: [
+        { _id: string; displayName: string; collaboratorUrl: string },
+      ]
+      images: GalleryImage[]
+    }[]
+  }
   projectGallery?: {
     _type: 'gallery'
     gallery: Gallery
@@ -188,6 +202,13 @@ export interface LocalizedProject {
   }
   translations: TranslationHome[] // Define a more specific type for translations if applicable
 }
+
+// export interface GalleryArrays {
+//   _type: 'singleProjectGallery'
+//   _key: string
+//   photoCredits: [{ _id: string; displayName: string; collaboratorUrl: string }]
+//   images: GalleryImage[]
+// }
 
 export interface MusicPagePayload {
   ogImage?: Image

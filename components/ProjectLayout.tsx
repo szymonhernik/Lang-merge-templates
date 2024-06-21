@@ -20,6 +20,7 @@ import AudioBox from './shared/AudioBox'
 import { InteractiveGallery } from './ProjectPage/InteractiveGallery'
 import PageExtraMaterials from './ProjectPage/PageExtraMaterials'
 import { LocalizedProject } from '@/types'
+import { MultipleGalleries } from './MultipleGalleries'
 
 type ProjectLayoutProps = {
   data: LocalizedProject
@@ -32,7 +33,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
     title,
     coverImage,
     details,
-
+    defaultLangDocument,
     year,
     pageExtraMaterials,
     language,
@@ -43,7 +44,8 @@ export function ProjectLayout(props: ProjectLayoutProps) {
   } = props.data ?? {}
 
   // const { projects } = portfolio ?? {}
-  const gallery = props.gallery
+  // const gallery = defaultLangDocument?.galleryArrays[0]
+  const galleryArrays = defaultLangDocument?.galleryArrays
 
   // const otherProjects = useMemo(
   //   () => filterOutCurrentProject(projects, slug.current, language),
@@ -60,7 +62,8 @@ export function ProjectLayout(props: ProjectLayoutProps) {
   return (
     <>
       <InteractiveGallery
-        gallery={gallery}
+        // gallery={gallery}
+        galleryArrays={galleryArrays}
         coverImage={coverImage}
         onCoverImageVisibilityChange={handleCoverImageVisibility}
       />
@@ -174,7 +177,20 @@ export function ProjectLayout(props: ProjectLayoutProps) {
               </div>
             )}
             {/* Mobile&Tablet gallery */}
-            {gallery && gallery.images && (
+            {galleryArrays && galleryArrays.length > 0 && (
+              <div className="w-screen md:w-full -mx-6 lg:hidden">
+                <MultipleGalleries galleryArrays={galleryArrays} />
+              </div>
+            )}
+            {/* {galleryArrays &&
+              galleryArrays.length > 0 &&
+              galleryArrays.map((gallery) => (
+                <div className="w-screen md:w-full -mx-6 lg:hidden">
+                  <Gallery gallery={gallery} />
+                </div>
+              ))} */}
+
+            {/* {gallery && gallery.images && (
               <>
                 <div className="w-screen md:w-full -mx-6 lg:hidden">
                   <Gallery gallery={gallery} />
@@ -203,7 +219,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
                     ))}
                 </div>
               </>
-            )}
+            )} */}
 
             {pageExtraMaterials &&
               pageExtraMaterials?.length > 0 &&

@@ -7,7 +7,6 @@ import {
   FiToggleLeft,
 } from 'react-icons/fi'
 import { defineArrayMember, defineField, defineType } from 'sanity'
-import gallery from './gallery'
 
 export default defineType({
   name: 'project',
@@ -306,14 +305,14 @@ export default defineType({
       title: 'Gallery arrays',
       of: [
         defineField({
-          name: 'projectGallery',
+          name: 'singleProjectGallery',
           type: 'object',
           title: 'Project gallery',
           fields: [
             defineField({
-              name: 'pageBuilder',
+              name: 'photoCredits',
               type: 'array',
-              title: 'Photo credits',
+              title: 'Photographs credits',
               of: [
                 defineArrayMember({
                   name: 'photographerArray',
@@ -346,7 +345,7 @@ export default defineType({
           ],
           preview: {
             select: {
-              authorsName: 'pageBuilder.0.displayName',
+              authorsName: 'photoCredits.0.displayName',
               previewImage: 'images.0.asset',
             },
             prepare(select) {

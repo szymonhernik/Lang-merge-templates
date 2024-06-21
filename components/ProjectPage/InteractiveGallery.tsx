@@ -5,11 +5,12 @@ import React, { useState } from 'react'
 import { motion, useTransform } from 'framer-motion'
 import ImageBox from '../shared/ImageBox'
 import { Gallery } from '../Gallery'
+import { MultipleGalleries } from '../MultipleGalleries'
 
 type CursorText = { arrow: string; text: string } // For cases where you have an arrow and text
 
 export function InteractiveGallery({
-  gallery,
+  galleryArrays,
   coverImage,
   onCoverImageVisibilityChange,
 }) {
@@ -116,7 +117,7 @@ export function InteractiveGallery({
 
   return (
     <section ref={ref} className="renderedDesktop hidden lg:block">
-      {gallery && (
+      {galleryArrays && (
         <motion.div
           variants={variants}
           className="fixed pointer-events-none z-[100] flex flex-col justify-center items-center top-0 left-0 h-[10px] w-[10px] text-white mix-blend-difference"
@@ -140,10 +141,16 @@ export function InteractiveGallery({
             ></div> */}
           {/* this has 44vw width */}
           <div
-            className={`hidden lg:block fixed top-0 left-0 h-screen   z-[3] transition-all duration-500 ${gallery ? 'hover:cursor-pointer pr-[16vw] w-[60vw]' : 'pr-0 w-[50vw]'}  ${isCoverImageShown ? 'translate-x-0' : '-translate-x-full'}`}
-            onClick={gallery && toggleCoverImage}
-            onMouseOver={gallery && projectEnter}
-            onMouseLeave={gallery && projectLeave}
+            className={`hidden lg:block fixed top-0 left-0 h-screen   z-[3] transition-all duration-500 ${galleryArrays && galleryArrays.length > 0 ? 'hover:cursor-pointer pr-[16vw] w-[60vw]' : 'pr-0 w-[50vw]'}  ${isCoverImageShown ? 'translate-x-0' : '-translate-x-full'}`}
+            onClick={
+              galleryArrays && galleryArrays.length > 0 && toggleCoverImage
+            }
+            onMouseOver={
+              galleryArrays && galleryArrays.length > 0 && projectEnter
+            }
+            onMouseLeave={
+              galleryArrays && galleryArrays.length > 0 && projectLeave
+            }
           >
             <ImageBox
               classesWrapper="w-full h-screen "
@@ -156,12 +163,21 @@ export function InteractiveGallery({
             />
           </div>
           {/* Desktop gallery */}
-          {gallery && (
+          {/* {gallery && (
             <div
               onMouseLeave={galleryLeave}
               className={`hidden lg:block fixed left-0 top-[25vh] z-[0] transition-all duration-700 w-[calc(60vw-1rem)]  ${isCoverImageShown ? 'opacity-10 translate-x-[44vw]' : 'opacity-100 translate-x-0'} ${isHoverInitialized && 'opacity-30'} `}
             >
               <Gallery gallery={gallery} />
+              
+            </div>
+          )} */}
+          {galleryArrays && galleryArrays.length > 0 && (
+            <div
+              onMouseLeave={galleryLeave}
+              className={`hidden lg:block fixed left-0 top-[25vh] z-[0] transition-all duration-700 w-[calc(60vw-1rem)]  ${isCoverImageShown ? 'opacity-10 translate-x-[44vw]' : 'opacity-100 translate-x-0'} ${isHoverInitialized && 'opacity-30'} `}
+            >
+              <MultipleGalleries galleryArrays={galleryArrays} />
             </div>
           )}
         </>
