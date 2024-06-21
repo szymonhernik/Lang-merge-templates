@@ -32,7 +32,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
     title,
     coverImage,
     details,
-    portfolio,
+
     year,
     pageExtraMaterials,
     language,
@@ -42,7 +42,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
     relatedProject,
   } = props.data ?? {}
 
-  const { projects } = portfolio ?? {}
+  // const { projects } = portfolio ?? {}
   const gallery = props.gallery
 
   // const otherProjects = useMemo(

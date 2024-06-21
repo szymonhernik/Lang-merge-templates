@@ -140,7 +140,7 @@ export default async function Page({
   if (!initial.data) {
     notFound()
   }
-  console.log('initial.data.translations', initial.data.translations)
+  console.log('initial.data', initial.data)
   // initial.data.translations [
   //   {
   //     language: 'en',
@@ -158,7 +158,6 @@ export default async function Page({
     const path = `/${translation.language}/works/${translation.slug.current}`
     return { ...translation, path }
   })
-  console.log('newTranslations', newTranslations)
 
   const slugPage = slug
   // const projectPaths = createProjectReachLinks(

@@ -283,6 +283,23 @@ export default defineType({
         }),
       ],
     }),
+    defineField({
+      name: 'galleryReference',
+      group: 'media',
+      title: 'All galleries',
+      description: 'Add gallery',
+      icon: FiImage,
+      type: 'array',
+      of: [
+        defineField({
+          name: 'gallery',
+          title: 'Reference',
+          type: 'reference',
+          to: [{ type: 'gallery' }],
+        }),
+      ],
+      // validation: (Rule) => [Rule.required().min(1), Rule.unique()],
+    }),
 
     defineField({
       name: 'projectGallery',

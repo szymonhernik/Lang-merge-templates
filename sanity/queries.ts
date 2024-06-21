@@ -121,7 +121,6 @@ export const PROJECT_QUERY = groq`*[_type == "project" && slug.current == $slug]
     // Get this whole document
     ...,
     pageExtraMaterials[]{
-      
       _type == "video" => {
         _type,
         videoLabel,
@@ -151,7 +150,6 @@ export const PROJECT_QUERY = groq`*[_type == "project" && slug.current == $slug]
           url,
           originalFilename
         }
-
       },
     },
     relatedImageGallery[]->{
@@ -164,7 +162,6 @@ export const PROJECT_QUERY = groq`*[_type == "project" && slug.current == $slug]
       "slug": slug.current,
       title,
     },
-    
     coverImage{
       alt,
       asset->{
@@ -177,8 +174,8 @@ export const PROJECT_QUERY = groq`*[_type == "project" && slug.current == $slug]
       }
     },
     pageContent[] {
-    ...,
-    _type == "pdfEmbed" => {
+      ...,
+      _type == "pdfEmbed" => {
         _type,
         asset->{
           url,
@@ -186,20 +183,7 @@ export const PROJECT_QUERY = groq`*[_type == "project" && slug.current == $slug]
         }
       },
     },
-    "translations": *[
-      // by finding the translation metadata document
-      _type == "translation.metadata" && 
-      // that contains this lesson's _id
-      ^._id in translations[].value._ref
-      // then map over the translations array
-    ][0].translations[]{
-      // and spread the "value" of each reference to the root level
-      ...(value->{
-        language,
-        title,
-        slug
-      })
-    },
+    
     projectGallery {
       pageBuilder[]->{
           _id,
@@ -220,23 +204,27 @@ export const PROJECT_QUERY = groq`*[_type == "project" && slug.current == $slug]
         }
       }
     },
-    
-    // ...and get this project's portfolio
-    // In this Project, we have single "portfolio" documents that reference "English" language version projects
-    "portfolio": select(
-      
-      // So if this project isn't in English...
-      ^.language != $defaultLocale => *[_type == "translation.metadata" && ^._id in translations[].value._ref][0]{
-        // our query has to look up through the translations metadata
-        // and find the portfolio that references the English version, not this language version
-        "portfolio": *[
-          _type == "portfolio" && 
-          ^.translations[_key == $defaultLocale][0].value._ref in projects[]._ref
-        ][0]{ ${PORTFOLIO_QUERY_PROJECTION} }
-      }.portfolio,
-      // By default, 
-      *[_type == "portfolio" && ^._id in translations[].value._ref][0]{ ${PORTFOLIO_QUERY_PROJECTION} }
-    ),
+    "translations": *[
+      // by finding the translation metadata document
+      _type == "translation.metadata" && 
+      // that contains this lesson's _id
+      ^._id in translations[].value._ref
+      // then map over the translations array
+    ][0].translations[]{
+      // and spread the "value" of each reference to the root level
+      ...(value->{
+        language,
+        title,
+        slug
+      })
+    },
+     "defaultLangDocument": *[
+    _type == "translation.metadata" && 
+    ^._id in translations[].value._ref
+  ][0].translations[0].value->{
+  projectGallery},
+
+
 }`
 
 const HOME_PORTFOLIO_QUERY_PROJECTION = groq`
@@ -321,10 +309,8 @@ export const WORKS_QUERY = groq`{
   "portfolios": *[_type == "portfolio" && count(projects) > 0]|order(orderRank){
     ...,
     category->{
-
-    categoryName
+      categoryName
     },
-    //see what is needed for the works page. if i remove this and have only title, language then the links dont work
     "projects": projects[]->{
       // Get each project's *base* language version's title and slug
       language,

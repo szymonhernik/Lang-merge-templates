@@ -7,6 +7,7 @@ import {
   FiMusic,
   FiInfo,
   FiAlignLeft,
+  FiImage,
 } from 'react-icons/fi'
 import {
   StructureResolver,
@@ -310,7 +311,8 @@ export const structure: StructureResolver = (S, context) => {
       S.documentTypeListItem('collaborator')
         .title('Collaborators')
         .icon(FiUsers),
-      S.documentTypeListItem('categories').title('Categories').icon(FiFilter),
+      S.documentTypeListItem('gallery').title('Galleries').icon(FiImage),
+
       // Singleton, field-level translations
     ])
 }
