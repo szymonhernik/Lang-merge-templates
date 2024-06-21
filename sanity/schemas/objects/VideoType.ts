@@ -1,8 +1,10 @@
+import { FiVideo } from 'react-icons/fi'
 import { defineField, defineType } from 'sanity'
 
 export const videoType = defineType({
   name: 'video',
   type: 'object',
+  icon: FiVideo,
   fields: [
     defineField({
       name: 'videoLabel',

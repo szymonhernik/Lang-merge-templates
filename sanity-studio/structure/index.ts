@@ -311,7 +311,7 @@ export const structure: StructureResolver = (S, context) => {
       S.documentTypeListItem('collaborator')
         .title('Collaborators')
         .icon(FiUsers),
-      S.documentTypeListItem('gallery').title('Galleries').icon(FiImage),
+      // S.documentTypeListItem('gallery').title('Galleries').icon(FiImage),
 
       // Singleton, field-level translations
     ])

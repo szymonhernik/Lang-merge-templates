@@ -7,6 +7,7 @@ import {
   FiToggleLeft,
 } from 'react-icons/fi'
 import { defineArrayMember, defineField, defineType } from 'sanity'
+import gallery from './gallery'
 
 export default defineType({
   name: 'project',
@@ -281,78 +282,84 @@ export default defineType({
           type: 'pdfEmbed',
           description: 'Embed a PDF document within the post.',
         }),
+        defineArrayMember({
+          type: 'textBox',
+          description: 'Text box with headline (optional) and content.',
+        }),
+        defineArrayMember({
+          name: 'audio',
+          type: 'audio',
+        }),
+        defineArrayMember({
+          name: 'video',
+          type: 'video',
+        }),
+        defineArrayMember({
+          name: 'imageInline',
+          type: 'imageInline',
+        }),
       ],
     }),
     defineField({
-      name: 'galleryReference',
-      group: 'media',
-      title: 'All galleries',
-      description: 'Add gallery',
-      icon: FiImage,
+      name: 'galleryArrays',
       type: 'array',
+      title: 'Gallery arrays',
       of: [
         defineField({
-          name: 'gallery',
-          title: 'Reference',
-          type: 'reference',
-          to: [{ type: 'gallery' }],
-        }),
-      ],
-      // validation: (Rule) => [Rule.required().min(1), Rule.unique()],
-    }),
-
-    defineField({
-      name: 'projectGallery',
-      type: 'object',
-      description: '[EN]',
-      group: ['media', 'main'],
-      title: 'Project gallery',
-      fields: [
-        defineField({
-          name: 'pageBuilder',
-          type: 'array',
-          title: 'Photo credits',
-          of: [
-            defineArrayMember({
-              name: 'photographerArray',
-              type: 'reference',
-              title: 'Collaborators database',
-              to: [{ type: 'collaborator' }],
-            }),
-          ],
-        }),
-        defineField({
-          name: 'images',
-          type: 'array',
-          of: [
+          name: 'projectGallery',
+          type: 'object',
+          title: 'Project gallery',
+          fields: [
             defineField({
-              name: 'image',
-              type: 'image',
-              fields: [
-                {
-                  name: 'alt',
-                  type: 'string',
-                  title: 'Alternative text',
-                },
+              name: 'pageBuilder',
+              type: 'array',
+              title: 'Photo credits',
+              of: [
+                defineArrayMember({
+                  name: 'photographerArray',
+                  type: 'reference',
+                  title: 'Collaborators database',
+                  to: [{ type: 'collaborator' }],
+                }),
               ],
             }),
+            defineField({
+              name: 'images',
+              type: 'array',
+              of: [
+                defineField({
+                  name: 'image',
+                  type: 'image',
+                  fields: [
+                    {
+                      name: 'alt',
+                      type: 'string',
+                      title: 'Alternative text',
+                    },
+                  ],
+                }),
+              ],
+              options: {
+                layout: 'grid',
+              },
+            }),
           ],
-          options: {
-            layout: 'grid',
+          preview: {
+            select: {
+              authorsName: 'pageBuilder.0.displayName',
+              previewImage: 'images.0.asset',
+            },
+            prepare(select) {
+              const { authorsName, previewImage } = select
+
+              return {
+                title: authorsName ? `Gallery by ${authorsName}` : 'Gallery',
+                media: previewImage ? previewImage : FiImage,
+              }
+            },
           },
         }),
       ],
-      preview: {
-        select: {
-          title: 'galleryTitle',
-        },
-        prepare({ title }) {
-          return {
-            title: title ? `Gallery: ${title}` : 'Gallery',
-            media: FiImage,
-          }
-        },
-      },
     }),
     defineField({
       name: 'language',

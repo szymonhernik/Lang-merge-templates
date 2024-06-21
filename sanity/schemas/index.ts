@@ -24,6 +24,8 @@ import { videoType } from './objects/VideoType'
 import { audioType } from './objects/AudioType'
 import pdfEmbed from './objects/pdfEmbed'
 import gallery from './documents/gallery'
+import textBox from './objects/textBox'
+import imageInline from './objects/imageInline'
 
 export const schemaTypes = [
   // documents
@@ -48,5 +50,7 @@ export const schemaTypes = [
   localizedFile,
   localizedText,
   pdfEmbed,
+  textBox,
   portableText,
+  imageInline,
 ]
