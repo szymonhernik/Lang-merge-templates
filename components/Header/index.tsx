@@ -36,7 +36,7 @@ export default function Header() {
             !isHomePage && !isMusicPage && !isWorksPage,
         },
         {
-          'text-black lg:!absolute md:text-white md:mix-blend-difference bg-white md:bg-transparent':
+          'text-black lg:!absolute lg:right-0 md:text-white md:mix-blend-difference bg-white md:bg-transparent':
             isWorksPage,
         },
         {

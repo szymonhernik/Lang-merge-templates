@@ -24,9 +24,15 @@ interface PropsInterface {
   galleryArrays: NonNullable<
     NonNullable<LocalizedProject['defaultLangDocument']>['galleryArrays']
   >
+  onFirstImageInFirstGallery?: () => void
+  isGalleryActive?: boolean
 }
 
-export function MultipleGalleries({ galleryArrays }: PropsInterface) {
+export function MultipleGalleries({
+  galleryArrays,
+  onFirstImageInFirstGallery,
+  isGalleryActive,
+}: PropsInterface) {
   // State to hold whether we're on a mobile device
   const [isMobile, setIsMobile] = useState(false)
 
@@ -56,6 +62,16 @@ export function MultipleGalleries({ galleryArrays }: PropsInterface) {
   const handleSlideChange = (swiper) => {
     // Find the active slide's gallery index
     const activeIndex = swiper.activeIndex
+    // Check if moving back to the first image of the first gallery
+    if (
+      swiper.previousIndex !== undefined &&
+      swiper.previousIndex > activeIndex &&
+      activeIndex === 0
+    ) {
+      if (onFirstImageInFirstGallery) {
+        onFirstImageInFirstGallery()
+      }
+    }
     let totalImages = 0
     for (let i = 0; i < galleryArrays.length; i++) {
       totalImages += galleryArrays[i].images.length
@@ -158,7 +174,9 @@ export function MultipleGalleries({ galleryArrays }: PropsInterface) {
           )
         })}
       </Swiper>
-      <div className="w-full text-center lg:text-left lg:ml-12 lg:mt-6 font-medium text-sm mt-4">
+      <div
+        className={`w-full text-center lg:text-left lg:ml-12 lg:mt-6 font-medium text-sm mt-4 transition-opacity duration-700 ${isGalleryActive ? 'opacity-100' : 'opacity-0'}`}
+      >
         Photography by <span className="underline">{currentPhotographer}</span>
       </div>
     </>

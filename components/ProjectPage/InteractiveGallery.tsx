@@ -58,6 +58,13 @@ export function InteractiveGallery({
     },
   }
 
+  const handleFirstImageInFirstGallery = () => {
+    // wait 1 second before showing the cover image
+    setTimeout(() => {
+      toggleCoverImage()
+    }, 1000)
+  }
+
   function projectEnter(event) {
     if (!isHoverInitialized) {
       setCursorText({ arrow: '→', text: 'GALLERY' })
@@ -76,44 +83,6 @@ export function InteractiveGallery({
     setCursorText({ arrow: '', text: '' })
     setCursorVariant('default')
   }
-
-  // Define a ref for the gallery element
-  // const galleryRef = React.useRef(null)
-
-  // Function to calculate if mouse is on the left or right side
-  // const updateGalleryCursor = (event) => {
-  //   if (!galleryRef.current) return
-
-  //   const galleryRect = (
-  //     galleryRef.current as HTMLElement
-  //   ).getBoundingClientRect()
-  //   const galleryMidpoint = galleryRect.left + galleryRect.width / 2
-  //   setCursorVariant('gallery')
-  //   // Determine if the mouse is on the left or right side of the gallery midpoint
-  //   if (mouseXPosition < galleryMidpoint) {
-  //     // Mouse is on the left side
-  //     setCursorText({ arrow: '←', text: 'PREV' })
-  //   } else if (mouseXPosition > galleryMidpoint) {
-  //     // Mouse is on the right side
-  //     if (galleryReachedEnd) {
-  //       setCursorText({ arrow: '', text: '' })
-  //       setCursorVariant('default')
-  //     } else {
-  //       // Default behavior
-  //       setCursorText({ arrow: '→', text: 'NEXT' })
-  //     }
-  //   } else {
-  //     setCursorText({ arrow: '', text: '' })
-  //     setCursorVariant('default')
-  //   }
-  // }
-  // const handleGalleryEndReached = () => {
-  //   setGalleryReachedEnd(true) // Mark that the gallery end has been reached
-  // }
-  // const handleSlideChange = (swiper) => {
-  //   const isEnd = swiper.isEnd // Boolean value indicating if the swiper is at the last slide
-  //   setGalleryReachedEnd(isEnd)
-  // }
 
   return (
     <section ref={ref} className="renderedDesktop hidden lg:block">
@@ -162,22 +131,23 @@ export function InteractiveGallery({
               alt={coverImage.alt || 'Project image'}
             />
           </div>
+          <div
+            className="fixed bottom-4 left-4 w-fit cursor-pointer font-medium text-sm"
+            onClick={toggleCoverImage}
+          >
+            back to cover image
+          </div>
           {/* Desktop gallery */}
-          {/* {gallery && (
-            <div
-              onMouseLeave={galleryLeave}
-              className={`hidden lg:block fixed left-0 top-[25vh] z-[0] transition-all duration-700 w-[calc(60vw-1rem)]  ${isCoverImageShown ? 'opacity-10 translate-x-[44vw]' : 'opacity-100 translate-x-0'} ${isHoverInitialized && 'opacity-30'} `}
-            >
-              <Gallery gallery={gallery} />
-              
-            </div>
-          )} */}
           {galleryArrays && galleryArrays.length > 0 && (
             <div
               onMouseLeave={galleryLeave}
               className={`hidden lg:block fixed left-0 top-[25vh] z-[0] transition-all duration-700 w-[calc(60vw-1rem)]  ${isCoverImageShown ? 'opacity-10 translate-x-[44vw]' : 'opacity-100 translate-x-0'} ${isHoverInitialized && 'opacity-30'} `}
             >
-              <MultipleGalleries galleryArrays={galleryArrays} />
+              <MultipleGalleries
+                isGalleryActive={!isCoverImageShown}
+                galleryArrays={galleryArrays}
+                onFirstImageInFirstGallery={handleFirstImageInFirstGallery}
+              />
             </div>
           )}
         </>

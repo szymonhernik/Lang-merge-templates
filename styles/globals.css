@@ -79,6 +79,9 @@ pre[class*='language-'] {
   top: calc(50% - 25px) !important;
   text-shadow: 0px 2px 10px rgba(0, 0, 0, 0.8);
 }
+.swiper-button-prev.swiper-button-disabled {
+  opacity: 0 !important;
+}
 
 .swiper-button-next::after,
 .swiper-button-prev::after {
