@@ -58,6 +58,7 @@ export const PROJECT_QUERY = groq`*[_type == "project" && slug.current == $slug]
       title,
     },
     coverImage{
+    ...,
       alt,
       asset->{
         _id,
@@ -65,7 +66,7 @@ export const PROJECT_QUERY = groq`*[_type == "project" && slug.current == $slug]
         "lqip": metadata.lqip,
         "aspectRatio": metadata.dimensions.aspectRatio,
         "width": metadata.dimensions.width,
-          "height": metadata.dimensions.height,
+        "height": metadata.dimensions.height,
       }
     },
     pageContent[] {
@@ -153,9 +154,12 @@ export const HOME_QUERY = groq`{
       
       "coverImage": select(
         language == $defaultLocale => coverImage{
+        ...,
           alt,
           asset->{
             _id,
+            "width": metadata.dimensions.width,
+            "height": metadata.dimensions.height,
             url,
             "lqip": metadata.lqip,
             "aspectRatio": metadata.dimensions.aspectRatio,
@@ -167,11 +171,15 @@ export const HOME_QUERY = groq`{
       ),
       "coverImageOptional": select(
         language == $defaultLocale => coverImageOptional{
+        ...,
           alt,
           asset->{
             _id,
             url,
+            "width": metadata.dimensions.width,
+            "height": metadata.dimensions.height,
             "lqip": metadata.lqip,
+            "aspectRatio": metadata.dimensions.aspectRatio,
           }
         },
         // If not the default language, do not include coverImage
@@ -207,6 +215,7 @@ export const WORKS_QUERY = groq`{
       slug,
       year,
       coverImage{
+      ...,
         alt,
         asset->{
           _id,

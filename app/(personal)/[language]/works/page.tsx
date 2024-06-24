@@ -27,7 +27,6 @@ export async function generateMetadata({ params }): Promise<Metadata> {
   )
 
   const ogImage = urlForOpenGraphImage(dataPage.data.ogImage)
-  // console.log('homeRef', dataPage)
 
   return {
     title:
@@ -54,7 +53,6 @@ export default async function Page({ params }) {
       next: { tags: ['project'] },
     },
   )
-  // console.log('worksInitial', worksInitial.data.categories)
 
   const translations = i18n.languages.map((lang) => {
     return {
@@ -68,11 +66,6 @@ export default async function Page({ params }) {
     worksInitial.data.projects.showcaseWorks,
     language,
   )
-
-  // console.log('worksInitial')
-  // console.log(JSON.stringify(worksInitial.data.projects, null, 4))
-  // console.log('localizedProjects')
-  // console.log(JSON.stringify(localizedProjects, null, 4))
 
   return (
     <>

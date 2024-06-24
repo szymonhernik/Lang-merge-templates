@@ -43,6 +43,8 @@ export function ProjectLayout(props: ProjectLayoutProps) {
     relatedProject,
   } = props.data ?? {}
 
+  // console.log('coverImage', coverImage)
+
   // const { projects } = portfolio ?? {}
   // const gallery = defaultLangDocument?.galleryArrays[0]
   const galleryArrays = defaultLangDocument?.galleryArrays

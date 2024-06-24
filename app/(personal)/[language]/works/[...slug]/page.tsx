@@ -47,13 +47,7 @@ export default async function Page({
   params: { slug: string[]; language: string }
 }) {
   const { slug, language } = params
-  let project = ''
-
-  if (slug.length === 2) {
-    project = slug[1]
-  } else if (slug.length === 1) {
-    project = slug[0]
-  }
+  const project = slug[0]
 
   const queryParams = { ...COMMON_PARAMS, slug: project, language }
   const { isEnabled } = draftMode()

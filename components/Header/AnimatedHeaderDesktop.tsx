@@ -61,7 +61,7 @@ export default function AnimatedHeaderDesktop({
         </motion.div>
         <motion.div
           className={clsx(
-            'border-r-[1.5px] w-px h-12 transition-opacity delay-50',
+            'border-r-[1.5px] w-px h-16 transition-opacity delay-50',
             {
               'opacity-0': pathname !== `/${langSelected}`,
             },

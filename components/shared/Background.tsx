@@ -21,8 +21,6 @@ export default function Background({
   classesImage,
   ...props
 }: BackgroundProps) {
-  // Assuming image.asset.url is the base URL you're starting with
-
   const aspectRatioFirst = image && image[0]?.asset?.aspectRatio
 
   const horizontalUrl =
@@ -56,7 +54,7 @@ export default function Background({
             sizes={size}
             src={imageUrl}
             placeholder="blur"
-            blurDataURL={blurDataURL} // Use the extracted LQIP as the blurDataURL
+            blurDataURL={blurDataURL}
           />
         </div>
       ) : imageUrl && !imageUrl2 && horizontalUrl ? (
@@ -68,7 +66,7 @@ export default function Background({
             sizes={size}
             src={horizontalUrl}
             placeholder="blur"
-            blurDataURL={blurDataURL} // Use the extracted LQIP as the blurDataURL
+            blurDataURL={blurDataURL}
           />
         </div>
       ) : (
@@ -83,7 +81,7 @@ export default function Background({
               sizes="(max-width:640px) 100vw, (max-width: 768px) 50vw, 50vw"
               src={imageUrl}
               placeholder="blur"
-              blurDataURL={blurDataURL} // Use the extracted LQIP as the blurDataURL
+              blurDataURL={blurDataURL}
             />
             <Image
               className={`hidden md:block w-full md:w-1/2 ${classesImage}`}
@@ -93,7 +91,7 @@ export default function Background({
               sizes="(max-width:640px) 100vw, (max-width: 768px) 50vw, 50vw"
               src={imageUrl2}
               placeholder="blur"
-              blurDataURL={blurDataURL2} // Use the extracted LQIP as the blurDataURL
+              blurDataURL={blurDataURL2}
             />
           </div>
         )

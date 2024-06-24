@@ -1,26 +1,20 @@
 'use client'
 
-import { useParams, useSearchParams } from 'next/navigation'
+import { useParams } from 'next/navigation'
 import { SanityDocument } from 'next-sanity'
-import { createProjectLinks } from '@/lib/helpers'
-import React, { useMemo } from 'react'
+
+import React from 'react'
 import Link from 'next/link'
 import ProjectContent from './ProjectContent'
 import PageTitle from './PageTitle'
-import FilterWorks from './WorksPage/FilterWorks'
-import {
-  LocalizedProject,
-  ShowcaseHomeProject,
-  ShowcaseWorksPageExtended,
-} from '@/types'
+
+import { ShowcaseWorksPageExtended } from '@/types'
 
 type WorksLayoutProps = {
-  data?: { portfolios: SanityDocument[]; categories: SanityDocument[] }
   localizedProjects: ShowcaseWorksPageExtended[]
 }
 
 export function WorksLayout(props: WorksLayoutProps) {
-  const { portfolios, categories } = props.data || {}
   const params = useParams()
   const localizedProjects = props.localizedProjects
 
@@ -35,26 +29,10 @@ export function WorksLayout(props: WorksLayoutProps) {
         {localizedProjects &&
           localizedProjects.length > 0 &&
           localizedProjects.map((project, index) => {
-            // const numberOfProjects = portfolio.projects.length
-            // const projectPaths = createProjectLinks(
-            //   portfolio.projects,
-            //   portfolio.slug,
-            // )
-            // console.log('projectPaths:', projectPaths)
-            // path =
-            //     '/' +
-            //     [projectLang, 'works', portfolioLangSlug, projectLangSlug].join(
-            //       '/',
-            //     )
             return (
               <React.Fragment key={index}>
                 <Link href={`/${language}/works/${project.currentSlug}`}>
                   <ProjectContent project={project} language={language} />
-                  {/* <ProjectContent
-                    portfolio={portfolio}
-                    language={language}
-                    numberOfProjects={numberOfProjects}
-                  /> */}
                 </Link>
               </React.Fragment>
             )
