@@ -111,30 +111,12 @@ export const PORTFOLIOS_WITH_PROJECTS_COUNT_QUERY = groq`*[_type == "portfolio" 
 //       *[_type == "portfolio" && ^._id in translations[].value._ref][0].slug
 //     )
 // }[defined(portfolio)]`
-export const PROJECT_SLUGS_QUERY = groq`*[_type == "project" && defined(language) && defined(slug.current)]{
+export const PROJECT_SLUGS_QUERY = groq`*[_type == "project" && defined(language) && defined(slug.current) && slug.current == $slugParams][0]{
   language,
   "slug": slug.current,
   title,
-  ogImage,
   coverImage,
   overview,
-  year,
-  "translations": *[
-      // by finding the translation metadata document
-      _type == "translation.metadata" && 
-      // that contains this lesson's _id
-      ^._id in translations[].value._ref
-      // then map over the translations array
-    ][0].translations[]{
-      // and spread the "value" of each reference to the root level
-      ...(value->{
-        language,
-        title,
-        slug
-      })
-    },
-
-  
 }`
 export const ABOUT_SLUGS_QUERY = groq`*[_type == "aboutPage" && defined(language) && defined(slug.current)]{
   language,

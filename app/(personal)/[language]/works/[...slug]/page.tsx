@@ -8,35 +8,34 @@ import { COMMON_PARAMS, DEFAULT_EMPTY_PARAMS } from '@/lib/constants'
 
 import { getProjectsWithSlugs } from '@/sanity/fetchers'
 import { loadQuery } from '@/sanity/lib/store'
-import { PROJECT_QUERY } from '@/sanity/queries'
+import { PROJECT_QUERY, PROJECT_SLUGS_QUERY } from '@/sanity/queries'
 import { urlForOpenGraphImage } from '@/sanity/lib/utils'
 import { LocalizedProject } from '@/types'
+import { generateStaticSlugs } from '@/sanity/loader/generateStaticSlugs'
 
 export async function generateStaticParams() {
-  const projects = await getProjectsWithSlugs()
-
-  const params = projects.map((project) => {
-    return {
-      language: project.language,
-      slug: [project.slug],
-    }
-  })
-
-  return params
+  return generateStaticSlugs('project')
 }
 
 export async function generateMetadata({ params }) {
   const { slug, language } = params
-  const projects = await getProjectsWithSlugs()
+  const { isEnabled } = draftMode()
+  const slugParams = slug[0]
 
-  const currentProject = projects.find((project) => {
-    return project.slug === slug[0] && project.language === language
-  })
-  const ogImage = urlForOpenGraphImage(currentProject?.coverImage)
+  const initial = await loadQuery<any>(
+    PROJECT_SLUGS_QUERY,
+    { slugParams },
+    {
+      perspective: isEnabled ? 'previewDrafts' : 'published',
+      next: { tags: [`project:${slugParams}`] },
+    },
+  )
+  const project = initial.data
+  const ogImage = urlForOpenGraphImage(project?.coverImage)
 
   return {
-    title: currentProject?.title + ' | Narges Mohammadi' ?? '',
-    description: currentProject?.overview ?? '',
+    title: project?.title + ' | Narges Mohammadi' ?? '',
+    description: project?.overview ?? '',
     openGraph: {
       images: ogImage ? [ogImage] : [],
     },
@@ -65,7 +64,7 @@ export default async function Page({
     queryParams,
     {
       perspective: isEnabled ? 'previewDrafts' : 'published',
-      next: { tags: ['project', 'portfolio'] },
+      next: { tags: ['project'] },
     },
   )
 
