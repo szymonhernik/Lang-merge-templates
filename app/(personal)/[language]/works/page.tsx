@@ -76,8 +76,8 @@ export default async function Page({ params }) {
 
   // console.log('worksInitial')
   // console.log(JSON.stringify(worksInitial.data.projects, null, 4))
-  console.log('localizedProjects')
-  console.log(JSON.stringify(localizedProjects, null, 4))
+  // console.log('localizedProjects')
+  // console.log(JSON.stringify(localizedProjects, null, 4))
 
   return (
     <>

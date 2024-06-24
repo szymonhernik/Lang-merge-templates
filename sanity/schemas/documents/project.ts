@@ -80,6 +80,7 @@ export default defineType({
           type: 'reference',
           to: [{ type: 'project' }],
           options: {
+            // @ts-ignore
             filter: ({ document }) => {
               if (!document.language) {
                 return null
@@ -107,6 +108,7 @@ export default defineType({
           type: 'reference',
           to: [{ type: 'project' }],
           options: {
+            // @ts-ignore
             filter: ({ document }) => {
               if (!document.language) {
                 return null
