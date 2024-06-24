@@ -6,7 +6,6 @@ import UpdateLangContext from '@/components/UpdateLangContext'
 import { LiveQueryWrapper } from '@/components/LiveQueryWrapper'
 import { COMMON_PARAMS, DEFAULT_EMPTY_PARAMS } from '@/lib/constants'
 
-import { getProjectsWithSlugs } from '@/sanity/fetchers'
 import { loadQuery } from '@/sanity/lib/store'
 import { PROJECT_QUERY, PROJECT_SLUGS_QUERY } from '@/sanity/queries'
 import { urlForOpenGraphImage } from '@/sanity/lib/utils'

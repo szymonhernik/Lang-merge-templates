@@ -1,7 +1,4 @@
 import { draftMode } from 'next/headers'
-import { SanityDocument } from 'next-sanity'
-
-// import { HomeLayout } from '@/components/HomeLayout'
 import { LiveQueryWrapper } from '@/components/LiveQueryWrapper'
 import { COMMON_PARAMS, DEFAULT_EMPTY_PARAMS } from '@/lib/constants'
 
@@ -9,7 +6,6 @@ import { loadQuery } from '@/sanity/lib/store'
 import { HOME_QUERY, SETTINGS_QUERY } from '@/sanity/queries'
 
 import { i18n } from '../../../languages'
-import Header from '@/components/Header'
 import { HomeLayout } from '@/components/HomeLayout'
 
 import { HomeQueryResult, SettingsQueryResult } from '@/types'
@@ -20,13 +16,14 @@ import { urlForOpenGraphImage } from '@/sanity/lib/utils'
 
 export async function generateMetadata({ params }): Promise<Metadata> {
   const { language } = params
+  const { isEnabled } = draftMode()
   const queryParams = { ...COMMON_PARAMS, language }
 
   const dataPage = await loadQuery<SettingsQueryResult>(
     SETTINGS_QUERY,
     queryParams,
     {
-      // perspective: isEnabled ? 'previewDrafts' : 'published',
+      perspective: isEnabled ? 'previewDrafts' : 'published',
       next: { tags: ['settings'] },
     },
   )
@@ -70,8 +67,6 @@ export default async function Page({ params }) {
       title: lang.title,
     }
   })
-
-  // console.log(homeInitial.data.home.showcaseHome)
 
   return (
     <>

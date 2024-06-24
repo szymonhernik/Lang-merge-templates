@@ -1,15 +1,10 @@
 import { draftMode } from 'next/headers'
-import { SanityDocument } from 'next-sanity'
-
-// import { HomeLayout } from '@/components/HomeLayout'
 import { LiveQueryWrapper } from '@/components/LiveQueryWrapper'
 import { COMMON_PARAMS, DEFAULT_EMPTY_PARAMS } from '@/lib/constants'
 
 import { loadQuery } from '@/sanity/lib/store'
-import { HOME_QUERY, SETTINGS_QUERY, WORKS_QUERY } from '@/sanity/queries'
+import { SETTINGS_QUERY, WORKS_QUERY } from '@/sanity/queries'
 
-import Header from '@/components/Header'
-import { HomeLayout } from '@/components/HomeLayout'
 import { i18n } from '@/languages'
 import { WorksLayout } from '@/components/WorksLayout'
 import UpdateLangContext from '@/components/UpdateLangContext'
@@ -56,7 +51,7 @@ export default async function Page({ params }) {
     queryParams,
     {
       perspective: isEnabled ? 'previewDrafts' : 'published',
-      next: { tags: ['project', 'portfolio'] },
+      next: { tags: ['project'] },
     },
   )
   // console.log('worksInitial', worksInitial.data.categories)
