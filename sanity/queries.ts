@@ -261,19 +261,7 @@ export const HOME_QUERY = groq`{
       language,
       title,
       slug,
-      "portfolio": select(
-        // So if this project isn't in English...
-        ^.language != $defaultLocale => *[_type == "translation.metadata" && ^._id in translations[].value._ref][0]{
-          // our query has to look up through the translations metadata
-          // and find the portfolio that references the English version, not this language version
-          "portfolio": *[
-            _type == "portfolio" && 
-            ^.translations[_key == $defaultLocale][0].value._ref in projects[]._ref
-          ][0]{ ${HOME_PORTFOLIO_QUERY_PROJECTION} }
-        }.portfolio,
-        // By default, 
-        *[_type == "portfolio" && ^._id in translations[].value._ref][0]{ ${HOME_PORTFOLIO_QUERY_PROJECTION} }
-      ),
+      
       "coverImage": select(
         language == $defaultLocale => coverImage{
           alt,
@@ -321,57 +309,89 @@ export const HOME_QUERY = groq`{
     
   }
 }`
-export const WORKS_QUERY = groq`{
-  "categories": *[_type == "categories"]{
+// export const WORKS_QUERY = groq`{
+//   "portfolios": *[_type == "portfolio" && count(projects) > 0]|order(orderRank){
+//     ...,
+//     category->{
+//       categoryName
+//     },
+//     "projects": projects[]->{
+//       // Get each project's *base* language version's title and slug
+//       language,
+//       title,
+//       slug,
+//       year,
+//       // Fetch coverImage only if the project's language matches the default language
 
-    categoryName
-  },
-  "portfolios": *[_type == "portfolio" && count(projects) > 0]|order(orderRank){
-    ...,
-    category->{
-      categoryName
-    },
-    "projects": projects[]->{
-      // Get each project's *base* language version's title and slug
+//   "coverImage": select(
+//     language == $defaultLocale => coverImage{
+//       asset->{
+//         _id,
+//         url,
+//         "lqip": metadata.lqip,
+//         "width": metadata.dimensions.width,
+//         "height": metadata.dimensions.height,
+
+//       }
+//     },
+//     // If not the default language, do not include coverImage
+//     true => null
+//   ),
+//   "linkedFile": select(
+//     showAdditionalFields == true => linkedFile{
+
+//       asset->{
+//         _id,
+//         url,
+//         "originalFilename": originalFilename
+//       },
+//       "description": description
+//     },
+//     true => null
+//   ),
+
+//       // ...and all its connected document-level translations
+//       "translations": *[
+//         // by finding the translation metadata document
+//         _type == "translation.metadata" &&
+//         // that contains this project's _id
+//         ^._id in translations[].value._ref
+//         // then map over the translations array
+//       ][0].translations[]{
+//         // and spread the "value" of each reference to the root level
+//         ...(value->{
+//           language,
+//           title,
+//           slug
+//         })
+//       }
+//     },
+//   },
+
+// }`
+
+export const WORKS_QUERY = groq`{
+  "projects": *[_type == "home"][0] {
+    showcaseWorks[]->{
       language,
       title,
       slug,
       year,
-      // Fetch coverImage only if the project's language matches the default language
-
-  "coverImage": select(
-    language == $defaultLocale => coverImage{
-      asset->{
-        _id,
-        url,
-        "lqip": metadata.lqip,
-        "width": metadata.dimensions.width,
-        "height": metadata.dimensions.height,
-        
-      }
-    },
-    // If not the default language, do not include coverImage
-    true => null
-  ),
-  "linkedFile": select(
-    showAdditionalFields == true => linkedFile{
-
-      asset->{
-        _id,
-        url,
-        "originalFilename": originalFilename
+      coverImage{
+        alt,
+        asset->{
+          _id,
+          url,
+          "lqip": metadata.lqip,
+          "aspectRatio": metadata.dimensions.aspectRatio,
+          "width": metadata.dimensions.width,
+            "height": metadata.dimensions.height,
+        }
       },
-      "description": description
-    },
-    true => null
-  ),
-  
-
-      // ...and all its connected document-level translations
       "translations": *[
         // by finding the translation metadata document
         _type == "translation.metadata" && 
-        // that contains this project's _id
+        // that contains this lesson's _id
         ^._id in translations[].value._ref
         // then map over the translations array
       ][0].translations[]{
@@ -381,10 +401,9 @@ export const WORKS_QUERY = groq`{
           title,
           slug
         })
-      }
-    },
-  },
-  
+      },
+    }
+}
 }`
 
 export const SETTINGS_QUERY = groq` *[_type == "settings"][0]{

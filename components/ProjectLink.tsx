@@ -1,9 +1,9 @@
-import { LocalizedProject } from '@/types'
+import { LocalizedProject, ShowcaseWorksPageExtended } from '@/types'
 import { SanityDocument } from 'next-sanity'
 import Link from 'next/link'
 
 interface ProjectLinkProps {
-  project: LocalizedProject // replace with your actual project type
+  project: ShowcaseWorksPageExtended // replace with your actual project type
   language: string
   children: React.ReactNode
 }

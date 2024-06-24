@@ -67,6 +67,7 @@ export default defineType({
       validation: (rule) =>
         rule.max(200).warning('SEO text should be short').required(),
     }),
+
     defineField({
       name: 'relatedImageGallery',
       title: 'Related Image Gallery',

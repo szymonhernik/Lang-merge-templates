@@ -8,21 +8,17 @@ import { createProjectReachLinks } from '@/lib/helpers'
 import ImageBox from './shared/ImageBox'
 import MultifaceProjects from './MultifaceProjects'
 import Title from './Title'
+import { ShowcaseWorksPageExtended } from '@/types'
 
 type ProjectContentProps = PropsWithChildren<{
-  portfolio: any
+  project: ShowcaseWorksPageExtended
+  // portfolio: any
   language: string
-  numberOfProjects: number
+  // numberOfProjects: number
 }>
 
 export default function ProjectContent(props: ProjectContentProps) {
-  const { children, portfolio, language, numberOfProjects } = props
-
-  //   const numberOfProjects = portfolio.projects.length
-  const projectPaths = createProjectReachLinks(
-    portfolio.projects,
-    portfolio.slug,
-  )
+  const { children, language, project } = props
 
   return (
     <>
@@ -30,19 +26,11 @@ export default function ProjectContent(props: ProjectContentProps) {
         <ImageBox
           size={'(max-width: 768px) 100vw, 45vw'}
           classesImage="aspect-[3/4] object-cover w-full overflow-hidden  transition-opacity"
-          image={portfolio.projects[0].coverImage}
-          alt={`${portfolio.projects[0].coverImage?.alt ?? ''}`}
+          image={project.coverImage}
+          alt={`${project.coverImage?.alt ?? ''}`}
         />
 
-        <Title
-          year={
-            numberOfProjects > 0 && portfolio.projects[0].year
-              ? portfolio.projects[0].year
-              : null
-          }
-        >
-          {portfolio.title[language]}
-        </Title>
+        <Title year={project.year}>{project.currentTitle}</Title>
       </article>
     </>
   )

@@ -13,9 +13,10 @@ import { HomeLayout } from '@/components/HomeLayout'
 import { i18n } from '@/languages'
 import { WorksLayout } from '@/components/WorksLayout'
 import UpdateLangContext from '@/components/UpdateLangContext'
-import { SettingsQueryResult } from '@/types'
+import { SettingsQueryResult, WorksQueryResult } from '@/types'
 import { Metadata } from 'next'
 import { urlForOpenGraphImage } from '@/sanity/lib/utils'
+import { localizeProjects } from '@/lib/localizeProjects'
 
 export async function generateMetadata({ params }): Promise<Metadata> {
   const { language } = params
@@ -50,7 +51,7 @@ export default async function Page({ params }) {
 
   const queryParams = { ...COMMON_PARAMS, language }
   const { isEnabled } = draftMode()
-  const worksInitial = await loadQuery<{ portfolios: SanityDocument[] }>(
+  const worksInitial = await loadQuery<WorksQueryResult>(
     WORKS_QUERY,
     queryParams,
     {
@@ -68,6 +69,16 @@ export default async function Page({ params }) {
     }
   })
 
+  const localizedProjects = localizeProjects(
+    worksInitial.data.projects.showcaseWorks,
+    language,
+  )
+
+  // console.log('worksInitial')
+  // console.log(JSON.stringify(worksInitial.data.projects, null, 4))
+  console.log('localizedProjects')
+  console.log(JSON.stringify(localizedProjects, null, 4))
+
   return (
     <>
       <UpdateLangContext
@@ -80,7 +91,7 @@ export default async function Page({ params }) {
         params={isEnabled ? queryParams : DEFAULT_EMPTY_PARAMS}
         initial={worksInitial}
       >
-        <WorksLayout />
+        <WorksLayout localizedProjects={localizedProjects} />
       </LiveQueryWrapper>
     </>
   )

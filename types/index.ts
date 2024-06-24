@@ -20,9 +20,15 @@ interface TranslationHome {
   slug: Slug
 }
 
+export interface ShowcaseWorksPageExtended extends ShowcaseHomeProject {
+  currentTitle: string
+  currentSlug: string
+}
+
 export interface ShowcaseHomeProject {
   language: string
   title: string
+  year: string
   slug: string
   portfolio?: PortfolioProjectHome // Assuming it follows the same structure defined elsewhere
   coverImage?: {
@@ -44,11 +50,17 @@ export interface ShowcaseHomeProject {
   }
   translations: TranslationHome[]
 }
+
 export interface HomeQueryResult {
   home: {
     ogImage: Image
     text: Text
     showcaseHome?: ShowcaseHomeProject[]
+  }
+}
+export interface WorksQueryResult {
+  projects: {
+    showcaseWorks?: ShowcaseHomeProject[]
   }
 }
 export interface SettingsQueryResult {

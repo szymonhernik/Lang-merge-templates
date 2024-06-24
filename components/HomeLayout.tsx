@@ -12,10 +12,14 @@ import 'swiper/css'
 // import required modules
 import { Autoplay } from 'swiper/modules'
 import Background from './shared/Background'
-import { HomeQueryResult, LocalizedProject } from '@/types'
+import {
+  HomeQueryResult,
+  LocalizedProject,
+  ShowcaseWorksPageExtended,
+} from '@/types'
 
 type HomeLayoutProps = {
-  localizedProjects: LocalizedProject[]
+  localizedProjects: ShowcaseWorksPageExtended[]
   language: string
 }
 
