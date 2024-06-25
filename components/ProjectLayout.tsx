@@ -71,7 +71,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
       />
       <section
         id="project"
-        className="py-mobileSpace  md:overflow-hidden  mx-auto px-6 flex flex-col gap-12 text-sm  lg:items-end lg:py-[0]"
+        className="py-mobileSpace  lg:overflow-hidden  mx-auto px-6 flex flex-col gap-12 text-sm  lg:items-end lg:py-[0]"
       >
         <div className="text-center lg:hidden">
           <Link href={`/${language}/works`} className="underline ">
@@ -166,7 +166,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
               </div>
             )}
 
-            <div className="-mt-4 px-6 lg:hidden sticky top-headerSmallSpace z-[10] left-0 md:max-w-screen-md md:mx-auto w-screen -mx-6 text-xs font-medium  bg-white  opacity-80  ">
+            <div className="-mt-4 px-6 lg:hidden sticky top-headerSmallSpace z-[10] left-0 lg:max-w-screen-md lg:mx-auto w-screen -mx-6 text-xs font-medium  bg-white  opacity-80  ">
               <a
                 href="#project"
                 className="flex flex-row gap-2 justify-center items-center py-4"

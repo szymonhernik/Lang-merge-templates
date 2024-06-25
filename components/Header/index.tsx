@@ -27,7 +27,7 @@ export default function Header() {
   return (
     <header
       className={clsx(
-        'text-sm fixed top-0 w-screen h-headerSmall md:h-header flex z-[20] pt-4   ',
+        'text-sm fixed top-0 w-screen h-headerSmall lg:h-header flex z-[20] pt-4   ',
         {
           'text-white bg-transparent': isHomePage,
         },
@@ -36,7 +36,7 @@ export default function Header() {
             !isHomePage && !isMusicPage && !isWorksPage,
         },
         {
-          'text-black lg:!absolute lg:right-0 md:text-white md:mix-blend-difference bg-white md:bg-transparent':
+          'text-black lg:!absolute lg:right-0 lg:text-white lg:mix-blend-difference bg-white lg:bg-transparent':
             isWorksPage,
         },
         {
@@ -52,7 +52,7 @@ export default function Header() {
         <div className="space-y-3 ">
           <h1
             className={clsx('mr-auto space-x-3 ', {
-              'md:fixed md:left-12 md:top-8': isWorksPage,
+              'lg:fixed lg:left-12 lg:top-8': isWorksPage,
             })}
           >
             <Link href={`/${clean(langSelected)}`} className="">
@@ -66,12 +66,12 @@ export default function Header() {
             </Link>
           </h1>
           {(isHomePage || isMenuOpen) && (
-            <div className="md:hidden">
+            <div className="lg:hidden">
               <TranslationLinks translations={translations} isWorksPage />
             </div>
           )}
         </div>
-        <div className="text-left flex flex-col gap-[0.3rem] md:hidden">
+        <div className="text-left flex flex-col gap-[0.3rem] lg:hidden">
           <MobileNavLinks
             pathname={pathname}
             langSelected={langSelected}
@@ -82,7 +82,7 @@ export default function Header() {
           />
         </div>
 
-        <div className="hidden md:flex gap-12 items-start">
+        <div className="hidden lg:flex gap-12 items-start">
           <Suspense>
             <AnimatedHeaderDesktop
               pathname={pathname}
