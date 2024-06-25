@@ -70,15 +70,55 @@ export const PROJECT_QUERY = groq`*[_type == "project" && slug.current == $slug]
       }
     },
     pageContent[] {
-      ...,
-      _type == "pdfEmbed" => {
+    
+      _type == "textBox" => {
+        _key,
         _type,
-        asset->{
-          url,
-          originalFilename
+        headline,
+        contents
+      },
+      _type == "pdfEmbed" => {
+        _key,
+        _type,
+        pdfFile {
+          asset->{
+            url,
+            originalFilename
+          }
         }
       },
+      _type == "imageInline" => {
+        _type,
+        caption,
+        alt,
+        asset->{
+          _id,
+          url,
+          "lqip": metadata.lqip,
+          "aspectRatio": metadata.dimensions.aspectRatio,
+          "width": metadata.dimensions.width,
+          "height": metadata.dimensions.height,
+        }
+        
+      },
+      _type == "video" => {
+        _key,
+        _type,
+        videoLabel,
+        video {
+          _type,
+          asset->{
+            data{
+              aspect_ratio,
+            },
+            playbackId
+          }
+        }
+      }
     },
+    
+      
+      
     
     projectGallery {
       photoCredits[]->{

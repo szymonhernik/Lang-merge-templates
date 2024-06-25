@@ -21,6 +21,7 @@ import { InteractiveGallery } from './ProjectPage/InteractiveGallery'
 import PageExtraMaterials from './ProjectPage/PageExtraMaterials'
 import { LocalizedProject } from '@/types'
 import { MultipleGalleries } from './MultipleGalleries'
+import PageContentModules from './PageContentModules'
 
 type ProjectLayoutProps = {
   data: LocalizedProject
@@ -32,6 +33,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
   const {
     title,
     coverImage,
+    pageContent,
     details,
     defaultLangDocument,
     year,
@@ -42,8 +44,6 @@ export function ProjectLayout(props: ProjectLayoutProps) {
     relatedImageGallery,
     relatedProject,
   } = props.data ?? {}
-
-  // console.log('coverImage', coverImage)
 
   // const { projects } = portfolio ?? {}
   // const gallery = defaultLangDocument?.galleryArrays[0]
@@ -90,7 +90,9 @@ export function ProjectLayout(props: ProjectLayoutProps) {
                   {relatedImageGallery && (
                     <div>
                       <h3 className="uppercase opacity-50 font-medium">
-                        Related Image Gallery
+                        {language === 'en'
+                          ? 'Related Image Gallery '
+                          : 'Gerelateerde Beeldgalerij'}
                       </h3>
                       {relatedImageGallery.map((relatedItem, index) => (
                         <Link href={relatedItem.slug} key={relatedItem._id}>
@@ -105,7 +107,9 @@ export function ProjectLayout(props: ProjectLayoutProps) {
                   {relatedProject && (
                     <div>
                       <h3 className="uppercase opacity-50 font-medium">
-                        Related Project
+                        {language === 'en'
+                          ? 'Related Projects '
+                          : 'Gerelateerd project'}
                       </h3>
                       {relatedProject.map((relatedItem, index) => (
                         <Link href={relatedItem.slug} key={relatedItem._id}>
@@ -184,44 +188,9 @@ export function ProjectLayout(props: ProjectLayoutProps) {
                 <MultipleGalleries galleryArrays={galleryArrays} />
               </div>
             )}
-            {/* {galleryArrays &&
-              galleryArrays.length > 0 &&
-              galleryArrays.map((gallery) => (
-                <div className="w-screen md:w-full -mx-6 lg:hidden">
-                  <Gallery gallery={gallery} />
-                </div>
-              ))} */}
-
-            {/* {gallery && gallery.images && (
-              <>
-                <div className="w-screen md:w-full -mx-6 lg:hidden">
-                  <Gallery gallery={gallery} />
-                </div>
-                <div
-                  className={`block px-0 -mt-6 lg:mt-0 mx-auto lg:mx-0 lg:fixed lg:z-[0] bottom-[20vh] left-0 lg:px-12 font-medium text-sm transition-opacity delay-200   ${isCoverImageShown ? 'lg:opacity-0 pointer-events-none' : 'lg:opacity-100 pointer-events-auto'}`}
-                >
-                  {gallery.pageBuilder &&
-                    gallery.pageBuilder.map((collabObj, index) => (
-                      <p key={`${index}-${collabObj._id}`}>
-                        {language === 'en'
-                          ? 'Photography by'
-                          : 'Fotografie door'}{' '}
-                        {collabObj.collaboratorUrl ? (
-                          <a
-                            href={collabObj.collaboratorUrl}
-                            target="_blank"
-                            className="underline"
-                          >
-                            {collabObj.displayName}
-                          </a>
-                        ) : (
-                          <span>{collabObj.displayName}</span>
-                        )}
-                      </p>
-                    ))}
-                </div>
-              </>
-            )} */}
+            {pageContent && pageContent.length > 0 && (
+              <PageContentModules pageContent={pageContent} />
+            )}
 
             {pageExtraMaterials &&
               pageExtraMaterials?.length > 0 &&

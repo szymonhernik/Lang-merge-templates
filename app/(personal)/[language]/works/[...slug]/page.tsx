@@ -83,11 +83,6 @@ export default async function Page({
 
   // const gallery = initial.data.portfolio.projects[0].projectGallery
 
-  // console.log(
-  //   'initial.data',
-  //   initial.data.portfolio.projects[currentProjectIndex].pageExtraMaterials[1],
-  // )
-
   return (
     <>
       <UpdateLangContext

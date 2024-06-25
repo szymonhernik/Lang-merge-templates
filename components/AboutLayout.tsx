@@ -62,55 +62,6 @@ export async function AboutLayout({ data, currentLanguage }: AboutLayoutProps) {
                     </div>
                   )
                 })}
-
-              <div className="mt-8 text-sm ">
-                <p className="font-medium mb-2">Colophon</p>
-
-                <p>Editor (Englisch): Shivani Gowda</p>
-
-                <p>
-                  Editor & translator (English & Dutch):{' '}
-                  <a
-                    href="https://puckkroon.com/"
-                    target="_blank"
-                    className="underline text-violet-400"
-                  >
-                    Puck Kroon
-                  </a>
-                </p>
-                <p>
-                  Web design and coding:{' '}
-                  <a
-                    href="https://szymonhernik.com/"
-                    target="_blank"
-                    className="underline text-violet-400"
-                  >
-                    Szymon Eda Hernik
-                  </a>
-                </p>
-                <p>
-                  Fonts used: Tonka by{' '}
-                  <a
-                    href="https://celine-hurka.com/home/"
-                    target="_blank"
-                    className="underline text-violet-400"
-                  >
-                    Céline Hurka and Huw Williams
-                  </a>
-                </p>
-                <p>Emotional support: Yannik Güldner & Pannekoekie </p>
-
-                <p className="mt-2">
-                  Gallery representation:{' '}
-                  <a
-                    href="https://www.copperfieldgallery.com/"
-                    target="_blank"
-                    className="underline text-violet-400"
-                  >
-                    Copperfield, London
-                  </a>
-                </p>
-              </div>
             </article>
           </div>
         </div>

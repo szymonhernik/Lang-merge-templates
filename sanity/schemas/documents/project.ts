@@ -197,10 +197,10 @@ export default defineType({
       title: 'Page extra materials',
       description: '[EN, NL] Add movie, sound file, pdf',
       of: [
-        defineArrayMember({
-          name: 'video',
-          type: 'video',
-        }),
+        // defineArrayMember({
+        //   name: 'video',
+        //   type: 'video',
+        // }),
         defineArrayMember({
           name: 'audio',
           type: 'audio',
@@ -288,10 +288,10 @@ export default defineType({
           type: 'textBox',
           description: 'Text box with headline (optional) and content.',
         }),
-        defineArrayMember({
-          name: 'audio',
-          type: 'audio',
-        }),
+        // defineArrayMember({
+        //   name: 'audio',
+        //   type: 'audio',
+        // }),
         defineArrayMember({
           name: 'video',
           type: 'video',

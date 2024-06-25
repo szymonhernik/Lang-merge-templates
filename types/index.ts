@@ -172,22 +172,7 @@ export interface LocalizedProject {
     gallery: Gallery
   }
   pageContent?: [
-    | {
-        _type: 'pdfEmbed'
-        pdfFile: {
-          _type: 'file'
-          asset: {
-            url: string
-            originalFilename: string
-          }
-        }
-      }
-    | {
-        _type: 'textBlock'
-        textBlock: {
-          content: PortableTextBlock[]
-        }
-      },
+    PDFEmbedModule | TextBoxModule | ImageInlineModule | VideoModule,
   ]
   // projectGallery: any
   details: PortableTextBlock[]
@@ -213,6 +198,51 @@ export interface LocalizedProject {
     asset: any // Same as above, define a more specific type if possible
   }
   translations: TranslationHome[] // Define a more specific type for translations if applicable
+}
+export interface PDFEmbedModule {
+  _key: string
+  _type: 'pdfEmbed'
+  pdfFile: {
+    _type: 'file'
+    asset: {
+      url: string
+      originalFilename: string
+    }
+  }
+}
+export interface TextBoxModule {
+  _key: string
+  _type: 'textBox'
+  headline: string
+  contents: PortableTextBlock[]
+}
+
+export interface VideoModule {
+  _key: string
+  _type: 'video'
+  videoLabel: string
+  video: {
+    asset: {
+      playbackId: string
+      data: {
+        aspect_ratio: string
+      }
+    }
+  }
+}
+export interface ImageInlineModule {
+  _key: string
+  _type: 'imageInline'
+  caption?: string
+  alt?: string
+  asset: {
+    _id: string
+    url: string
+    aspectRatio: number
+    lqip: string
+    width: number
+    height: number
+  }
 }
 
 // export interface GalleryArrays {
