@@ -91,6 +91,7 @@ export const PROJECT_QUERY = groq`*[_type == "project" && slug.current == $slug]
       _type == "imageInline" => {
         _type,
         caption,
+        _key,
         alt,
         asset->{
           _id,

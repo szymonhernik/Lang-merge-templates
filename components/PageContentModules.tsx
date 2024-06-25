@@ -18,7 +18,11 @@ export default function PageContentModules(props: PageContentsProps) {
   const { pageContent } = props
 
   return pageContent?.map((module) => {
-    return <Module module={module} />
+    return (
+      <div key={module._key}>
+        <Module module={module} />
+      </div>
+    )
   })
 }
 
@@ -43,17 +47,15 @@ const Module = ({
 
 const TextBox = ({ module }: { module: TextBoxModule }) => {
   return (
-    <div>
-      <div className="font-medium   md:max-w-screen-md lg:max-w-full md:mx-auto lg:text-base lg:space-y-4 space-y-4 ">
-        <p className="opacity-50 lg:text-sm uppercase">{module.headline}</p>
-        <CustomPortableText value={module.contents} />
-      </div>
+    <div className="font-medium   md:max-w-screen-md lg:max-w-full md:mx-auto lg:text-base lg:space-y-4 space-y-4 ">
+      <p className="opacity-50 lg:text-sm uppercase">{module.headline}</p>
+      <CustomPortableText value={module.contents} />
     </div>
   )
 }
 const PdfEmbed = ({ module }: { module: PDFEmbedModule }) => {
   return (
-    <div>
+    <>
       <iframe
         src={module.pdfFile.asset.url}
         width="100%"
@@ -64,7 +66,7 @@ const PdfEmbed = ({ module }: { module: PDFEmbedModule }) => {
         {module.pdfFile.asset.originalFilename}
       </p>
       {/* <p>{module.pdfFile.asset._ref}</p> */}
-    </div>
+    </>
   )
 }
 
@@ -74,10 +76,7 @@ const VideoBlock = ({ module }: { module: VideoModule }) => {
   const [width, height] = aspectRatio.split(':').map(Number)
 
   return (
-    <div
-      key={module._key}
-      className="w-full mx-auto h-auto max-w-lg lg:max-w-screen-md"
-    >
+    <div className="w-full mx-auto h-auto max-w-lg lg:max-w-screen-md">
       <AspectRatio
         ratio={videoProps.asset.data.aspect_ratio ? width / height : 16 / 9}
         className="bg-muted"
@@ -92,7 +91,7 @@ const VideoBlock = ({ module }: { module: VideoModule }) => {
 const RenderImage = ({ module }: { module: ImageInlineModule }) => {
   const image = module
   return (
-    <div>
+    <>
       <ImageBox
         classesWrapper={`mx-auto w-full max-w-lg lg:max-w-xl h-auto max-h-screen overflow-hidden `}
         size="(max-width:640px) 100vw, (max-width: 768px) 50vw, 50vw"
@@ -104,7 +103,7 @@ const RenderImage = ({ module }: { module: ImageInlineModule }) => {
       />
 
       {image.caption && <p className="text-center mt-4">{image.caption}</p>}
-    </div>
+    </>
   )
 }
 
