@@ -37,7 +37,13 @@ export function MultipleGalleries({
   const [isMobile, setIsMobile] = useState(false)
 
   const photographers = galleryArrays.map((gallery) => {
-    return gallery.photoCredits[0].displayName
+    {
+      if (gallery.photoCredits && gallery.photoCredits[0]) {
+        return gallery.photoCredits[0].displayName
+      } else {
+        return null
+      }
+    }
   })
   const [currentPhotographer, setCurrentPhotographer] = useState(
     photographers[0],
@@ -174,11 +180,14 @@ export function MultipleGalleries({
           )
         })}
       </Swiper>
-      <div
-        className={`w-full text-center lg:text-left lg:ml-12 lg:mt-6 font-medium text-sm mt-4 transition-opacity duration-700 ${isGalleryActive ? 'opacity-100' : 'opacity-0'}`}
-      >
-        Photography by <span className="underline">{currentPhotographer}</span>
-      </div>
+      {currentPhotographer && (
+        <div
+          className={`w-full text-center lg:text-left lg:ml-12 lg:mt-6 ml-6 font-medium text-sm mt-4 transition-opacity duration-700 ${isGalleryActive ? 'lg:opacity-100' : 'lg:opacity-0'}`}
+        >
+          Photography by{' '}
+          <span className="underline">{currentPhotographer}</span>
+        </div>
+      )}
     </>
   )
 }

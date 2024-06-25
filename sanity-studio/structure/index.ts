@@ -8,6 +8,7 @@ import {
   FiInfo,
   FiAlignLeft,
   FiImage,
+  FiGrid,
 } from 'react-icons/fi'
 import {
   StructureResolver,
@@ -15,9 +16,6 @@ import {
 } from 'sanity/structure'
 
 import { i18n } from '../../languages'
-import preview from './preview'
-import references from './references'
-import transifex from './transifex'
 import home from '@/sanity/schemas/singletons/home'
 import settings from '@/sanity/schemas/singletons/settings'
 import { apiVersion } from '@/sanity/env'
@@ -224,7 +222,8 @@ export const structure: StructureResolver = (S, context) => {
         ),
       S.divider(),
       S.listItem()
-        .title('Projects → add to Portfolio ↓')
+        .title('Projects')
+        .icon(FiGrid)
         .child(
           S.list()
             .title('Projects')
@@ -233,7 +232,7 @@ export const structure: StructureResolver = (S, context) => {
                 S.listItem()
                   .title(`Projects (${language.id.toLocaleUpperCase()})`)
                   .schemaType('project')
-
+                  .icon(FiGrid)
                   .child(
                     S.documentList()
                       .apiVersion(apiVersion)
@@ -297,7 +296,7 @@ export const structure: StructureResolver = (S, context) => {
             ]),
         ),
       // Field-level translations
-      orderableDocumentListDeskItem({ type: 'portfolio', S, context }),
+      // orderableDocumentListDeskItem({ type: 'portfolio', S, context }),
 
       // S.documentTypeListItem('portfolio')
       //   .title('Portfolio')
@@ -305,12 +304,13 @@ export const structure: StructureResolver = (S, context) => {
 
       //   ]),
 
-      S.divider(),
-      S.documentTypeListItem('externalDoc').title('Seperate files'),
+      // S.divider(),
+      // S.documentTypeListItem('externalDoc').title('Seperate files'),
       S.divider(),
       S.documentTypeListItem('collaborator')
         .title('Collaborators')
         .icon(FiUsers),
+
       // S.documentTypeListItem('gallery').title('Galleries').icon(FiImage),
 
       // Singleton, field-level translations
@@ -324,16 +324,16 @@ export const defaultDocumentNode: DefaultDocumentNodeResolver = (
   // const client = getClient({apiVersion: `2023-01-01`})
 
   switch (schemaType) {
-    case 'portfolio':
-      return S.document().views([
-        S.view.form(),
-        // preview(S, client)
-      ])
-    case 'externalDoc':
-      return S.document().views([
-        S.view.form(),
-        // preview(S, client)
-      ])
+    // case 'portfolio':
+    //   return S.document().views([
+    //     S.view.form(),
+    //     // preview(S, client)
+    //   ])
+    // case 'externalDoc':
+    //   return S.document().views([
+    //     S.view.form(),
+    //     // preview(S, client)
+    //   ])
     case 'project':
       return S.document().views([
         S.view.form(),

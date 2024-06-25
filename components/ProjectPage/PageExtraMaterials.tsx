@@ -20,7 +20,7 @@ export default function PageExtraMaterials({ materials, filterType }) {
           switch (mat._type) {
             case 'audio':
               return (
-                <div className="hover:bg-stone-100" key={mat._key}>
+                <div className="" key={mat._key}>
                   {mat.audioFile && <AudioBox mat={mat} />}
                 </div>
               )

@@ -1,5 +1,5 @@
-import {Card} from '@sanity/ui'
-import {TranslateIcon} from '@sanity/icons'
+import { Card } from '@sanity/ui'
+import { TranslateIcon } from '@sanity/icons'
 import styled from 'styled-components'
 
 export const SquareCard = styled(Card)`

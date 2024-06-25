@@ -54,13 +54,6 @@ export default defineType({
           'A slug is required to generate a page on the website',
         ),
     }),
-    defineField({
-      title: 'Category',
-      name: 'category',
-      type: 'reference',
-      to: [{ type: 'categories' }],
-      validation: (Rule) => [Rule.required()],
-    }),
 
     defineField({
       name: 'projects',
@@ -71,6 +64,7 @@ export default defineType({
           name: 'project',
           title: 'Project',
           type: 'reference',
+          weak: true,
           to: [
             { type: 'project' },
             // { type: 'externalDoc' }
@@ -83,7 +77,7 @@ export default defineType({
           },
         }),
       ],
-      validation: (Rule) => [Rule.required().min(1), Rule.unique()],
+      // validation: (Rule) => [Rule.required().min(1), Rule.unique()],
     }),
   ],
   preview: {

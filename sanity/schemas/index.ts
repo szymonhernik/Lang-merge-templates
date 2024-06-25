@@ -19,7 +19,6 @@ import home from './singletons/home'
 import settings from './singletons/settings'
 import externalDoc from './documents/externalDoc'
 import collaborator from './documents/collaborator'
-import categories from './documents/categories'
 import { videoType } from './objects/VideoType'
 import { audioType } from './objects/AudioType'
 import pdfEmbed from './objects/pdfEmbed'
@@ -31,7 +30,6 @@ export const schemaTypes = [
   // documents
   portfolio,
   collaborator,
-  categories,
   externalDoc,
   project,
   videoType,

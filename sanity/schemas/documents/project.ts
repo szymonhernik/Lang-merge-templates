@@ -71,6 +71,7 @@ export default defineType({
     defineField({
       name: 'relatedImageGallery',
       title: 'Related Image Gallery',
+      description: '[EN, NL]',
       type: 'array',
       of: [
         defineField({
@@ -99,6 +100,7 @@ export default defineType({
     defineField({
       name: 'relatedProject',
       title: 'Related Projects',
+      description: '[EN, NL]',
       type: 'array',
       of: [
         defineField({
@@ -124,23 +126,23 @@ export default defineType({
         }),
       ],
     }),
-    defineField({
-      name: 'belongs',
-      group: 'optional',
-      title: 'Belongs to (optional)',
-      description:
-        '[EN, NL] This is just for clarity which project belongs to which group',
-      type: 'array',
-      of: [
-        defineField({
-          name: 'portfolios',
-          title: 'Portfolio',
-          type: 'reference',
-          to: [{ type: 'portfolio' }],
-        }),
-      ],
-      // validation: (Rule) => [Rule.required().min(1), Rule.unique()],
-    }),
+    // defineField({
+    //   name: 'belongs',
+    //   group: 'optional',
+    //   title: 'Belongs to (optional)',
+    //   description:
+    //     '[EN, NL] This is just for clarity which project belongs to which group',
+    //   type: 'array',
+    //   of: [
+    //     defineField({
+    //       name: 'portfolios',
+    //       title: 'Portfolio',
+    //       type: 'reference',
+    //       to: [{ type: 'portfolio' }],
+    //     }),
+    //   ],
+    //   // validation: (Rule) => [Rule.required().min(1), Rule.unique()],
+    // }),
 
     defineField({
       name: 'year',
@@ -195,7 +197,7 @@ export default defineType({
       group: 'optional',
       type: 'array',
       title: 'Page extra materials',
-      description: '[EN, NL] Add movie, sound file, pdf',
+      description: '[EN, NL] Add sound file or a linked pdf',
       of: [
         // defineArrayMember({
         //   name: 'video',
@@ -276,7 +278,7 @@ export default defineType({
       title: 'Page Content',
       group: 'main',
       description:
-        'The main content of the post. It can include text, post content, and embedded PDFs.',
+        '[EN, NL] The main content of the post. It can include text, post content, and embedded PDFs. ',
 
       type: 'array',
       of: [
@@ -305,6 +307,7 @@ export default defineType({
     defineField({
       name: 'galleryArrays',
       type: 'array',
+      description: '[EN]',
       title: 'Gallery arrays',
       of: [
         defineField({

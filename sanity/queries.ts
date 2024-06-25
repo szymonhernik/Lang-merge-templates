@@ -33,8 +33,9 @@ export const PROJECT_QUERY = groq`*[_type == "project" && slug.current == $slug]
         _type,
         audioLabel,
         audioFile {
-        _type,
+          _type,
           asset->{
+          playbackId,
             url
           }
         }

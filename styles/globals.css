@@ -135,3 +135,20 @@ pre[class*='language-'] {
 .slide-out {
   @apply transform -translate-x-full transition-transform duration-300 ease-in-out;
 }
+
+audio {
+  border-radius: 0 !important;
+}
+
+audio::-webkit-media-controls-panel {
+  background-color: white !important;
+  border-radius: 0 !important;
+}
+
+.tooltip {
+  @apply invisible absolute;
+}
+
+.has-tooltip:hover .tooltip {
+  @apply visible z-50;
+}

@@ -10,10 +10,11 @@ export const audioType = defineType({
       name: 'audioLabel',
       type: 'string',
     }),
+
     defineField({
+      title: 'Video file',
       name: 'audioFile',
-      type: 'file',
-      options: { accept: 'audio/*' },
+      type: 'mux.video',
     }),
   ],
 })
