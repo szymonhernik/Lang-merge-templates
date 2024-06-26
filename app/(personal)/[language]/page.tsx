@@ -51,7 +51,7 @@ export default async function Page({ params }) {
     queryParams,
     {
       perspective: isEnabled ? 'previewDrafts' : 'published',
-      next: { tags: ['home'] },
+      next: { tags: ['home, project'] },
     },
   )
 
