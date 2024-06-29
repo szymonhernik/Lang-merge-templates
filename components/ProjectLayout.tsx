@@ -138,15 +138,12 @@ export function ProjectLayout(props: ProjectLayoutProps) {
                   slugPage={slugPage}
                 />
               )} */}
-              {pageExtraMaterials &&
-                pageExtraMaterials?.length > 0 &&
-                pageExtraMaterials.filter((type) => type._type !== 'video')
-                  .length > 0 && (
-                  <PageExtraMaterials
-                    materials={pageExtraMaterials}
-                    filterType="non-video"
-                  />
-                )}
+              {pageExtraMaterials && pageExtraMaterials?.length > 0 && (
+                <PageExtraMaterials
+                  materials={pageExtraMaterials}
+                  filterType="non-video"
+                />
+              )}
             </div>
             <div className="font-medium space-y-2 md:max-w-screen-md mx-auto lg:text-sm lg:w-11/12 xl:w-3/4  lg:mx-0 lg:mb-12">
               <span className="opacity-50 font-medium lg:text-sm ">{year}</span>
