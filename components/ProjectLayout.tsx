@@ -87,7 +87,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
               <h1 className="text-3xl lg:text-4xl ">{title}</h1>
               {(relatedImageGallery || relatedProject) && (
                 <div className="space-y-4 mt-6">
-                  {relatedImageGallery && (
+                  {relatedImageGallery && relatedImageGallery.length > 0 && (
                     <div>
                       <h3 className="uppercase opacity-50 font-medium">
                         {language === 'en'
@@ -104,7 +104,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
                       ))}
                     </div>
                   )}
-                  {relatedProject && (
+                  {relatedProject && relatedProject.length > 0 && (
                     <div>
                       <h3 className="uppercase opacity-50 font-medium">
                         {language === 'en'
