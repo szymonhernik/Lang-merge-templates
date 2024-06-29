@@ -67,6 +67,68 @@ export default defineType({
       validation: (rule) =>
         rule.max(200).warning('SEO text should be short').required(),
     }),
+    defineField({
+      name: 'galleryArrays',
+      type: 'array',
+      description: '[EN]',
+      title: 'Gallery arrays',
+      of: [
+        defineField({
+          name: 'singleProjectGallery',
+          type: 'object',
+          title: 'Project gallery',
+          fields: [
+            defineField({
+              name: 'photoCredits',
+              type: 'array',
+              title: 'Photographs credits',
+              of: [
+                defineArrayMember({
+                  name: 'photographerArray',
+                  type: 'reference',
+                  title: 'Collaborators database',
+                  to: [{ type: 'collaborator' }],
+                }),
+              ],
+            }),
+            defineField({
+              name: 'images',
+              type: 'array',
+              of: [
+                defineField({
+                  name: 'image',
+                  type: 'image',
+                  fields: [
+                    {
+                      name: 'alt',
+                      type: 'string',
+                      title: 'Alternative text',
+                    },
+                  ],
+                }),
+              ],
+              options: {
+                layout: 'grid',
+              },
+            }),
+          ],
+          preview: {
+            select: {
+              authorsName: 'photoCredits.0.displayName',
+              previewImage: 'images.0.asset',
+            },
+            prepare(select) {
+              const { authorsName, previewImage } = select
+
+              return {
+                title: authorsName ? `Gallery by ${authorsName}` : 'Gallery',
+                media: previewImage ? previewImage : FiImage,
+              }
+            },
+          },
+        }),
+      ],
+    }),
 
     defineField({
       name: 'relatedImageGallery',
@@ -304,68 +366,7 @@ export default defineType({
         }),
       ],
     }),
-    defineField({
-      name: 'galleryArrays',
-      type: 'array',
-      description: '[EN]',
-      title: 'Gallery arrays',
-      of: [
-        defineField({
-          name: 'singleProjectGallery',
-          type: 'object',
-          title: 'Project gallery',
-          fields: [
-            defineField({
-              name: 'photoCredits',
-              type: 'array',
-              title: 'Photographs credits',
-              of: [
-                defineArrayMember({
-                  name: 'photographerArray',
-                  type: 'reference',
-                  title: 'Collaborators database',
-                  to: [{ type: 'collaborator' }],
-                }),
-              ],
-            }),
-            defineField({
-              name: 'images',
-              type: 'array',
-              of: [
-                defineField({
-                  name: 'image',
-                  type: 'image',
-                  fields: [
-                    {
-                      name: 'alt',
-                      type: 'string',
-                      title: 'Alternative text',
-                    },
-                  ],
-                }),
-              ],
-              options: {
-                layout: 'grid',
-              },
-            }),
-          ],
-          preview: {
-            select: {
-              authorsName: 'photoCredits.0.displayName',
-              previewImage: 'images.0.asset',
-            },
-            prepare(select) {
-              const { authorsName, previewImage } = select
 
-              return {
-                title: authorsName ? `Gallery by ${authorsName}` : 'Gallery',
-                media: previewImage ? previewImage : FiImage,
-              }
-            },
-          },
-        }),
-      ],
-    }),
     defineField({
       name: 'language',
       type: 'string',
