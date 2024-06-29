@@ -192,7 +192,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
               <PageContentModules pageContent={pageContent} />
             )}
 
-            {pageExtraMaterials &&
+            {/* {pageExtraMaterials &&
               pageExtraMaterials?.length > 0 &&
               pageExtraMaterials.filter((type) => type._type === 'video')
                 .length > 0 && (
@@ -200,7 +200,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
                   materials={pageExtraMaterials}
                   filterType="video"
                 />
-              )}
+              )} */}
           </div>
         </div>
       </section>
