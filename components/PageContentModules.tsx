@@ -46,28 +46,38 @@ const Module = ({
 }
 
 const TextBox = ({ module }: { module: TextBoxModule }) => {
-  return (
-    <div className="font-medium   md:max-w-screen-md lg:max-w-full md:mx-auto lg:text-base lg:space-y-4 space-y-4 ">
-      <p className="opacity-50 lg:text-sm uppercase">{module.headline}</p>
-      <CustomPortableText value={module.contents} />
-    </div>
-  )
+  if (module.contents) {
+    return (
+      <div className="font-medium   md:max-w-screen-md lg:max-w-full md:mx-auto lg:text-base lg:space-y-4 space-y-4 ">
+        {module.headline && (
+          <p className="opacity-50 lg:text-sm uppercase">{module.headline}</p>
+        )}
+        <CustomPortableText value={module.contents} />
+      </div>
+    )
+  } else {
+    return null
+  }
 }
 const PdfEmbed = ({ module }: { module: PDFEmbedModule }) => {
-  return (
-    <>
-      <iframe
-        src={module.pdfFile.asset.url}
-        width="100%"
-        height="600px"
-        className="border-b-[1px]"
-      ></iframe>
-      <p className="text-center mt-4 ">
-        {module.pdfFile.asset.originalFilename}
-      </p>
-      {/* <p>{module.pdfFile.asset._ref}</p> */}
-    </>
-  )
+  if (module.pdfFile.asset) {
+    return (
+      <>
+        <iframe
+          src={module.pdfFile.asset.url}
+          width="100%"
+          height="600px"
+          className="border-b-[1px]"
+        ></iframe>
+        <p className="text-center mt-4 ">
+          {module.pdfFile.asset.originalFilename}
+        </p>
+        {/* <p>{module.pdfFile.asset._ref}</p> */}
+      </>
+    )
+  } else {
+    return null
+  }
 }
 
 const VideoBlock = ({ module }: { module: VideoModule }) => {
@@ -75,36 +85,44 @@ const VideoBlock = ({ module }: { module: VideoModule }) => {
   const aspectRatio = videoProps.asset.data.aspect_ratio
   const [width, height] = aspectRatio.split(':').map(Number)
 
-  return (
-    <div className="w-full mx-auto h-auto max-w-lg lg:max-w-screen-md">
-      <AspectRatio
-        ratio={videoProps.asset.data.aspect_ratio ? width / height : 16 / 9}
-        className="bg-muted"
-      >
-        {videoProps && <VideoPlayer videoProps={videoProps} />}
-      </AspectRatio>
+  if (videoProps.asset) {
+    return (
+      <div className="w-full mx-auto h-auto max-w-lg lg:max-w-screen-md">
+        <AspectRatio
+          ratio={videoProps.asset.data.aspect_ratio ? width / height : 16 / 9}
+          className="bg-muted"
+        >
+          {videoProps && <VideoPlayer videoProps={videoProps} />}
+        </AspectRatio>
 
-      <caption className="block mt-2">{module.videoLabel}</caption>
-    </div>
-  )
+        <caption className="block mt-2">{module.videoLabel}</caption>
+      </div>
+    )
+  } else {
+    return null
+  }
 }
 const RenderImage = ({ module }: { module: ImageInlineModule }) => {
   const image = module
-  return (
-    <>
-      <ImageBox
-        classesWrapper={`mx-auto w-full max-w-lg lg:max-w-xl h-auto max-h-screen overflow-hidden `}
-        size="(max-width:640px) 100vw, (max-width: 768px) 50vw, 50vw"
-        width={image.asset.width}
-        height={image.asset.height}
-        classesImage="object-cover  object-center h-full w-auto "
-        image={image}
-        alt={image.alt || 'Project image'}
-      />
+  if (image.asset) {
+    return (
+      <>
+        <ImageBox
+          classesWrapper={`mx-auto w-full max-w-lg lg:max-w-xl h-auto max-h-screen overflow-hidden `}
+          size="(max-width:640px) 100vw, (max-width: 768px) 50vw, 50vw"
+          width={image.asset.width}
+          height={image.asset.height}
+          classesImage="object-cover  object-center h-full w-auto "
+          image={image}
+          alt={image.alt || 'Project image'}
+        />
 
-      {image.caption && <p className="text-center mt-4">{image.caption}</p>}
-    </>
-  )
+        {image.caption && <p className="text-center mt-4">{image.caption}</p>}
+      </>
+    )
+  } else {
+    return null
+  }
 }
 
 // EXAMPLE FETCH PAGE MODULES
