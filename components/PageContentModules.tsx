@@ -46,7 +46,7 @@ const Module = ({
 }
 
 const TextBox = ({ module }: { module: TextBoxModule }) => {
-  if (module.contents) {
+  if (module?.contents) {
     return (
       <div className="font-medium   md:max-w-screen-md lg:max-w-full md:mx-auto lg:text-base lg:space-y-4 space-y-4 ">
         {module.headline && (
@@ -60,7 +60,7 @@ const TextBox = ({ module }: { module: TextBoxModule }) => {
   }
 }
 const PdfEmbed = ({ module }: { module: PDFEmbedModule }) => {
-  if (module.pdfFile.asset) {
+  if (module?.pdfFile?.asset) {
     return (
       <>
         <iframe
@@ -82,10 +82,12 @@ const PdfEmbed = ({ module }: { module: PDFEmbedModule }) => {
 
 const VideoBlock = ({ module }: { module: VideoModule }) => {
   const videoProps = module.video
-  const aspectRatio = videoProps.asset.data.aspect_ratio
+  const aspectRatio = videoProps?.asset
+    ? videoProps.asset.data.aspect_ratio
+    : ''
   const [width, height] = aspectRatio.split(':').map(Number)
 
-  if (videoProps.asset) {
+  if (videoProps?.asset) {
     return (
       <div className="w-full mx-auto h-auto max-w-lg lg:max-w-screen-md">
         <AspectRatio
@@ -104,7 +106,7 @@ const VideoBlock = ({ module }: { module: VideoModule }) => {
 }
 const RenderImage = ({ module }: { module: ImageInlineModule }) => {
   const image = module
-  if (image.asset) {
+  if (image?.asset) {
     return (
       <>
         <ImageBox
