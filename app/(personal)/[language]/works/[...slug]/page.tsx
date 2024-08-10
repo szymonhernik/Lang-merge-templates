@@ -70,7 +70,6 @@ export default async function Page({
     return { ...translation, path }
   })
 
-  const slugPage = slug
   // const projectPaths = createProjectReachLinks(
   //   initial.data.portfolio.projects,
   //   initial.data.portfolio.slug,
