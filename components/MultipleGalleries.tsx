@@ -112,8 +112,14 @@ export function MultipleGalleries({
           return (
             <>
               {gallery.images.map((image, index) => {
-                // Define sizes based on aspect ratio
-
+                if (
+                  !image.asset ||
+                  !image.asset.url ||
+                  !image.asset.width ||
+                  !image.asset.height
+                ) {
+                  return null // Skip rendering this image
+                }
                 const isVertical = image.asset.aspectRatio < 1
 
                 let sizes
