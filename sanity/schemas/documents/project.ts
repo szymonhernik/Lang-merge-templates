@@ -233,7 +233,7 @@ export default defineType({
           description: 'Alternative text for screenreaders. ',
         }),
       ],
-      // validation: (rule) => rule.required(),
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'coverImageOptional',
