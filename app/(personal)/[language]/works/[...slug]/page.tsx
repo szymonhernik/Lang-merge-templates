@@ -64,8 +64,12 @@ export default async function Page({
   if (!initial.data) {
     notFound()
   }
+  console.log(initial.data.translations)
 
   const newTranslations = initial.data.translations.map((translation) => {
+    if (!translation.slug?.current) {
+      return null
+    }
     const path = `/${translation.language}/works/${translation.slug.current}`
     return { ...translation, path }
   })
