@@ -46,85 +46,81 @@ const Module = ({
 }
 
 const TextBox = ({ module }: { module: TextBoxModule }) => {
-  if (module?.contents) {
-    return (
-      <div className="font-medium   md:max-w-screen-md lg:max-w-full md:mx-auto lg:text-base lg:space-y-4 space-y-4 ">
-        {module.headline && (
-          <p className="opacity-50 lg:text-sm uppercase">{module.headline}</p>
-        )}
-        <CustomPortableText value={module.contents} />
-      </div>
-    )
-  } else {
+  if (!module.contents) {
     return null
   }
+
+  return (
+    <div className="font-medium   md:max-w-screen-md lg:max-w-full md:mx-auto lg:text-base lg:space-y-4 space-y-4 ">
+      {module.headline && (
+        <p className="opacity-50 lg:text-sm uppercase">{module.headline}</p>
+      )}
+      <CustomPortableText value={module.contents} />
+    </div>
+  )
 }
 const PdfEmbed = ({ module }: { module: PDFEmbedModule }) => {
-  if (module?.pdfFile?.asset) {
-    return (
-      <>
-        <iframe
-          src={module.pdfFile.asset.url}
-          width="100%"
-          height="600px"
-          className="border-b-[1px]"
-        ></iframe>
-        <p className="text-center mt-4 ">
-          {module.pdfFile.asset.originalFilename}
-        </p>
-        {/* <p>{module.pdfFile.asset._ref}</p> */}
-      </>
-    )
-  } else {
+  if (!module.pdfFile || !module.pdfFile.asset) {
     return null
   }
+  return (
+    <>
+      <iframe
+        src={module.pdfFile.asset.url}
+        width="100%"
+        height="600px"
+        className="border-b-[1px]"
+      ></iframe>
+      <p className="text-center mt-4 ">
+        {module.pdfFile.asset.originalFilename}
+      </p>
+      {/* <p>{module.pdfFile.asset._ref}</p> */}
+    </>
+  )
 }
 
 const VideoBlock = ({ module }: { module: VideoModule }) => {
   const videoProps = module.video
-  const aspectRatio = videoProps?.asset
-    ? videoProps.asset.data.aspect_ratio
-    : ''
+  if (!videoProps || !videoProps.asset) {
+    return null // Return null or some fallback UI if the necessary data isn't available
+  }
+  const aspectRatio = videoProps.asset.data.aspect_ratio || '16:9' // Provide a default aspect ratio
+
   const [width, height] = aspectRatio.split(':').map(Number)
 
-  if (videoProps?.asset) {
-    return (
-      <div className="w-full mx-auto h-auto max-w-lg lg:max-w-screen-md">
-        <AspectRatio
-          ratio={videoProps.asset.data.aspect_ratio ? width / height : 16 / 9}
-          className="bg-muted"
-        >
-          {videoProps && <VideoPlayer videoProps={videoProps} />}
-        </AspectRatio>
+  return (
+    <div className="w-full mx-auto h-auto max-w-lg lg:max-w-screen-md">
+      <AspectRatio
+        ratio={videoProps.asset.data.aspect_ratio ? width / height : 16 / 9}
+        className="bg-muted"
+      >
+        {videoProps && <VideoPlayer videoProps={videoProps} />}
+      </AspectRatio>
 
-        <caption className="block mt-2">{module.videoLabel}</caption>
-      </div>
-    )
-  } else {
-    return null
-  }
+      <caption className="block mt-2">{module.videoLabel}</caption>
+    </div>
+  )
 }
 const RenderImage = ({ module }: { module: ImageInlineModule }) => {
-  const image = module
-  if (image?.asset) {
-    return (
-      <>
-        <ImageBox
-          classesWrapper={`mx-auto w-full max-w-lg lg:max-w-xl h-auto max-h-screen overflow-hidden `}
-          size="(max-width:640px) 100vw, (max-width: 768px) 50vw, 50vw"
-          width={image.asset.width}
-          height={image.asset.height}
-          classesImage="object-cover  object-center h-full w-auto "
-          image={image}
-          alt={image.alt || 'Project image'}
-        />
-
-        {image.caption && <p className="text-center mt-4">{image.caption}</p>}
-      </>
-    )
-  } else {
+  if (!module.asset) {
     return null
   }
+  const image = module
+  return (
+    <>
+      <ImageBox
+        classesWrapper={`mx-auto w-full max-w-lg lg:max-w-xl h-auto max-h-screen overflow-hidden `}
+        size="(max-width:640px) 100vw, (max-width: 768px) 50vw, 50vw"
+        width={image.asset.width}
+        height={image.asset.height}
+        classesImage="object-cover  object-center h-full w-auto "
+        image={image}
+        alt={image.alt || 'Project image'}
+      />
+
+      {image.caption && <p className="text-center mt-4">{image.caption}</p>}
+    </>
+  )
 }
 
 // EXAMPLE FETCH PAGE MODULES
