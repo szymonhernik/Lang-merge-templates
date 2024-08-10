@@ -70,17 +70,7 @@ export default async function Page({
     return { ...translation, path }
   })
 
-  // const projectPaths = createProjectReachLinks(
-  //   initial.data.portfolio.projects,
-  //   initial.data.portfolio.slug,
-  // )
-  // const currentProjectIndex = projectPaths.findIndex((versions) =>
-  //   versions.find((project) => project.title === initial.data.title),
-  // )
-
   const translations = newTranslations
-
-  // const gallery = initial.data.portfolio.projects[0].projectGallery
 
   return (
     <>
