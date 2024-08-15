@@ -23,7 +23,7 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }): Promise<Metadata> {
-  const { language, slug } = params
+  const { language } = params
   const queryParams = { ...COMMON_PARAMS, language }
   const { isEnabled } = draftMode()
 
