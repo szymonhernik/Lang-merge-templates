@@ -11,6 +11,14 @@ import { AboutPagePayload, ContactPagePayload } from '@/types'
 import { urlForOpenGraphImage } from '@/sanity/lib/utils'
 import { ContactLayout } from '@/components/ContactLayout'
 
+export async function generateStaticParams() {
+  return i18n.languages.map((lang) => {
+    return {
+      language: lang.id,
+    }
+  })
+}
+
 export async function generateMetadata({ params }): Promise<Metadata> {
   const { language, slug } = params
   const { isEnabled } = draftMode()

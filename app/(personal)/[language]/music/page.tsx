@@ -14,6 +14,14 @@ import { MusicPagePayload } from '@/types'
 import { Suspense } from 'react'
 import { urlForOpenGraphImage } from '@/sanity/lib/utils'
 
+export async function generateStaticParams() {
+  return i18n.languages.map((lang) => {
+    return {
+      language: lang.id,
+    }
+  })
+}
+
 export async function generateMetadata({ params }): Promise<Metadata> {
   const { language, slug } = params
   const queryParams = { ...COMMON_PARAMS, language }
