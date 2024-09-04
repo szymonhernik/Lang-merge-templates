@@ -83,8 +83,8 @@ export function ProjectLayout(props: ProjectLayoutProps) {
           className={`${!isCoverImageShown && 'lg:shadow-shadowProject'} lg:bg-white lg:w-[40vw] lg:z-[10] lg:-mr-6 lg:pl-8 lg:pr-8 xl:pr-24 lg:pb-desktopSpace lg:pt-48 transition-shadow duration-700  lg:min-h-screen`}
         >
           <div className="lg:max-w-screen-sm flex flex-col gap-12">
-            <div className="my-8 flex flex-col gap-y-2 w-3/4 text-center mx-auto md:max-w-screen-md lg:text-left lg:w-[80%] lg:mx-0 ">
-              <h1 className="text-3xl lg:text-4xl ">{title}</h1>
+            <div className=" flex flex-col gap-y-2 w-3/4 text-center mx-auto md:max-w-screen-md lg:text-left lg:w-[80%] lg:mx-0 ">
+              <h1 className="text-3xl lg:text-4xl mt-8">{title}</h1>
               {(relatedImageGallery || relatedProject) && (
                 <div className="space-y-4 mt-6">
                   {relatedImageGallery && relatedImageGallery.length > 0 && (
@@ -145,7 +145,7 @@ export function ProjectLayout(props: ProjectLayoutProps) {
                 />
               )}
             </div>
-            <div className="font-medium space-y-2 md:max-w-screen-md mx-auto lg:text-sm lg:w-11/12 xl:w-3/4  lg:mx-0 lg:mb-12">
+            <div className="font-medium space-y-2 md:max-w-screen-md mx-auto lg:text-sm lg:w-11/12 xl:w-3/4  lg:mx-0 ">
               <span className="opacity-50 font-medium lg:text-sm ">{year}</span>
               {details?.length > 0 && <Prose value={details} />}
             </div>
@@ -174,8 +174,8 @@ export function ProjectLayout(props: ProjectLayoutProps) {
             </div>
 
             {text?.length && (
-              <div className="font-medium   md:max-w-screen-md lg:max-w-full md:mx-auto lg:text-base lg:space-y-4 space-y-4 ">
-                <p className="opacity-50 lg:text-sm">TEXT</p>
+              <div className="font-medium   md:max-w-screen-md lg:max-w-full md:mx-auto lg:text-base lg:space-y-2 space-y-4 ">
+                <p className="opacity-50 lg:text-sm">INFO</p>
                 <CustomPortableText value={text} />
               </div>
             )}
