@@ -30,8 +30,8 @@ export async function AboutLayout({ data, currentLanguage }: AboutLayoutProps) {
     <section className="py-mobileSpace md:pt-desktopSpace lg:pb-16 max-w-screen-3xl mx-auto">
       <PageTitle currentLanguage={currentLanguage} currentPage={'About'} />
 
-      <div className="pt-mobileSpace md:pt-0 p-6 about w-full flex flex-col md:flex-row gap-8 font-medium ">
-        <div className="lg:w-1/3 space-y-8">
+      <div className="pt-mobileSpace lg:pt-0 p-6 about w-full flex flex-col lg:flex-row gap-8 font-medium ">
+        <div className="lg:w-1/3 flex flex-col gap-8">
           {highlightedContent && (
             <p className="text-2xl">{highlightedContent}</p>
           )}
@@ -49,9 +49,9 @@ export async function AboutLayout({ data, currentLanguage }: AboutLayoutProps) {
               <Photocredits profilePicture={profilePicture.photographerArray} />
             </div>
           )}
-          <div className="max-w-screen-md mx-auto flex gap-8 flex-col">
+          <div className="max-w-screen-md mx-auto flex gap-4 flex-col ">
             {content && <CustomPortableText value={content} />}
-            <article className="flex flex-col gap-8 font-normal ">
+            <article className="flex mt-4 flex-col gap-8 font-normal ">
               {fileAssets &&
                 fileAssets.length &&
                 fileAssets.map((file) => {

@@ -27,5 +27,5 @@ export default function PageTitle({
       break
   }
 
-  return <h1 className={`text-center md:hidden `}>{title}</h1>
+  return <h1 className={`text-center lg:hidden `}>{title}</h1>
 }

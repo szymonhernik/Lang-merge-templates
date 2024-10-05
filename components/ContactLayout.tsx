@@ -24,10 +24,10 @@ export async function ContactLayout({
     <section className="py-mobileSpace md:pt-mobileSpace lg:pb-16 max-w-screen-3xl mx-auto">
       <PageTitle currentLanguage={currentLanguage} currentPage={'Contact'} />
 
-      <div className="pt-mobileSpace md:pt-0 p-6 about w-full flex flex-col md:flex-row gap-8 font-medium ">
+      <div className="pt-mobileSpace lg:pt-0 p-6 about w-full flex flex-col lg:flex-row gap-8 font-medium ">
         <div className="lg:w-1/2 space-y-16 ">
           <div className="max-w-screen-md  flex gap-4 flex-col">
-            <h1 className="text-xl hidden md:block">Contact</h1>
+            <h1 className="text-xl hidden lg:block">Contact</h1>
             {contactLink && contactLink.length > 0 && (
               <div className=" text-xl">
                 {contactLink.map((link, index) => {
