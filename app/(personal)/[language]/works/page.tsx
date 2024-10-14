@@ -30,7 +30,9 @@ export async function generateMetadata({ params }): Promise<Metadata> {
 
   return {
     title:
-      language === 'en' ? 'Home | Narges Mohammadi' : 'Home | Narges Mohammadi',
+      language === 'en'
+        ? 'Works | Narges Mohammadi'
+        : 'Werken | Narges Mohammadi',
     description: dataPage.data.text[language]
       ? dataPage.data.text[language]
       : '',
