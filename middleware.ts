@@ -30,7 +30,7 @@ export function middleware(request: NextRequest) {
   }
 
   // Handle .html pages and non-existent pages
-  if (pathname.endsWith('.html') || !isValidPath(pathname)) {
+  if (pathname.includes('.html') || !isValidPath(pathname)) {
     const locale = getLocale(request)
     return NextResponse.redirect(new URL(`/${locale}/`, request.url))
   }
@@ -54,18 +54,16 @@ export function middleware(request: NextRequest) {
   // Redirect if there is no locale
   if (pathnameIsMissingLocale) {
     const locale = getLocale(request)
-
-    // e.g. incoming request is /products
-    // The new URL is now /en-US/products
-    return NextResponse.redirect(new URL(`/${locale}/${pathname}`, request.url))
+    return NextResponse.redirect(new URL(`/${locale}${pathname}`, request.url))
   }
 }
 
 // Add this function to check if the path is valid
 function isValidPath(pathname: string): boolean {
-  // Add your valid paths here
-  const validPaths = ['/works', '/about', '/contact', '/music']
-  return validPaths.some((path) => pathname.startsWith(path))
+  const validPaths = ['/', '/works', '/about', '/contact', '/music']
+  return validPaths.some(
+    (path) => pathname === path || pathname.startsWith(`${path}/`),
+  )
 }
 
 export const config = {
