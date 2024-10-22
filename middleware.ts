@@ -35,16 +35,6 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL(`/${locale}/`, request.url))
   }
 
-  // `/_next/` and `/api/` are ignored by the watcher, but we need to ignore files in `public` manually.
-  if (
-    [
-      '/manifest.json',
-      '/favicon.ico',
-      // Your other files in `public`
-    ].includes(pathname)
-  )
-    return
-
   // Check if there is any supported locale in the pathname
   const pathnameIsMissingLocale = supportedLanguages.every(
     (locale) =>
@@ -67,6 +57,6 @@ function isValidPath(pathname: string): boolean {
 }
 
 export const config = {
-  // Matcher ignoring `/_next/` and `/api/`
-  matcher: ['/((?!api|_next|.*\\..*).*)'],
+  // Matcher including all paths except /studio, api, _next, and static files
+  matcher: ['/((?!studio|api|_next|.*\\..*).*)'],
 }
