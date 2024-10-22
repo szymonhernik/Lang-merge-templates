@@ -29,6 +29,12 @@ export function middleware(request: NextRequest) {
     return NextResponse.next()
   }
 
+  // Handle .html pages and non-existent pages
+  if (pathname.endsWith('.html') || !isValidPath(pathname)) {
+    const locale = getLocale(request)
+    return NextResponse.redirect(new URL(`/${locale}/`, request.url))
+  }
+
   // `/_next/` and `/api/` are ignored by the watcher, but we need to ignore files in `public` manually.
   if (
     [
@@ -53,6 +59,13 @@ export function middleware(request: NextRequest) {
     // The new URL is now /en-US/products
     return NextResponse.redirect(new URL(`/${locale}/${pathname}`, request.url))
   }
+}
+
+// Add this function to check if the path is valid
+function isValidPath(pathname: string): boolean {
+  // Add your valid paths here
+  const validPaths = ['/works', '/about', '/contact', '/music']
+  return validPaths.some((path) => pathname.startsWith(path))
 }
 
 export const config = {
