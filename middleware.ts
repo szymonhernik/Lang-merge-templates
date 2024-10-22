@@ -1,23 +1,19 @@
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
-
 import { i18n } from './languages'
-const supportedLanguages = i18n.languages.map((l) => l.id)
-
 import { match as matchLocale } from '@formatjs/intl-localematcher'
 import Negotiator from 'negotiator'
 
+const supportedLanguages = i18n.languages.map((l) => l.id)
+
 function getLocale(request: NextRequest): string | undefined {
-  // Negotiator expects plain object so we need to transform headers
   const negotiatorHeaders: Record<string, string> = {}
   request.headers.forEach((value, key) => (negotiatorHeaders[key] = value))
 
-  // Use negotiator and intl-localematcher to get best locale
-  let languages =
+  const languages =
     new Negotiator({ headers: negotiatorHeaders }).languages() ?? []
-
-  // @ts-ignore locales are readonly
   const locales: string[] = supportedLanguages
+
   return matchLocale(languages, locales, i18n.base)
 }
 
@@ -29,34 +25,55 @@ export function middleware(request: NextRequest) {
     return NextResponse.next()
   }
 
-  // Handle .html pages and non-existent pages
-  if (pathname.includes('.html') || !isValidPath(pathname)) {
-    const locale = getLocale(request)
-    return NextResponse.redirect(new URL(`/${locale}/`, request.url))
+  // Ignore certain paths (/_next/, /api/, etc.)
+  if (['/manifest.json', '/favicon.ico'].includes(pathname)) return
+
+  // Remove .html extensions
+  if (pathname.endsWith('.html')) {
+    const cleanPath = pathname.replace('.html', '')
+    return NextResponse.redirect(new URL(cleanPath, request.url))
   }
 
-  // Check if there is any supported locale in the pathname
+  // Check if the pathname is missing a locale
   const pathnameIsMissingLocale = supportedLanguages.every(
     (locale) =>
       !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`,
   )
 
-  // Redirect if there is no locale
   if (pathnameIsMissingLocale) {
     const locale = getLocale(request)
-    return NextResponse.redirect(new URL(`/${locale}${pathname}`, request.url))
+    return NextResponse.redirect(new URL(`/${locale}/${pathname}`, request.url))
   }
+
+  // Catch-all: Redirect unknown paths to home page with the preferred locale
+  if (!isValidPath(pathname)) {
+    const locale = getLocale(request) || i18n.base
+    return NextResponse.redirect(new URL(`/${locale}`, request.url))
+  }
+
+  return NextResponse.next()
 }
 
-// Add this function to check if the path is valid
+// Utility function to check valid paths
 function isValidPath(pathname: string): boolean {
-  const validPaths = ['/', '/works', '/about', '/contact', '/music']
-  return validPaths.some(
-    (path) => pathname === path || pathname.startsWith(`${path}/`),
-  )
+  // List your valid paths here, or use dynamic checks based on your routing
+  const validPaths = [
+    '/en',
+    '/nl',
+    '/en/works',
+    '/nl/works',
+    '/en/about',
+    '/nl/about',
+    '/en/contact',
+    '/nl/contact',
+    '/en/music',
+    '/nl/music',
+    // Add more valid paths
+  ]
+
+  return validPaths.some((path) => pathname.startsWith(path))
 }
 
 export const config = {
-  // Matcher including all paths except /studio, api, _next, and static files
-  matcher: ['/((?!studio|api|_next|.*\\..*).*)'],
+  matcher: ['/((?!api|_next|.*\\..*).*)'],
 }
