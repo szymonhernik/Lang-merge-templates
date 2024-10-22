@@ -1,6 +1,9 @@
-import { LocalizedProject, ShowcaseWorksPageExtended } from '@/types'
-import { SanityDocument } from 'next-sanity'
+import { ShowcaseWorksPageExtended } from '@/types'
 import Link from 'next/link'
+
+import { i18n } from '@/languages'
+import { redirect } from 'next/navigation'
+const supportedLanguages = i18n.languages.map((l) => l.id)
 
 interface ProjectLinkProps {
   project: ShowcaseWorksPageExtended // replace with your actual project type
@@ -13,6 +16,12 @@ const ProjectLink: React.FC<ProjectLinkProps> = ({
   language,
   children,
 }) => {
+  // if language is not any of the i18n languages, use english
+  if (!supportedLanguages.includes(language)) {
+    // redirect to homepage english
+    redirect(`/en`)
+  }
+
   const href =
     project.portfolio && project.portfolio.projectsCount > 1
       ? `${language}/works/${project.portfolio.slug}/${project.currentSlug}`

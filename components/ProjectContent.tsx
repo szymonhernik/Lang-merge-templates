@@ -1,12 +1,6 @@
-import { Translation } from '@/lib/types'
-import { clsx } from 'clsx'
-import Link from 'next/link'
 import React, { PropsWithChildren } from 'react'
 
-import { SanityDocument } from 'next-sanity'
-import { createProjectReachLinks } from '@/lib/helpers'
 import ImageBox from './shared/ImageBox'
-import MultifaceProjects from './MultifaceProjects'
 import Title from './Title'
 import { ShowcaseWorksPageExtended } from '@/types'
 

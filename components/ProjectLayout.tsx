@@ -1,22 +1,13 @@
 'use client'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useState } from 'react'
 
 import Prose from './Prose'
-
-import { Gallery } from './Gallery'
-
-import { filterOutCurrentProject } from '@/lib/helpers'
-import PortfolioNavigator from './PortfolioNavigator'
 
 import Link from 'next/link'
 
 import ImageBox from './shared/ImageBox'
 import { CustomPortableText } from './CustomPortableText'
-import useMouse from '@react-hook/mouse-position'
-import { motion, useTransform } from 'framer-motion'
-import VideoBanner from './VideoBanner'
-import VideoPlayer from './shared/VideoPlayer'
-import AudioBox from './shared/AudioBox'
+
 import { InteractiveGallery } from './ProjectPage/InteractiveGallery'
 import PageExtraMaterials from './ProjectPage/PageExtraMaterials'
 import { LocalizedProject } from '@/types'
