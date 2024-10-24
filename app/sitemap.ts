@@ -11,12 +11,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const languages = ['en', 'nl']
 
   // Add root URL
-  const rootPage = [
-    {
-      url: baseUrl,
-      lastModified: new Date(),
-    },
-  ]
+  // const rootPage = [
+  //   {
+  //     url: baseUrl,
+  //     lastModified: new Date(),
+  //   },
+  // ]
 
   const staticPages = languages.flatMap((lang) =>
     routes.map((route) => ({
@@ -32,5 +32,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: new Date(),
   }))
 
-  return [...rootPage, ...staticPages, ...projectPages]
+  return [...staticPages, ...projectPages]
 }
