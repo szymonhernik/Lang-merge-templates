@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /studio
+
+Sitemap: https://nargesmohammadi.com/sitemap.xml
+

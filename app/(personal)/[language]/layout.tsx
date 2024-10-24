@@ -41,7 +41,9 @@ export default async function RootLayout(props) {
         lang={props.params.language}
         className={`${tonka.className} ${tonka_italic.variable}`}
       >
-        <head></head>
+        <head>
+          <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+        </head>
         <body className="font-sans bg-white text-gray-900">
           <Header />
           {props.children}
