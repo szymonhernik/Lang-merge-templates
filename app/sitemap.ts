@@ -2,7 +2,9 @@ import { MetadataRoute } from 'next'
 import { generateStaticSlugs } from '@/sanity/loader/generateStaticSlugs'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
+  const baseUrl = (
+    process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
+  ).replace(/\/$/, '')
 
   // Define static routes
   const routes = ['', 'about', 'music', 'contact', 'works']
@@ -18,7 +20,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const staticPages = languages.flatMap((lang) =>
     routes.map((route) => ({
-      url: `${baseUrl}/${lang}${route ? `/${route}` : ''}`,
+      url: `${baseUrl}/${lang}${route ? `/${route}` : ''}`.replace(/\/+/g, '/'),
       lastModified: new Date(),
     })),
   )
@@ -26,7 +28,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Generate project pages using generateStaticSlugs
   const projectSlugs = await generateStaticSlugs('project')
   const projectPages = projectSlugs.map((params) => ({
-    url: `${baseUrl}/${params.language}/works/${params.slug[0]}`,
+    url: `${baseUrl}/${params.language}/works/${params.slug[0]}`.replace(
+      /\/+/g,
+      '/',
+    ),
     lastModified: new Date(),
   }))
 
