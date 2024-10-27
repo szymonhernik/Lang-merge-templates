@@ -21,7 +21,7 @@ export async function generateMetadata(): Promise<Metadata> {
   )
 
   const ogImage = urlForOpenGraphImage(dataPage.data.ogImage)
-  const baseUrl = 'https://nargesmohammadi.com'
+  const baseUrl = 'https://www.nargesmohammadi.com'
 
   return {
     metadataBase: new URL('https://nargesmohammadi.com'),
