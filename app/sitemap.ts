@@ -7,30 +7,34 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ).replace(/\/+$/, '')
 
   // Define static routes
-  const routes = ['', 'about', 'music', 'contact', 'works']
+  const routes = ['about', 'music', 'contact', 'works']
   const languages = ['en', 'nl']
-
-  // Add root URL
-  // const rootPage = [
-  //   {
-  //     url: baseUrl,
-  //     lastModified: new Date(),
-  //   },
-  // ]
 
   const staticPages = languages.flatMap((lang) =>
     routes.map((route) => ({
       url: `${baseUrl}/${lang}${route ? `/${route}` : ''}`,
       lastModified: new Date(),
+      // Add priority and changefreq
+      priority: route === '' ? 1.0 : 0.8,
+      changefreq: 'weekly' as const,
     })),
   )
+  // Add home pages
+  const homePages = languages.map((lang) => ({
+    url: `${baseUrl}/${lang}`,
+    lastModified: new Date(),
+    priority: 1.0,
+    changefreq: 'weekly' as const,
+  }))
 
   // Generate project pages using generateStaticSlugs
   const projectSlugs = await generateStaticSlugs('project')
   const projectPages = projectSlugs.map((params) => ({
     url: `${baseUrl}/${params.language}/works/${params.slug[0]}`,
     lastModified: new Date(),
+    priority: 0.7,
+    changefreq: 'monthly' as const,
   }))
 
-  return [...staticPages, ...projectPages]
+  return [...homePages, ...staticPages, ...projectPages]
 }
