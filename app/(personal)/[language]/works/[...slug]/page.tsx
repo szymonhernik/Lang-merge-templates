@@ -31,12 +31,50 @@ export async function generateMetadata({ params }) {
   )
   const project = initial.data
   const ogImage = urlForOpenGraphImage(project?.coverImage)
+  const baseUrl = 'https://www.nargesmohammadi.com'
+
+  // Create language alternatives from translations
+  const languageAlternates =
+    initial.data.translations?.reduce((acc, translation) => {
+      if (translation?.language && translation?.slug) {
+        acc[translation.language] =
+          `${baseUrl}/${translation.language}/works/${translation.slug}`
+      }
+      return acc
+    }, {}) || {}
+
+  // Add current language if not in translations
+  if (!languageAlternates[language]) {
+    languageAlternates[language] = `${baseUrl}/${language}/works/${slugParams}`
+  }
 
   return {
-    title: project?.title + ' | Narges Mohammadi' ?? '',
-    description: project?.overview ?? '',
+    metadataBase: new URL(baseUrl),
+    title: `${initial.data.title} | Narges Mohammadi`,
+    description: initial.data.overview ?? '',
     openGraph: {
       images: ogImage ? [ogImage] : [],
+      locale: language,
+      type: 'article',
+      siteName: 'Narges Mohammadi',
+      url: `${baseUrl}/${language}/works/${slugParams}`,
+    },
+    alternates: {
+      canonical: `${baseUrl}/en/works/${
+        language === 'en'
+          ? slugParams
+          : initial.data.translations?.find((t) => t?.language === 'en')
+              ?.slug || slugParams
+      }`,
+      languages: languageAlternates,
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+      },
     },
   }
 }

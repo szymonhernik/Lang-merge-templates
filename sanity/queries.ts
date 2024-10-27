@@ -6,6 +6,16 @@ export const PROJECT_SLUGS_QUERY = groq`*[_type == "project" && defined(language
   title,
   coverImage,
   overview,
+  "translations": *[
+    _type == "translation.metadata" && 
+    ^._id in translations[].value._ref
+  ][0].translations[]{
+    ...(value->{
+      language,
+      "slug": slug.current,
+      title
+    })
+  }
 }`
 export const ABOUT_SLUGS_QUERY = groq`*[_type == "aboutPage" && defined(language) && defined(slug.current)]{
   language,
