@@ -2,9 +2,9 @@ import { MetadataRoute } from 'next'
 import { generateStaticSlugs } from '@/sanity/loader/generateStaticSlugs'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = (
-    process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
-  ).replace(/\/+$/, '')
+  const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000')
+    .replace(/\/+$/, '')
+    .replace(/^(https?:\/\/)/, '$1www.')
 
   // Define static routes
   const routes = ['about', 'music', 'contact', 'works']
