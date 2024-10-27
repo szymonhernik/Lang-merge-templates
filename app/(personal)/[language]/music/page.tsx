@@ -36,15 +36,35 @@ export async function generateMetadata({ params }): Promise<Metadata> {
     },
   )
   const ogImage = urlForOpenGraphImage(musicPage?.data.ogImage)
-
+  const baseUrl = 'https://www.nargesmohammadi.com'
   return {
+    metadataBase: new URL(baseUrl),
     title:
       language === 'en'
         ? 'Music | Narges Mohammadi'
         : 'Muziek | Narges Mohammadi',
-    description: musicPage.data.overview ? musicPage.data.overview : undefined,
+    description: musicPage.data.overview ?? '', // Fallback to empty string
     openGraph: {
       images: ogImage ? [ogImage] : [],
+      locale: language,
+      type: 'website',
+      siteName: 'Narges Mohammadi',
+      url: `${baseUrl}/${language}/music`,
+    },
+    alternates: {
+      canonical: `${baseUrl}/en/music`,
+      languages: {
+        en: `${baseUrl}/en/music`,
+        nl: `${baseUrl}/nl/music`,
+      },
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+      },
     },
   }
 }

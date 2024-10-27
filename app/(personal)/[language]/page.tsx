@@ -29,15 +29,33 @@ export async function generateMetadata({ params }): Promise<Metadata> {
   )
 
   const ogImage = urlForOpenGraphImage(dataPage.data.ogImage)
+  const baseUrl = 'https://www.nargesmohammadi.com'
 
   return {
-    title:
-      language === 'en' ? 'Home | Narges Mohammadi' : 'Home | Narges Mohammadi',
-    description: dataPage.data.text[language]
-      ? dataPage.data.text[language]
-      : '',
+    metadataBase: new URL(baseUrl),
+    title: 'Home | Narges Mohammadi', // Simplified title
+    description: dataPage.data.text[language] ?? '', // Fallback to empty string
     openGraph: {
       images: ogImage ? [ogImage] : [],
+      locale: language,
+      type: 'website',
+      siteName: 'Narges Mohammadi',
+      url: `${baseUrl}/${language}`, // Keep language-specific URL for OG
+    },
+    alternates: {
+      canonical: `${baseUrl}/en`,
+      languages: {
+        en: `${baseUrl}/en`,
+        nl: `${baseUrl}/nl`,
+      },
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+      },
     },
   }
 }

@@ -39,6 +39,15 @@ export function middleware(request: NextRequest) {
   )
     return
 
+  // Handle root path specifically
+  if (pathname === '/') {
+    const locale = getLocale(request)
+    return NextResponse.redirect(new URL(`/${locale}`, request.url), {
+      // Use 308 for permanent redirect
+      status: 308,
+    })
+  }
+
   // Check if there is any supported locale in the pathname
   const pathnameIsMissingLocale = supportedLanguages.every(
     (locale) =>
@@ -48,10 +57,13 @@ export function middleware(request: NextRequest) {
   // Redirect if there is no locale
   if (pathnameIsMissingLocale) {
     const locale = getLocale(request)
-
-    // e.g. incoming request is /products
-    // The new URL is now /en-US/products
-    return NextResponse.redirect(new URL(`/${locale}/${pathname}`, request.url))
+    return NextResponse.redirect(
+      new URL(`/${locale}${pathname}`, request.url),
+      {
+        // Use 308 for permanent redirect
+        status: 308,
+      },
+    )
   }
 }
 

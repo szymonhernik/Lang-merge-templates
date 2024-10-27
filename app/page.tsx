@@ -21,6 +21,7 @@ export async function generateMetadata(): Promise<Metadata> {
   )
 
   const ogImage = urlForOpenGraphImage(dataPage.data.ogImage)
+  const baseUrl = 'https://nargesmohammadi.com'
 
   return {
     metadataBase: new URL('https://nargesmohammadi.com'),
@@ -28,6 +29,17 @@ export async function generateMetadata(): Promise<Metadata> {
     description: dataPage.data.text['en'] ? dataPage.data.text['en'] : '',
     openGraph: {
       images: ogImage ? [ogImage] : [],
+    },
+    alternates: {
+      canonical: `${baseUrl}/en`,
+      languages: {
+        en: `${baseUrl}/en`,
+        nl: `${baseUrl}/nl`,
+      },
+    },
+    robots: {
+      index: false, // Don't index the root page
+      follow: true,
     },
   }
 }
