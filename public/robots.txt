@@ -2,5 +2,5 @@ User-agent: *
 Allow: /
 Disallow: /studio
 
-Sitemap: https://nargesmohammadi.com/sitemap.xml
+Sitemap: https://www.nargesmohammadi.com/sitemap.xml
 
