@@ -2,12 +2,11 @@
 
 import useMouse from '@react-hook/mouse-position'
 import React, { useState } from 'react'
-import { motion, useTransform } from 'framer-motion'
+import { motion } from 'framer-motion'
 import ImageBox from '../shared/ImageBox'
-import { Gallery } from '../Gallery'
 import { MultipleGalleries } from '../MultipleGalleries'
 
-type CursorText = { arrow: string; text: string } // For cases where you have an arrow and text
+type CursorText = { arrow: string; text: string }
 
 export function InteractiveGallery({
   galleryArrays,
@@ -105,10 +104,6 @@ export function InteractiveGallery({
       {/* Desktop Cover image */}
       {coverImage && (
         <>
-          {/* <div
-              className={`fixed top-0 left-0  z-[3] bg-gradient-to-b from-black opacity-50 w-[44vw] h-72 ${!isCoverImageShown && 'hidden'}`}
-            ></div> */}
-          {/* this has 44vw width */}
           <div
             className={`hidden lg:block fixed top-0 left-0 h-screen   z-[3] transition-all duration-500 ${galleryArrays && galleryArrays.length > 0 ? 'hover:cursor-pointer pr-[16vw] w-[60vw]' : 'pr-0 w-[50vw]'}  ${isCoverImageShown ? 'translate-x-0' : '-translate-x-full'}`}
             onClick={

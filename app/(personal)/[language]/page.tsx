@@ -33,14 +33,14 @@ export async function generateMetadata({ params }): Promise<Metadata> {
 
   return {
     metadataBase: new URL(baseUrl),
-    title: 'Home | Narges Mohammadi', // Simplified title
-    description: dataPage.data.text[language] ?? '', // Fallback to empty string
+    title: 'Home | Narges Mohammadi',
+    description: dataPage.data.text[language] ?? '',
     openGraph: {
       images: ogImage ? [ogImage] : [],
       locale: language,
       type: 'website',
       siteName: 'Narges Mohammadi',
-      url: `${baseUrl}/${language}`, // Keep language-specific URL for OG
+      url: `${baseUrl}/${language}`,
     },
     alternates: {
       canonical: `${baseUrl}/en`,

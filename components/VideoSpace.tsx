@@ -18,7 +18,6 @@ export default function VideoSpace({
 }: Props) {
   return (
     <MuxVideo
-      // className="w-full h-full object-cover object-center"
       playsInline={true}
       className={`w-full  ${classesImage}`}
       playbackId={playbackId}

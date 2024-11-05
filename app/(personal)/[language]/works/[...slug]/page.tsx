@@ -104,15 +104,13 @@ export default async function Page({
   }
   console.log(initial.data.translations)
 
-  const newTranslations = initial.data.translations.map((translation) => {
+  const translations = initial.data.translations.map((translation) => {
     if (!translation.slug?.current) {
       return null
     }
     const path = `/${translation.language}/works/${translation.slug.current}`
     return { ...translation, path }
   })
-
-  const translations = newTranslations
 
   return (
     <>
@@ -131,7 +129,6 @@ export default async function Page({
           data={{
             ...initial.data,
           }}
-          // gallery={gallery}
         />
       </LiveQueryWrapper>
     </>

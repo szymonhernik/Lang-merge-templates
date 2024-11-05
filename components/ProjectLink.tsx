@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation'
 const supportedLanguages = i18n.languages.map((l) => l.id)
 
 interface ProjectLinkProps {
-  project: ShowcaseWorksPageExtended // replace with your actual project type
+  project: ShowcaseWorksPageExtended
   language: string
   children: React.ReactNode
 }

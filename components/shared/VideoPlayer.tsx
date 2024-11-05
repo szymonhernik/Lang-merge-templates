@@ -9,7 +9,6 @@ export default function VideoPlayer({ videoProps }) {
     aspectRatioFormatted = aspectRatio.replace(':', '/')
   }
 
-  // console.log('aspectRatio', aspectRatio)
   return (
     <MuxPlayer
       theme="minimal"

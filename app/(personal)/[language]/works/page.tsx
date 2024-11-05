@@ -21,7 +21,6 @@ export async function generateMetadata({ params }): Promise<Metadata> {
     SETTINGS_QUERY,
     queryParams,
     {
-      // perspective: isEnabled ? 'previewDrafts' : 'published',
       next: { tags: ['settings'] },
     },
   )
@@ -35,13 +34,13 @@ export async function generateMetadata({ params }): Promise<Metadata> {
       language === 'en'
         ? 'Works | Narges Mohammadi'
         : 'Werken | Narges Mohammadi',
-    description: dataPage.data.text[language] ?? '', // Fallback to empty string
+    description: dataPage.data.text[language] ?? '',
     openGraph: {
       images: ogImage ? [ogImage] : [],
       locale: language,
       type: 'website',
       siteName: 'Narges Mohammadi',
-      url: `${baseUrl}/${language}/works`, // Keep language-specific URL for OG
+      url: `${baseUrl}/${language}/works`,
     },
 
     alternates: {
@@ -101,7 +100,10 @@ export default async function Page({ params }) {
         params={isEnabled ? queryParams : DEFAULT_EMPTY_PARAMS}
         initial={worksInitial}
       >
-        <WorksLayout localizedProjects={localizedProjects} />
+        <WorksLayout
+          localizedProjects={localizedProjects}
+          language={language}
+        />
       </LiveQueryWrapper>
     </>
   )

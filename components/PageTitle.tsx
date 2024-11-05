@@ -1,7 +1,6 @@
-// Define a type for the component props
 type PageTitleProps = {
-  currentLanguage: string // Assuming only English and Dutch are supported
-  currentPage: 'About' | 'Music' | 'Works' | 'Contact' // Extend this list if there are more pages
+  currentLanguage: string
+  currentPage: 'About' | 'Music' | 'Works' | 'Contact'
 }
 
 export default function PageTitle({
@@ -23,7 +22,7 @@ export default function PageTitle({
       title = currentLanguage === 'en' ? 'Works' : 'Werken'
       break
     default:
-      title = '' // Handle undefined or other pages
+      title = ''
       break
   }
 

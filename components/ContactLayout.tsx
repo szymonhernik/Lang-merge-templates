@@ -1,12 +1,6 @@
-import Image from 'next/image'
-import Prose from './Prose'
-import ImageBox from './shared/ImageBox'
 import { ContactPagePayload } from '@/types'
 import { CustomPortableText } from './CustomPortableText'
-import { i18n } from '@/languages'
 import PageTitle from './PageTitle'
-import Photocredits from './Photocredits'
-import PDFAsset from './shared/PDFAsset'
 
 type ContactLayoutProps = {
   data: ContactPagePayload | null
@@ -17,8 +11,7 @@ export async function ContactLayout({
   data,
   currentLanguage,
 }: ContactLayoutProps) {
-  const { _id, title, slug, contactLink, colophon } = data ?? {}
-  // console.log('fileAssets', fileAssets)
+  const { contactLink, colophon } = data ?? {}
 
   return (
     <section className="py-mobileSpace md:pt-mobileSpace lg:pb-16 max-w-screen-3xl mx-auto">
@@ -30,7 +23,7 @@ export async function ContactLayout({
             <h1 className="text-xl hidden lg:block">Contact</h1>
             {contactLink && contactLink.length > 0 && (
               <div className=" text-xl">
-                {contactLink.map((link, index) => {
+                {contactLink.map((link) => {
                   return (
                     <p key={link._key} className="lowercase">
                       {link.title}:{' '}

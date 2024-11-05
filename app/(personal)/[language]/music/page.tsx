@@ -70,7 +70,7 @@ export async function generateMetadata({ params }): Promise<Metadata> {
 }
 
 export default async function Page({ params }) {
-  const { language, slug } = params
+  const { language } = params
   const currentLanguage = language
 
   const queryParams = { ...COMMON_PARAMS, language }
@@ -94,12 +94,10 @@ export default async function Page({ params }) {
 
   return (
     <>
-      <Suspense fallback={null}>
-        <UpdateLangContext
-          currentLanguage={language}
-          translations={translations}
-        />
-      </Suspense>
+      <UpdateLangContext
+        currentLanguage={language}
+        translations={translations}
+      />
 
       <MusicLayout data={initial.data} currentLanguage={currentLanguage} />
     </>

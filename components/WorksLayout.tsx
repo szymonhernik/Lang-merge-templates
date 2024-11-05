@@ -1,8 +1,3 @@
-'use client'
-
-import { useParams } from 'next/navigation'
-import { SanityDocument } from 'next-sanity'
-
 import React from 'react'
 import Link from 'next/link'
 import ProjectContent from './ProjectContent'
@@ -12,15 +7,12 @@ import { ShowcaseWorksPageExtended } from '@/types'
 
 type WorksLayoutProps = {
   localizedProjects: ShowcaseWorksPageExtended[]
+  language: string
 }
 
 export function WorksLayout(props: WorksLayoutProps) {
-  const params = useParams()
+  const { language } = props
   const localizedProjects = props.localizedProjects
-
-  const language = Array.isArray(params.language)
-    ? params.language[0]
-    : params.language
 
   return (
     <section className="w-full py-mobileSpace lg:pt-desktopSpace lg:pb-16">

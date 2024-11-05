@@ -48,7 +48,7 @@ export default function RootPage() {
   // This page will not be rendered due to middleware redirect
   return (
     <div>
-      <h1>Welcome to Narges Mohammadi's Portfolio</h1>
+      <h1>Welcome to my page</h1>
       <p>Please select a language to continue.</p>
     </div>
   )

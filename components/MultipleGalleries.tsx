@@ -7,17 +7,9 @@ import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/navigation'
 
-import React, { Suspense, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from './ui/dialog'
+import { Dialog, DialogClose, DialogContent, DialogTrigger } from './ui/dialog'
 import { LocalizedProject } from '@/types'
 
 interface PropsInterface {
@@ -37,13 +29,13 @@ export function MultipleGalleries({
   const [isMobile, setIsMobile] = useState(false)
 
   const photographers = galleryArrays.map((gallery) => {
-    {
-      if (gallery.photoCredits && gallery.photoCredits[0]) {
-        return gallery.photoCredits[0].displayName
-      } else {
-        return null
+    if (gallery.photoCredits && gallery.photoCredits[0]) {
+      return {
+        displayName: gallery.photoCredits[0].displayName,
+        url: gallery.photoCredits[0].collaboratorUrl,
       }
     }
+    return null
   })
   const [currentPhotographer, setCurrentPhotographer] = useState(
     photographers[0],
@@ -162,9 +154,6 @@ export function MultipleGalleries({
                             className="bg-transparent  w-screen h-screen items-center p-0 justify-center"
                           >
                             <DialogClose asChild>
-                              {/* <div
-                            className={`aspect-[${Math.round(image.asset.width)}/${Math.round(image.asset.height)}]`}
-                          > */}
                               <Image
                                 src={`${image.asset.url}?w=${Math.round(image.asset.width / 1.5)}&h=${Math.round(image.asset.height / 1.5)}`}
                                 width={Math.round(image.asset.width)}
@@ -175,7 +164,6 @@ export function MultipleGalleries({
                                 blurDataURL={image.asset.lqip}
                                 placeholder="blur"
                               />
-                              {/* </div> */}
                             </DialogClose>
                           </DialogContent>
                         </Dialog>
@@ -192,7 +180,18 @@ export function MultipleGalleries({
           className={`w-full text-center lg:text-left lg:ml-12 lg:mt-6  font-medium text-sm mt-4 transition-opacity duration-700 ${isGalleryActive ? 'lg:opacity-100' : 'lg:opacity-0'}`}
         >
           Photography by{' '}
-          <span className="underline">{currentPhotographer}</span>
+          {currentPhotographer.url ? (
+            <a
+              href={currentPhotographer.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline"
+            >
+              {currentPhotographer.displayName}
+            </a>
+          ) : (
+            <span>{currentPhotographer.displayName}</span>
+          )}
         </div>
       )}
     </>

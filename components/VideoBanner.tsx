@@ -21,6 +21,7 @@ export default async function VideoBanner({
   classesImage,
 }: Props) {
   const playbackId = videoBanner.asset.playbackId
+  // generate a blurHash placeholder and passe to VideoSpace for rendering
   const blurHashBase64 = await getBlurHash(playbackId)
 
   return (

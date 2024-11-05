@@ -30,20 +30,12 @@ export function ProjectLayout(props: ProjectLayoutProps) {
     year,
     pageExtraMaterials,
     language,
-    slug,
     text,
     relatedImageGallery,
     relatedProject,
   } = props.data ?? {}
 
-  // const { projects } = portfolio ?? {}
-  // const gallery = defaultLangDocument?.galleryArrays[0]
   const galleryArrays = defaultLangDocument?.galleryArrays
-
-  // const otherProjects = useMemo(
-  //   () => filterOutCurrentProject(projects, slug.current, language),
-  //   [projects, slug, language],
-  // )
 
   const [isCoverImageShown, setIsCoverImageShown] = useState(true)
 
@@ -55,7 +47,6 @@ export function ProjectLayout(props: ProjectLayoutProps) {
   return (
     <>
       <InteractiveGallery
-        // gallery={gallery}
         galleryArrays={galleryArrays}
         coverImage={coverImage}
         onCoverImageVisibilityChange={handleCoverImageVisibility}
@@ -114,26 +105,9 @@ export function ProjectLayout(props: ProjectLayoutProps) {
                   )}
                 </div>
               )}
-              {/* {year && (
-                <span className="opacity-50 font-medium lg:text-sm">
-                  {year}
-                </span>
-              )} */}
-              {/* Reference from the portfolio that is a group */}
-              {/* {portfolio.projects.length > 1 && (
-                <PortfolioNavigator
-                  portfolio={portfolio}
-                  title={title}
-                  language={language}
-                  otherProjects={otherProjects}
-                  slugPage={slugPage}
-                />
-              )} */}
+
               {pageExtraMaterials && pageExtraMaterials?.length > 0 && (
-                <PageExtraMaterials
-                  materials={pageExtraMaterials}
-                  filterType="non-video"
-                />
+                <PageExtraMaterials materials={pageExtraMaterials} />
               )}
             </div>
             <div className="font-medium space-y-2 md:max-w-screen-md mx-auto lg:text-sm lg:w-11/12 xl:w-3/4  lg:mx-0 ">
@@ -179,16 +153,6 @@ export function ProjectLayout(props: ProjectLayoutProps) {
             {pageContent && pageContent.length > 0 && (
               <PageContentModules pageContent={pageContent} />
             )}
-
-            {/* {pageExtraMaterials &&
-              pageExtraMaterials?.length > 0 &&
-              pageExtraMaterials.filter((type) => type._type === 'video')
-                .length > 0 && (
-                <PageExtraMaterials
-                  materials={pageExtraMaterials}
-                  filterType="video"
-                />
-              )} */}
           </div>
         </div>
       </section>

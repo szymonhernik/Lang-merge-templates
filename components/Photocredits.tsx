@@ -1,4 +1,12 @@
-export default function Photocredits({ profilePicture }) {
+export default function Photocredits({
+  profilePicture,
+}: {
+  profilePicture: {
+    _id: string
+    displayName: string
+    collaboratorUrl: string
+  }
+}) {
   return (
     <>
       {profilePicture && (

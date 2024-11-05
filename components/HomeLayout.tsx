@@ -1,7 +1,4 @@
 'use client'
-import { SanityDocument } from 'next-sanity'
-
-import ImageBox from './shared/ImageBox'
 import ProjectLink from './ProjectLink'
 
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -12,11 +9,7 @@ import 'swiper/css'
 // import required modules
 import { Autoplay } from 'swiper/modules'
 import Background from './shared/Background'
-import {
-  HomeQueryResult,
-  LocalizedProject,
-  ShowcaseWorksPageExtended,
-} from '@/types'
+import { ShowcaseWorksPageExtended } from '@/types'
 
 type HomeLayoutProps = {
   localizedProjects: ShowcaseWorksPageExtended[]
@@ -24,7 +17,6 @@ type HomeLayoutProps = {
 }
 
 export function HomeLayout({ localizedProjects, language }: HomeLayoutProps) {
-  // console.log('localizedProjects', localizedProjects)
   return (
     <div className="w-screen h-dvh lg:h-screen overflow-hidden absolute top-0 left-0">
       <div className="fixed top-0 left-0  z-[2] bg-gradient-to-b from-black opacity-70 w-screen h-72"></div>

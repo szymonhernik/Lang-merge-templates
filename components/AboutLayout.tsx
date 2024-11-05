@@ -1,9 +1,6 @@
-import Image from 'next/image'
-import Prose from './Prose'
 import ImageBox from './shared/ImageBox'
 import { AboutPagePayload } from '@/types'
 import { CustomPortableText } from './CustomPortableText'
-import { i18n } from '@/languages'
 import PageTitle from './PageTitle'
 import Photocredits from './Photocredits'
 import PDFAsset from './shared/PDFAsset'
@@ -14,17 +11,7 @@ type AboutLayoutProps = {
 }
 
 export async function AboutLayout({ data, currentLanguage }: AboutLayoutProps) {
-  const {
-    _id,
-    title,
-    slug,
-    content,
-    language,
-    profilePicture,
-    highlightedContent,
-    fileAssets,
-  } = data ?? {}
-  // console.log('fileAssets', fileAssets)
+  const { content, profilePicture, highlightedContent, fileAssets } = data ?? {}
 
   return (
     <section className="py-mobileSpace md:pt-desktopSpace lg:pb-16 max-w-screen-3xl mx-auto">
@@ -57,7 +44,7 @@ export async function AboutLayout({ data, currentLanguage }: AboutLayoutProps) {
                 fileAssets.map((file) => {
                   return (
                     <div key={file._key} className="flex flex-col gap-4">
-                      <h3 className="font-medium  ">{file.fileTitle} </h3>
+                      <h3 className="font-medium ">{file.fileTitle} </h3>
                       <PDFAsset classWrapper={'w-fit'} file={file.fileAbout} />
                     </div>
                   )

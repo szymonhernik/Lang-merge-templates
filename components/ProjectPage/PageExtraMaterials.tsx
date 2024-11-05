@@ -1,9 +1,7 @@
 import AudioBox from '../shared/AudioBox'
 import PDFAsset from '../shared/PDFAsset'
-import VideoPlayer from '../shared/VideoPlayer'
-import { AspectRatio } from '@/components/ui/aspect-ratio'
 
-export default function PageExtraMaterials({ materials, filterType }) {
+export default function PageExtraMaterials({ materials }) {
   return (
     <div className="py-4 flex flex-col gap-4 justify-center items-center lg:items-start w-full ">
       {materials.map((mat) => {

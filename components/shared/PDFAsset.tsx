@@ -1,12 +1,20 @@
+interface FileAbout {
+  _type: 'file'
+  asset: {
+    url: string
+    originalFilename?: string
+  }
+}
 export default function PDFAsset({
   file,
   classItem = '',
   classWrapper,
 }: {
-  file: any
+  file: FileAbout
   classItem?: string
   classWrapper: string
 }) {
+  const filename = file.asset.originalFilename || 'Download PDF'
   return (
     <div className={`${classWrapper}`}>
       <a
@@ -14,16 +22,16 @@ export default function PDFAsset({
         rel="noopener noreferrer"
         className="w-fit"
         download
-        href={`${file.asset.url}?dl=${file.asset.originalFilename}`}
+        href={`${file.asset.url}?dl=${filename}`}
       >
         <div
           className={` border-black border-[0.5px] px-2 py-2 lg:py-2 lg:px-4 hover:bg-stone-200 ${classItem}`}
         >
           PDF{' '}
           <span className=" text-gray-500 text-sm ">
-            {file.asset.originalFilename.length > 16
-              ? `${file.asset.originalFilename.slice(0, 14)}(...)`
-              : file.asset.originalFilename.slice(0, -4)}
+            {filename.length > 16
+              ? `${filename.slice(0, 14)}(...)`
+              : filename.slice(0, -4)}
           </span>
         </div>
       </a>

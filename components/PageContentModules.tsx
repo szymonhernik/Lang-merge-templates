@@ -13,7 +13,7 @@ import ImageBox from './shared/ImageBox'
 type PageContentsProps = {
   pageContent: LocalizedProject['pageContent']
 }
-// cll
+
 export default function PageContentModules(props: PageContentsProps) {
   const { pageContent } = props
 
@@ -74,7 +74,6 @@ const PdfEmbed = ({ module }: { module: PDFEmbedModule }) => {
       <p className="text-center mt-4 ">
         {module.pdfFile.asset.originalFilename}
       </p>
-      {/* <p>{module.pdfFile.asset._ref}</p> */}
     </>
   )
 }
@@ -82,9 +81,9 @@ const PdfEmbed = ({ module }: { module: PDFEmbedModule }) => {
 const VideoBlock = ({ module }: { module: VideoModule }) => {
   const videoProps = module.video
   if (!videoProps || !videoProps.asset) {
-    return null // Return null or some fallback UI if the necessary data isn't available
+    return null
   }
-  const aspectRatio = videoProps.asset.data.aspect_ratio || '16:9' // Provide a default aspect ratio
+  const aspectRatio = videoProps.asset.data.aspect_ratio || '16:9'
 
   const [width, height] = aspectRatio.split(':').map(Number)
 
@@ -122,68 +121,3 @@ const RenderImage = ({ module }: { module: ImageInlineModule }) => {
     </>
   )
 }
-
-// EXAMPLE FETCH PAGE MODULES
-// [
-//   {
-//       "pdfFile": {
-//           "asset": {
-//               "url": "https://cdn.sanity.io/files/iyrz6cpc/production/e600ed04bb7657ce8f210a3848815932eec76d5a.pdf",
-//               "originalFilename": "Melisa Can-In Your Touch, I Remain EN.pdf"
-//           }
-//       },
-//       "_type": "pdfEmbed",
-//       "_key": "0bb0aeb32311"
-//   },
-//   {
-//       "_key": "069cfe826a72",
-//       "headline": "Credits",
-//       "contents": [
-//           {
-//               "_key": "18ccad606ddd",
-//               "markDefs": [],
-//               "children": [
-//                   {
-//                       "text": "In Your Touch, I Remain",
-//                       "_key": "b399fc2bcce6",
-//                       "_type": "span",
-//                       "marks": [
-//                           "em"
-//                       ]
-//                   },
-//                   {
-//                       "marks": [],
-//                       "text": " explores the notion of residue as a connecting link between the past and the present, and as a testament to the formative impact the previous generations had on our reality. Starting from my designation of the 'residue' as the traces of our (ancestors) parents that remain in our bodies, the group exhibition approaches themes around 'the bodily', touch and intimacy, memory, skin, polyphony and tactility.",
-//                       "_key": "56a23f18d074",
-//                       "_type": "span"
-//                   }
-//               ],
-//               "_type": "block",
-//               "style": "normal"
-//           }
-//       ],
-//       "_type": "textBox"
-//   },
-//   {
-//       "videoLabel": "Innn",
-//       "_type": "video",
-//       "video": {
-//           "_type": "mux.video",
-//           "asset": {
-//               "_weak": true,
-//               "_ref": "8f7c44a7-0ee4-4733-aa09-c67862d28111",
-//               "_type": "reference"
-//           }
-//       },
-//       "_key": "d9b1aa8ad7fb"
-//   },
-//   {
-//       "_type": "imageInline",
-//       "caption": "Poster",
-//       "_key": "dddac9200f29",
-//       "asset": {
-//           "_ref": "image-05edec0bdcd25c9dbd65a39fc93f3d332b6935a0-2400x1702-jpg",
-//           "_type": "reference"
-//       }
-//   }
-// ]

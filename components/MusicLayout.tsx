@@ -1,9 +1,5 @@
-import Image from 'next/image'
-import Prose from './Prose'
-import ImageBox from './shared/ImageBox'
 import { MusicPagePayload } from '@/types'
 import { CustomPortableText } from './CustomPortableText'
-import VideoSpace from './VideoSpace'
 import VideoBanner from './VideoBanner'
 import { Suspense } from 'react'
 import PageTitle from './PageTitle'
@@ -14,10 +10,7 @@ type MusicLayoutProps = {
 }
 
 export async function MusicLayout({ data, currentLanguage }: MusicLayoutProps) {
-  const { _id, title, slug, summary, content, language, videoBanner, link } =
-    data ?? {}
-
-  // console.log(videoBanner.video)
+  const { content, videoBanner, link } = data ?? {}
 
   return (
     <section className="bg-black flex lg:flex-col flex-col-reverse pt-mobileSpace lg:pt-0 ">
@@ -39,7 +32,7 @@ export async function MusicLayout({ data, currentLanguage }: MusicLayoutProps) {
           </Suspense>
         )}
       </div>
-      <div className="z-[10] bg-black    text-white relative">
+      <div className="z-[10] bg-black  text-white relative">
         <PageTitle currentLanguage={currentLanguage} currentPage={'Music'} />
 
         <div className=" p-6 about flex flex-row gap-8 container mx-auto text-lg lg:text-xl">
