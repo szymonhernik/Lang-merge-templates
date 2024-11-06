@@ -1,15 +1,4 @@
-import {
-  FiAward,
-  FiFilter,
-  FiType,
-  FiUsers,
-  FiAtSign,
-  FiMusic,
-  FiInfo,
-  FiAlignLeft,
-  FiImage,
-  FiGrid,
-} from 'react-icons/fi'
+import { FiUsers, FiAtSign, FiMusic, FiAlignLeft, FiGrid } from 'react-icons/fi'
 import {
   StructureResolver,
   DefaultDocumentNodeResolver,
@@ -19,29 +8,28 @@ import { i18n } from '../../languages'
 import home from '@/sanity/schemas/singletons/home'
 import settings from '@/sanity/schemas/singletons/settings'
 import { apiVersion } from '@/sanity/env'
-import { orderableDocumentListDeskItem } from '@sanity/orderable-document-list'
 
 export const structure: StructureResolver = (S, context) => {
   // Define the custom 'home' document list item
   const homeListItem = S.listItem()
-    .title('Home') // Assuming home schema has a title field
-    .icon(home.icon) // Assuming home schema has an icon field
+    .title('Home')
+    .icon(home.icon)
     .child(
       S.editor()
         .title('Home')
-        .id(home.name) // Assuming home schema has a name field, like 'home'
-        .schemaType(home.name) // Same as the ID, typically
-        .documentId(home.name), // This ensures it points to the specific singleton document
+        .id(home.name)
+        .schemaType(home.name)
+        .documentId(home.name),
     )
   const settingsListItem = S.listItem()
-    .title('Settings') // Assuming settings schema has a title field
-    .icon(settings.icon) // Assuming settings schema has an icon field
+    .title('Settings')
+    .icon(settings.icon)
     .child(
       S.editor()
         .title('Settings')
-        .id(settings.name) // Assuming settings schema has a name field, like 'settings'
-        .schemaType(settings.name) // Same as the ID, typically
-        .documentId(settings.name), // This ensures it points to the specific singleton document
+        .id(settings.name)
+        .schemaType(settings.name)
+        .documentId(settings.name),
     )
 
   // Get the default list items, but filter out 'home' if it's there by default
@@ -89,11 +77,9 @@ export const structure: StructureResolver = (S, context) => {
                         // TODO: Handle **existing** documents (like search results when clicked)
                         // to return `true` on the correct language list!
                         if (intentName === 'edit') {
-                          // return params?.language === language.id
                           return false
                         }
                         if (intentName === 'create') {
-                          // return params?.language === language.id
                           return true
                         }
 
@@ -143,11 +129,9 @@ export const structure: StructureResolver = (S, context) => {
                         // TODO: Handle **existing** documents (like search results when clicked)
                         // to return `true` on the correct language list!
                         if (intentName === 'edit') {
-                          // return params?.language === language.id
                           return false
                         }
                         if (intentName === 'create') {
-                          // return params?.language === language.id
                           return true
                         }
 
@@ -198,11 +182,9 @@ export const structure: StructureResolver = (S, context) => {
                         // TODO: Handle **existing** documents (like search results when clicked)
                         // to return `true` on the correct language list!
                         if (intentName === 'edit') {
-                          // return params?.language === language.id
                           return false
                         }
                         if (intentName === 'create') {
-                          // return params?.language === language.id
                           return true
                         }
 
@@ -250,12 +232,10 @@ export const structure: StructureResolver = (S, context) => {
 
                       .canHandleIntent((intentName, params) => {
                         if (intentName === 'edit') {
-                          // return params?.language === language.id
                           return false
                         }
 
                         if (intentName === 'create') {
-                          // return params?.language === language.id
                           return true
                         }
 
@@ -295,60 +275,25 @@ export const structure: StructureResolver = (S, context) => {
                 ),
             ]),
         ),
-      // Field-level translations
-      // orderableDocumentListDeskItem({ type: 'portfolio', S, context }),
 
-      // S.documentTypeListItem('portfolio')
-      //   .title('Portfolio')
-      //   .items([
-
-      //   ]),
-
-      // S.divider(),
-      // S.documentTypeListItem('externalDoc').title('Seperate files'),
       S.divider(),
       S.documentTypeListItem('collaborator')
         .title('Collaborators')
         .icon(FiUsers),
-
-      // S.documentTypeListItem('gallery').title('Galleries').icon(FiImage),
-
-      // Singleton, field-level translations
     ])
 }
 
 export const defaultDocumentNode: DefaultDocumentNodeResolver = (
   S,
-  { schemaType, getClient },
+  { schemaType },
 ) => {
-  // const client = getClient({apiVersion: `2023-01-01`})
-
   switch (schemaType) {
-    // case 'portfolio':
-    //   return S.document().views([
-    //     S.view.form(),
-    //     // preview(S, client)
-    //   ])
-    // case 'externalDoc':
-    //   return S.document().views([
-    //     S.view.form(),
-    //     // preview(S, client)
-    //   ])
     case 'project':
-      return S.document().views([
-        S.view.form(),
-        // preview(S, client)
-      ])
+      return S.document().views([S.view.form()])
     case 'aboutPage':
-      return S.document().views([
-        S.view.form(),
-        // preview(S, client)
-      ])
+      return S.document().views([S.view.form()])
     case 'musicPage':
-      return S.document().views([
-        S.view.form(),
-        // preview(S, client)
-      ])
+      return S.document().views([S.view.form()])
 
     default:
       return S.document()

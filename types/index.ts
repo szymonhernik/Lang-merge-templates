@@ -1,6 +1,3 @@
-import { Translation } from '@/lib/types'
-
-import { SanityDocument } from 'next-sanity'
 import type { Image, PortableTextBlock } from 'sanity'
 
 interface PortfolioProjectHome {
@@ -30,7 +27,7 @@ export interface ShowcaseHomeProject {
   title: string
   year: string
   slug: string
-  portfolio?: PortfolioProjectHome // Assuming it follows the same structure defined elsewhere
+  portfolio?: PortfolioProjectHome
   coverImage?: {
     alt?: string
     asset: {
@@ -191,13 +188,13 @@ export interface LocalizedProject {
   portfolio?: any
   coverImage: {
     alt?: string
-    asset: any // Consider defining a more specific type for the asset if possible
+    asset: any
   }
   coverImageOptional?: {
     alt?: string
-    asset: any // Same as above, define a more specific type if possible
+    asset: any
   }
-  translations: TranslationHome[] // Define a more specific type for translations if applicable
+  translations: TranslationHome[]
 }
 export interface PDFEmbedModule {
   _key: string
@@ -244,13 +241,6 @@ export interface ImageInlineModule {
     height: number
   }
 }
-
-// export interface GalleryArrays {
-//   _type: 'singleProjectGallery'
-//   _key: string
-//   photoCredits: [{ _id: string; displayName: string; collaboratorUrl: string }]
-//   images: GalleryImage[]
-// }
 
 export interface MusicPagePayload {
   ogImage?: Image
