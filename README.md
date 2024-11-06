@@ -2,6 +2,8 @@
 
 Web portfolio for Narges' artistic, curatorial and DJ practice
 
+Live at [nargesmohammadi.com](https://www.nargesmohammadi.com/en)
+
 ## Core Technologies
 
 - **Frontend**: Next.js 14 (App Router), React, TypeScript, Tailwind CSS, Framer Motion
