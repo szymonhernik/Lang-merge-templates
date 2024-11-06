@@ -1,7 +1,6 @@
 import portfolio from './documents/portfolio'
 
 import project from './documents/project'
-import presenter from './documents/presenter'
 
 import callout from './objects/callout'
 
@@ -34,7 +33,6 @@ export const schemaTypes = [
   project,
   videoType,
   audioType,
-  presenter,
   aboutPage,
   contactPage,
   musicPage,

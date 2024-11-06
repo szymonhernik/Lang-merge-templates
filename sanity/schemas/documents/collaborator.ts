@@ -1,7 +1,5 @@
-import { FiUser, FiGlobe, FiUsers, FiMapPin } from 'react-icons/fi'
-import { defineField, defineType, KeyedObject } from 'sanity'
-
-import { i18n } from '../../../languages'
+import { FiUser } from 'react-icons/fi'
+import { defineField, defineType } from 'sanity'
 
 export default defineType({
   name: 'collaborator',

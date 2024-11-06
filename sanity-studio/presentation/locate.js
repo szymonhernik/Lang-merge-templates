@@ -1,6 +1,5 @@
 import groq from 'groq'
 import { map } from 'rxjs'
-import { ListenQueryOptions } from 'sanity'
 
 const DEFAULT_LANG = 'en'
 
@@ -10,34 +9,7 @@ export const locate = (params, context) => {
   const queryParams = { ...params, lang: DEFAULT_LANG }
   const listenOptions = { perspective: 'previewDrafts' }
 
-  if (params.type === 'presenter') {
-    doc$ = context.documentStore.listenQuery(
-      groq`*[_id == $id][0]{
-            slug,
-            "title": name
-        }`,
-      queryParams,
-      listenOptions,
-    )
-
-    // Return a streaming list of locations
-    return doc$.pipe(
-      map((doc) => {
-        if (!doc || !doc.slug?.current) {
-          return null
-        }
-
-        return {
-          locations: [
-            {
-              title: doc.title || 'Untitled',
-              href: `/${DEFAULT_LANG}/presenter/${doc.slug.current}`,
-            },
-          ],
-        }
-      }),
-    )
-  } else if (params.type === 'portfolio') {
+  if (params.type === 'portfolio') {
     doc$ = context.documentStore.listenQuery(
       groq`*[_id == $id][0]{
             "slug": slug[$lang],

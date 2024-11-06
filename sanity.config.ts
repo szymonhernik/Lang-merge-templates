@@ -1,5 +1,4 @@
-import { Card } from '@sanity/ui'
-import { buildLegacyTheme, defineConfig, isKeyedObject } from 'sanity'
+import { defineConfig, isKeyedObject } from 'sanity'
 import { structureTool } from 'sanity/structure'
 import { visionTool } from '@sanity/vision'
 import { presentationTool } from 'sanity/presentation'
@@ -16,12 +15,6 @@ import { schemaTypes } from '@/sanity/schemas'
 import { i18n } from '@/languages'
 import { enableUrl, locate } from '@/sanity-studio/presentation'
 
-import Icon from '@/sanity-studio/components/Icon'
-import home from './sanity/schemas/singletons/home'
-import { pageStructure } from './sanity-studio/structure/transifex'
-
-const title = process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'Narges Mohammadi'
-
 export default defineConfig({
   basePath: studioUrl,
   projectId: projectId || '',
@@ -31,7 +24,6 @@ export default defineConfig({
   apiVersion: apiVersion || '',
   plugins: [
     structureTool({
-      // structure: pageStructure([home]),
       structure,
       defaultDocumentNode,
     }),
@@ -89,18 +81,7 @@ export default defineConfig({
   ],
   schema: {
     types: schemaTypes,
-    // {
-    //   name: 'portfolio',
-    //   title: 'Portfolio',
-    //   type: 'document',
-    //   // Optional: The plugin also exports a set of 'orderings' for use in other Document Lists
-    //   // https://www.sanity.io/docs/sort-orders
-    //   orderings: [orderRankOrdering],
-    //   fields: [
-    //     // OR placing new documents on top
-    //     orderRankField({ type: 'portfolio', newItemPosition: 'before' }),
-    //   ],
-    // },
+
     templates: (prev) => {
       const prevFiltered = prev.filter(
         (template) =>
@@ -152,20 +133,10 @@ export default defineConfig({
       ]
     },
   },
-  studio: {
-    components: {
-      // navbar: (props) => <Card scheme="dark">{props.renderDefault(props)}</Card>,
-    },
-  },
+  studio: {},
   form: {
     components: {
       field: (props) => {
-        // if (props.path.length === 1) {
-        //   return (
-        //     <div style={{border: '1px solid red', padding: 30}}>{props.renderDefault(props)}</div>
-        //   )
-        // }
-
         return props.renderDefault(props)
       },
     },

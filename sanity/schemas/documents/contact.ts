@@ -1,4 +1,3 @@
-import { FiAward, FiFilePlus } from 'react-icons/fi'
 import { defineArrayMember, defineField, defineType } from 'sanity'
 
 export default defineType({

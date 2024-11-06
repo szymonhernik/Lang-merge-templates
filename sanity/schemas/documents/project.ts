@@ -1,11 +1,4 @@
-import {
-  FiAward,
-  FiGlobe,
-  FiHome,
-  FiImage,
-  FiLink,
-  FiToggleLeft,
-} from 'react-icons/fi'
+import { FiGlobe, FiHome, FiImage, FiToggleLeft } from 'react-icons/fi'
 import { defineArrayMember, defineField, defineType } from 'sanity'
 
 export default defineType({

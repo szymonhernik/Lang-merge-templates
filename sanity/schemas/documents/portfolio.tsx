@@ -1,17 +1,7 @@
-import {
-  FiAward,
-  FiBook,
-  FiGlobe,
-  FiImage,
-  FiUsers,
-  FiCircle,
-} from 'react-icons/fi'
+import { FiBook, FiGlobe, FiImage } from 'react-icons/fi'
 import { defineType, defineField, Reference } from 'sanity'
-import { SanityImageObjectStub } from '@sanity/asset-utils'
-import CustomFiCircleIcon from '@/sanity-studio/components/CustomFiCircleIcon' // Import your custom icon component
 
 import { i18n } from '../../../languages'
-import PortfolioMedia from '../../../sanity-studio/components/PortfolioMedia'
 import { orderRankField } from '@sanity/orderable-document-list'
 
 export default defineType({
@@ -65,10 +55,7 @@ export default defineType({
           title: 'Project',
           type: 'reference',
           weak: true,
-          to: [
-            { type: 'project' },
-            // { type: 'externalDoc' }
-          ],
+          to: [{ type: 'project' }],
           options: {
             // Add filter options to only show projects where 'language' is 'en'
             // filter: `(_type == 'project' && language == $lang) || _type == 'externalDoc'`,

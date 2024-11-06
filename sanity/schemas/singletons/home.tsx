@@ -1,16 +1,6 @@
-import {
-  FiAward,
-  FiBook,
-  FiGlobe,
-  FiGrid,
-  FiImage,
-  FiSettings,
-  FiUsers,
-} from 'react-icons/fi'
-import { defineType, defineField, Reference } from 'sanity'
-import { SanityImageObjectStub } from '@sanity/asset-utils'
+import { FiAward, FiGrid } from 'react-icons/fi'
+import { defineType, defineField } from 'sanity'
 
-import { i18n } from '../../../languages'
 import { HomeIcon } from '@sanity/icons'
 
 export default defineType({
@@ -44,7 +34,6 @@ export default defineType({
           options: {
             // Add filter options to only show projects where 'language' is 'en'
             filter: `(_type == 'project' && language == $lang && !defined(linkedFile))`,
-            // filter: 'language == $lang',
             filterParams: { lang: 'en' },
           },
         }),
