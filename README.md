@@ -2,7 +2,7 @@
 
 Web portfolio for Narges' artistic, curatorial and DJ practice
 
-Live at [nargesmohammadi.com](https://www.nargesmohammadi.com/en)
+Live at [nargesmohammadi.com](https://www.nargesmohammadi.com/en){:target="\_blank"}
 
 ## Core Technologies
 
