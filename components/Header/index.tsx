@@ -46,13 +46,13 @@ export default function Header() {
     >
       <div
         className={clsx(
-          'px-6 lg:px-12 py-4  w-screen 3xl:mx-auto max-w-screen-3xl text-base flex items-start  justify-between gap-12 ',
+          'px-6 lg:px-6 py-4  w-screen 3xl:mx-auto max-w-screen-3xl text-base flex items-start  justify-between gap-12 ',
         )}
       >
         <div className="space-y-3 ">
           <h1
             className={clsx('mr-auto space-x-3 ', {
-              'lg:fixed lg:left-12 lg:top-8': isWorksPage,
+              'lg:fixed lg:left-6 lg:top-8': isWorksPage,
             })}
           >
             <Link href={`/${clean(langSelected)}`} className="">

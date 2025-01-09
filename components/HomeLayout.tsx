@@ -57,7 +57,7 @@ export function HomeLayout({ localizedProjects, language }: HomeLayoutProps) {
                   />
                 </div>
               )}
-              <div className="absolute bottom-1 left-0 p-8 z-[3]">
+              <div className="absolute bottom-1 left-0 p-6 z-[3]">
                 <ProjectLink project={project} language={language}>
                   <h1 className="text-white ">
                     {project.currentTitle}{' '}
