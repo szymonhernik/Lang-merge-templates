@@ -2,23 +2,40 @@ import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 
 import { i18n } from './languages'
-const supportedLanguages = i18n.languages.map((l) => l.id)
 
 import { match as matchLocale } from '@formatjs/intl-localematcher'
 import Negotiator from 'negotiator'
 
-function getLocale(request: NextRequest): string | undefined {
-  // Negotiator expects plain object so we need to transform headers
-  const negotiatorHeaders: Record<string, string> = {}
-  request.headers.forEach((value, key) => (negotiatorHeaders[key] = value))
+// Define your supported languages
+const supportedLanguages = ['en', 'nl']
+const defaultLanguage = 'en'
 
-  // Use negotiator and intl-localematcher to get best locale
-  let languages =
-    new Negotiator({ headers: negotiatorHeaders }).languages() ?? []
+// Modify the getLocale function to be more robust
+function getLocale(request: NextRequest): string {
+  try {
+    // Get accept-language header
+    const acceptLanguage = request.headers.get('accept-language')
 
-  // @ts-ignore locales are readonly
-  const locales: string[] = supportedLanguages
-  return matchLocale(languages, locales, i18n.base)
+    // If no accept-language header, return default
+    if (!acceptLanguage) return defaultLanguage
+
+    // Create headers object for Negotiator
+    const headers = { 'accept-language': acceptLanguage }
+
+    const negotiator = new Negotiator({ headers })
+
+    // Get languages from negotiator
+    let languages = negotiator.languages()
+
+    // Ensure we have valid languages array
+    languages = languages.map((lang) => lang.split('-')[0])
+
+    // Use intl-localematcher
+    return matchLocale(languages, supportedLanguages, defaultLanguage)
+  } catch (e) {
+    console.error('Locale matching error:', e)
+    return defaultLanguage
+  }
 }
 
 export function middleware(request: NextRequest) {
@@ -39,31 +56,34 @@ export function middleware(request: NextRequest) {
   )
     return
 
-  // Handle root path specifically
-  if (pathname === '/') {
-    const locale = getLocale(request)
-    return NextResponse.redirect(new URL(`/${locale}`, request.url), {
-      // Use 308 for permanent redirect
-      status: 308,
-    })
-  }
+  try {
+    // Handle root path
+    if (pathname === '/') {
+      const locale = getLocale(request)
+      return NextResponse.redirect(new URL(`/${locale}`, request.url), {
+        status: 307,
+      })
+    }
 
-  // Check if there is any supported locale in the pathname
-  const pathnameIsMissingLocale = supportedLanguages.every(
-    (locale) =>
-      !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`,
-  )
-
-  // Redirect if there is no locale
-  if (pathnameIsMissingLocale) {
-    const locale = getLocale(request)
-    return NextResponse.redirect(
-      new URL(`/${locale}${pathname}`, request.url),
-      {
-        // Use 308 for permanent redirect
-        status: 308,
-      },
+    // Check if pathname missing locale
+    const pathnameIsMissingLocale = supportedLanguages.every(
+      (locale) =>
+        !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`,
     )
+
+    if (pathnameIsMissingLocale) {
+      const locale = getLocale(request)
+      return NextResponse.redirect(
+        new URL(`/${locale}${pathname}`, request.url),
+        { status: 307 },
+      )
+    }
+  } catch (e) {
+    console.error('Middleware error:', e)
+    // In case of any error, redirect to default language
+    return NextResponse.redirect(new URL(`/${defaultLanguage}`, request.url), {
+      status: 307,
+    })
   }
 }
 
