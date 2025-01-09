@@ -30,9 +30,11 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       images: ogImage ? [ogImage] : [],
     },
+    // add x-default to the languages object
     alternates: {
       canonical: `${baseUrl}/en`,
       languages: {
+        'x-default': `${baseUrl}`,
         en: `${baseUrl}/en`,
         nl: `${baseUrl}/nl`,
       },

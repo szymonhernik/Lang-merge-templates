@@ -60,13 +60,17 @@ export async function generateMetadata({ params }) {
       url: `${baseUrl}/${language}/works/${slugParams}`,
     },
     alternates: {
-      canonical: `${baseUrl}/en/works/${
-        language === 'en'
-          ? slugParams
-          : initial.data.translations?.find((t) => t?.language === 'en')
-              ?.slug || slugParams
-      }`,
-      languages: languageAlternates,
+      canonical: `${baseUrl}/${language}/works/${slugParams}`,
+      // canonical: `${baseUrl}/en/works/${
+      //   language === 'en'
+      //     ? slugParams
+      //     : initial.data.translations?.find((t) => t?.language === 'en')
+      //         ?.slug || slugParams
+      // }`,
+      languages: {
+        'x-default': `${baseUrl}/${language}/works/${slugParams}`,
+        ...languageAlternates,
+      },
     },
     robots: {
       index: true,

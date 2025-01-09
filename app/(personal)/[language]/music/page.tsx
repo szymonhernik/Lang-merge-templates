@@ -52,8 +52,9 @@ export async function generateMetadata({ params }): Promise<Metadata> {
       url: `${baseUrl}/${language}/music`,
     },
     alternates: {
-      canonical: `${baseUrl}/en/music`,
+      canonical: `${baseUrl}/${language}/music`,
       languages: {
+        'x-default': `${baseUrl}/music`,
         en: `${baseUrl}/en/music`,
         nl: `${baseUrl}/nl/music`,
       },
